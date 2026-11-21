@@ -1,7 +1,7 @@
 import os
 from xml_to_json.xml_to_json import xml_to_jsonl
 from json_to_neo4j.json_to_neo4j import load_graph_from_jsonl
-from neo4j_qa import ask_graph_question
+from neo4j_qa.neo4j_qa import ask_graph_question
 import api_keys
 
 file_name = "sample_2"

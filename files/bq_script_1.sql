@@ -7,100 +7,230 @@ BEGIN
         v_rownum NUMBER := 0
 
 -- BLOCK 2
--- complexity_score: 5
--- used_llm: True
+-- complexity_score: 1
+-- used_llm: False
 -- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
--- note: Applied simple scalar assignment rewrites.
--- note: Detected Oracle outer join markers and annotated them for LLM conversion.
--- note: Qualified simple table references.
 BEGIN
 
-        dbms_output.put_line('
-        EXECUTE IMMEDIATE 'truncate table vnadsprd.naut_trail_tmp1';
-        EXECUTE IMMEDIATE 'insert into  `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp1
+        dbms_output.put_line('-------------------- naut_trail_tmp load started--------------------' || CURRENT_TIMESTAMP())
 
-SET v_rownum = (SELECT distinct trail_name,status,trail_id from `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail
+-- BLOCK 3
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'truncate table vnadsprd.naut_trail_tmp1'
 
-where trail_name in (
+-- BLOCK 4
+-- complexity_score: 4
+-- used_llm: True
+-- note: Qualified simple table references.
+MERGE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp1 AS T
+USING (
+  SELECT DISTINCT trail_name, status, trail_id
+  FROM `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail
+  WHERE trail_name IN (
+    SELECT trail_name
+    FROM (
+      SELECT DISTINCT trail_name, status
+      FROM `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail
+    )
+    GROUP BY trail_name
+    HAVING COUNT(1) > 1
+  )
+) AS S
+ON T.trail_name = S.trail_name
+   AND T.status = S.status
+   AND T.trail_id = S.trail_id
+WHEN NOT MATCHED THEN
+  INSERT (trail_name, status, trail_id) VALUES (S.trail_name, S.status, S.trail_id);
 
-select trail_name from (
+-- BLOCK 5
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-select distinct trail_name,status from `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail)
+-- BLOCK 6
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'truncate table vnadsprd.naut_trail_tmp2'
 
-group by trail_name
+-- BLOCK 7
+-- complexity_score: 4
+-- used_llm: True
+-- note: Qualified simple table references.
+INSERT INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp2
+SELECT
+  trail.trail_name,
+  MIN(lkp.priority)   AS priority,
+  MIN(lkp.sub_priority) AS sub_priority
+FROM
+  `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp1 AS trail
+JOIN
+  vnadsprd.NAUT_TRAIL_STATUS_PRTY_LKP AS lkp
+  ON trail.trail_status = lkp.trail_status
+GROUP BY
+  trail.trail_name;
 
-having count(1)>1)';
-        COMMIT;
-        EXECUTE IMMEDIATE 'truncate table vnadsprd.naut_trail_tmp2';
-        EXECUTE IMMEDIATE 'insert into  `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp2
+-- BLOCK 8
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-select trail_name,min(priority) priority,min(sub_priority) sub_priority from (
+-- BLOCK 9
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'truncate table vnadsprd.naut_trail_tmp3'
 
-select trail.trail_name,trail.trail_status,lkp.priority,lkp.sub_priority from `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp1 trail,vnadsprd.NAUT_TRAIL_STATUS_PRTY_LKP lkp where
+-- BLOCK 10
+-- complexity_score: 4
+-- used_llm: True
+-- note: Qualified simple table references.
+INSERT INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp3 (trail_name, trail_status, trail_id)
+SELECT
+  trail.trail_name,
+  trail.trail_status,
+  trail.trail_id
+FROM `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp1 AS trail
+JOIN vnadsprd.NAUT_TRAIL_STATUS_PRTY_LKP AS lkp
+  ON trail.trail_status = lkp.trail_status
+JOIN vnadsprd.naut_trail_tmp2 AS tst1
+  ON trail.trail_name = tst1.trail_name
+  AND lkp.priority = tst1.priority
+  AND lkp.sub_priority = tst1.sub_priority;
 
-trail.trail_status = lkp.trail_status
+-- BLOCK 11
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-order by trail.trail_name,lkp.priority,lkp.sub_priority)
+-- BLOCK 12
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'truncate table vnadsprd.naut_trail_tmp'
 
-group by trail_name';
-        COMMIT;
-        EXECUTE IMMEDIATE 'truncate table vnadsprd.naut_trail_tmp3';
-        EXECUTE IMMEDIATE 'insert into `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp3
+-- BLOCK 13
+-- complexity_score: 4
+-- used_llm: True
+-- note: Qualified simple table references.
+INSERT INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp
+SELECT t.*
+FROM `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail t
+WHERE t.trail_name NOT IN (
+  SELECT trail_name
+  FROM `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp3
+)
+AND t.version IN (
+  SELECT MAX(tt.version)
+  FROM `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail tt
+  WHERE t.trail_name = tt.trail_name
+  GROUP BY tt.trail_name
+);
 
-select trail.trail_name,trail.trail_status,trail.trail_id from `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp1 trail,vnadsprd.NAUT_TRAIL_STATUS_PRTY_LKP lkp,vnadsprd.naut_trail_tmp2 tst1 where
+-- BLOCK 14
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-trail.trail_status = lkp.trail_status
+-- BLOCK 15
+-- complexity_score: 4
+-- used_llm: True
+-- note: Qualified simple table references.
+INSERT INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp
+SELECT t.*
+FROM `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail t
+WHERE t.trail_id IN (
+  SELECT DISTINCT trail_id
+  FROM `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp3
+)
+AND t.version IN (
+  SELECT MAX(tt.version)
+  FROM `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail tt
+  WHERE t.trail_name = tt.trail_name
+    AND tt.trail_id IN (
+      SELECT trail_id
+      FROM `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp3
+    )
+  GROUP BY tt.trail_name
+);
 
-and trail.trail_name = tst1.trail_name
+-- BLOCK 16
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-and lkp.priority = tst1.priority and lkp.sub_priority =tst1.sub_priority';
-        COMMIT;
-        EXECUTE IMMEDIATE 'truncate table vnadsprd.naut_trail_tmp';
-        EXECUTE IMMEDIATE 'insert into  `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp
+-- BLOCK 17
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('-------------------- naut_trail_tmp load ended--------------------' || CURRENT_TIMESTAMP())
 
-select t.* from `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail t where t.trail_name not in (
+-- BLOCK 18
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------Icoe Tbl refresh load started--------------------' || CURRENT_TIMESTAMP())
 
-select trail_name from
+-- BLOCK 19
+-- complexity_score: 0
+-- used_llm: False
+vnadsprd.sp_ien_icon_tbls_refresh_cnd
 
-`JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp3)and t.version in (select max(tt.version)
+-- BLOCK 20
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------Icoe Tbl refresh load Ended--------------------' || CURRENT_TIMESTAMP())
 
-                 from `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail tt where t.trail_name = tt.trail_name
+-- BLOCK 21
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------TRAIL_TEMP tbl load started--------------------' || CURRENT_TIMESTAMP())
 
-group by tt.trail_name)';
-        COMMIT;
-        EXECUTE IMMEDIATE 'insert into  `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp
+-- BLOCK 22
+-- complexity_score: 0
+-- used_llm: False
+vnadsprd.sp_ien_mr_trail_temp_load()
 
-select t.* from `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail t  where t.trail_id  in (
+-- BLOCK 23
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------TRAIL_TEMP tbl load ended--------------------' || CURRENT_TIMESTAMP())
 
-select distinct trail_id from
+-- BLOCK 24
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------NAUT_SA_PRTCKTS_INFO tbl load started--------------------' || CURRENT_TIMESTAMP())
 
-`JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp3 ) and t.version in (select max(tt.version)
+-- BLOCK 25
+-- complexity_score: 0
+-- used_llm: False
+vnadsprd.sp_ien_mr_naut_sa_prtckts_info()
 
-                 from `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail tt where t.trail_name = tt.trail_name
+-- BLOCK 26
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------NAUT_SA_PRTCKTS_INFO tbl load ended--------------------' || CURRENT_TIMESTAMP())
 
-                 and tt.trail_id in (select trail_id from
+-- BLOCK 27
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------IEN_MR_TRAIL_MASTER tbl load started--------------------' || CURRENT_TIMESTAMP())
 
-`JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_trail_tmp3)
+-- BLOCK 28
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'TRUNCATE TABLE vnadsprd.IEN_MR_TRAIL_MASTER'
 
-group by tt.trail_name)';
-        COMMIT;
-        dbms_output.put_line('
-
-        dbms_output.put_line('
-        vnadsprd.sp_ien_icon_tbls_refresh_cnd;
-        dbms_output.put_line('
-
-        dbms_output.put_line('
-        vnadsprd.sp_ien_mr_trail_temp_load();
-        dbms_output.put_line('
-
-        dbms_output.put_line('
-        vnadsprd.sp_ien_mr_naut_sa_prtckts_info();
-        dbms_output.put_line('
-
-        dbms_output.put_line('
-        EXECUTE IMMEDIATE 'TRUNCATE TABLE vnadsprd.IEN_MR_TRAIL_MASTER';
-        INSERT  INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_mr_trail_master (
+-- BLOCK 29
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+-- note: Qualified simple table references.
+INSERT   INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_mr_trail_master (
             trail_id,
             trail_name,
             type,
@@ -141,15 +271,35 @@ group by tt.trail_name)';
                         vnadsprd.naut_trail_tmp       tw
                     WHERE
                         t.trail_name = tw.trail_name
-                );
+                )
 
-        COMMIT;
+-- BLOCK 30
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        dbms_output.put_line('
+-- BLOCK 31
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------IEN_MR_TRAIL_MASTER tbl load ended--------------------' || CURRENT_TIMESTAMP())
 
-        EXECUTE IMMEDIATE 'TRUNCATE TABLE vnadsprd.IEN_MR_NTLS_CKT_CHANNEL_STG';
-        EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX_IEN_MR_NTLS_CKT_CHANNEL UNUSABLE';
-        INSERT INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_mr_ntls_ckt_channel_stg (
+-- BLOCK 32
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'TRUNCATE TABLE vnadsprd.IEN_MR_NTLS_CKT_CHANNEL_STG'
+
+-- BLOCK 33
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX_IEN_MR_NTLS_CKT_CHANNEL UNUSABLE'
+
+-- BLOCK 34
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+-- note: Qualified simple table references.
+INSERT INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_mr_ntls_ckt_channel_stg (
                 trail_id,
             parent_trail_id,
             channel_name,
@@ -216,11 +366,19 @@ group by tt.trail_name)';
                 (select e.trail_id, 'SVC_DESCRIPTOR' as source from `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_SERVICE_EXT e where e.SVC_DESCRIPTOR_NAME like '%FLEX%'
 				and e.trail_id = aa.trail_id union select a.trail_id, 'CENTRAL_FREQUENCY' as source
 				from `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_TRAIL_ATTRIBUTES a where a.ATTRIBUTE_NAME= 'CENTRAL_FREQUENCY'
-				AND a.attribute_value is not null and a.trail_id= aa.trail_id));
+				AND a.attribute_value is not null and a.trail_id= aa.trail_id))
 
-        COMMIT;
+-- BLOCK 35
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-		INSERT INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_mr_ntls_ckt_channel_stg(
+-- BLOCK 36
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+-- note: Qualified simple table references.
+INSERT INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_mr_ntls_ckt_channel_stg(
             trail_id,
             parent_trail_id,
             channel_name,
@@ -247,17 +405,45 @@ group by tt.trail_name)';
                 (select e.trail_id, 'SVC_DESCRIPTOR' as source from `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_SERVICE_EXT e where e.SVC_DESCRIPTOR_NAME like '%FLEX%'
                 and e.trail_id = aa.trail_id union select a.trail_id, 'CENTRAL_FREQUENCY' as source
                 from `JSON_TO_BQ.BQ_DATASET.vnadsprd`.naut_TRAIL_ATTRIBUTES a where a.ATTRIBUTE_NAME= 'CENTRAL_FREQUENCY'
-                AND a.attribute_value is not null and a.trail_id= aa.trail_id));
+                AND a.attribute_value is not null and a.trail_id= aa.trail_id))
 
-        COMMIT;
+-- BLOCK 37
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX_IEN_MR_NTLS_CKT_CHANNEL REBUILD';
+-- BLOCK 38
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX_IEN_MR_NTLS_CKT_CHANNEL REBUILD'
 
-        dbms_output.put_line('
-        EXECUTE IMMEDIATE 'TRUNCATE TABLE vnadsprd.IEN_MR_CHANNEL_TEMP';
-        EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX1_IEN_MR_CHANNEL_TEMP UNUSABLE';
-        EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX2_IEN_MR_CHANNEL_TEMP UNUSABLE';
-        INSERT  INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_mr_channel_temp (
+-- BLOCK 39
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------IEN_MR_CHANNEL_TEMP tbl load started--------------------' || CURRENT_TIMESTAMP())
+
+-- BLOCK 40
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'TRUNCATE TABLE vnadsprd.IEN_MR_CHANNEL_TEMP'
+
+-- BLOCK 41
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX1_IEN_MR_CHANNEL_TEMP UNUSABLE'
+
+-- BLOCK 42
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX2_IEN_MR_CHANNEL_TEMP UNUSABLE'
+
+-- BLOCK 43
+-- complexity_score: 0
+-- used_llm: False
+-- note: Detected Oracle outer join markers and annotated them for LLM conversion.
+-- note: Qualified simple table references.
+INSERT   INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_mr_channel_temp (
             trail_id,
             trail_name,
             type,
@@ -302,23 +488,64 @@ group by tt.trail_name)';
                 vw.project_id,
                 asite.clli,
                 zsite.clli,
-                vw.network_type;
+                vw.network_type
 
-        COMMIT;
-        EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX1_IEN_MR_CHANNEL_TEMP REBUILD';
-        EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX2_IEN_MR_CHANNEL_TEMP REBUILD';
-        BEGIN
+-- BLOCK 44
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
+
+-- BLOCK 45
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX1_IEN_MR_CHANNEL_TEMP REBUILD'
+
+-- BLOCK 46
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX2_IEN_MR_CHANNEL_TEMP REBUILD'
+
+-- BLOCK 47
+-- complexity_score: 1
+-- used_llm: False
+BEGIN
             dbms_stats.gather_table_stats(ownname => 'vnadsprd', tabname => 'IEN_MR_CHANNEL_TEMP', degree => 16, method_opt => 'FOR ALL COLUMNS SIZE 1',
-            cascade => true);
-        END;
+            cascade => true)
 
-        dbms_output.put_line('
+-- BLOCK 48
+-- complexity_score: 0
+-- used_llm: False
+END
 
-        EXECUTE IMMEDIATE 'truncate table vnadsprd.IEN_MRKT_READINSS_NTLS_CKT_STG';
-        EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX1_IEN_ICON_CKT_STG UNUSABLE';
-        dbms_output.put_line('
+-- BLOCK 49
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------IEN_MR_CHANNEL_TEMP tbl load ended--------------------' || CURRENT_TIMESTAMP())
 
-        INSERT INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_mrkt_readinss_ntls_ckt_stg (
+-- BLOCK 50
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'truncate table vnadsprd.IEN_MRKT_READINSS_NTLS_CKT_STG'
+
+-- BLOCK 51
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX1_IEN_ICON_CKT_STG UNUSABLE'
+
+-- BLOCK 52
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------IEN_MRKT_READINSS_NTLS_CKT_STG tbl load started--------------------' || CURRENT_TIMESTAMP())
+
+-- BLOCK 53
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+-- note: Detected Oracle outer join markers and annotated them for LLM conversion.
+-- note: Qualified simple table references.
+INSERT INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_mrkt_readinss_ntls_ckt_stg (
             trail_id,
             trail_name,
             status,
@@ -642,15 +869,41 @@ group by tt.trail_name)';
             AND tce.element_id = e.element_id
             AND vw.a_site_name = asite.clli  /*ORACLE_OUTER_JOIN_MARKER*/
             AND vw.z_site_name = zsite.clli  /*ORACLE_OUTER_JOIN_MARKER*/
-			AND vw.trail_id = mstr.trail_id;
+			AND vw.trail_id = mstr.trail_id
 
-        COMMIT;
-        dbms_output.put_line('
-        EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX1_IEN_ICON_CKT_STG REBUILD';
+-- BLOCK 54
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        dbms_output.put_line('
-        EXECUTE IMMEDIATE 'truncate table vnadsprd.IEN_MR_NTLS_ICON_CKT_TMP';
-        INSERT INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_mr_ntls_icon_ckt_tmp (
+-- BLOCK 55
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------IEN_MRKT_READINSS_NTLS_CKT_STG tbl load ended--------------------' || CURRENT_TIMESTAMP())
+
+-- BLOCK 56
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX1_IEN_ICON_CKT_STG REBUILD'
+
+-- BLOCK 57
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------IEN_MR_NTLS_ICON_CKT_TMP tbl load started--------------------' || CURRENT_TIMESTAMP())
+
+-- BLOCK 58
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'truncate table vnadsprd.IEN_MR_NTLS_ICON_CKT_TMP'
+
+-- BLOCK 59
+-- complexity_score: 0
+-- used_llm: False
+-- note: Detected Oracle outer join markers and annotated them for LLM conversion.
+-- note: Qualified simple table references.
+INSERT INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_mr_ntls_icon_ckt_tmp (
             trail_id,
             trail_name,
             status,
@@ -713,17 +966,51 @@ group by tt.trail_name)';
                     ttp.port_reference_id = mvp.PVNR_PORT_ID  /*ORACLE_OUTER_JOIN_MARKER*/
                 AND mvp.PVNR_PORT_ID = mvlp.port_reference_id  /*ORACLE_OUTER_JOIN_MARKER*/
                 AND mvp.related_port_ref_id = mvlp1.port_reference_id  /*ORACLE_OUTER_JOIN_MARKER*/
-            );
+            )
 
-        COMMIT;
-        dbms_output.put_line('
+-- BLOCK 60
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        dbms_output.put_line('
-        EXECUTE IMMEDIATE 'truncate table vnadsprd.IEN_MR_NTLS_ICON_CKT_STG';
-        EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX_IEN_MR_NTLS_ICON_CKT UNUSABLE';
-        EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX1_IEN_MR_NTLS_ICON_CKT UNUSABLE';
-        EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX2_IEN_MR_NTLS_ICON_CKT UNUSABLE';
-        INSERT INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_mr_ntls_icon_ckt_stg (
+-- BLOCK 61
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------IEN_MR_NTLS_ICON_CKT_TMP tbl load ended--------------------' || CURRENT_TIMESTAMP())
+
+-- BLOCK 62
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------IEN_MR_NTLS_ICON_CKT_STG tbl load started--------------------' || CURRENT_TIMESTAMP())
+
+-- BLOCK 63
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'truncate table vnadsprd.IEN_MR_NTLS_ICON_CKT_STG'
+
+-- BLOCK 64
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX_IEN_MR_NTLS_ICON_CKT UNUSABLE'
+
+-- BLOCK 65
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX1_IEN_MR_NTLS_ICON_CKT UNUSABLE'
+
+-- BLOCK 66
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX2_IEN_MR_NTLS_ICON_CKT UNUSABLE'
+
+-- BLOCK 67
+-- complexity_score: 0
+-- used_llm: False
+-- note: Detected Oracle outer join markers and annotated them for LLM conversion.
+-- note: Qualified simple table references.
+INSERT INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_mr_ntls_icon_ckt_stg (
             trail_id,
             trail_name,
             status,
@@ -783,17 +1070,50 @@ group by tt.trail_name)';
                   OR lport_reference_id IS NOT NULL )
                 AND tmp.port_reference_id = port.port_reference_id  /*ORACLE_OUTER_JOIN_MARKER*/
                 AND port.eqp_reference_id = eqp.eqp_reference_id  /*ORACLE_OUTER_JOIN_MARKER*/
-            );
+            )
 
-        COMMIT;
-        EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX_IEN_MR_NTLS_ICON_CKT REBUILD';
-        EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX1_IEN_MR_NTLS_ICON_CKT REBUILD';
-        EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX2_IEN_MR_NTLS_ICON_CKT REBUILD';
-        dbms_output.put_line('
-        dbms_output.put_line('IEN_MR_ICOE_PORT_TMP Load started ' || CURRENT_TIMESTAMP());
+-- BLOCK 68
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        EXECUTE IMMEDIATE 'TRUNCATE TABLE vnadsprd.IEN_MR_ICOE_PORT_TMP';
-        INSERT INTO  `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_mr_icoe_port_tmp
+-- BLOCK 69
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX_IEN_MR_NTLS_ICON_CKT REBUILD'
+
+-- BLOCK 70
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX1_IEN_MR_NTLS_ICON_CKT REBUILD'
+
+-- BLOCK 71
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'ALTER INDEX vnadsprd.IDX2_IEN_MR_NTLS_ICON_CKT REBUILD'
+
+-- BLOCK 72
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------IEN_MR_NTLS_ICON_CKT_STG tbl load ended--------------------' || CURRENT_TIMESTAMP())
+
+-- BLOCK 73
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('IEN_MR_ICOE_PORT_TMP Load started ' || CURRENT_TIMESTAMP())
+
+-- BLOCK 74
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'TRUNCATE TABLE vnadsprd.IEN_MR_ICOE_PORT_TMP'
+
+-- BLOCK 75
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+INSERT INTO   `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_mr_icoe_port_tmp
             SELECT DISTINCT
                 phy.port_reference_id,
                 virtual1.port_status,
@@ -815,15 +1135,41 @@ group by tt.trail_name)';
             WHERE
                     virtual1.port_reference_id = mv_port.PVNR_PORT_ID
                 AND mv_port.PORT_INSTNC_ID >= - 1e20
-                AND phy.port_reference_id = virtual1.physical_port_reference_id;
+                AND phy.port_reference_id = virtual1.physical_port_reference_id
 
-        COMMIT;
-        dbms_output.put_line('IEN_MR_ICOE_PORT_TMP Load ENDED ' || CURRENT_TIMESTAMP());
+-- BLOCK 76
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        EXECUTE IMMEDIATE ' TRUNCATE TABLE vnadsprd.IEN_MARKT_READINESS_NTLS_DATA';
-        EXECUTE IMMEDIATE 'ALTER index vnadsprd.IDX_IEN_MR_NTLS_DATA UNUSABLE';
-        dbms_output.put_line('
-        INSERT  INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data (
+-- BLOCK 77
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('IEN_MR_ICOE_PORT_TMP Load ENDED ' || CURRENT_TIMESTAMP())
+
+-- BLOCK 78
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE ' TRUNCATE TABLE vnadsprd.IEN_MARKT_READINESS_NTLS_DATA'
+
+-- BLOCK 79
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'ALTER index vnadsprd.IDX_IEN_MR_NTLS_DATA UNUSABLE'
+
+-- BLOCK 80
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('----IEN_MARKT_READINESS_NTLS_DATA tbl load started--' || CURRENT_TIMESTAMP())
+
+-- BLOCK 81
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+-- note: Qualified simple table references.
+INSERT   INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data (
             id,
             trail_id,
             trail_name,
@@ -909,7 +1255,7 @@ group by tt.trail_name)';
             slot_type,
             logical_slot_name_port
         )
-            SELECT  DISTINCT
+            SELECT   DISTINCT
                 ROWNUM                                                     id,
                 g.trail_id                                                 AS trail_id,
                 g.trail_name                                               AS trail_name,
@@ -1673,14 +2019,36 @@ group by tt.trail_name)';
                 LEFT JOIN `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_mr_icoe_port_tmp     virtualport2 ON ( virtualport2.port_reference_id = ppp.port_reference_id )
             ORDER BY
                 g.trail_id,
-                g.sequence;
+                g.sequence
 
-        COMMIT;
-        SELECT
-            IFNULL(MAX(id),1) FROM `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data);
+-- BLOCK 82
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        dbms_output.put_line('
-        INSERT  INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data (
+-- BLOCK 83
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+-- note: Qualified simple table references.
+SELECT
+            IFNULL(MAX(id),1)
+        INTO `JSON_TO_BQ.BQ_DATASET.v_rownum`
+        FROM
+            `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+
+-- BLOCK 84
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('----IEN_MARKT_READINESS_NTLS_DATA tbl load1 started--' || CURRENT_TIMESTAMP())
+
+-- BLOCK 85
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+-- note: Qualified simple table references.
+INSERT   INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data (
             id,
             trail_id,
             trail_name,
@@ -1766,7 +2134,7 @@ group by tt.trail_name)';
             slot_type,
             logical_slot_name_port
         )
-            SET v_rownum = (SELECT DISTINCT
+            SELECT   DISTINCT
                 v_rownum + ROWNUM                                          id,
                 g.trail_id                                                 AS trail_id,
                 g.trail_name                                               AS trail_name,
@@ -2533,14 +2901,36 @@ group by tt.trail_name)';
                 LEFT JOIN `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_mr_icoe_port_tmp     virtualport2 ON ( virtualport2.port_reference_id = ppp.port_reference_id )
             ORDER BY
                 g.trail_id,
-                g.sequence;
+                g.sequence
 
-        COMMIT;
-        SELECT
-            IFNULL(MAX(id),1) FROM `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data);
+-- BLOCK 86
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        dbms_output.put_line('
-        INSERT  INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data (
+-- BLOCK 87
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+-- note: Qualified simple table references.
+SELECT
+            IFNULL(MAX(id),1)
+        INTO `JSON_TO_BQ.BQ_DATASET.v_rownum`
+        FROM
+            `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+
+-- BLOCK 88
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('----IEN_MARKT_READINESS_NTLS_DATA tbl load2 started--' || CURRENT_TIMESTAMP())
+
+-- BLOCK 89
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+-- note: Qualified simple table references.
+INSERT   INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data (
             id,
             trail_id,
             trail_name,
@@ -2569,7 +2959,7 @@ group by tt.trail_name)';
             channel_status,
             equipment_id
         )
-            SELECT  DISTINCT
+            SELECT   DISTINCT
                 v_rownum + ROWNUM                                          id,
                 g.trail_id                                                 AS trail_id,
                 g.trail_name                                               AS trail_name,
@@ -2706,10 +3096,18 @@ group by tt.trail_name)';
                                                                                      END )
             ORDER BY
                 g.trail_id,
-                g.sequence;
+                g.sequence
 
-        COMMIT;
-        DELETE FROM `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 90
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
+
+-- BLOCK 91
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+DELETE FROM `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         WHERE
             ROWID NOT IN (
                 SELECT
@@ -2734,10 +3132,18 @@ group by tt.trail_name)';
                             element_type = 'E'
                     )
                     AND element_type = 'P'
-            );
+            )
 
-        COMMIT;
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 92
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
+
+-- BLOCK 93
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             equipment_id = NULL,
             eqp_status = NULL,
@@ -2827,16 +3233,45 @@ group by tt.trail_name)';
                             element_type = 'E'
                     )
                     AND element_type = 'P'
-            );
+            )
 
-        COMMIT;
-        EXECUTE IMMEDIATE 'ALTER index vnadsprd.IDX_IEN_MR_NTLS_DATA REBUILD';
-        dbms_output.put_line('
+-- BLOCK 94
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        EXECUTE IMMEDIATE 'truncate table vnadsprd.TEMP_IEN_MR_NTLS';
-        EXECUTE IMMEDIATE ' drop index vnadsprd.IDX_TEMP_IEN_MR_NTLS';
-        dbms_output.put_line('
-        INSERT INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.temp_ien_mr_ntls (
+-- BLOCK 95
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'ALTER index vnadsprd.IDX_IEN_MR_NTLS_DATA REBUILD'
+
+-- BLOCK 96
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('----IEN_MARKT_READINESS_NTLS_DATA tbl load ended--' || CURRENT_TIMESTAMP())
+
+-- BLOCK 97
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'truncate table vnadsprd.TEMP_IEN_MR_NTLS'
+
+-- BLOCK 98
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE ' drop index vnadsprd.IDX_TEMP_IEN_MR_NTLS'
+
+-- BLOCK 99
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------TEMP_IEN_MR_NTLS tbl load started--------------------' || CURRENT_TIMESTAMP())
+
+-- BLOCK 100
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+INSERT INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.temp_ien_mr_ntls (
             trail_name,
             npreinventory_flag
         )
@@ -2875,13 +3310,29 @@ group by tt.trail_name)';
                         ntls.trail_name = mstr.trail_name
                     GROUP BY
                         ntls.trail_name
-                );
+                )
 
-        COMMIT;
-        dbms_output.put_line('
-        EXECUTE IMMEDIATE ' create index vnadsprd.IDX_TEMP_IEN_MR_NTLS on vnadsprd.TEMP_IEN_MR_NTLS(TRAIL_NAME)';
+-- BLOCK 101
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data b
+-- BLOCK 102
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------TEMP_IEN_MR_NTLS tbl load ended--------------------' || CURRENT_TIMESTAMP())
+
+-- BLOCK 103
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE ' create index vnadsprd.IDX_TEMP_IEN_MR_NTLS on vnadsprd.TEMP_IEN_MR_NTLS(TRAIL_NAME)'
+
+-- BLOCK 104
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data b
         SET
             ( b.npreinventory_flag ) = (
                 SELECT DISTINCT
@@ -2890,13 +3341,30 @@ group by tt.trail_name)';
                     `JSON_TO_BQ.BQ_DATASET.vnadsprd`.temp_ien_mr_ntls a
                 WHERE
                     a.trail_name = b.trail_name
-            );
+            )
 
-        COMMIT;
+-- BLOCK 105
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        EXECUTE IMMEDIATE 'truncate table vnadsprd.IEN_NTLS_CKT_HIER_LKP';
-        dbms_output.put_line('
-        INSERT INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_ntls_ckt_hier_lkp (
+-- BLOCK 106
+-- complexity_score: 4
+-- used_llm: True
+EXECUTE IMMEDIATE 'truncate table vnadsprd.IEN_NTLS_CKT_HIER_LKP'
+
+-- BLOCK 107
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------IEN_NTLS_CKT_HIER_LKP tbl load started--------------------' || CURRENT_TIMESTAMP())
+
+-- BLOCK 108
+-- complexity_score: 0
+-- used_llm: False
+-- note: Detected Oracle outer join markers and annotated them for LLM conversion.
+-- note: Qualified simple table references.
+INSERT INTO `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_ntls_ckt_hier_lkp (
             trail_id,
             trail_name,
             type,
@@ -2948,35 +3416,76 @@ group by tt.trail_name)';
             WHERE
                     t.trail_id = t1.trail_id  /*ORACLE_OUTER_JOIN_MARKER*/
                 AND t1.parent_trail_id = t2.trail_id  /*ORACLE_OUTER_JOIN_MARKER*/
-                AND t2.parent_trail_id = t3.trail_id  /*ORACLE_OUTER_JOIN_MARKER*/ ;
+                AND t2.parent_trail_id = t3.trail_id  /*ORACLE_OUTER_JOIN_MARKER*/
 
-        COMMIT;
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_ntls_ckt_hier_lkp
+-- BLOCK 109
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
+
+-- BLOCK 110
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_ntls_ckt_hier_lkp
         SET
             level1trail = NULL
         WHERE
-            trail_id = level1trail;
+            trail_id = level1trail
 
-        COMMIT;
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_ntls_ckt_hier_lkp
+-- BLOCK 111
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
+
+-- BLOCK 112
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_ntls_ckt_hier_lkp
         SET
             level2trail = NULL
         WHERE
-            trail_id = level2trail;
+            trail_id = level2trail
 
-        COMMIT;
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_ntls_ckt_hier_lkp
+-- BLOCK 113
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
+
+-- BLOCK 114
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_ntls_ckt_hier_lkp
         SET
             level3trail = NULL
         WHERE
-            trail_id = level3trail;
+            trail_id = level3trail
 
-        COMMIT;
-        dbms_output.put_line('
+-- BLOCK 115
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        dbms_output.put_line('
+-- BLOCK 116
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+dbms_output.put_line('--------------------IEN_NTLS_CKT_HIER_LKP tbl load ended--------------------' || CURRENT_TIMESTAMP())
 
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 117
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+-- note: Qualified simple table references.
+dbms_output.put_line('--------------------icon integrity issues update `JSON_TO_BQ.BQ_DATASET.started`------------' || CURRENT_TIMESTAMP())
+
+-- BLOCK 118
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments = 'SLOT_REFERENCE_ID is not found in Logical Slot table for CARD'
         WHERE
@@ -2991,11 +3500,16 @@ group by tt.trail_name)';
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
                                     'LGX' )
 
-                                    ;
+-- BLOCK 119
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        COMMIT;
-
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 120
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments =
                 CASE
@@ -3018,11 +3532,16 @@ group by tt.trail_name)';
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
                                     'LGX' )
 
-                                    ;
+-- BLOCK 121
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        COMMIT;
-
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 122
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments =
                 CASE
@@ -3045,11 +3564,16 @@ group by tt.trail_name)';
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
                                     'LGX' )
 
-                                    ;
+-- BLOCK 123
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        COMMIT;
-
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 124
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments =
                 CASE
@@ -3072,11 +3596,16 @@ group by tt.trail_name)';
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
                                     'LGX' )
 
-                                    ;
+-- BLOCK 125
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        COMMIT;
-
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 126
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments =
                 CASE
@@ -3099,11 +3628,16 @@ group by tt.trail_name)';
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
                                     'LGX' )
 
-                                    ;
+-- BLOCK 127
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        COMMIT;
-
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 128
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments =
                 CASE
@@ -3128,11 +3662,16 @@ group by tt.trail_name)';
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
                                     'LGX' )
 
-                                    ;
+-- BLOCK 129
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        COMMIT;
-
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 130
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments =
                 CASE
@@ -3157,11 +3696,16 @@ group by tt.trail_name)';
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
                                     'LGX' )
 
-                                    ;
+-- BLOCK 131
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        COMMIT;
-
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 132
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments =
                 CASE
@@ -3186,11 +3730,16 @@ group by tt.trail_name)';
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
                                     'LGX' )
 
-                                    ;
+-- BLOCK 133
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        COMMIT;
-
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 134
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments =
                 CASE
@@ -3213,11 +3762,16 @@ group by tt.trail_name)';
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
                                     'LGX' )
 
-                                    ;
+-- BLOCK 135
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        COMMIT;
-
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 136
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments =
                 CASE
@@ -3241,11 +3795,16 @@ group by tt.trail_name)';
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
                                     'LGX' )
 
-                                    ;
+-- BLOCK 137
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        COMMIT;
-
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 138
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments =
                 CASE
@@ -3269,11 +3828,16 @@ group by tt.trail_name)';
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
                                     'LGX' )
 
-                                    ;
+-- BLOCK 139
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        COMMIT;
-
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 140
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments =
                 CASE
@@ -3297,11 +3861,17 @@ group by tt.trail_name)';
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
                                     'LGX' )
 
-                                    ;
+-- BLOCK 141
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        COMMIT;
-
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 142
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments =
                 CASE
@@ -3323,11 +3893,16 @@ group by tt.trail_name)';
             AND IFNULL(shelf_type, 'Not Available') NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB',
                                                           'TL', 'LGX' )
 
-                                                          ;
+-- BLOCK 143
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        COMMIT;
-
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 144
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments =
                 CASE
@@ -3349,11 +3924,16 @@ group by tt.trail_name)';
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
                                     'LGX' )
 
-                                    ;
+-- BLOCK 145
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        COMMIT;
-
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 146
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments =
                 CASE
@@ -3375,11 +3955,16 @@ group by tt.trail_name)';
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
                                     'LGX' )
 
-                                    ;
+-- BLOCK 147
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        COMMIT;
-
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 148
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments =
                 CASE
@@ -3401,11 +3986,16 @@ group by tt.trail_name)';
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
                                     'LGX' )
 
-                                    ;
+-- BLOCK 149
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        COMMIT;
-
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 150
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments =
                 CASE
@@ -3427,11 +4017,16 @@ group by tt.trail_name)';
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
                                     'LGX' )
 
-                                    ;
+-- BLOCK 151
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        COMMIT;
-
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 152
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments =
                 CASE
@@ -3453,11 +4048,17 @@ group by tt.trail_name)';
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
                                     'LGX' )
 
-                                    ;
+-- BLOCK 153
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        COMMIT;
-
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 154
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             comments =
                 CASE
@@ -3488,20 +4089,34 @@ group by tt.trail_name)';
                 WHERE
                     CASE_DECODE_PLACEHOLDER(network_type, 'ULH', eqp_type, functional_type) IN ( 'CMD44 C-BAND RED (45-88)', 'CMD44 C-BAND BLUE (1-44)',
                                                                                 'FIM TYPE 1', 'FIBER_SHUFFLE', 'FIBER SHUFFLE' )
-            );
+            )
 
-        COMMIT;
+-- BLOCK 155
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-        UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 156
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
             icoe_port_missing_flag = 'N'
         WHERE
                 trail_name = 'I1001/OTUC2/LNBHNYLB/LYBRNYLB'
-            AND port_reference_id IN ( 50779832, 50779789, 50779789, 50779832 );
+            AND port_reference_id IN ( 50779832, 50779789, 50779789, 50779832 )
 
-        COMMIT;
+-- BLOCK 157
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
 
-	UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 158
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
 		comments =
                 CASE
@@ -3521,10 +4136,18 @@ group by tt.trail_name)';
                                       'DISCONNECTED', 'DELETED', 'CANCELLED', 'PND CHANGE CANCEL', 'RESERVATION_COPIED',
                                       'RESERVATION_CREATED', 'RESERVATION_EXPIRED' )
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
-                                    'LGX' ) ;
-        COMMIT;
+                                    'LGX' )
 
-	UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 159
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
+
+-- BLOCK 160
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
 		comments =
                 CASE
@@ -3544,10 +4167,18 @@ group by tt.trail_name)';
                                       'DISCONNECTED', 'DELETED', 'CANCELLED', 'PND CHANGE CANCEL', 'RESERVATION_COPIED',
                                       'RESERVATION_CREATED', 'RESERVATION_EXPIRED' )
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
-                                    'LGX' ) ;
-        COMMIT;
+                                    'LGX' )
 
-	UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 161
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
+
+-- BLOCK 162
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
 
 		SET
 		comments =
@@ -3568,10 +4199,18 @@ group by tt.trail_name)';
                                       'DISCONNECTED', 'DELETED', 'CANCELLED', 'PND CHANGE CANCEL', 'RESERVATION_COPIED',
                                       'RESERVATION_CREATED', 'RESERVATION_EXPIRED' )
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
-                                    'LGX' ) ;
-        COMMIT;
+                                    'LGX' )
 
-	UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 163
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
+
+-- BLOCK 164
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
 		comments =
                 CASE
@@ -3591,11 +4230,25 @@ group by tt.trail_name)';
                                       'DISCONNECTED', 'DELETED', 'CANCELLED', 'PND CHANGE CANCEL', 'RESERVATION_COPIED',
                                       'RESERVATION_CREATED', 'RESERVATION_EXPIRED' )
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
-                                    'LGX' ) ;
-        COMMIT;
-	dbms_output.put_line('
+                                    'LGX' )
 
-	UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
+-- BLOCK 165
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
+
+-- BLOCK 166
+-- complexity_score: 0
+-- used_llm: False
+-- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
+-- note: Qualified simple table references.
+dbms_output.put_line('--------------------25.Port status is PRE INVENTORY update `JSON_TO_BQ.BQ_DATASET.ended`------------' || CURRENT_TIMESTAMP())
+
+-- BLOCK 167
+-- complexity_score: 0
+-- used_llm: False
+-- note: Qualified simple table references.
+UPDATE `JSON_TO_BQ.BQ_DATASET.vnadsprd`.ien_markt_readiness_ntls_data
         SET
 		    comments =
                 CASE
@@ -3615,8 +4268,19 @@ group by tt.trail_name)';
                                       'DISCONNECTED', 'DELETED', 'CANCELLED', 'PND CHANGE CANCEL', 'RESERVATION_COPIED',
                                       'RESERVATION_CREATED', 'RESERVATION_EXPIRED' )
             AND shelf_type NOT IN ( 'PATCH_PANEL', 'PATCH', 'PATCH PANEL', 'FDB', 'TL',
-                                    'LGX' ) ;
-        COMMIT;
+                                    'LGX' )
 
-    END;
-END;
+-- BLOCK 168
+-- complexity_score: 0
+-- used_llm: False
+COMMIT
+
+-- BLOCK 169
+-- complexity_score: 0
+-- used_llm: False
+END
+
+-- BLOCK 170
+-- complexity_score: 0
+-- used_llm: False
+END

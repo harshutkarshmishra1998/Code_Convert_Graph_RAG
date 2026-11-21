@@ -24,8 +24,10 @@ from groq import Groq
 # -------------------- Configuration --------------------
 PROJECT_ID = os.getenv("BQ_PROJECT_ID", "JSON_TO_BQ")
 DATASET = os.getenv("BQ_DATASET", "BQ_DATASET")
-PLAYBOOK_PATH = os.getenv("CONVERSION_PLAYBOOK_PATH", "conversion_doc.txt")
-LLM_MODEL = os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
+PLAYBOOK_PATH = os.getenv(
+    "CONVERSION_PLAYBOOK_PATH",
+    str(Path(__file__).resolve().with_name("conversion_doc.txt")),
+)
 MAX_RETRIES = int(os.getenv("LLM_MAX_RETRIES", "3"))
 CACHE_PATH = os.getenv("LLM_CACHE_PATH", "")
 
@@ -450,12 +452,9 @@ def build_blocks(sql: str) -> List[Block]:
 # -------------------- Playbook / prompt handling --------------------
 def load_playbook(path: str = PLAYBOOK_PATH) -> str:
     p = Path(path)
-    if p.exists():
-        return p.read_text(encoding="utf-8")
-    return (
-        "PLSQL_TO_BIGQUERY_CONVERSION_PLAYBOOK_NOT_FOUND\n"
-        "Use deterministic rewrites first; preserve logic; prefer set-based SQL; use scripting for procedural logic."
-    )
+    if not p.is_file():
+        raise FileNotFoundError(f"Conversion playbook not found: {p.resolve()}")
+    return p.read_text(encoding="utf-8")
 
 
 def build_llm_prompt(block: str, playbook: str, context_notes: Sequence[str]) -> str:
@@ -719,7 +718,7 @@ def convert_many(input_files: Sequence[str], output_files: Sequence[str]) -> Non
 
 # -------------------- CLI entry point --------------------
 def main() -> None:
-    values = [0, 1, 2, 3, 4, 5]
+    values = [1]
     input_files = [f"files/pls_sample_{i}.pls" for i in values]
     output_files = [f"files/bq_script_{i}.sql" for i in values]
     convert_many(input_files, output_files)

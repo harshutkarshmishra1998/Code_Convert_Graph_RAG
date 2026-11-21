@@ -14,7 +14,7 @@ def ask_graph_question(question):
     )
 
     llm = ChatGroq(
-        model="llama-3.3-70b-versatile",
+        model=api_keys._loaded["LLM"],
         temperature=0
     )
 
