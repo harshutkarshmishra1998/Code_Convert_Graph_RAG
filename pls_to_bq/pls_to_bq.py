@@ -1,6 +1,4 @@
-"""Production-oriented PL/SQL -> BigQuery conversion pipeline.
-
-Goals:
+"""Goals:
 - Use the conversion playbook as a first-class input, not just a prompt add-on.
 - Apply deterministic rewrites before calling the LLM.
 - Classify blocks by complexity and route only the hard parts to the LLM.
@@ -9,7 +7,6 @@ Goals:
 Notes:
 - This is intentionally conservative: it avoids unsafe semantic guesses.
 - The LLM is used for complex procedural blocks, while simple rewrites are handled deterministically.
-- Adjust the PLAYBOOK_PATH and PROJECT/DATASET values for your environment.
 """
 
 from __future__ import annotations
@@ -22,13 +19,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 import api_keys
-
 from groq import Groq
 
 # -------------------- Configuration --------------------
-
-PROJECT_ID = os.getenv("BQ_PROJECT_ID", "your_project")
-DATASET = os.getenv("BQ_DATASET", "your_dataset")
+PROJECT_ID = os.getenv("BQ_PROJECT_ID", "JSON_TO_BQ")
+DATASET = os.getenv("BQ_DATASET", "BQ_DATASET")
 PLAYBOOK_PATH = os.getenv("CONVERSION_PLAYBOOK_PATH", "conversion_doc.txt")
 LLM_MODEL = os.getenv("LLM_MODEL", "llama-3.3-70b-versatile")
 MAX_RETRIES = int(os.getenv("LLM_MAX_RETRIES", "3"))
@@ -93,7 +88,6 @@ COMPLEXITY_PATTERNS: Sequence[re.Pattern[str]] = (
 )
 
 # -------------------- Data models --------------------
-
 @dataclass(frozen=True)
 class Block:
     kind: str
@@ -113,7 +107,6 @@ class ConversionResult:
 
 
 # -------------------- Cache --------------------
-
 class MemoryCache:
     def __init__(self, path: str = "") -> None:
         self.path = path.strip()
@@ -150,7 +143,6 @@ class MemoryCache:
 
 
 # -------------------- Utilities --------------------
-
 def load_text(file_path: str) -> str:
     return Path(file_path).read_text(encoding="utf-8")
 
@@ -160,10 +152,51 @@ def md5(text: str) -> str:
 
 
 def strip_comments(sql: str) -> str:
-    # Remove block comments first, then line comments.
-    sql = re.sub(r"/\*.*?\*/", "", sql, flags=re.DOTALL)
-    sql = re.sub(r"--.*?$", "", sql, flags=re.MULTILINE)
-    return sql
+    result: List[str] = []
+    quote: Optional[str] = None
+    i = 0
+
+    while i < len(sql):
+        char = sql[i]
+        next_char = sql[i + 1] if i + 1 < len(sql) else ""
+
+        if quote:
+            result.append(char)
+            if char == quote:
+                if next_char == quote:
+                    result.append(next_char)
+                    i += 2
+                    continue
+                quote = None
+            i += 1
+            continue
+
+        if char in ("'", '"', "`"):
+            quote = char
+            result.append(char)
+            i += 1
+            continue
+
+        if char == "-" and next_char == "-":
+            i += 2
+            while i < len(sql) and sql[i] not in "\r\n":
+                i += 1
+            continue
+
+        if char == "/" and next_char == "*":
+            comment_end = sql.find("*/", i + 2)
+            if comment_end == -1:
+                result.append(sql[i:])
+                break
+            result.append(" ")
+            result.extend(char for char in sql[i:comment_end + 2] if char in "\r\n")
+            i = comment_end + 2
+            continue
+
+        result.append(char)
+        i += 1
+
+    return "".join(result)
 
 
 def normalize_whitespace(sql: str) -> str:
@@ -258,7 +291,6 @@ def count_lines(text: str) -> Tuple[int, int]:
 
 
 # -------------------- Deterministic transformations --------------------
-
 def map_oracle_functions(sql: str) -> str:
     out = sql
     for pattern, replacement in FUNCTION_RULES:
@@ -380,7 +412,6 @@ def complexity_score(sql: str) -> int:
 
 
 # -------------------- Block classification --------------------
-
 def classify_statement(stmt: str) -> str:
     s = stmt.strip().upper()
     if not s:
@@ -417,7 +448,6 @@ def build_blocks(sql: str) -> List[Block]:
 
 
 # -------------------- Playbook / prompt handling --------------------
-
 def load_playbook(path: str = PLAYBOOK_PATH) -> str:
     p = Path(path)
     if p.exists():
@@ -458,7 +488,6 @@ SQL_END>>>
 
 
 # -------------------- Validation --------------------
-
 # def validate_bigquery_output(sql: str) -> List[str]:
 #     issues: List[str] = []
 #     upper = sql.upper()
@@ -527,9 +556,8 @@ def validate_bigquery_output(sql: str) -> List[str]:
 
 
 # -------------------- LLM transformation --------------------
-
 class LLMTransformer:
-    def __init__(self, model: str = LLM_MODEL, cache_path: str = CACHE_PATH) -> None:
+    def __init__(self, model: str = api_keys._loaded["LLM"], cache_path: str = CACHE_PATH) -> None:
         self.client = Groq()
         self.model = model
         self.cache = MemoryCache(cache_path)
@@ -579,7 +607,6 @@ class LLMTransformer:
 
 
 # -------------------- Main conversion pipeline --------------------
-
 def deterministic_preprocess(block_sql: str, project_id: str = PROJECT_ID, dataset: str = DATASET) -> Tuple[str, List[str]]:
     notes: List[str] = []
     out = block_sql
@@ -664,7 +691,6 @@ def convert_pls_to_bq(file_path: str) -> List[ConversionResult]:
 
 
 # -------------------- Output helpers --------------------
-
 def save_output(results: Sequence[ConversionResult], output_path: str) -> None:
     out_lines: List[str] = []
     for idx, result in enumerate(results, start=1):
@@ -692,9 +718,8 @@ def convert_many(input_files: Sequence[str], output_files: Sequence[str]) -> Non
 
 
 # -------------------- CLI entry point --------------------
-
 def main() -> None:
-    values = [0, 1, 2, 3, 4, 5]  # Example file indices; adjust as needed.
+    values = [0, 1, 2, 3, 4, 5]
     input_files = [f"files/pls_sample_{i}.pls" for i in values]
     output_files = [f"files/bq_script_{i}.sql" for i in values]
     convert_many(input_files, output_files)

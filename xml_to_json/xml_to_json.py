@@ -203,7 +203,6 @@ def xml_to_jsonl(input_path: str, output_path: str):
     print(f"JSONL saved at: {output_path}")
 
 if __name__ == "__main__":
-    xml_to_jsonl(
-    input_path="files/sample.xml",
-    output_path="files/sample.jsonl"
-)
+    n = 2
+    for i in range(1, n+1):
+        xml_to_jsonl(input_path=f"files/sample_{i}.xml", output_path=f"files/sample_{i}.jsonl")

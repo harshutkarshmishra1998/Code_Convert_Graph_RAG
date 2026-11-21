@@ -2,14 +2,17 @@ import json
 from neo4j import GraphDatabase
 import os
 import api_keys
+import certifi
+
+os.environ["SSL_CERT_FILE"] = certifi.where()
 
 class JSONLToNeo4j:
     def __init__(self):
         self.driver = GraphDatabase.driver(
-            os.environ["NEO4J_URI"],
+            api_keys._loaded["NEO4J_URI"],
             auth=(
-                os.environ["NEO4J_USERNAME"],
-                os.environ["NEO4J_PASSWORD"]
+                api_keys._loaded["NEO4J_USERNAME"],
+                api_keys._loaded["NEO4J_PASSWORD"]
             )
         )
 
@@ -63,4 +66,5 @@ def load_graph_from_jsonl(input_file_path: str):
 
 # CLI EN
 if __name__ == "__main__":
-    load_graph_from_jsonl("files/sample.jsonl")
+    n = 2
+    load_graph_from_jsonl(f"files/sample_{n}.jsonl")

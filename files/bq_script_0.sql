@@ -1,18 +1,18 @@
 -- BLOCK 1
 -- complexity_score: 5
 -- used_llm: True
-```sql
+CREATE OR REPLACE PROCEDURE DEMO_MARKET_DATA_LOAD()
+AS
 BEGIN
-  EXECUTE IMMEDIATE 'TRUNCATE TABLE DEMO_MARKET_STG';
+  TRUNCATE TABLE DEMO_MARKET_STG;
 END;
-```
 
 -- BLOCK 2
 -- complexity_score: 0
 -- used_llm: False
 -- note: Applied deterministic function mapping (NVL/SYSDATE/etc.).
 -- note: Qualified simple table references.
-INSERT INTO `your_project.your_dataset.DEMO_MARKET_STG` (
+INSERT INTO `JSON_TO_BQ.BQ_DATASET.DEMO_MARKET_STG` (
         PROJECT_ID,
         SITE_CODE,
         REGION,
@@ -32,12 +32,12 @@ INSERT INTO `your_project.your_dataset.DEMO_MARKET_STG` (
         CURRENT_TIMESTAMP()
 
     FROM
-        `your_project.your_dataset.DEMO_PROJECTS` SRC
+        `JSON_TO_BQ.BQ_DATASET.DEMO_PROJECTS` SRC
 
-        INNER JOIN `your_project.your_dataset.DEMO_SITES` SITE
+        INNER JOIN `JSON_TO_BQ.BQ_DATASET.DEMO_SITES` SITE
             ON SRC.SITE_ID = SITE.SITE_ID
 
-        LEFT JOIN `your_project.your_dataset.DEMO_DEVICES` DEV
+        LEFT JOIN `JSON_TO_BQ.BQ_DATASET.DEMO_DEVICES` DEV
             ON SITE.SITE_ID = DEV.SITE_ID
 
     WHERE
