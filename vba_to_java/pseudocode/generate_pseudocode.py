@@ -390,6 +390,41 @@ def safe_filename(value: str) -> str:
     return value[:100] or "procedure"
 
 
+def _validate_procedure_section(
+    content: str, procedure_name: str, part_number: int, part_count: int
+) -> str:
+    if not isinstance(content, str) or not content.strip():
+        raise ValueError("LLM returned an empty procedure section")
+
+    canonical_heading = (
+        f"### Procedure: {procedure_name} (part {part_number}/{part_count})"
+    )
+    heading_pattern = re.compile(
+        r"(?m)^[ \t]*#{2,4}\s+Procedure:\s*(.+?)\s*$", re.IGNORECASE
+    )
+    match = heading_pattern.search(content)
+    if match:
+        returned_name = re.sub(
+            r"\s*\(?part\s+\d+\s*/\s*\d+\)?\s*$",
+            "",
+            match.group(1),
+            flags=re.IGNORECASE,
+        ).strip()
+        if returned_name.casefold() != procedure_name.casefold():
+            raise ValueError(
+                f"LLM section heading names {returned_name!r}, expected {procedure_name!r}"
+            )
+        content = content[:match.start()] + canonical_heading + content[match.end():]
+        body = content.replace(canonical_heading, "", 1).strip()
+    else:
+        body = content.strip()
+        content = f"{canonical_heading}\n\n{body}"
+
+    if not body:
+        raise ValueError("LLM returned a procedure heading without pseudocode")
+    return content.strip()
+
+
 def process_sample(sample_dir: Path, llm: LLMAdapter, max_chars: int, retries: int) -> dict[str, Any]:
     graph_path = pick_graph_file(sample_dir)
     if graph_path is None:
@@ -438,7 +473,8 @@ def process_sample(sample_dir: Path, llm: LLMAdapter, max_chars: int, retries: i
         "sample": sample_dir.name, "graph_file": graph_path.name,
         "project": project_name, "node_count": len(nodes), "edge_count": len(edges),
         "procedure_count": len(procedures), "diagnostics": diagnostics,
-        "generated_sections": 0, "failed_sections": [],
+        "generated_sections": 0, "generated_section_details": [],
+        "failed_sections": [],
     }
 
     if module_nodes:
@@ -458,8 +494,16 @@ def process_sample(sample_dir: Path, llm: LLMAdapter, max_chars: int, retries: i
         last_error = None
         for attempt in range(retries + 1):
             try:
-                sections.append(llm.generate(prompt))
+                content = llm.generate(prompt)
+                if not isinstance(content, str) or not content.strip():
+                    raise ValueError("LLM returned an empty module overview")
+                sections.append(content.strip())
                 status["generated_sections"] += 1
+                status["generated_section_details"].append({
+                    "section": "module_overview",
+                    "status": "generated",
+                    "characters": len(content.strip()),
+                })
                 last_error = None
                 break
             except Exception as exc:
@@ -471,7 +515,10 @@ def process_sample(sample_dir: Path, llm: LLMAdapter, max_chars: int, retries: i
             status["failed_sections"].append({"section": "module_overview", "error": last_error})
             sections.append("## Module overview and shared declarations\n\n[GENERATION FAILED: " + last_error + "]")
 
+    completed_procedure_ids = set()
     for proc_index, proc in enumerate(procedures, 1):
+        procedure_name = proc.get("name") or proc.get("id")
+        procedure_complete = True
         chunks = chunk_children(proc, max_chars=max_chars)
         for part_index, children in enumerate(chunks, 1):
             subtree_ids = {n.get("id") for child in children for n in flatten(child)}
@@ -483,8 +530,21 @@ def process_sample(sample_dir: Path, llm: LLMAdapter, max_chars: int, retries: i
             last_error = None
             for attempt in range(retries + 1):
                 try:
-                    sections.append(llm.generate(prompt))
+                    content = _validate_procedure_section(
+                        llm.generate(prompt),
+                        str(procedure_name),
+                        part_index,
+                        len(chunks),
+                    )
+                    sections.append(content)
                     status["generated_sections"] += 1
+                    status["generated_section_details"].append({
+                        "procedure": procedure_name,
+                        "procedure_id": proc.get("id"),
+                        "part": part_index,
+                        "status": "generated",
+                        "characters": len(content),
+                    })
                     last_error = None
                     break
                 except Exception as exc:
@@ -493,12 +553,22 @@ def process_sample(sample_dir: Path, llm: LLMAdapter, max_chars: int, retries: i
                     if attempt < retries:
                         time.sleep(min(2 ** attempt, 8))
             if last_error:
-                record = {"procedure": proc.get("name"), "procedure_id": proc.get("id"), "part": part_index, "error": last_error}
+                procedure_complete = False
+                record = {"procedure": procedure_name, "procedure_id": proc.get("id"), "part": part_index, "error": last_error}
                 status["failed_sections"].append(record)
                 sections.append(
-                    f"### Procedure: {proc.get('name') or proc.get('id')} (part {part_index}/{len(chunks)})\n\n"
+                    f"### Procedure: {procedure_name} (part {part_index}/{len(chunks)})\n\n"
                     f"[GENERATION FAILED: {last_error}]"
                 )
+        if procedure_complete:
+            completed_procedure_ids.add(proc.get("id"))
+
+    coverage_gaps = [
+        proc.get("name") or proc.get("id")
+        for proc in procedures
+        if proc.get("id") not in completed_procedure_ids
+    ]
+    status["pseudocode_coverage_gaps"] = coverage_gaps
 
     if diagnostics:
         sections.extend(["", "## Parser diagnostics (verbatim from graph)", ""])
@@ -509,7 +579,11 @@ def process_sample(sample_dir: Path, llm: LLMAdapter, max_chars: int, retries: i
     output_path = sample_dir / "pseudocode.md"
     output_path.write_text("\n\n".join(s.strip() for s in sections if s is not None) + "\n", encoding="utf-8")
     status["output_file"] = output_path.name
-    status["status"] = "partial" if status["failed_sections"] else "success"
+    status["status"] = (
+        "partial"
+        if status["failed_sections"] or status["pseudocode_coverage_gaps"]
+        else "success"
+    )
     (sample_dir / "pseudocode_run.json").write_text(json.dumps(status, ensure_ascii=False, indent=2, default=str) + "\n", encoding="utf-8")
     return status
 

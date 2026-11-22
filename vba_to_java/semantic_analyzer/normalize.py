@@ -433,8 +433,14 @@ def _segment_evidence(segments: dict[str, Any]) -> tuple[dict[str,dict], dict[st
 
 def _pseudocode_sections(text: str) -> set[str]:
     names=set()
-    for m in re.finditer(r'^\s*#{2,4}\s+Procedure:\s*([^(`]+)',text,re.I|re.M):
-        names.add(_norm(m.group(1).strip()))
+    headers=list(re.finditer(r'^\s*#{2,4}\s+Procedure:\s*([^(`]+).*$',text,re.I|re.M))
+    for match in headers:
+        next_heading=re.search(r'(?m)^[ \t]*#{1,3}\s+',text[match.end():])
+        next_start=match.end()+next_heading.start() if next_heading else len(text)
+        body=text[match.end():next_start].strip()
+        if not body or re.search(r'\[GENERATION FAILED:',body,re.I):
+            continue
+        names.add(_norm(match.group(1).strip()))
     return names
 
 
