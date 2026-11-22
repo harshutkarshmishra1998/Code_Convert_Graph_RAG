@@ -4,7 +4,7 @@ from .cli import main
 
 project_root = Path(__file__).resolve().parents[2]
 output_root = project_root / "files" / "vba_graph_output"
-n = [1, 2, 3, 4, 5]
+n = [6]
 status = 0
 
 for i in n:
