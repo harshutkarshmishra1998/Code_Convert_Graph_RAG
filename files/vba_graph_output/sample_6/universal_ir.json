@@ -3904,7 +3904,7 @@
             },
             "pseudocode_context": {
               "status": "missing",
-              "source_path": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6/pseudocode.md",
+              "source_path": null,
               "authority": "generated_semantic_assistance_not_ground_truth",
               "review_required": true
             }
@@ -4347,12 +4347,9 @@
               "return_type": null
             },
             "pseudocode_context": {
-              "heading": "### Procedure: InitInfrastructure (part 1/1)",
-              "text": "### Procedure: InitInfrastructure (part 1/1)\n\n**Context**  \n- Module: `module_c7488e4fcd800f9b` (file `vba_sample_6.bas`)  \n- Procedure ID: `procedure_2954e225a14758ac`  \n- Called by: `procedure_3f3c2e33f7565363` (line 75)  \n- Visibility: `PRIVATE`  \n- Kind: `SUB` (no return value)  \n- Parameters: none  \n\n**Purpose**  \nInitialise two module‑level collections used by the application:  \n- `m_NodeRegistry` – a dictionary of nodes (fallback to a generic collection if dictionary creation fails).  \n- `m_AuditLog` – a collection of audit entries (initialised only if not already set).  \n\nThe procedure deliberately suppresses errors during dictionary creation, checks for failure, and restores normal error handling before proceeding to audit log initialisation.\n\n---\n\n#### Pseudocode\n\n```\nPROCEDURE InitInfrastructure\n    // ------------------------------------------------------------------\n    // 1. Suppress runtime errors while attempting to create a dictionary.\n    // ------------------------------------------------------------------\n    ON ERROR RESUME NEXT\n\n    // 2. Attempt to create a Scripting.Dictionary object.\n    SET m_NodeRegistry = CreateObject(\"Scripting.Dictionary\")\n\n    // ------------------------------------------------------------------\n    // 3. If an error occurred (Err.Number <> 0) or the dictionary is\n    //    still Nothing, fall back to a generic Collection.\n    // ------------------------------------------------------------------\n    IF (Err.Number <> 0) OR (m_NodeRegistry IS NOTHING) THEN\n        // Clear the error state so subsequent code is not affected.\n        CALL Err.Clear\n\n        // Replace the failed dictionary with a new Collection instance.\n        SET m_NodeRegistry = New Collection\n    END IF\n\n    // ------------------------------------------------------------------\n    // 4. Restore default error handling behaviour.\n    // ------------------------------------------------------------------\n    ON ERROR GOTO 0\n\n    // ------------------------------------------------------------------\n    // 5. Initialise the audit log collection if it has not already been\n    //    created elsewhere in the program.\n    // ------------------------------------------------------------------\n    IF m_AuditLog IS NOTHING THEN\n        SET m_AuditLog = New Collection\n    END IF\n\n    // ------------------------------------------------------------------\n    // 6. Procedure ends – no return value.\n    // ------------------------------------------------------------------\nEND PROCEDURE\n```\n\n**Notes on the pseudocode**\n\n- `ON ERROR RESUME NEXT` and `ON ERROR GOTO 0` are explicit error‑handling directives that control how the runtime responds to runtime errors.  \n- `Err.Number` is the global error object’s numeric code; a non‑zero value indicates that the previous statement raised an error.  \n- `CreateObject(\"Scripting.Dictionary\")` attempts to instantiate a COM dictionary object.  \n- `New Collection` creates a standard VBA collection object.  \n- The `IS NOTHING` test checks whether a reference variable has been assigned an object instance.  \n- The procedure performs no other side effects beyond the assignments to `m_NodeRegistry` and `m_AuditLog`.  \n- All identifiers (`m_NodeRegistry`, `m_AuditLog`, `Err`) are preserved exactly as they appear in the source.",
-              "status": "pseudocode_available",
-              "contains_pseudocode_block": true,
+              "status": "missing",
+              "source_path": null,
               "authority": "generated_semantic_assistance_not_ground_truth",
-              "source_path": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6/pseudocode.md",
               "review_required": true
             }
           },
@@ -4494,12 +4491,9 @@
               "return_type": "Long"
             },
             "pseudocode_context": {
-              "heading": "### Procedure: NextSequence (part 1/1)",
-              "text": "### Procedure: NextSequence (part 1/1)\n\n**Purpose**  \n`NextSequence` is a private function that generates a monotonically increasing sequence number.  \nIt increments a module‑level counter `m_GlobalSequence` and returns the new value.\n\n**Inputs**  \nNone.\n\n**Outputs**  \n*Return value*: a `Long` integer representing the next sequence number.\n\n**State Changes**  \n* Reads the current value of the module‑level variable `m_GlobalSequence`.  \n* Writes a new value to `m_GlobalSequence` (current value + 1).  \n* Assigns that new value to the function name `NextSequence`, which serves as the return value.\n\n**Side Effects**  \n* The global counter `m_GlobalSequence` is permanently altered.  \n* The function is referenced by other procedures (e.g., at line 76 of `vba_sample_6.bas`) and by itself via the implicit return assignment at line 160.\n\n**Pseudocode**\n\n```\nFUNCTION NextSequence() RETURNS Long\n    // Increment the global sequence counter\n    m_GlobalSequence = m_GlobalSequence + 1\n\n    // Return the updated sequence value\n    NextSequence = m_GlobalSequence\nEND FUNCTION\n```\n\n*Notes*  \n- `m_GlobalSequence` is a module‑level variable; its initial value is defined elsewhere in the module.  \n- The assignment to `NextSequence` is the implicit return mechanism used by VBA functions.  \n- No error handling or additional logic is present in this fragment.",
-              "status": "pseudocode_available",
-              "contains_pseudocode_block": true,
+              "status": "missing",
+              "source_path": null,
               "authority": "generated_semantic_assistance_not_ground_truth",
-              "source_path": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6/pseudocode.md",
               "review_required": true
             }
           },
@@ -4705,7 +4699,7 @@
             },
             "pseudocode_context": {
               "status": "missing",
-              "source_path": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6/pseudocode.md",
+              "source_path": null,
               "authority": "generated_semantic_assistance_not_ground_truth",
               "review_required": true
             }
@@ -5030,12 +5024,9 @@
               "return_type": "String"
             },
             "pseudocode_context": {
-              "heading": "### Procedure: NormalizeLineEndings (part 1/1)",
-              "text": "### Procedure: NormalizeLineEndings (part 1/1)\n\n**Purpose**  \nNormalizes all line‑ending characters in a supplied text string so that the result contains only the line‑feed character (`vbLf`).  \nThe function is public, accepts a single `String` argument passed by value, and returns a `String`.\n\n**Inputs**  \n- `text` (String, ByVal): The original text that may contain any combination of carriage‑return (`vbCr`), line‑feed (`vbLf`), or carriage‑return‑line‑feed (`vbCrLf`) sequences.\n\n**Outputs**  \n- Returns a `String` that contains the same characters as `text` except that every line‑ending sequence has been converted to a single `vbLf`.\n\n**Local State**  \n- `result` (String): Temporary variable used to accumulate the transformed text.\n\n**Side Effects**  \n- None. The procedure performs only local string manipulation and returns a value.\n\n**Dependencies**  \n- Built‑in `Replace` function: `Replace(sourceString, findText, replaceText)` returns a new string with all occurrences of `findText` replaced by `replaceText`.  \n- Constants:  \n  - `vbCrLf` – carriage‑return + line‑feed (`CRLF`).  \n  - `vbCr`   – carriage‑return (`CR`).  \n  - `vbLf`   – line‑feed (`LF`).\n\n**Procedure Flow**  \n\n```\n1. Declare local variable:\n      result : String\n\n2. First replacement pass:\n      result = Replace(text, vbCrLf, vbLf)\n   // All CRLF sequences are replaced with a single LF.\n\n3. Second replacement pass:\n      result = Replace(result, vbCr, vbLf)\n   // Any remaining CR characters (not part of CRLF) are replaced with LF.\n\n4. Return the normalized string:\n      NormalizeLineEndings = result\n```\n\n**Notes**  \n- The two passes are necessary because `Replace` operates on literal substrings; replacing `vbCrLf`",
-              "status": "summary_only",
-              "contains_pseudocode_block": false,
+              "status": "missing",
+              "source_path": null,
               "authority": "generated_semantic_assistance_not_ground_truth",
-              "source_path": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6/pseudocode.md",
               "review_required": true
             }
           },
@@ -6986,7 +6977,7 @@
             },
             "pseudocode_context": {
               "status": "missing",
-              "source_path": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6/pseudocode.md",
+              "source_path": null,
               "authority": "generated_semantic_assistance_not_ground_truth",
               "review_required": true
             }
@@ -8284,7 +8275,7 @@
             },
             "pseudocode_context": {
               "status": "missing",
-              "source_path": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6/pseudocode.md",
+              "source_path": null,
               "authority": "generated_semantic_assistance_not_ground_truth",
               "review_required": true
             }
@@ -10075,12 +10066,9 @@
               "return_type": null
             },
             "pseudocode_context": {
-              "heading": "### Procedure: DeduplicateBatchEntries (part 1/1)",
-              "text": "### Procedure: DeduplicateBatchEntries (part 1/1)\n\n**Purpose**  \nRemove duplicate ledger entries from a `BatchSummary` object.  \nA duplicate is defined as an entry that shares the same `EntryId` and `AccountCode`.  \nThe procedure keeps the first occurrence of each unique key, discards subsequent duplicates, and updates the batch’s entry list, record count, and total amount.\n\n**Signature**  \n```\nPRIVATE SUB DeduplicateBatchEntries(ByRef batch As BatchSummary)\n```\n\n**Inputs**  \n- `batch` – a reference to a `BatchSummary` object that contains:\n  - `Entries` – an array of `LedgerEntry` objects.\n  - `RecordCount` – the number of entries currently in `Entries`.\n  - `TotalAmount` – the sum of the `Amount` fields of all entries.\n\n**Outputs / Side‑Effects**  \n- `batch.Entries` is replaced with a new array that contains only the first occurrence of each unique key.\n- `batch.RecordCount` is set to the number of unique entries retained.\n- `batch.TotalAmount` is set to the sum of the `Amount` values of the retained entries.\n- Duplicate entries are logged via `LogAudit`.\n- If the dictionary creation fails, the procedure exits immediately without modifying `batch`.\n\n**Local Variables**  \n| Variable | Type | Purpose |\n|----------|------|---------|\n| `seenKeys` | `Object` (Scripting.Dictionary) | Tracks keys that have already been seen. |\n| `kept()` | `LedgerEntry` array | Temporary array to hold unique entries. |\n| `keptCount` | `Long` | Count of unique entries found. |\n| `i` | `Long` | Loop index over `batch.Entries`. |\n| `key` | `String` | Composite key `EntryId::AccountCode`. |\n| `newTotal` | `Currency` | Running total of amounts for unique entries. |\n\n**Pseudocode**\n\n```pseudocode\n// 1. Declare local variables\nDECLARE seenKeys AS Object\nDECLARE kept() AS LedgerEntry\nDECLARE keptCount AS Long\nDECLARE i AS Long\nDECLARE key AS String\nDECLARE newTotal AS Currency\n\n// 2. Suppress errors while creating the dictionary\nON ERROR RESUME NEXT\nSET seenKeys = CreateObject(\"Scripting.Dictionary\")\nON ERROR GO TO 0\n\n// 3. If dictionary creation failed, exit early\nIF seenKeys IS NOTHING THEN\n    EXIT SUB\nEND IF\n\n// 4. Prepare storage for unique entries\nREDIM kept(1 TO batch.RecordCount)   // allocate maximum possible size\nkeptCount = 0\nnewTotal = 0@                           // Currency literal\n\n// 5. Iterate over all entries in the batch\nFOR i = LBound(batch.Entries) TO UBound(batch.Entries)\n    // 5a. Build a composite key for the current entry\n    key = CStr(batch.Entries(i).EntryId) & \"::\" & batch.Entries(i).AccountCode\n\n    // 5b. Check if this key has already been seen\n    IF NOT seenKeys.Exists(key) THEN\n        // 5b.i. Record the key and its index\n        seenKeys.Add key, i\n\n        // 5b.ii. Store the entry in the temporary array\n        keptCount = keptCount + 1\n        kept(keptCount) = batch.Entries(i)\n\n        // 5b.iii. Add the entry amount to the running total\n        newTotal = newTotal + batch.Entries(i).Amount\n    ELSE\n        // 5c. Duplicate found – log the event\n        LogAudit(\"DEDUP: Dropped duplicate key \" & key)\n    END IF\nNEXT i\n\n// 6. Replace the original entries with the unique set\nIF keptCount > 0 THEN\n    // Shrink the array to the actual number of unique entries\n    REDIM PRESERVE kept(1 TO keptCount)\n    batch.Entries = kept\nELSE\n    // No unique entries – clear the array\n    ERASE batch.Entries\nEND IF\n\n// 7. Update batch metadata\nbatch.RecordCount = keptCount\nbatch.TotalAmount = newTotal\n```\n\n**Notes & Observations**\n\n- `On Error Resume Next` is used only around the dictionary creation; any failure results in `seenKeys` remaining `Nothing`, which triggers an early exit.\n- The composite key uses a double colon (`::`) as a separator",
-              "status": "pseudocode_available",
-              "contains_pseudocode_block": true,
+              "status": "missing",
+              "source_path": null,
               "authority": "generated_semantic_assistance_not_ground_truth",
-              "source_path": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6/pseudocode.md",
               "review_required": true
             }
           },
@@ -11366,12 +11354,9 @@
               "return_type": null
             },
             "pseudocode_context": {
-              "heading": "### Procedure: RunLegacyGoSubAudit (part 1/1)",
-              "text": "### Procedure: RunLegacyGoSubAudit (part 1/1)\n\n**Purpose**  \n`RunLegacyGoSubAudit` performs a legacy audit of a batch of entries.  \nFor each entry it validates the amount and posted date, counts how many\nentries fail validation, logs flagged entries, and finally returns a\nsummary status string.\n\n**Visibility**  \n`PRIVATE` – only callable from within the same module.\n\n**Parameters**  \n| Name          | Passing | Type          | Description |\n|---------------|---------|---------------|-------------|\n| `batch`       | ByRef   | `BatchSummary` | The batch to audit. The procedure may modify the batch object. |\n| `summaryStatus` | ByRef | `String` | Output parameter that receives a status string after the audit. |\n\n**Return value**  \nNone (SUB).\n\n**Side‑effects**  \n*",
-              "status": "summary_only",
-              "contains_pseudocode_block": false,
+              "status": "missing",
+              "source_path": null,
               "authority": "generated_semantic_assistance_not_ground_truth",
-              "source_path": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6/pseudocode.md",
               "review_required": true
             }
           },
@@ -13315,12 +13300,9 @@
               "return_type": "Long"
             },
             "pseudocode_context": {
-              "heading": "### Procedure: EvaluateDependencyDepth (part 1/1)",
-              "text": "### Procedure: EvaluateDependencyDepth (part 1/1)\n\n**Signature**  \n```\nFUNCTION EvaluateDependencyDepth(\n    edgesSpec   : String,\n    startNode   : String,\n    currentDepth : Long = 0,\n    maxDepth     : Long = 25\n) RETURNS Long\n```\n\n**Purpose**  \nRecursively determine the maximum depth of a directed dependency graph described by `edgesSpec`.  \n`edgesSpec` is a comma‑separated list of edges in the form `\"source>destination\"`.  \nThe function starts from `startNode` and explores all reachable nodes, returning the greatest number of hops required to reach any descendant, bounded by `maxDepth`.  \n\n**Local Variables**  \n```\npairs          : Variant   // array of edge strings\nedgeParts      : Variant   // array of source/destination strings for a single edge\ni              : Long      // loop index\nsrcNode        : String    // source node of current edge\ndstNode        : String    // destination node of current edge\nchildDepth     : Long      // depth returned from recursive call\nmaxChildDepth  : Long      // maximum depth found among all children\n```\n\n**Algorithm**\n\n```\n1. // Early exit if recursion depth limit reached\n2. IF currentDepth >= maxDepth THEN\n3.     RETURN currentDepth\n4. END IF\n\n5. // Early exit if input specification or start node is empty\n6. IF Len(Trim$(edgesSpec)) = 0 OR Len(Trim$(startNode)) = 0 THEN\n7.     RETURN currentDepth\n8. END IF\n\n9. // Split the edge specification into individual edges\n10. pairs = Split(edgesSpec, \",\")\n\n11. // Initialise maximum child depth to the current depth\n12. maxChildDepth = currentDepth\n\n13. // Iterate over each edge\n14. FOR i = LBound(pairs) TO UBound(pairs)\n15.     // Split the edge into source and destination\n16.     edgeParts = Split(CStr(pairs(i)), \">\")\n\n17.     // Ensure the edge has exactly two parts\n18.     IF UBound(edgeParts) - LBound(edgeParts) + 1 = 2 THEN\n19.         // Extract and trim source and destination nodes\n20.         srcNode = Trim$(CStr(edgeParts(LBound(edgeParts))))\n21.         dstNode = Trim$(CStr(edgeParts(LBound(edgeParts) + 1)))\n\n22.         // Process only if the source matches the start node and destination is non‑empty\n23.         IF StrComp(srcNode, Trim$(startNode), vbTextCompare) = 0 AND Len(dstNode) > 0 THEN\n24.             // Avoid self‑loops\n25.             IF StrComp(dstNode, srcNode, vbTextCompare) <> 0 THEN\n26.                 // Recursive call to evaluate depth from the destination node\n27.                 childDepth = EvaluateDependencyDepth(\n28.                                 edgesSpec,\n29.                                 dstNode,\n30.                                 currentDepth + 1,\n31.                                 maxDepth\n32.                              )\n33.                 // Update maximum depth if this child is deeper\n34.                 IF childDepth > maxChildDepth THEN\n35.                     maxChildDepth = childDepth\n36.                 END IF\n37.             END IF\n38.         END IF\n39.     END IF\n40. NEXT i\n\n41. // Return the deepest depth found among all children\n42. RETURN maxChildDepth\n```\n\n**Notes & Observations**\n\n- The function is **public** and returns a `Long`.  \n- Parameters `currentDepth` and `maxDepth` are optional and default to `0` and `25` respectively.  \n- All string manipulation uses built‑in VBA functions: `Trim$`, `CStr`, `Split`, `Len`, and `StrComp` with `vbTextCompare`.  \n- Recursion is the core mechanism; each call explores one level deeper until the depth limit or an empty input is reached.  \n- No external resources (files",
-              "status": "summary_only",
-              "contains_pseudocode_block": false,
+              "status": "missing",
+              "source_path": null,
               "authority": "generated_semantic_assistance_not_ground_truth",
-              "source_path": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6/pseudocode.md",
               "review_required": true
             }
           },
@@ -14080,12 +14062,9 @@
               "return_type": "String"
             },
             "pseudocode_context": {
-              "heading": "### Procedure: BuildUpsertSql (part 1/1)",
-              "text": "### Procedure: BuildUpsertSql (part 1/1)\n\n**Signature**  \n```\nFUNCTION BuildUpsertSql(tableName AS String, entry AS LedgerEntry) AS String\n```\n* `tableName` – passed ByVal, a string containing the target table name.  \n* `entry` – passed ByRef, a `LedgerEntry` object whose fields are read but not modified.  \n* Return value – a single SQL string that performs a MERGE (upsert) into the specified table.\n\n**Local Variables**  \n```\ncleanTable  AS String   // sanitized table name\ncleanAcct   AS String   // account code with single quotes escaped\ncleanDate   AS String   // posted date formatted as yyyy-mm-dd\nrecFlag     AS Long     // 1 if entry.IsReconciled is true, otherwise 0\n```\n\n**Procedure Body**\n\n1. **Sanitize the table name**  \n   ```\n   cleanTable = SanitizeSqlIdentifier(tableName)\n   ```\n   *Calls the external routine `SanitizeSqlIdentifier` to escape or quote the table name so it is safe for use in SQL.*\n\n2. **Escape single quotes in the account code**  \n   ```\n   cleanAcct = Replace(entry.AccountCode, \"'\", \"''\")\n   ```\n   *Replaces each single‑quote character in `entry.AccountCode` with two single quotes, the SQL escape sequence.*\n\n3. **Format the posted date**  \n   ```\n   cleanDate = Format$(entry.PostedDate, \"yyyy-mm-dd\")\n   ```\n   *Converts the `Date` value `entry.PostedDate` to a string in ISO‑8601 format.*\n\n4. **Determine the reconciliation flag**  \n   ```\n   recFlag = IIf(entry.IsReconciled, 1, 0)\n   ```\n   *If `entry.IsReconciled` is true, `recFlag` becomes 1; otherwise it becomes 0.*\n\n5. **Build the MERGE statement**  \n   ```\n   BuildUpsertSql =\n       \"MERGE INTO \" & cleanTable & \" AS tgt \" &\n       \"USING (SELECT \" & CStr(entry.EntryId) & \" AS entry_id, '\" & cleanAcct & \"' AS account_code) AS src \" &\n       \"ON tgt.entry_id = src",
-              "status": "summary_only",
-              "contains_pseudocode_block": false,
+              "status": "missing",
+              "source_path": null,
               "authority": "generated_semantic_assistance_not_ground_truth",
-              "source_path": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6/pseudocode.md",
               "review_required": true
             }
           },
@@ -14894,12 +14873,9 @@
               "return_type": "String"
             },
             "pseudocode_context": {
-              "heading": "### Procedure: SanitizeSqlIdentifier (part 1/1)",
-              "text": "### Procedure: SanitizeSqlIdentifier (part 1/1)\n\n**Purpose**  \nSanitizes a supplied SQL identifier string by retaining only characters that are valid in most SQL identifiers (letters, digits, underscore, and period).  \nIf the input contains no valid characters, the function returns the default string `\"default_ledger_table\"`.\n\n**Signature**  \n```\nPRIVATE FUNCTION SanitizeSqlIdentifier(ident AS String) AS String\n```\n\n**Inputs**  \n- `ident` – the original identifier string to be sanitized (passed ByVal).\n\n**Outputs**  \n- Returns a string containing only the allowed characters from `ident`.  \n- If no allowed characters are found, returns `\"default_ledger_table\"`.\n\n**Local Variables**  \n- `i` (Long) – loop counter for iterating over each character of `ident`.  \n- `ch` (String) – the current character extracted from `ident`.  \n- `outStr` (String) – accumulator for the sanitized identifier; initially empty.\n\n**Side‑Effects**  \n- No external state is modified.  \n- The function only reads the input `ident` and writes to its local variables.\n\n**Pseudocode**\n\n```\nBEGIN FUNCTION SanitizeSqlIdentifier(ident)\n\n    // 1. Declare local variables\n    DECLARE i AS Long\n    DECLARE ch AS String\n    DECLARE outStr AS String\n\n    // 2. Initialize the output string to empty\n    outStr = \"\"\n\n    // 3. Iterate over each character of the input identifier\n    FOR i FROM 1 TO LEN(ident) DO\n        // 3a. Extract the i‑th character (1‑based indexing)\n        ch = MID$(ident, i, 1)\n\n        // 3b. Check if the character is allowed\n        IF (ch >= \"A\" AND ch <= \"Z\") OR\n           (ch >= \"a\" AND ch <= \"z\") OR\n           (ch >= \"0\" AND ch <= \"9\") OR\n           (ch = \"_\") OR\n           (ch = \".\") THEN\n\n            // 3c. Append the allowed character to the output\n            outStr = outStr & ch\n        END IF\n    END FOR\n\n    // 4. If no valid characters were found, use the default name\n    IF LEN(outStr) = 0 THEN\n        outStr = \"default_ledger_table\"\n    END IF\n\n    // 5. Return the sanitized identifier\n    RETURN outStr\n\nEND FUNCTION\n```\n\n**Notes**\n\n- `MID$` is a VBA string function that returns a substring; here it is used to obtain a single character.\n- The comparison operators (`>=`, `<=`, `=`) perform lexicographic comparison of single‑character strings.\n- The function is marked `PRIVATE`, meaning it is intended for internal use within its module only.\n- No error handling is present; the function assumes `ident` is a valid string (including the empty string).",
-              "status": "pseudocode_available",
-              "contains_pseudocode_block": true,
+              "status": "missing",
+              "source_path": null,
               "authority": "generated_semantic_assistance_not_ground_truth",
-              "source_path": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6/pseudocode.md",
               "review_required": true
             }
           },
@@ -16088,12 +16064,9 @@
               "return_type": "String"
             },
             "pseudocode_context": {
-              "heading": "### Procedure: BuildSummaryReport (part 1/1)",
-              "text": "### Procedure: BuildSummaryReport (part 1/1)\n\n**Signature**  \n```\nPRIVATE FUNCTION BuildSummaryReport(batch As BatchSummary, parsedCount As Long, statusMsg As String) As String\n```\n* `batch` – passed **ByRef**; a `BatchSummary` object whose fields are read but not modified.  \n* `parsedCount` – passed **ByVal**; a `Long` indicating how many rows were parsed.  \n* `statusMsg` – passed **ByVal**; a `String` containing the audit status message.  \n* Returns a `String` that contains a formatted summary of the batch and, if available, recent audit log entries.\n\n---\n\n#### Local Variables\n| Name | Type | Purpose |\n|------|------|---------|\n| `sb` | `String` | Accumulates the report text. |\n| `i` | `Long` | Loop counter for audit log entries. |\n| `logLimit` | `Long` | Upper bound for the audit log loop (capped at 15). |\n\n---\n\n#### Pseudocode Body\n\n```\n1.  // Initialise the report header\n2.  sb = \"=== BATCH SUMMARY ===\" + vbCrLf\n\n3.  // Append batch metadata\n4.  sb = sb + \"Batch ID:      \" + batch.BatchId + vbCrLf\n5.  sb = sb + \"Mode Mask:     \" + CStr(batch.ModeMask) + vbCrLf\n6.  sb = sb + \"Parsed Rows:   \" + CStr(parsedCount) + vbCrLf\n7.  sb = sb + \"Final Rows:    \" + CStr(batch.RecordCount) + vbCrLf\n8.  sb = sb + \"Total Amount:  \" + Format$(batch.TotalAmount, \"#,##0.00\") + vbCrLf\n9.  sb = sb + \"Audit Status:  \" + statusMsg + vbCrLf\n\n10. // If an audit log exists and contains entries, append recent logs\n11. IF (m_AuditLog IS NOT Nothing) AND (m_AuditLog.Count > 0) THEN\n12.     sb = sb + \"--- RECENT AUDIT LOGS ---\" + vbCrLf\n13.     logLimit = m_AuditLog.Count\n14.     IF logLimit > 15 THEN\n15.         logLimit = 15\n16.     END IF\n17.     FOR i = 1 TO logLimit\n18.         sb = sb + CStr(m_AuditLog(i)) + vbCrLf\n19.     NEXT i\n20. END IF\n\n21. // Return the accumulated string\n22. BuildSummaryReport = sb\n```\n\n---\n\n#### Notes on Behavior\n\n* **String Concatenation** – Each `sb = sb + ...` statement appends a new line to the report.  \n* **Formatting** – `Format$(batch.TotalAmount, \"#,##0.00\")` formats the total amount with two decimal places and thousands separators.  \n* **Audit Log Handling** –  \n  * `m_AuditLog` is a global collection (or array) of audit messages.  \n  * The function checks that it is not `Nothing` and that it contains at least one entry.  \n  * It limits the number of displayed entries to a maximum of 15 to avoid excessive output.  \n  * Each log entry is converted to a string with `CStr` before concatenation.  \n* **Return Value** – The function assigns the final string to its own name (`BuildSummaryReport`) and returns it.  \n* **Side Effects** – The only observable side effect is the returned string; no external state is modified.  \n* **Error Handling** – No explicit error handling is present; any runtime errors (e.g., accessing an out‑of‑range audit log index) will propagate to the caller.  \n\nThis pseudocode preserves the exact control flow, evaluation order, and data transformations of the original VBA fragment while remaining language‑neutral.",
-              "status": "pseudocode_available",
-              "contains_pseudocode_block": true,
+              "status": "missing",
+              "source_path": null,
               "authority": "generated_semantic_assistance_not_ground_truth",
-              "source_path": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6/pseudocode.md",
               "review_required": true
             }
           },
@@ -16328,12 +16301,9 @@
               "return_type": "Long"
             },
             "pseudocode_context": {
-              "heading": "### Procedure: GetAuditEntryCount (part 1/1)",
-              "text": "### Procedure: GetAuditEntryCount (part 1/1)\n\n**Signature**  \n```\nFUNCTION GetAuditEntryCount() RETURNS Long\n```\n\n**Description**  \n`GetAuditEntryCount` reports the number of audit entries stored in the module‑level collection `m_AuditLog`.  \nIf `m_AuditLog` has not been initialized (`Nothing`), the function returns `0`.  \nOtherwise it returns the value of the `Count` property of `m_AuditLog`.\n\n**State accessed**  \n- Reads the global variable `m_AuditLog`.  \n- Reads `m_AuditLog.Count` when `m_AuditLog` is not `Nothing`.\n\n**State modified**  \n- The function’s return value (`GetAuditEntryCount`) is set to the computed count.  \n- No other global or local state is altered.\n\n**Side effects**  \n- None beyond the return value.\n\n**Pseudocode**  \n```\nFUNCTION GetAuditEntryCount() RETURNS Long\n    // Determine the number of audit entries\n    IF m_AuditLog IS Nothing THEN\n        // Audit log not initialized → zero entries\n        GetAuditEntryCount = 0\n    ELSE\n        // Audit log exists → use its Count property\n        GetAuditEntryCount = m_AuditLog.Count\n    END IF\n    // The function returns the value assigned to GetAuditEntryCount\nEND FUNCTION\n```\n\n**Notes**  \n- The assignment to `GetAuditEntryCount` is the mechanism by which a VBA function returns a value.  \n- The `Count` property is assumed to be a numeric value of type `Long`.  \n- No error handling or additional logic is present in this fragment.",
-              "status": "pseudocode_available",
-              "contains_pseudocode_block": true,
+              "status": "missing",
+              "source_path": null,
               "authority": "generated_semantic_assistance_not_ground_truth",
-              "source_path": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6/pseudocode.md",
               "review_required": true
             }
           },
@@ -16517,12 +16487,9 @@
               "return_type": null
             },
             "pseudocode_context": {
-              "heading": "### Procedure: ResetModuleState (part 1/1)",
-              "text": "### Procedure: ResetModuleState (part 1/1)\n\n**Context**  \n- Procedure `ResetModuleState` is a public `SUB` defined in module `module_c7488e4fcd800f9b` of project `vba_sample_6`.  \n- It has no parameters and returns no value.  \n- The procedure is intended to reset module‑level state variables to their initial values.\n\n**Inputs**  \n- None.\n\n**Outputs / Return Value**  \n- None (procedure returns `void`/`SUB`).\n\n**State Read / Written**  \n| Variable | Type | Read? | Written? | Description |\n|----------|------|-------|----------|-------------|\n| `m_GlobalSequence` | numeric (Integer/Long) | No | Yes | Global sequence counter, reset to `0`. |\n| `m_AuditLog` | Collection object | No | Yes | Audit log collection, replaced with a new empty collection. |\n| `m_NodeRegistry` | Object reference | No | Yes | Registry of nodes, cleared by setting to `Nothing`. |\n\n**Side Effects**  \n- After execution, `m_GlobalSequence` equals `0`.  \n- `m_AuditLog` refers to a brand‑new, empty `Collection`.  \n- `m_NodeRegistry` is set to `Nothing` (null reference).  \n- No external resources (files, databases, UI) are accessed.  \n- No errors are anticipated; the procedure performs straightforward assignments.\n\n**Pseudocode**\n\n```\nPROCEDURE ResetModuleState\n    // Reset the global sequence counter to zero\n    m_GlobalSequence = 0\n\n    // Create a new, empty audit log collection\n    SET m_AuditLog = NEW Collection\n\n    // Clear the node registry reference\n    SET m_NodeRegistry = NOTHING\nEND PROCEDURE\n```\n\n**Control Flow**  \n1. Execute the first assignment (`m_GlobalSequence = 0`).  \n2. Execute the second assignment (`SET m_AuditLog = NEW Collection`).  \n3. Execute the third assignment (`SET m_NodeRegistry = NOTHING`).  \n4. Procedure terminates normally.\n\n**Dependencies**  \n- Requires the `Collection` class to be available in the runtime environment.  \n- No other procedures or modules are called.\n\n**Notes**  \n- The `SET` keyword indicates object assignment; it is distinct from simple value assignment.  \n- The procedure is deterministic and side‑effect‑only on the three module‑level variables.  \n- No error handling constructs (e.g., `On Error`) are present in the body.\n\n\n\n## Parser diagnostics (verbatim from graph)\n\n\n\n- **warning / CROSS_NESTED_BLOCK_CLOSE** — End If closed a non-top IF frame; inspect nested syntax. (line 223)\n\n- **warning / CROSS_NESTED_BLOCK_CLOSE** — End If closed a non-top IF frame; inspect nested syntax. (line 256)\n\n- **warning / CROSS_NESTED_BLOCK_CLOSE** — End If closed a non-top IF frame; inspect nested syntax. (line 472)",
-              "status": "pseudocode_available",
-              "contains_pseudocode_block": true,
+              "status": "missing",
+              "source_path": null,
               "authority": "generated_semantic_assistance_not_ground_truth",
-              "source_path": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6/pseudocode.md",
               "review_required": true
             }
           },
@@ -16582,12 +16549,7 @@
               "end_line": 1
             }
           }
-        ],
-        "pseudocode_module_overview": {
-          "text": "# Pseudocode: vba_sample_6\n\n\n\n> Generated from the VBA structural graph. This is a language-neutral behavioral description for downstream intermediate-representation design, not executable code.\n\n\n\n## Translation notes and known limitations\n\n- Graph nodes: 331; graph edges: 520; procedures detected: 15.\n\n- Parser diagnostics reported: 3.\n\n- Treat every `[UNCERTAIN]` / `[OPAQUE]` marker as a review item before translation.\n\n- Supporting granular segments supplied (procedure snapshots excluded): 237.\n\n- The graph may omit comments, formatting, or syntax it could not model; consult the original VBA for unresolved constructs.\n\n\n\n## Module overview and shared declarations\n\n**Module name**: `ComplexConversionStressTest`  \n**Module kind**: Standard VBA module (no form or class dependencies).  \n**Compiler options**:  \n- `Option Explicit` – all variables must be declared.  \n- `Option Compare Text` – string comparisons are case‑insensitive.  \n- `Option Base 1` – the lower bound of all dynamic arrays is 1.  \n\n### Enumerated constants\n\n```pseudocode\nEnum PipelineModeFlags\n    ModeNone        = 0\n    ModeNormalize   = 1\n    ModeDeduplicate = 2\n    ModeAggregate   = 4\n    ModeAudit       = 8\n    ModeAll         = ModeNormalize OR ModeDeduplicate OR ModeAggregate OR ModeAudit\nEnd Enum\n```\n\nThese constants are used as bit‑flags to control the behaviour of the main pipeline routine.\n\n### User‑defined types\n\n```pseudocode\nType LedgerEntry\n    EntryId      : Long\n    AccountCode  : String\n    Amount       : Currency\n    PostedDate   : Date\n    Tags         : Array of String   // dynamic array\n    IsReconciled : Boolean\nEnd Type\n```\n\n```pseudocode\nType BatchSummary\n    BatchId      : String\n    ModeMask     : Long\n    RecordCount  : Long\n    TotalAmount  : Currency\n    Entries      : Array of LedgerEntry   // dynamic array\nEnd Type\n```\n\n```pseudocode\nPrivate Type InternalGraphNode\n    NodeKey   : String\n    Weight    : Double\n    Visited   : Boolean\n    Children  : Array of String   // dynamic array\nEnd Type\n```\n\n### Module‑level state variables\n\n```pseudocode\nPrivate m_GlobalSequence : Long          // sequence counter for unique IDs\nPrivate m_AuditLog       : Collection    // holds audit log strings\nPrivate m_NodeRegistry   : Object        // late‑bound Scripting.Dictionary or fallback Collection\n```\n\n- `m_GlobalSequence` is incremented by `NextSequence()` to generate unique identifiers.  \n- `m_AuditLog` collects audit messages; it is instantiated lazily in `InitInfrastructure`.  \n- `m_NodeRegistry` is intended to store graph nodes; it is created as a `Scripting.Dictionary` if available, otherwise as a `Collection`.  \n\n### Initialization procedures\n\n```pseudocode\nPrivate Sub InitInfrastructure()\n    // Attempt to create a late‑bound dictionary\n    On Error Resume Next\n    m_NodeRegistry = CreateObject(\"Scripting.Dictionary\")\n    If Err.Number <> 0 Or m_NodeRegistry Is Nothing Then\n        Err.Clear\n        m_NodeRegistry = New Collection\n    End If\n    On Error GoTo 0\n\n    // Ensure the audit log collection exists\n    If m_AuditLog Is Nothing Then\n        m_AuditLog = New Collection\n    End If\nEnd Sub\n```\n\n`InitInfrastructure` is called by the public entry point `ExecuteStressPipeline` before any processing occurs. It guarantees that `m_NodeRegistry` and `m_AuditLog` are ready for use.\n\n```pseudocode\nPublic Sub ResetModuleState()\n    m_GlobalSequence = 0\n    m_AuditLog = New Collection\n    m_NodeRegistry = Nothing\nEnd Sub\n```\n\n`ResetModuleState` clears the module’s internal state, resetting the sequence counter, recreating the audit log collection, and discarding any previously stored graph nodes.\n\n### Summary of module‑level declarations\n\n| Category | Declaration | Purpose |\n|----------|-------------|---------|\n| Compiler options | `Option Explicit`, `Option Compare Text`, `Option Base 1` | Enforce variable declaration, case‑insensitive string comparison, array lower bound = 1 |\n| Attribute | `Attribute VB_Name = \"ComplexConversionStressTest\"` | Sets the module name |\n| Enum | `PipelineModeFlags` | Bit‑flag constants for pipeline configuration |\n| Types | `LedgerEntry`, `BatchSummary`, `InternalGraphNode` | Structured data used throughout the module |\n| Private state | `m_GlobalSequence`, `m_AuditLog`, `m_NodeRegistry` | Internal counters, audit log, and graph node registry |\n| Initialization | `InitInfrastructure`, `ResetModuleState` | Prepare and reset module state |\n\nNo other module‑level initialization logic is present; all runtime setup occurs within `InitInfrastructure` and is invoked by the public entry point.",
-          "authority": "generated_semantic_assistance_not_ground_truth",
-          "source_path": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6/pseudocode.md"
-        }
+        ]
       },
       "provenance": {
         "source_language": "VBA",
@@ -16821,20 +16783,9 @@
         "size_bytes": 16480
       }
     ],
-    "pseudocode_provided": true,
-    "pseudocode_embedded": true,
-    "pseudocode_artifact": {
-      "path": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6/pseudocode.md",
-      "sha256": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-      "character_count": 30218,
-      "procedure_sections_found": 11,
-      "procedure_sections_missing": [
-        "ExecuteStressPipeline",
-        "LogAudit",
-        "TryParseEntry",
-        "NormalizeEntryInPlace"
-      ]
-    },
+    "pseudocode_provided": false,
+    "pseudocode_embedded": false,
+    "pseudocode_artifact": null,
     "frontend_symbols": [
       {
         "id": "vba_sample_6.ExecuteStressPipeline.param.rawPayload",

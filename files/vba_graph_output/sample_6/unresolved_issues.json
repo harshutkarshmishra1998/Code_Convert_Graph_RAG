@@ -195,12 +195,10 @@
           "artifact_hashes": {
             "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
             "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
+            "ir": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a",
+            "normalized_ir": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b",
+            "semantic_analysis": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21",
             "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
             "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
             "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
           },
@@ -211,8 +209,6 @@
             "normalized_ir",
             "semantic_analysis",
             "manifest",
-            "pseudocode",
-            "pseudocode_run",
             "report",
             "sources",
             "source"
@@ -461,12 +457,10 @@
           "artifact_hashes": {
             "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
             "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
+            "ir": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a",
+            "normalized_ir": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b",
+            "semantic_analysis": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21",
             "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
             "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
             "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
           },
@@ -477,8 +471,6 @@
             "normalized_ir",
             "semantic_analysis",
             "manifest",
-            "pseudocode",
-            "pseudocode_run",
             "report",
             "sources",
             "source"
@@ -757,12 +749,10 @@
           "artifact_hashes": {
             "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
             "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
+            "ir": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a",
+            "normalized_ir": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b",
+            "semantic_analysis": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21",
             "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
             "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
             "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
           },
@@ -1020,12 +1010,10 @@
           "artifact_hashes": {
             "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
             "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
+            "ir": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a",
+            "normalized_ir": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b",
+            "semantic_analysis": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21",
             "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
             "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
             "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
           },
@@ -1289,12 +1277,10 @@
           "artifact_hashes": {
             "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
             "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
+            "ir": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a",
+            "normalized_ir": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b",
+            "semantic_analysis": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21",
             "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
             "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
             "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
           },
@@ -1556,12 +1542,10 @@
           "artifact_hashes": {
             "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
             "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
+            "ir": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a",
+            "normalized_ir": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b",
+            "semantic_analysis": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21",
             "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
             "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
             "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
           },
@@ -1572,8 +1556,6 @@
             "normalized_ir",
             "semantic_analysis",
             "manifest",
-            "pseudocode",
-            "pseudocode_run",
             "report",
             "sources",
             "source"
@@ -1866,12 +1848,10 @@
           "artifact_hashes": {
             "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
             "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
+            "ir": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a",
+            "normalized_ir": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b",
+            "semantic_analysis": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21",
             "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
             "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
             "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
           },
@@ -1882,8 +1862,6 @@
             "normalized_ir",
             "semantic_analysis",
             "manifest",
-            "pseudocode",
-            "pseudocode_run",
             "report",
             "sources",
             "source"
@@ -2135,12 +2113,10 @@
           "artifact_hashes": {
             "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
             "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
+            "ir": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a",
+            "normalized_ir": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b",
+            "semantic_analysis": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21",
             "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
             "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
             "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
           },
@@ -2151,8 +2127,6 @@
             "normalized_ir",
             "semantic_analysis",
             "manifest",
-            "pseudocode",
-            "pseudocode_run",
             "report",
             "sources",
             "source"
@@ -2404,12 +2378,10 @@
           "artifact_hashes": {
             "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
             "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
+            "ir": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a",
+            "normalized_ir": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b",
+            "semantic_analysis": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21",
             "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
             "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
             "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
           },
@@ -2420,8 +2392,6 @@
             "normalized_ir",
             "semantic_analysis",
             "manifest",
-            "pseudocode",
-            "pseudocode_run",
             "report",
             "sources",
             "source"
@@ -2701,12 +2671,10 @@
           "artifact_hashes": {
             "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
             "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
+            "ir": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a",
+            "normalized_ir": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b",
+            "semantic_analysis": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21",
             "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
             "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
             "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
           },
@@ -2717,8 +2685,6 @@
             "normalized_ir",
             "semantic_analysis",
             "manifest",
-            "pseudocode",
-            "pseudocode_run",
             "report",
             "sources",
             "source"
@@ -2971,12 +2937,10 @@
           "artifact_hashes": {
             "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
             "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
+            "ir": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a",
+            "normalized_ir": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b",
+            "semantic_analysis": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21",
             "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
             "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
             "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
           },
@@ -2987,8 +2951,6 @@
             "normalized_ir",
             "semantic_analysis",
             "manifest",
-            "pseudocode",
-            "pseudocode_run",
             "report",
             "sources",
             "source"
@@ -3241,12 +3203,10 @@
           "artifact_hashes": {
             "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
             "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
+            "ir": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a",
+            "normalized_ir": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b",
+            "semantic_analysis": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21",
             "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
             "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
             "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
           },
@@ -3257,8 +3217,6 @@
             "normalized_ir",
             "semantic_analysis",
             "manifest",
-            "pseudocode",
-            "pseudocode_run",
             "report",
             "sources",
             "source"
@@ -3522,12 +3480,10 @@
           "artifact_hashes": {
             "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
             "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
+            "ir": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a",
+            "normalized_ir": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b",
+            "semantic_analysis": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21",
             "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
             "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
             "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
           },
@@ -3538,8 +3494,6 @@
             "normalized_ir",
             "semantic_analysis",
             "manifest",
-            "pseudocode",
-            "pseudocode_run",
             "report",
             "sources",
             "source"
@@ -3795,12 +3749,10 @@
           "artifact_hashes": {
             "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
             "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
+            "ir": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a",
+            "normalized_ir": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b",
+            "semantic_analysis": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21",
             "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
             "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
             "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
           },
@@ -3811,8 +3763,6 @@
             "normalized_ir",
             "semantic_analysis",
             "manifest",
-            "pseudocode",
-            "pseudocode_run",
             "report",
             "sources",
             "source"
@@ -4071,12 +4021,10 @@
           "artifact_hashes": {
             "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
             "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
+            "ir": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a",
+            "normalized_ir": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b",
+            "semantic_analysis": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21",
             "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
             "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
             "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
           },
@@ -4087,8 +4035,6 @@
             "normalized_ir",
             "semantic_analysis",
             "manifest",
-            "pseudocode",
-            "pseudocode_run",
             "report",
             "sources",
             "source"
@@ -4366,12 +4312,10 @@
           "artifact_hashes": {
             "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
             "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
+            "ir": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a",
+            "normalized_ir": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b",
+            "semantic_analysis": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21",
             "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
             "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
             "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
           },
@@ -4382,8 +4326,6 @@
             "normalized_ir",
             "semantic_analysis",
             "manifest",
-            "pseudocode",
-            "pseudocode_run",
             "report",
             "sources",
             "source"
@@ -4651,12 +4593,10 @@
           "artifact_hashes": {
             "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
             "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
+            "ir": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a",
+            "normalized_ir": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b",
+            "semantic_analysis": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21",
             "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
             "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
             "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
           },
@@ -4667,8 +4607,6 @@
             "normalized_ir",
             "semantic_analysis",
             "manifest",
-            "pseudocode",
-            "pseudocode_run",
             "report",
             "sources",
             "source"
@@ -4724,768 +4662,6 @@
       "status": "unresolved_or_unverified"
     },
     {
-      "code": "CROSS_NESTED_BLOCK_CLOSE",
-      "severity": "warning",
-      "message": "End If closed a non-top IF frame; inspect nested syntax.",
-      "path": "vba_sample_6.bas",
-      "line": 223,
-      "artifact": "pseudocode_run",
-      "reported_by": [
-        "pseudocode_run"
-      ],
-      "subsystem": "frontend_control_flow",
-      "priority": "high",
-      "auto_fix_policy": "source_evidence_and_independent_validation_required",
-      "id": "08e44f2b12f78bf2",
-      "context": {
-        "source": {
-          "available": true,
-          "path": "vba_sample_6.bas",
-          "line_range": [
-            211,
-            235
-          ],
-          "text": "211: \n212:     target.IsReconciled = False\n213: \n214:     If UBound(parts) - LBound(parts) + 1 >= 5 And Len(Trim$(CStr(parts(LBound(parts) + 4)))) > 0 Then\n215:         tagTokens = Split(CStr(parts(LBound(parts) + 4)), \",\")\n216:         ReDim target.Tags(1 To UBound(tagTokens) - LBound(tagTokens) + 1)\n217:         For i = LBound(tagTokens) To UBound(tagTokens)\n218:             target.Tags(i - LBound(tagTokens) + 1) = LCase$(Trim$(CStr(tagTokens(i))))\n219:         Next i\n220:     Else\n221:         ReDim target.Tags(1 To 1)\n222:         target.Tags(1) = \"untagged\"\n223:     End If\n224: \n225:     TryParseEntry = True\n226:     Exit Function\n227: \n228: ParseFail:\n229:     TryParseEntry = False\n230: End Function\n231: \n232: ' -----------------------------------------------------------------------------\n233: ' Mutates a UDT passed ByRef, including resizing/populating nested dynamic array.\n234: ' -----------------------------------------------------------------------------\n235: Private Sub NormalizeEntryInPlace(ByRef entry As LedgerEntry)",
-          "sha256": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
-          "exact_line": 223
-        },
-        "procedure": {
-          "procedure_names": [],
-          "graph_procedures": [
-            {
-              "id": "procedure_3f3c2e33f7565363",
-              "name": "ExecuteStressPipeline",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 54,
-                "end_line": 138,
-                "text": "Public Function ExecuteStressPipeline( _\n    ByVal rawPayload As String, _\n    ByVal modeMask As Long, _\n    Optional ByRef outReport As String, _\n    Optional ByVal maxIterations As Long = 1000 _\n) As Boolean\n    On Error GoTo ErrHandler\n\n    Dim lines() As String\n    Dim batch As BatchSummary\n    Dim idx As Long\n    Dim processedCount As Long\n    Dim tempAmount As Currency\n    Dim statusMsg As String\n\n    If Len(Trim$(rawPayload)) = 0 Then\n        outReport = \"EMPTY_PAYLOAD\"\n        ExecuteStressPipeline = False\n        Exit Function\n    End If\n\n    InitInfrastructure\n    batch.BatchId = \"BATCH_\" & Format$(Now, \"yyyymmdd_hhnnss\") & \"_\" & CStr(NextSequence())\n    batch.ModeMask = modeMask\n    batch.RecordCount = 0\n    batch.TotalAmount = 0@\n\n    lines = Split(NormalizeLineEndings(rawPayload), vbLf)\n    ReDim batch.Entries(1 To UBound(lines) - LBound(lines) + 1)\n\n    For idx = LBound(lines) To UBound(lines)\n        If idx - LBound(lines) + 1 > maxIterations Then\n            LogAudit \"WARN: Max iteration cap reached at row \" & CStr(idx)\n            Exit For\n        End If\n\n        If Len(Trim$(lines(idx))) > 0 Then\n            If TryParseEntry(lines(idx), idx, batch.Entries(batch.RecordCount + 1)) Then\n                batch.RecordCount = batch.RecordCount + 1\n\n                If (modeMask And ModeNormalize) = ModeNormalize Then\n                    NormalizeEntryInPlace batch.Entries(batch.RecordCount)\n                End If\n\n                tempAmount = batch.Entries(batch.RecordCount).Amount\n                If (modeMask And ModeAggregate) = ModeAggregate Then\n                    batch.TotalAmount = batch.TotalAmount + tempAmount\n                End If\n\n                processedCount = processedCount + 1\n            Else\n                LogAudit \"SKIP: Malformed row \" & CStr(idx) & \" -> \" & Left$(lines(idx), 60)\n            End If\n        End If\n\n        If (idx Mod 250) = 0 Then\n            DoEvents\n        End If\n    Next idx\n\n    If batch.RecordCount > 0 Then\n        ReDim Preserve batch.Entries(1 To batch.RecordCount)\n    Else\n        Erase batch.Entries\n    End If\n\n    If (modeMask And ModeDeduplicate) = ModeDeduplicate And batch.RecordCount > 1 Then\n        DeduplicateBatchEntries batch\n    End If\n\n    If (modeMask And ModeAudit) = ModeAudit Then\n        RunLegacyGoSubAudit batch, statusMsg\n    Else\n        statusMsg = \"AUDIT_SKIPPED\"\n    End If\n\n    outReport = BuildSummaryReport(batch, processedCount, statusMsg)\n    ExecuteStressPipeline = True\n    Exit Function\n\nErrHandler:\n    outReport = \"PIPELINE_ERROR [\" & CStr(Err.Number) & \"]: \" & Err.Description & \" at line/step context.\"\n    LogAudit outReport\n    ExecuteStressPipeline = False\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_2954e225a14758ac",
-              "name": "InitInfrastructure",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 144,
-                "end_line": 156,
-                "text": "Private Sub InitInfrastructure()\n    On Error Resume Next\n    Set m_NodeRegistry = CreateObject(\"Scripting.Dictionary\")\n    If Err.Number <> 0 Or m_NodeRegistry Is Nothing Then\n        Err.Clear\n        Set m_NodeRegistry = New Collection\n    End If\n    On Error GoTo 0\n\n    If m_AuditLog Is Nothing Then\n        Set m_AuditLog = New Collection\n    End If\nEnd Sub"
-              }
-            },
-            {
-              "id": "procedure_d0d7fa00e94c9ed7",
-              "name": "NextSequence",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 158,
-                "end_line": 161,
-                "text": "Private Function NextSequence() As Long\n    m_GlobalSequence = m_GlobalSequence + 1\n    NextSequence = m_GlobalSequence\nEnd Sub"
-              }
-            },
-            {
-              "id": "procedure_6ef7d8528482afcc",
-              "name": "LogAudit",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 163,
-                "end_line": 166,
-                "text": "Private Sub LogAudit(ByVal message As String)\n    If m_AuditLog Is Nothing Then Set m_AuditLog = New Collection\n    m_AuditLog.Add Format$(Now, \"yyyy-mm-dd hh:nn:ss\") & \" | \" & message\nEnd Sub"
-              }
-            },
-            {
-              "id": "procedure_d55db4a37410becc",
-              "name": "NormalizeLineEndings",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 171,
-                "end_line": 176,
-                "text": "Public Function NormalizeLineEndings(ByVal text As String) As String\n    Dim result As String\n    result = Replace(text, vbCrLf, vbLf)\n    result = Replace(result, vbCr, vbLf)\n    NormalizeLineEndings = result\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_5406ba068a801948",
-              "name": "TryParseEntry",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 178,
-                "end_line": 230,
-                "text": "Private Function TryParseEntry( _\n    ByVal rawLine As String, _\n    ByVal fallbackId As Long, _\n    ByRef target As LedgerEntry _\n) As Boolean\n    On Error GoTo ParseFail\n\n    Dim parts As Variant\n    Dim tagTokens As Variant\n    Dim i As Long\n    Dim rawAmt As Double\n\n    parts = Split(rawLine, \"|\")\n    If Not IsArray(parts) Then GoTo ParseFail\n    If UBound(parts) - LBound(parts) + 1 < 4 Then GoTo ParseFail\n\n    If IsNumeric(Trim$(parts(LBound(parts)))) Then\n        target.EntryId = CLng(Trim$(parts(LBound(parts))))\n    Else\n        target.EntryId = fallbackId\n    End If\n\n    target.AccountCode = UCase$(Trim$(CStr(parts(LBound(parts) + 1))))\n    If Len(target.AccountCode) = 0 Then GoTo ParseFail\n\n    rawAmt = CDbl(Trim$(CStr(parts(LBound(parts) + 2))))\n    target.Amount = CCur(rawAmt)\n\n    If IsDate(Trim$(CStr(parts(LBound(parts) + 3)))) Then\n        target.PostedDate = CDate(Trim$(CStr(parts(LBound(parts) + 3))))\n    Else\n        target.PostedDate = Date\n    End If\n\n    target.IsReconciled = False\n\n    If UBound(parts) - LBound(parts) + 1 >= 5 And Len(Trim$(CStr(parts(LBound(parts) + 4)))) > 0 Then\n        tagTokens = Split(CStr(parts(LBound(parts) + 4)), \",\")\n        ReDim target.Tags(1 To UBound(tagTokens) - LBound(tagTokens) + 1)\n        For i = LBound(tagTokens) To UBound(tagTokens)\n            target.Tags(i - LBound(tagTokens) + 1) = LCase$(Trim$(CStr(tagTokens(i))))\n        Next i\n    Else\n        ReDim target.Tags(1 To 1)\n        target.Tags(1) = \"untagged\"\n    End If\n\n    TryParseEntry = True\n    Exit Function\n\nParseFail:\n    TryParseEntry = False\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_828ca9a47cc9a739",
-              "name": "NormalizeEntryInPlace",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 235,
-                "end_line": 267,
-                "text": "Private Sub NormalizeEntryInPlace(ByRef entry As LedgerEntry)\n    Dim i As Long\n    Dim hasCoreTag As Boolean\n\n    entry.AccountCode = Replace(entry.AccountCode, \" \", \"_\")\n    entry.AccountCode = Replace(entry.AccountCode, \"-\", \"_\")\n\n    If entry.Amount < 0@ Then\n        entry.IsReconciled = False\n    ElseIf entry.Amount >= 10000@ Then\n        entry.IsReconciled = False\n    Else\n        entry.IsReconciled = True\n    End If\n\n    hasCoreTag = False\n    If (Not Not entry.Tags) <> 0 Then\n        For i = LBound(entry.Tags) To UBound(entry.Tags)\n            entry.Tags(i) = Trim$(entry.Tags(i))\n            If entry.Tags(i) = \"core\" Then hasCoreTag = True\n        Next i\n    End If\n\n    If Not hasCoreTag Then\n        If (Not Not entry.Tags) = 0 Then\n            ReDim entry.Tags(1 To 1)\n            entry.Tags(1) = \"core\"\n        Else\n            ReDim Preserve entry.Tags(1 To UBound(entry.Tags) + 1)\n            entry.Tags(UBound(entry.Tags)) = \"core\"\n        End If\n    End If\nEnd Sub"
-              }
-            },
-            {
-              "id": "procedure_3104c2440f9bdac3",
-              "name": "DeduplicateBatchEntries",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 272,
-                "end_line": 311,
-                "text": "Private Sub DeduplicateBatchEntries(ByRef batch As BatchSummary)\n    Dim seenKeys As Object\n    Dim kept() As LedgerEntry\n    Dim keptCount As Long\n    Dim i As Long\n    Dim key As String\n    Dim newTotal As Currency\n\n    On Error Resume Next\n    Set seenKeys = CreateObject(\"Scripting.Dictionary\")\n    On Error GoTo 0\n\n    If seenKeys Is Nothing Then Exit Sub\n\n    ReDim kept(1 To batch.RecordCount)\n    keptCount = 0\n    newTotal = 0@\n\n    For i = LBound(batch.Entries) To UBound(batch.Entries)\n        key = CStr(batch.Entries(i).EntryId) & \"::\" & batch.Entries(i).AccountCode\n        If Not seenKeys.Exists(key) Then\n            seenKeys.Add key, i\n            keptCount = keptCount + 1\n            kept(keptCount) = batch.Entries(i)\n            newTotal = newTotal + batch.Entries(i).Amount\n        Else\n            LogAudit \"DEDUP: Dropped duplicate key \" & key\n        End If\n    Next i\n\n    If keptCount > 0 Then\n        ReDim Preserve kept(1 To keptCount)\n        batch.Entries = kept\n    Else\n        Erase batch.Entries\n    End If\n\n    batch.RecordCount = keptCount\n    batch.TotalAmount = newTotal\nEnd Sub"
-              }
-            },
-            {
-              "id": "procedure_389d8383c644215c",
-              "name": "RunLegacyGoSubAudit",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 317,
-                "end_line": 346,
-                "text": "Private Sub RunLegacyGoSubAudit(ByRef batch As BatchSummary, ByRef summaryStatus As String)\n    Dim i As Long\n    Dim flaggedCount As Long\n    Dim currentCheckId As Long\n    Dim checkResult As String\n\n    flaggedCount = 0\n\n    For i = LBound(batch.Entries) To UBound(batch.Entries)\n        currentCheckId = batch.Entries(i).EntryId\n        GoSub ValidateSingleEntry\n        If checkResult <> \"OK\" Then\n            flaggedCount = flaggedCount + 1\n            LogAudit \"FLAG [\" & CStr(currentCheckId) & \"]: \" & checkResult\n        End If\n    Next i\n\n    summaryStatus = \"AUDITED_\" & CStr(batch.RecordCount) & \"_FLAGGED_\" & CStr(flaggedCount)\n    Exit Sub\n\nValidateSingleEntry:\n    If batch.Entries(i).Amount = 0@ Then\n        checkResult = \"ZERO_AMOUNT\"\n    ElseIf Year(batch.Entries(i).PostedDate) < 1990 Or Year(batch.Entries(i).PostedDate) > 2099 Then\n        checkResult = \"OUT_OF_RANGE_DATE\"\n    Else\n        checkResult = \"OK\"\n    End If\n    Return\nEnd Sub"
-              }
-            },
-            {
-              "id": "procedure_7a9d528b68fd7ddd",
-              "name": "EvaluateDependencyDepth",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 352,
-                "end_line": 397,
-                "text": "Public Function EvaluateDependencyDepth( _\n    ByVal edgesSpec As String, _\n    ByVal startNode As String, _\n    Optional ByVal currentDepth As Long = 0, _\n    Optional ByVal maxDepth As Long = 25 _\n) As Long\n    Dim pairs As Variant\n    Dim edgeParts As Variant\n    Dim i As Long\n    Dim srcNode As String\n    Dim dstNode As String\n    Dim childDepth As Long\n    Dim maxChildDepth As Long\n\n    If currentDepth >= maxDepth Then\n        EvaluateDependencyDepth = currentDepth\n        Exit Function\n    End If\n\n    If Len(Trim$(edgesSpec)) = 0 Or Len(Trim$(startNode)) = 0 Then\n        EvaluateDependencyDepth = currentDepth\n        Exit Function\n    End If\n\n    pairs = Split(edgesSpec, \",\")\n    maxChildDepth = currentDepth\n\n    For i = LBound(pairs) To UBound(pairs)\n        edgeParts = Split(CStr(pairs(i)), \">\")\n        If UBound(edgeParts) - LBound(edgeParts) + 1 = 2 Then\n            srcNode = Trim$(CStr(edgeParts(LBound(edgeParts))))\n            dstNode = Trim$(CStr(edgeParts(LBound(edgeParts) + 1)))\n\n            If StrComp(srcNode, Trim$(startNode), vbTextCompare) = 0 And Len(dstNode) > 0 Then\n                If StrComp(dstNode, srcNode, vbTextCompare) <> 0 Then\n                    childDepth = EvaluateDependencyDepth(edgesSpec, dstNode, currentDepth + 1, maxDepth)\n                    If childDepth > maxChildDepth Then\n                        maxChildDepth = childDepth\n                    End If\n                End If\n            End If\n        End If\n    Next i\n\n    EvaluateDependencyDepth = maxChildDepth\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_715c7c5abecf4f17",
-              "name": "BuildUpsertSql",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 402,
-                "end_line": 425,
-                "text": "Public Function BuildUpsertSql( _\n    ByVal tableName As String, _\n    ByRef entry As LedgerEntry _\n) As String\n    Dim cleanTable As String\n    Dim cleanAcct As String\n    Dim cleanDate As String\n    Dim recFlag As Long\n\n    cleanTable = SanitizeSqlIdentifier(tableName)\n    cleanAcct = Replace(entry.AccountCode, \"'\", \"''\")\n    cleanDate = Format$(entry.PostedDate, \"yyyy-mm-dd\")\n    recFlag = IIf(entry.IsReconciled, 1, 0)\n\n    BuildUpsertSql = _\n        \"MERGE INTO \" & cleanTable & \" AS tgt \" & _\n        \"USING (SELECT \" & CStr(entry.EntryId) & \" AS entry_id, '\" & cleanAcct & \"' AS account_code) AS src \" & _\n        \"ON tgt.entry_id = src.entry_id AND tgt.account_code = src.account_code \" & _\n        \"WHEN MATCHED THEN UPDATE SET amount = \" & Replace(CStr(entry.Amount), \",\", \".\") & _\n        \", posted_date = DATE '\" & cleanDate & \"', is_reconciled = \" & CStr(recFlag) & \" \" & _\n        \"WHEN NOT MATCHED THEN INSERT (entry_id, account_code, amount, posted_date, is_reconciled) \" & _\n        \"VALUES (\" & CStr(entry.EntryId) & \", '\" & cleanAcct & \"', \" & _\n        Replace(CStr(entry.Amount), \",\", \".\") & \", DATE '\" & cleanDate & \"', \" & CStr(recFlag) & \");\"\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_96e279adeedf7e49",
-              "name": "SanitizeSqlIdentifier",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 427,
-                "end_line": 443,
-                "text": "Private Function SanitizeSqlIdentifier(ByVal ident As String) As String\n    Dim i As Long\n    Dim ch As String\n    Dim outStr As String\n\n    outStr = \"\"\n    For i = 1 To Len(ident)\n        ch = Mid$(ident, i, 1)\n        If (ch >= \"A\" And ch <= \"Z\") Or (ch >= \"a\" And ch <= \"z\") Or _\n           (ch >= \"0\" And ch <= \"9\") Or ch = \"_\" Or ch = \".\" Then\n            outStr = outStr & ch\n        End If\n    Next i\n\n    If Len(outStr) = 0 Then outStr = \"default_ledger_table\"\n    SanitizeSqlIdentifier = outStr\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_94d926ec9cd086c7",
-              "name": "BuildSummaryReport",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 448,
-                "end_line": 475,
-                "text": "Private Function BuildSummaryReport( _\n    ByRef batch As BatchSummary, _\n    ByVal parsedCount As Long, _\n    ByVal statusMsg As String _\n) As String\n    Dim sb As String\n    Dim i As Long\n    Dim logLimit As Long\n\n    sb = \"=== BATCH SUMMARY ===\" & vbCrLf\n    sb = sb & \"Batch ID:      \" & batch.BatchId & vbCrLf\n    sb = sb & \"Mode Mask:     \" & CStr(batch.ModeMask) & vbCrLf\n    sb = sb & \"Parsed Rows:   \" & CStr(parsedCount) & vbCrLf\n    sb = sb & \"Final Rows:    \" & CStr(batch.RecordCount) & vbCrLf\n    sb = sb & \"Total Amount:  \" & Format$(batch.TotalAmount, \"#,##0.00\") & vbCrLf\n    sb = sb & \"Audit Status:  \" & statusMsg & vbCrLf\n\n    If Not m_AuditLog Is Nothing And m_AuditLog.Count > 0 Then\n        sb = sb & \"--- RECENT AUDIT LOGS ---\" & vbCrLf\n        logLimit = m_AuditLog.Count\n        If logLimit > 15 Then logLimit = 15\n        For i = 1 To logLimit\n            sb = sb & CStr(m_AuditLog(i)) & vbCrLf\n        Next i\n    End If\n\n    BuildSummaryReport = sb\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_f4c1072dc8425eb5",
-              "name": "GetAuditEntryCount",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 477,
-                "end_line": 483,
-                "text": "Public Function GetAuditEntryCount() As Long\n    If m_AuditLog Is Nothing Then\n        GetAuditEntryCount = 0\n    Else\n        GetAuditEntryCount = m_AuditLog.Count\n    End If\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_3eb97ba58df2bb14",
-              "name": "ResetModuleState",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 485,
-                "end_line": 489,
-                "text": "Public Sub ResetModuleState()\n    m_GlobalSequence = 0\n    Set m_AuditLog = New Collection\n    Set m_NodeRegistry = Nothing\nEnd Sub"
-              }
-            }
-          ]
-        },
-        "producer_code": [],
-        "dependencies": {
-          "artifact_hashes": {
-            "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
-            "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
-            "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
-            "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
-            "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
-          },
-          "related_artifacts": [
-            "graph",
-            "segments",
-            "ir",
-            "normalized_ir",
-            "semantic_analysis"
-          ],
-          "symbols": []
-        },
-        "traceability": {
-          "source_present": true,
-          "sources": [
-            {
-              "path": "vba_sample_6.bas",
-              "actual": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
-              "expected": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
-              "matches": true
-            }
-          ],
-          "hash_matches": true,
-          "safe_for_source_grounded_repair": true,
-          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
-        }
-      },
-      "root_cause": {
-        "hypotheses": [
-          "Parser block-stack or branch-association defect",
-          "Source syntax or continuation handling not represented correctly"
-        ],
-        "source_available": true,
-        "source_lines": [
-          211,
-          235
-        ],
-        "confidence": "medium",
-        "recommended_action": "inspect_producer_and_rebuild_downstream",
-        "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
-      },
-      "investigation": {
-        "summary": "No LLM configured; deterministic evidence package only.",
-        "evidence_sufficient": true,
-        "root_cause": {
-          "hypotheses": [
-            "Parser block-stack or branch-association defect",
-            "Source syntax or continuation handling not represented correctly"
-          ],
-          "source_available": true,
-          "source_lines": [
-            211,
-            235
-          ],
-          "confidence": "medium",
-          "recommended_action": "inspect_producer_and_rebuild_downstream",
-          "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
-        },
-        "recommended_next_step": "inspect producer code and regenerate"
-      },
-      "status": "unresolved_or_unverified"
-    },
-    {
-      "code": "CROSS_NESTED_BLOCK_CLOSE",
-      "severity": "warning",
-      "message": "End If closed a non-top IF frame; inspect nested syntax.",
-      "path": "vba_sample_6.bas",
-      "line": 256,
-      "artifact": "pseudocode_run",
-      "reported_by": [
-        "pseudocode_run"
-      ],
-      "subsystem": "frontend_control_flow",
-      "priority": "high",
-      "auto_fix_policy": "source_evidence_and_independent_validation_required",
-      "id": "775d96c69b611473",
-      "context": {
-        "source": {
-          "available": true,
-          "path": "vba_sample_6.bas",
-          "line_range": [
-            244,
-            268
-          ],
-          "text": "244:     ElseIf entry.Amount >= 10000@ Then\n245:         entry.IsReconciled = False\n246:     Else\n247:         entry.IsReconciled = True\n248:     End If\n249: \n250:     hasCoreTag = False\n251:     If (Not Not entry.Tags) <> 0 Then\n252:         For i = LBound(entry.Tags) To UBound(entry.Tags)\n253:             entry.Tags(i) = Trim$(entry.Tags(i))\n254:             If entry.Tags(i) = \"core\" Then hasCoreTag = True\n255:         Next i\n256:     End If\n257: \n258:     If Not hasCoreTag Then\n259:         If (Not Not entry.Tags) = 0 Then\n260:             ReDim entry.Tags(1 To 1)\n261:             entry.Tags(1) = \"core\"\n262:         Else\n263:             ReDim Preserve entry.Tags(1 To UBound(entry.Tags) + 1)\n264:             entry.Tags(UBound(entry.Tags)) = \"core\"\n265:         End If\n266:     End If\n267: End Sub\n268: ",
-          "sha256": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
-          "exact_line": 256
-        },
-        "procedure": {
-          "procedure_names": [],
-          "graph_procedures": [
-            {
-              "id": "procedure_3f3c2e33f7565363",
-              "name": "ExecuteStressPipeline",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 54,
-                "end_line": 138,
-                "text": "Public Function ExecuteStressPipeline( _\n    ByVal rawPayload As String, _\n    ByVal modeMask As Long, _\n    Optional ByRef outReport As String, _\n    Optional ByVal maxIterations As Long = 1000 _\n) As Boolean\n    On Error GoTo ErrHandler\n\n    Dim lines() As String\n    Dim batch As BatchSummary\n    Dim idx As Long\n    Dim processedCount As Long\n    Dim tempAmount As Currency\n    Dim statusMsg As String\n\n    If Len(Trim$(rawPayload)) = 0 Then\n        outReport = \"EMPTY_PAYLOAD\"\n        ExecuteStressPipeline = False\n        Exit Function\n    End If\n\n    InitInfrastructure\n    batch.BatchId = \"BATCH_\" & Format$(Now, \"yyyymmdd_hhnnss\") & \"_\" & CStr(NextSequence())\n    batch.ModeMask = modeMask\n    batch.RecordCount = 0\n    batch.TotalAmount = 0@\n\n    lines = Split(NormalizeLineEndings(rawPayload), vbLf)\n    ReDim batch.Entries(1 To UBound(lines) - LBound(lines) + 1)\n\n    For idx = LBound(lines) To UBound(lines)\n        If idx - LBound(lines) + 1 > maxIterations Then\n            LogAudit \"WARN: Max iteration cap reached at row \" & CStr(idx)\n            Exit For\n        End If\n\n        If Len(Trim$(lines(idx))) > 0 Then\n            If TryParseEntry(lines(idx), idx, batch.Entries(batch.RecordCount + 1)) Then\n                batch.RecordCount = batch.RecordCount + 1\n\n                If (modeMask And ModeNormalize) = ModeNormalize Then\n                    NormalizeEntryInPlace batch.Entries(batch.RecordCount)\n                End If\n\n                tempAmount = batch.Entries(batch.RecordCount).Amount\n                If (modeMask And ModeAggregate) = ModeAggregate Then\n                    batch.TotalAmount = batch.TotalAmount + tempAmount\n                End If\n\n                processedCount = processedCount + 1\n            Else\n                LogAudit \"SKIP: Malformed row \" & CStr(idx) & \" -> \" & Left$(lines(idx), 60)\n            End If\n        End If\n\n        If (idx Mod 250) = 0 Then\n            DoEvents\n        End If\n    Next idx\n\n    If batch.RecordCount > 0 Then\n        ReDim Preserve batch.Entries(1 To batch.RecordCount)\n    Else\n        Erase batch.Entries\n    End If\n\n    If (modeMask And ModeDeduplicate) = ModeDeduplicate And batch.RecordCount > 1 Then\n        DeduplicateBatchEntries batch\n    End If\n\n    If (modeMask And ModeAudit) = ModeAudit Then\n        RunLegacyGoSubAudit batch, statusMsg\n    Else\n        statusMsg = \"AUDIT_SKIPPED\"\n    End If\n\n    outReport = BuildSummaryReport(batch, processedCount, statusMsg)\n    ExecuteStressPipeline = True\n    Exit Function\n\nErrHandler:\n    outReport = \"PIPELINE_ERROR [\" & CStr(Err.Number) & \"]: \" & Err.Description & \" at line/step context.\"\n    LogAudit outReport\n    ExecuteStressPipeline = False\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_2954e225a14758ac",
-              "name": "InitInfrastructure",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 144,
-                "end_line": 156,
-                "text": "Private Sub InitInfrastructure()\n    On Error Resume Next\n    Set m_NodeRegistry = CreateObject(\"Scripting.Dictionary\")\n    If Err.Number <> 0 Or m_NodeRegistry Is Nothing Then\n        Err.Clear\n        Set m_NodeRegistry = New Collection\n    End If\n    On Error GoTo 0\n\n    If m_AuditLog Is Nothing Then\n        Set m_AuditLog = New Collection\n    End If\nEnd Sub"
-              }
-            },
-            {
-              "id": "procedure_d0d7fa00e94c9ed7",
-              "name": "NextSequence",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 158,
-                "end_line": 161,
-                "text": "Private Function NextSequence() As Long\n    m_GlobalSequence = m_GlobalSequence + 1\n    NextSequence = m_GlobalSequence\nEnd Sub"
-              }
-            },
-            {
-              "id": "procedure_6ef7d8528482afcc",
-              "name": "LogAudit",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 163,
-                "end_line": 166,
-                "text": "Private Sub LogAudit(ByVal message As String)\n    If m_AuditLog Is Nothing Then Set m_AuditLog = New Collection\n    m_AuditLog.Add Format$(Now, \"yyyy-mm-dd hh:nn:ss\") & \" | \" & message\nEnd Sub"
-              }
-            },
-            {
-              "id": "procedure_d55db4a37410becc",
-              "name": "NormalizeLineEndings",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 171,
-                "end_line": 176,
-                "text": "Public Function NormalizeLineEndings(ByVal text As String) As String\n    Dim result As String\n    result = Replace(text, vbCrLf, vbLf)\n    result = Replace(result, vbCr, vbLf)\n    NormalizeLineEndings = result\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_5406ba068a801948",
-              "name": "TryParseEntry",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 178,
-                "end_line": 230,
-                "text": "Private Function TryParseEntry( _\n    ByVal rawLine As String, _\n    ByVal fallbackId As Long, _\n    ByRef target As LedgerEntry _\n) As Boolean\n    On Error GoTo ParseFail\n\n    Dim parts As Variant\n    Dim tagTokens As Variant\n    Dim i As Long\n    Dim rawAmt As Double\n\n    parts = Split(rawLine, \"|\")\n    If Not IsArray(parts) Then GoTo ParseFail\n    If UBound(parts) - LBound(parts) + 1 < 4 Then GoTo ParseFail\n\n    If IsNumeric(Trim$(parts(LBound(parts)))) Then\n        target.EntryId = CLng(Trim$(parts(LBound(parts))))\n    Else\n        target.EntryId = fallbackId\n    End If\n\n    target.AccountCode = UCase$(Trim$(CStr(parts(LBound(parts) + 1))))\n    If Len(target.AccountCode) = 0 Then GoTo ParseFail\n\n    rawAmt = CDbl(Trim$(CStr(parts(LBound(parts) + 2))))\n    target.Amount = CCur(rawAmt)\n\n    If IsDate(Trim$(CStr(parts(LBound(parts) + 3)))) Then\n        target.PostedDate = CDate(Trim$(CStr(parts(LBound(parts) + 3))))\n    Else\n        target.PostedDate = Date\n    End If\n\n    target.IsReconciled = False\n\n    If UBound(parts) - LBound(parts) + 1 >= 5 And Len(Trim$(CStr(parts(LBound(parts) + 4)))) > 0 Then\n        tagTokens = Split(CStr(parts(LBound(parts) + 4)), \",\")\n        ReDim target.Tags(1 To UBound(tagTokens) - LBound(tagTokens) + 1)\n        For i = LBound(tagTokens) To UBound(tagTokens)\n            target.Tags(i - LBound(tagTokens) + 1) = LCase$(Trim$(CStr(tagTokens(i))))\n        Next i\n    Else\n        ReDim target.Tags(1 To 1)\n        target.Tags(1) = \"untagged\"\n    End If\n\n    TryParseEntry = True\n    Exit Function\n\nParseFail:\n    TryParseEntry = False\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_828ca9a47cc9a739",
-              "name": "NormalizeEntryInPlace",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 235,
-                "end_line": 267,
-                "text": "Private Sub NormalizeEntryInPlace(ByRef entry As LedgerEntry)\n    Dim i As Long\n    Dim hasCoreTag As Boolean\n\n    entry.AccountCode = Replace(entry.AccountCode, \" \", \"_\")\n    entry.AccountCode = Replace(entry.AccountCode, \"-\", \"_\")\n\n    If entry.Amount < 0@ Then\n        entry.IsReconciled = False\n    ElseIf entry.Amount >= 10000@ Then\n        entry.IsReconciled = False\n    Else\n        entry.IsReconciled = True\n    End If\n\n    hasCoreTag = False\n    If (Not Not entry.Tags) <> 0 Then\n        For i = LBound(entry.Tags) To UBound(entry.Tags)\n            entry.Tags(i) = Trim$(entry.Tags(i))\n            If entry.Tags(i) = \"core\" Then hasCoreTag = True\n        Next i\n    End If\n\n    If Not hasCoreTag Then\n        If (Not Not entry.Tags) = 0 Then\n            ReDim entry.Tags(1 To 1)\n            entry.Tags(1) = \"core\"\n        Else\n            ReDim Preserve entry.Tags(1 To UBound(entry.Tags) + 1)\n            entry.Tags(UBound(entry.Tags)) = \"core\"\n        End If\n    End If\nEnd Sub"
-              }
-            },
-            {
-              "id": "procedure_3104c2440f9bdac3",
-              "name": "DeduplicateBatchEntries",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 272,
-                "end_line": 311,
-                "text": "Private Sub DeduplicateBatchEntries(ByRef batch As BatchSummary)\n    Dim seenKeys As Object\n    Dim kept() As LedgerEntry\n    Dim keptCount As Long\n    Dim i As Long\n    Dim key As String\n    Dim newTotal As Currency\n\n    On Error Resume Next\n    Set seenKeys = CreateObject(\"Scripting.Dictionary\")\n    On Error GoTo 0\n\n    If seenKeys Is Nothing Then Exit Sub\n\n    ReDim kept(1 To batch.RecordCount)\n    keptCount = 0\n    newTotal = 0@\n\n    For i = LBound(batch.Entries) To UBound(batch.Entries)\n        key = CStr(batch.Entries(i).EntryId) & \"::\" & batch.Entries(i).AccountCode\n        If Not seenKeys.Exists(key) Then\n            seenKeys.Add key, i\n            keptCount = keptCount + 1\n            kept(keptCount) = batch.Entries(i)\n            newTotal = newTotal + batch.Entries(i).Amount\n        Else\n            LogAudit \"DEDUP: Dropped duplicate key \" & key\n        End If\n    Next i\n\n    If keptCount > 0 Then\n        ReDim Preserve kept(1 To keptCount)\n        batch.Entries = kept\n    Else\n        Erase batch.Entries\n    End If\n\n    batch.RecordCount = keptCount\n    batch.TotalAmount = newTotal\nEnd Sub"
-              }
-            },
-            {
-              "id": "procedure_389d8383c644215c",
-              "name": "RunLegacyGoSubAudit",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 317,
-                "end_line": 346,
-                "text": "Private Sub RunLegacyGoSubAudit(ByRef batch As BatchSummary, ByRef summaryStatus As String)\n    Dim i As Long\n    Dim flaggedCount As Long\n    Dim currentCheckId As Long\n    Dim checkResult As String\n\n    flaggedCount = 0\n\n    For i = LBound(batch.Entries) To UBound(batch.Entries)\n        currentCheckId = batch.Entries(i).EntryId\n        GoSub ValidateSingleEntry\n        If checkResult <> \"OK\" Then\n            flaggedCount = flaggedCount + 1\n            LogAudit \"FLAG [\" & CStr(currentCheckId) & \"]: \" & checkResult\n        End If\n    Next i\n\n    summaryStatus = \"AUDITED_\" & CStr(batch.RecordCount) & \"_FLAGGED_\" & CStr(flaggedCount)\n    Exit Sub\n\nValidateSingleEntry:\n    If batch.Entries(i).Amount = 0@ Then\n        checkResult = \"ZERO_AMOUNT\"\n    ElseIf Year(batch.Entries(i).PostedDate) < 1990 Or Year(batch.Entries(i).PostedDate) > 2099 Then\n        checkResult = \"OUT_OF_RANGE_DATE\"\n    Else\n        checkResult = \"OK\"\n    End If\n    Return\nEnd Sub"
-              }
-            },
-            {
-              "id": "procedure_7a9d528b68fd7ddd",
-              "name": "EvaluateDependencyDepth",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 352,
-                "end_line": 397,
-                "text": "Public Function EvaluateDependencyDepth( _\n    ByVal edgesSpec As String, _\n    ByVal startNode As String, _\n    Optional ByVal currentDepth As Long = 0, _\n    Optional ByVal maxDepth As Long = 25 _\n) As Long\n    Dim pairs As Variant\n    Dim edgeParts As Variant\n    Dim i As Long\n    Dim srcNode As String\n    Dim dstNode As String\n    Dim childDepth As Long\n    Dim maxChildDepth As Long\n\n    If currentDepth >= maxDepth Then\n        EvaluateDependencyDepth = currentDepth\n        Exit Function\n    End If\n\n    If Len(Trim$(edgesSpec)) = 0 Or Len(Trim$(startNode)) = 0 Then\n        EvaluateDependencyDepth = currentDepth\n        Exit Function\n    End If\n\n    pairs = Split(edgesSpec, \",\")\n    maxChildDepth = currentDepth\n\n    For i = LBound(pairs) To UBound(pairs)\n        edgeParts = Split(CStr(pairs(i)), \">\")\n        If UBound(edgeParts) - LBound(edgeParts) + 1 = 2 Then\n            srcNode = Trim$(CStr(edgeParts(LBound(edgeParts))))\n            dstNode = Trim$(CStr(edgeParts(LBound(edgeParts) + 1)))\n\n            If StrComp(srcNode, Trim$(startNode), vbTextCompare) = 0 And Len(dstNode) > 0 Then\n                If StrComp(dstNode, srcNode, vbTextCompare) <> 0 Then\n                    childDepth = EvaluateDependencyDepth(edgesSpec, dstNode, currentDepth + 1, maxDepth)\n                    If childDepth > maxChildDepth Then\n                        maxChildDepth = childDepth\n                    End If\n                End If\n            End If\n        End If\n    Next i\n\n    EvaluateDependencyDepth = maxChildDepth\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_715c7c5abecf4f17",
-              "name": "BuildUpsertSql",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 402,
-                "end_line": 425,
-                "text": "Public Function BuildUpsertSql( _\n    ByVal tableName As String, _\n    ByRef entry As LedgerEntry _\n) As String\n    Dim cleanTable As String\n    Dim cleanAcct As String\n    Dim cleanDate As String\n    Dim recFlag As Long\n\n    cleanTable = SanitizeSqlIdentifier(tableName)\n    cleanAcct = Replace(entry.AccountCode, \"'\", \"''\")\n    cleanDate = Format$(entry.PostedDate, \"yyyy-mm-dd\")\n    recFlag = IIf(entry.IsReconciled, 1, 0)\n\n    BuildUpsertSql = _\n        \"MERGE INTO \" & cleanTable & \" AS tgt \" & _\n        \"USING (SELECT \" & CStr(entry.EntryId) & \" AS entry_id, '\" & cleanAcct & \"' AS account_code) AS src \" & _\n        \"ON tgt.entry_id = src.entry_id AND tgt.account_code = src.account_code \" & _\n        \"WHEN MATCHED THEN UPDATE SET amount = \" & Replace(CStr(entry.Amount), \",\", \".\") & _\n        \", posted_date = DATE '\" & cleanDate & \"', is_reconciled = \" & CStr(recFlag) & \" \" & _\n        \"WHEN NOT MATCHED THEN INSERT (entry_id, account_code, amount, posted_date, is_reconciled) \" & _\n        \"VALUES (\" & CStr(entry.EntryId) & \", '\" & cleanAcct & \"', \" & _\n        Replace(CStr(entry.Amount), \",\", \".\") & \", DATE '\" & cleanDate & \"', \" & CStr(recFlag) & \");\"\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_96e279adeedf7e49",
-              "name": "SanitizeSqlIdentifier",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 427,
-                "end_line": 443,
-                "text": "Private Function SanitizeSqlIdentifier(ByVal ident As String) As String\n    Dim i As Long\n    Dim ch As String\n    Dim outStr As String\n\n    outStr = \"\"\n    For i = 1 To Len(ident)\n        ch = Mid$(ident, i, 1)\n        If (ch >= \"A\" And ch <= \"Z\") Or (ch >= \"a\" And ch <= \"z\") Or _\n           (ch >= \"0\" And ch <= \"9\") Or ch = \"_\" Or ch = \".\" Then\n            outStr = outStr & ch\n        End If\n    Next i\n\n    If Len(outStr) = 0 Then outStr = \"default_ledger_table\"\n    SanitizeSqlIdentifier = outStr\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_94d926ec9cd086c7",
-              "name": "BuildSummaryReport",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 448,
-                "end_line": 475,
-                "text": "Private Function BuildSummaryReport( _\n    ByRef batch As BatchSummary, _\n    ByVal parsedCount As Long, _\n    ByVal statusMsg As String _\n) As String\n    Dim sb As String\n    Dim i As Long\n    Dim logLimit As Long\n\n    sb = \"=== BATCH SUMMARY ===\" & vbCrLf\n    sb = sb & \"Batch ID:      \" & batch.BatchId & vbCrLf\n    sb = sb & \"Mode Mask:     \" & CStr(batch.ModeMask) & vbCrLf\n    sb = sb & \"Parsed Rows:   \" & CStr(parsedCount) & vbCrLf\n    sb = sb & \"Final Rows:    \" & CStr(batch.RecordCount) & vbCrLf\n    sb = sb & \"Total Amount:  \" & Format$(batch.TotalAmount, \"#,##0.00\") & vbCrLf\n    sb = sb & \"Audit Status:  \" & statusMsg & vbCrLf\n\n    If Not m_AuditLog Is Nothing And m_AuditLog.Count > 0 Then\n        sb = sb & \"--- RECENT AUDIT LOGS ---\" & vbCrLf\n        logLimit = m_AuditLog.Count\n        If logLimit > 15 Then logLimit = 15\n        For i = 1 To logLimit\n            sb = sb & CStr(m_AuditLog(i)) & vbCrLf\n        Next i\n    End If\n\n    BuildSummaryReport = sb\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_f4c1072dc8425eb5",
-              "name": "GetAuditEntryCount",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 477,
-                "end_line": 483,
-                "text": "Public Function GetAuditEntryCount() As Long\n    If m_AuditLog Is Nothing Then\n        GetAuditEntryCount = 0\n    Else\n        GetAuditEntryCount = m_AuditLog.Count\n    End If\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_3eb97ba58df2bb14",
-              "name": "ResetModuleState",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 485,
-                "end_line": 489,
-                "text": "Public Sub ResetModuleState()\n    m_GlobalSequence = 0\n    Set m_AuditLog = New Collection\n    Set m_NodeRegistry = Nothing\nEnd Sub"
-              }
-            }
-          ]
-        },
-        "producer_code": [],
-        "dependencies": {
-          "artifact_hashes": {
-            "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
-            "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
-            "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
-            "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
-            "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
-          },
-          "related_artifacts": [
-            "graph",
-            "segments",
-            "ir",
-            "normalized_ir",
-            "semantic_analysis"
-          ],
-          "symbols": []
-        },
-        "traceability": {
-          "source_present": true,
-          "sources": [
-            {
-              "path": "vba_sample_6.bas",
-              "actual": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
-              "expected": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
-              "matches": true
-            }
-          ],
-          "hash_matches": true,
-          "safe_for_source_grounded_repair": true,
-          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
-        }
-      },
-      "root_cause": {
-        "hypotheses": [
-          "Parser block-stack or branch-association defect",
-          "Source syntax or continuation handling not represented correctly"
-        ],
-        "source_available": true,
-        "source_lines": [
-          244,
-          268
-        ],
-        "confidence": "medium",
-        "recommended_action": "inspect_producer_and_rebuild_downstream",
-        "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
-      },
-      "investigation": {
-        "summary": "No LLM configured; deterministic evidence package only.",
-        "evidence_sufficient": true,
-        "root_cause": {
-          "hypotheses": [
-            "Parser block-stack or branch-association defect",
-            "Source syntax or continuation handling not represented correctly"
-          ],
-          "source_available": true,
-          "source_lines": [
-            244,
-            268
-          ],
-          "confidence": "medium",
-          "recommended_action": "inspect_producer_and_rebuild_downstream",
-          "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
-        },
-        "recommended_next_step": "inspect producer code and regenerate"
-      },
-      "status": "unresolved_or_unverified"
-    },
-    {
-      "code": "CROSS_NESTED_BLOCK_CLOSE",
-      "severity": "warning",
-      "message": "End If closed a non-top IF frame; inspect nested syntax.",
-      "path": "vba_sample_6.bas",
-      "line": 472,
-      "artifact": "pseudocode_run",
-      "reported_by": [
-        "pseudocode_run"
-      ],
-      "subsystem": "frontend_control_flow",
-      "priority": "high",
-      "auto_fix_policy": "source_evidence_and_independent_validation_required",
-      "id": "852578f6dd5c48dc",
-      "context": {
-        "source": {
-          "available": true,
-          "path": "vba_sample_6.bas",
-          "line_range": [
-            460,
-            484
-          ],
-          "text": "460:     sb = sb & \"Parsed Rows:   \" & CStr(parsedCount) & vbCrLf\n461:     sb = sb & \"Final Rows:    \" & CStr(batch.RecordCount) & vbCrLf\n462:     sb = sb & \"Total Amount:  \" & Format$(batch.TotalAmount, \"#,##0.00\") & vbCrLf\n463:     sb = sb & \"Audit Status:  \" & statusMsg & vbCrLf\n464: \n465:     If Not m_AuditLog Is Nothing And m_AuditLog.Count > 0 Then\n466:         sb = sb & \"--- RECENT AUDIT LOGS ---\" & vbCrLf\n467:         logLimit = m_AuditLog.Count\n468:         If logLimit > 15 Then logLimit = 15\n469:         For i = 1 To logLimit\n470:             sb = sb & CStr(m_AuditLog(i)) & vbCrLf\n471:         Next i\n472:     End If\n473: \n474:     BuildSummaryReport = sb\n475: End Function\n476: \n477: Public Function GetAuditEntryCount() As Long\n478:     If m_AuditLog Is Nothing Then\n479:         GetAuditEntryCount = 0\n480:     Else\n481:         GetAuditEntryCount = m_AuditLog.Count\n482:     End If\n483: End Function\n484: ",
-          "sha256": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
-          "exact_line": 472
-        },
-        "procedure": {
-          "procedure_names": [],
-          "graph_procedures": [
-            {
-              "id": "procedure_3f3c2e33f7565363",
-              "name": "ExecuteStressPipeline",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 54,
-                "end_line": 138,
-                "text": "Public Function ExecuteStressPipeline( _\n    ByVal rawPayload As String, _\n    ByVal modeMask As Long, _\n    Optional ByRef outReport As String, _\n    Optional ByVal maxIterations As Long = 1000 _\n) As Boolean\n    On Error GoTo ErrHandler\n\n    Dim lines() As String\n    Dim batch As BatchSummary\n    Dim idx As Long\n    Dim processedCount As Long\n    Dim tempAmount As Currency\n    Dim statusMsg As String\n\n    If Len(Trim$(rawPayload)) = 0 Then\n        outReport = \"EMPTY_PAYLOAD\"\n        ExecuteStressPipeline = False\n        Exit Function\n    End If\n\n    InitInfrastructure\n    batch.BatchId = \"BATCH_\" & Format$(Now, \"yyyymmdd_hhnnss\") & \"_\" & CStr(NextSequence())\n    batch.ModeMask = modeMask\n    batch.RecordCount = 0\n    batch.TotalAmount = 0@\n\n    lines = Split(NormalizeLineEndings(rawPayload), vbLf)\n    ReDim batch.Entries(1 To UBound(lines) - LBound(lines) + 1)\n\n    For idx = LBound(lines) To UBound(lines)\n        If idx - LBound(lines) + 1 > maxIterations Then\n            LogAudit \"WARN: Max iteration cap reached at row \" & CStr(idx)\n            Exit For\n        End If\n\n        If Len(Trim$(lines(idx))) > 0 Then\n            If TryParseEntry(lines(idx), idx, batch.Entries(batch.RecordCount + 1)) Then\n                batch.RecordCount = batch.RecordCount + 1\n\n                If (modeMask And ModeNormalize) = ModeNormalize Then\n                    NormalizeEntryInPlace batch.Entries(batch.RecordCount)\n                End If\n\n                tempAmount = batch.Entries(batch.RecordCount).Amount\n                If (modeMask And ModeAggregate) = ModeAggregate Then\n                    batch.TotalAmount = batch.TotalAmount + tempAmount\n                End If\n\n                processedCount = processedCount + 1\n            Else\n                LogAudit \"SKIP: Malformed row \" & CStr(idx) & \" -> \" & Left$(lines(idx), 60)\n            End If\n        End If\n\n        If (idx Mod 250) = 0 Then\n            DoEvents\n        End If\n    Next idx\n\n    If batch.RecordCount > 0 Then\n        ReDim Preserve batch.Entries(1 To batch.RecordCount)\n    Else\n        Erase batch.Entries\n    End If\n\n    If (modeMask And ModeDeduplicate) = ModeDeduplicate And batch.RecordCount > 1 Then\n        DeduplicateBatchEntries batch\n    End If\n\n    If (modeMask And ModeAudit) = ModeAudit Then\n        RunLegacyGoSubAudit batch, statusMsg\n    Else\n        statusMsg = \"AUDIT_SKIPPED\"\n    End If\n\n    outReport = BuildSummaryReport(batch, processedCount, statusMsg)\n    ExecuteStressPipeline = True\n    Exit Function\n\nErrHandler:\n    outReport = \"PIPELINE_ERROR [\" & CStr(Err.Number) & \"]: \" & Err.Description & \" at line/step context.\"\n    LogAudit outReport\n    ExecuteStressPipeline = False\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_2954e225a14758ac",
-              "name": "InitInfrastructure",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 144,
-                "end_line": 156,
-                "text": "Private Sub InitInfrastructure()\n    On Error Resume Next\n    Set m_NodeRegistry = CreateObject(\"Scripting.Dictionary\")\n    If Err.Number <> 0 Or m_NodeRegistry Is Nothing Then\n        Err.Clear\n        Set m_NodeRegistry = New Collection\n    End If\n    On Error GoTo 0\n\n    If m_AuditLog Is Nothing Then\n        Set m_AuditLog = New Collection\n    End If\nEnd Sub"
-              }
-            },
-            {
-              "id": "procedure_d0d7fa00e94c9ed7",
-              "name": "NextSequence",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 158,
-                "end_line": 161,
-                "text": "Private Function NextSequence() As Long\n    m_GlobalSequence = m_GlobalSequence + 1\n    NextSequence = m_GlobalSequence\nEnd Sub"
-              }
-            },
-            {
-              "id": "procedure_6ef7d8528482afcc",
-              "name": "LogAudit",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 163,
-                "end_line": 166,
-                "text": "Private Sub LogAudit(ByVal message As String)\n    If m_AuditLog Is Nothing Then Set m_AuditLog = New Collection\n    m_AuditLog.Add Format$(Now, \"yyyy-mm-dd hh:nn:ss\") & \" | \" & message\nEnd Sub"
-              }
-            },
-            {
-              "id": "procedure_d55db4a37410becc",
-              "name": "NormalizeLineEndings",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 171,
-                "end_line": 176,
-                "text": "Public Function NormalizeLineEndings(ByVal text As String) As String\n    Dim result As String\n    result = Replace(text, vbCrLf, vbLf)\n    result = Replace(result, vbCr, vbLf)\n    NormalizeLineEndings = result\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_5406ba068a801948",
-              "name": "TryParseEntry",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 178,
-                "end_line": 230,
-                "text": "Private Function TryParseEntry( _\n    ByVal rawLine As String, _\n    ByVal fallbackId As Long, _\n    ByRef target As LedgerEntry _\n) As Boolean\n    On Error GoTo ParseFail\n\n    Dim parts As Variant\n    Dim tagTokens As Variant\n    Dim i As Long\n    Dim rawAmt As Double\n\n    parts = Split(rawLine, \"|\")\n    If Not IsArray(parts) Then GoTo ParseFail\n    If UBound(parts) - LBound(parts) + 1 < 4 Then GoTo ParseFail\n\n    If IsNumeric(Trim$(parts(LBound(parts)))) Then\n        target.EntryId = CLng(Trim$(parts(LBound(parts))))\n    Else\n        target.EntryId = fallbackId\n    End If\n\n    target.AccountCode = UCase$(Trim$(CStr(parts(LBound(parts) + 1))))\n    If Len(target.AccountCode) = 0 Then GoTo ParseFail\n\n    rawAmt = CDbl(Trim$(CStr(parts(LBound(parts) + 2))))\n    target.Amount = CCur(rawAmt)\n\n    If IsDate(Trim$(CStr(parts(LBound(parts) + 3)))) Then\n        target.PostedDate = CDate(Trim$(CStr(parts(LBound(parts) + 3))))\n    Else\n        target.PostedDate = Date\n    End If\n\n    target.IsReconciled = False\n\n    If UBound(parts) - LBound(parts) + 1 >= 5 And Len(Trim$(CStr(parts(LBound(parts) + 4)))) > 0 Then\n        tagTokens = Split(CStr(parts(LBound(parts) + 4)), \",\")\n        ReDim target.Tags(1 To UBound(tagTokens) - LBound(tagTokens) + 1)\n        For i = LBound(tagTokens) To UBound(tagTokens)\n            target.Tags(i - LBound(tagTokens) + 1) = LCase$(Trim$(CStr(tagTokens(i))))\n        Next i\n    Else\n        ReDim target.Tags(1 To 1)\n        target.Tags(1) = \"untagged\"\n    End If\n\n    TryParseEntry = True\n    Exit Function\n\nParseFail:\n    TryParseEntry = False\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_828ca9a47cc9a739",
-              "name": "NormalizeEntryInPlace",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 235,
-                "end_line": 267,
-                "text": "Private Sub NormalizeEntryInPlace(ByRef entry As LedgerEntry)\n    Dim i As Long\n    Dim hasCoreTag As Boolean\n\n    entry.AccountCode = Replace(entry.AccountCode, \" \", \"_\")\n    entry.AccountCode = Replace(entry.AccountCode, \"-\", \"_\")\n\n    If entry.Amount < 0@ Then\n        entry.IsReconciled = False\n    ElseIf entry.Amount >= 10000@ Then\n        entry.IsReconciled = False\n    Else\n        entry.IsReconciled = True\n    End If\n\n    hasCoreTag = False\n    If (Not Not entry.Tags) <> 0 Then\n        For i = LBound(entry.Tags) To UBound(entry.Tags)\n            entry.Tags(i) = Trim$(entry.Tags(i))\n            If entry.Tags(i) = \"core\" Then hasCoreTag = True\n        Next i\n    End If\n\n    If Not hasCoreTag Then\n        If (Not Not entry.Tags) = 0 Then\n            ReDim entry.Tags(1 To 1)\n            entry.Tags(1) = \"core\"\n        Else\n            ReDim Preserve entry.Tags(1 To UBound(entry.Tags) + 1)\n            entry.Tags(UBound(entry.Tags)) = \"core\"\n        End If\n    End If\nEnd Sub"
-              }
-            },
-            {
-              "id": "procedure_3104c2440f9bdac3",
-              "name": "DeduplicateBatchEntries",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 272,
-                "end_line": 311,
-                "text": "Private Sub DeduplicateBatchEntries(ByRef batch As BatchSummary)\n    Dim seenKeys As Object\n    Dim kept() As LedgerEntry\n    Dim keptCount As Long\n    Dim i As Long\n    Dim key As String\n    Dim newTotal As Currency\n\n    On Error Resume Next\n    Set seenKeys = CreateObject(\"Scripting.Dictionary\")\n    On Error GoTo 0\n\n    If seenKeys Is Nothing Then Exit Sub\n\n    ReDim kept(1 To batch.RecordCount)\n    keptCount = 0\n    newTotal = 0@\n\n    For i = LBound(batch.Entries) To UBound(batch.Entries)\n        key = CStr(batch.Entries(i).EntryId) & \"::\" & batch.Entries(i).AccountCode\n        If Not seenKeys.Exists(key) Then\n            seenKeys.Add key, i\n            keptCount = keptCount + 1\n            kept(keptCount) = batch.Entries(i)\n            newTotal = newTotal + batch.Entries(i).Amount\n        Else\n            LogAudit \"DEDUP: Dropped duplicate key \" & key\n        End If\n    Next i\n\n    If keptCount > 0 Then\n        ReDim Preserve kept(1 To keptCount)\n        batch.Entries = kept\n    Else\n        Erase batch.Entries\n    End If\n\n    batch.RecordCount = keptCount\n    batch.TotalAmount = newTotal\nEnd Sub"
-              }
-            },
-            {
-              "id": "procedure_389d8383c644215c",
-              "name": "RunLegacyGoSubAudit",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 317,
-                "end_line": 346,
-                "text": "Private Sub RunLegacyGoSubAudit(ByRef batch As BatchSummary, ByRef summaryStatus As String)\n    Dim i As Long\n    Dim flaggedCount As Long\n    Dim currentCheckId As Long\n    Dim checkResult As String\n\n    flaggedCount = 0\n\n    For i = LBound(batch.Entries) To UBound(batch.Entries)\n        currentCheckId = batch.Entries(i).EntryId\n        GoSub ValidateSingleEntry\n        If checkResult <> \"OK\" Then\n            flaggedCount = flaggedCount + 1\n            LogAudit \"FLAG [\" & CStr(currentCheckId) & \"]: \" & checkResult\n        End If\n    Next i\n\n    summaryStatus = \"AUDITED_\" & CStr(batch.RecordCount) & \"_FLAGGED_\" & CStr(flaggedCount)\n    Exit Sub\n\nValidateSingleEntry:\n    If batch.Entries(i).Amount = 0@ Then\n        checkResult = \"ZERO_AMOUNT\"\n    ElseIf Year(batch.Entries(i).PostedDate) < 1990 Or Year(batch.Entries(i).PostedDate) > 2099 Then\n        checkResult = \"OUT_OF_RANGE_DATE\"\n    Else\n        checkResult = \"OK\"\n    End If\n    Return\nEnd Sub"
-              }
-            },
-            {
-              "id": "procedure_7a9d528b68fd7ddd",
-              "name": "EvaluateDependencyDepth",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 352,
-                "end_line": 397,
-                "text": "Public Function EvaluateDependencyDepth( _\n    ByVal edgesSpec As String, _\n    ByVal startNode As String, _\n    Optional ByVal currentDepth As Long = 0, _\n    Optional ByVal maxDepth As Long = 25 _\n) As Long\n    Dim pairs As Variant\n    Dim edgeParts As Variant\n    Dim i As Long\n    Dim srcNode As String\n    Dim dstNode As String\n    Dim childDepth As Long\n    Dim maxChildDepth As Long\n\n    If currentDepth >= maxDepth Then\n        EvaluateDependencyDepth = currentDepth\n        Exit Function\n    End If\n\n    If Len(Trim$(edgesSpec)) = 0 Or Len(Trim$(startNode)) = 0 Then\n        EvaluateDependencyDepth = currentDepth\n        Exit Function\n    End If\n\n    pairs = Split(edgesSpec, \",\")\n    maxChildDepth = currentDepth\n\n    For i = LBound(pairs) To UBound(pairs)\n        edgeParts = Split(CStr(pairs(i)), \">\")\n        If UBound(edgeParts) - LBound(edgeParts) + 1 = 2 Then\n            srcNode = Trim$(CStr(edgeParts(LBound(edgeParts))))\n            dstNode = Trim$(CStr(edgeParts(LBound(edgeParts) + 1)))\n\n            If StrComp(srcNode, Trim$(startNode), vbTextCompare) = 0 And Len(dstNode) > 0 Then\n                If StrComp(dstNode, srcNode, vbTextCompare) <> 0 Then\n                    childDepth = EvaluateDependencyDepth(edgesSpec, dstNode, currentDepth + 1, maxDepth)\n                    If childDepth > maxChildDepth Then\n                        maxChildDepth = childDepth\n                    End If\n                End If\n            End If\n        End If\n    Next i\n\n    EvaluateDependencyDepth = maxChildDepth\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_715c7c5abecf4f17",
-              "name": "BuildUpsertSql",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 402,
-                "end_line": 425,
-                "text": "Public Function BuildUpsertSql( _\n    ByVal tableName As String, _\n    ByRef entry As LedgerEntry _\n) As String\n    Dim cleanTable As String\n    Dim cleanAcct As String\n    Dim cleanDate As String\n    Dim recFlag As Long\n\n    cleanTable = SanitizeSqlIdentifier(tableName)\n    cleanAcct = Replace(entry.AccountCode, \"'\", \"''\")\n    cleanDate = Format$(entry.PostedDate, \"yyyy-mm-dd\")\n    recFlag = IIf(entry.IsReconciled, 1, 0)\n\n    BuildUpsertSql = _\n        \"MERGE INTO \" & cleanTable & \" AS tgt \" & _\n        \"USING (SELECT \" & CStr(entry.EntryId) & \" AS entry_id, '\" & cleanAcct & \"' AS account_code) AS src \" & _\n        \"ON tgt.entry_id = src.entry_id AND tgt.account_code = src.account_code \" & _\n        \"WHEN MATCHED THEN UPDATE SET amount = \" & Replace(CStr(entry.Amount), \",\", \".\") & _\n        \", posted_date = DATE '\" & cleanDate & \"', is_reconciled = \" & CStr(recFlag) & \" \" & _\n        \"WHEN NOT MATCHED THEN INSERT (entry_id, account_code, amount, posted_date, is_reconciled) \" & _\n        \"VALUES (\" & CStr(entry.EntryId) & \", '\" & cleanAcct & \"', \" & _\n        Replace(CStr(entry.Amount), \",\", \".\") & \", DATE '\" & cleanDate & \"', \" & CStr(recFlag) & \");\"\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_96e279adeedf7e49",
-              "name": "SanitizeSqlIdentifier",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 427,
-                "end_line": 443,
-                "text": "Private Function SanitizeSqlIdentifier(ByVal ident As String) As String\n    Dim i As Long\n    Dim ch As String\n    Dim outStr As String\n\n    outStr = \"\"\n    For i = 1 To Len(ident)\n        ch = Mid$(ident, i, 1)\n        If (ch >= \"A\" And ch <= \"Z\") Or (ch >= \"a\" And ch <= \"z\") Or _\n           (ch >= \"0\" And ch <= \"9\") Or ch = \"_\" Or ch = \".\" Then\n            outStr = outStr & ch\n        End If\n    Next i\n\n    If Len(outStr) = 0 Then outStr = \"default_ledger_table\"\n    SanitizeSqlIdentifier = outStr\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_94d926ec9cd086c7",
-              "name": "BuildSummaryReport",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 448,
-                "end_line": 475,
-                "text": "Private Function BuildSummaryReport( _\n    ByRef batch As BatchSummary, _\n    ByVal parsedCount As Long, _\n    ByVal statusMsg As String _\n) As String\n    Dim sb As String\n    Dim i As Long\n    Dim logLimit As Long\n\n    sb = \"=== BATCH SUMMARY ===\" & vbCrLf\n    sb = sb & \"Batch ID:      \" & batch.BatchId & vbCrLf\n    sb = sb & \"Mode Mask:     \" & CStr(batch.ModeMask) & vbCrLf\n    sb = sb & \"Parsed Rows:   \" & CStr(parsedCount) & vbCrLf\n    sb = sb & \"Final Rows:    \" & CStr(batch.RecordCount) & vbCrLf\n    sb = sb & \"Total Amount:  \" & Format$(batch.TotalAmount, \"#,##0.00\") & vbCrLf\n    sb = sb & \"Audit Status:  \" & statusMsg & vbCrLf\n\n    If Not m_AuditLog Is Nothing And m_AuditLog.Count > 0 Then\n        sb = sb & \"--- RECENT AUDIT LOGS ---\" & vbCrLf\n        logLimit = m_AuditLog.Count\n        If logLimit > 15 Then logLimit = 15\n        For i = 1 To logLimit\n            sb = sb & CStr(m_AuditLog(i)) & vbCrLf\n        Next i\n    End If\n\n    BuildSummaryReport = sb\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_f4c1072dc8425eb5",
-              "name": "GetAuditEntryCount",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 477,
-                "end_line": 483,
-                "text": "Public Function GetAuditEntryCount() As Long\n    If m_AuditLog Is Nothing Then\n        GetAuditEntryCount = 0\n    Else\n        GetAuditEntryCount = m_AuditLog.Count\n    End If\nEnd Function"
-              }
-            },
-            {
-              "id": "procedure_3eb97ba58df2bb14",
-              "name": "ResetModuleState",
-              "source": {
-                "path": "vba_sample_6.bas",
-                "start_line": 485,
-                "end_line": 489,
-                "text": "Public Sub ResetModuleState()\n    m_GlobalSequence = 0\n    Set m_AuditLog = New Collection\n    Set m_NodeRegistry = Nothing\nEnd Sub"
-              }
-            }
-          ]
-        },
-        "producer_code": [],
-        "dependencies": {
-          "artifact_hashes": {
-            "graph": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd",
-            "segments": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c",
-            "ir": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-            "normalized_ir": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-            "semantic_analysis": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
-            "manifest": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5",
-            "pseudocode": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-            "pseudocode_run": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
-            "report": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b",
-            "source": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
-          },
-          "related_artifacts": [
-            "graph",
-            "segments",
-            "ir",
-            "normalized_ir",
-            "semantic_analysis"
-          ],
-          "symbols": []
-        },
-        "traceability": {
-          "source_present": true,
-          "sources": [
-            {
-              "path": "vba_sample_6.bas",
-              "actual": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
-              "expected": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
-              "matches": true
-            }
-          ],
-          "hash_matches": true,
-          "safe_for_source_grounded_repair": true,
-          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
-        }
-      },
-      "root_cause": {
-        "hypotheses": [
-          "Parser block-stack or branch-association defect",
-          "Source syntax or continuation handling not represented correctly"
-        ],
-        "source_available": true,
-        "source_lines": [
-          460,
-          484
-        ],
-        "confidence": "medium",
-        "recommended_action": "inspect_producer_and_rebuild_downstream",
-        "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
-      },
-      "investigation": {
-        "summary": "No LLM configured; deterministic evidence package only.",
-        "evidence_sufficient": true,
-        "root_cause": {
-          "hypotheses": [
-            "Parser block-stack or branch-association defect",
-            "Source syntax or continuation handling not represented correctly"
-          ],
-          "source_available": true,
-          "source_lines": [
-            460,
-            484
-          ],
-          "confidence": "medium",
-          "recommended_action": "inspect_producer_and_rebuild_downstream",
-          "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
-        },
-        "recommended_next_step": "inspect producer code and regenerate"
-      },
-      "status": "unresolved_or_unverified"
-    },
-    {
       "code": "PSEUDOCODE_COVERAGE_GAP",
       "severity": "warning",
       "procedure": "ExecuteStressPipeline",
@@ -5512,6 +4688,54 @@
     {
       "code": "PSEUDOCODE_COVERAGE_GAP",
       "severity": "warning",
+      "procedure": "InitInfrastructure",
+      "message": "Detailed pseudocode section missing: InitInfrastructure",
+      "context": {
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_6.bas",
+              "actual": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "expected": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "id": "852fac0d1548a2f8",
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "PSEUDOCODE_COVERAGE_GAP",
+      "severity": "warning",
+      "procedure": "NextSequence",
+      "message": "Detailed pseudocode section missing: NextSequence",
+      "context": {
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_6.bas",
+              "actual": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "expected": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "id": "f70079848422620c",
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "PSEUDOCODE_COVERAGE_GAP",
+      "severity": "warning",
       "procedure": "LogAudit",
       "message": "Detailed pseudocode section missing: LogAudit",
       "context": {
@@ -5531,6 +4755,30 @@
         }
       },
       "id": "ff18da0af55874c3",
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "PSEUDOCODE_COVERAGE_GAP",
+      "severity": "warning",
+      "procedure": "NormalizeLineEndings",
+      "message": "Detailed pseudocode section missing: NormalizeLineEndings",
+      "context": {
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_6.bas",
+              "actual": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "expected": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "id": "6e650211a86d6d5c",
       "status": "unresolved_or_unverified"
     },
     {
@@ -5579,6 +4827,198 @@
         }
       },
       "id": "f3d2f7fda0291948",
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "PSEUDOCODE_COVERAGE_GAP",
+      "severity": "warning",
+      "procedure": "DeduplicateBatchEntries",
+      "message": "Detailed pseudocode section missing: DeduplicateBatchEntries",
+      "context": {
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_6.bas",
+              "actual": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "expected": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "id": "de20f64203d45500",
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "PSEUDOCODE_COVERAGE_GAP",
+      "severity": "warning",
+      "procedure": "RunLegacyGoSubAudit",
+      "message": "Detailed pseudocode section missing: RunLegacyGoSubAudit",
+      "context": {
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_6.bas",
+              "actual": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "expected": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "id": "7491622fcccc96bf",
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "PSEUDOCODE_COVERAGE_GAP",
+      "severity": "warning",
+      "procedure": "EvaluateDependencyDepth",
+      "message": "Detailed pseudocode section missing: EvaluateDependencyDepth",
+      "context": {
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_6.bas",
+              "actual": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "expected": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "id": "dd5e2607313fc07d",
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "PSEUDOCODE_COVERAGE_GAP",
+      "severity": "warning",
+      "procedure": "BuildUpsertSql",
+      "message": "Detailed pseudocode section missing: BuildUpsertSql",
+      "context": {
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_6.bas",
+              "actual": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "expected": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "id": "9b0a3f6615f7dcae",
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "PSEUDOCODE_COVERAGE_GAP",
+      "severity": "warning",
+      "procedure": "SanitizeSqlIdentifier",
+      "message": "Detailed pseudocode section missing: SanitizeSqlIdentifier",
+      "context": {
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_6.bas",
+              "actual": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "expected": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "id": "d5d2b981b9a85455",
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "PSEUDOCODE_COVERAGE_GAP",
+      "severity": "warning",
+      "procedure": "BuildSummaryReport",
+      "message": "Detailed pseudocode section missing: BuildSummaryReport",
+      "context": {
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_6.bas",
+              "actual": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "expected": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "id": "9c557637e1fbe225",
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "PSEUDOCODE_COVERAGE_GAP",
+      "severity": "warning",
+      "procedure": "GetAuditEntryCount",
+      "message": "Detailed pseudocode section missing: GetAuditEntryCount",
+      "context": {
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_6.bas",
+              "actual": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "expected": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "id": "fb31ff73626bbc76",
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "PSEUDOCODE_COVERAGE_GAP",
+      "severity": "warning",
+      "procedure": "ResetModuleState",
+      "message": "Detailed pseudocode section missing: ResetModuleState",
+      "context": {
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_6.bas",
+              "actual": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "expected": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "id": "e023382534efb0a6",
       "status": "unresolved_or_unverified"
     },
     {

@@ -4,199 +4,7 @@
     {
       "status": "run_started",
       "project_root": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_1",
-      "timestamp": "2026-11-22T20:54:25.318175+00:00"
-    },
-    {
-      "issue_id": "cdbb35c9869444f5",
-      "status": "detected",
-      "pass": 1,
-      "issue": {
-        "code": "IR_EXPRESSIONS_OPAQUE",
-        "severity": "warning",
-        "priority": "high",
-        "subsystem": "expression_frontend",
-        "message": "17 expression/control operands are preserved as source-backed opaque expressions, not parsed AST nodes.",
-        "path": "universal_ir.json",
-        "artifact": "ir",
-        "reported_by": [
-          "ir",
-          "semantic_analysis"
-        ]
-      },
-      "timestamp": "2026-11-22T20:54:25.332170+00:00"
-    },
-    {
-      "issue_id": "5587823c9eaf352d",
-      "status": "detected",
-      "pass": 1,
-      "issue": {
-        "code": "VBA_ERROR_HANDLING",
-        "severity": "blocking",
-        "priority": "blocking",
-        "subsystem": "runtime_semantics",
-        "message": "VBA On Error runtime semantics",
-        "path": "semantic_analysis.json",
-        "artifact": "semantic_analysis",
-        "reported_by": [
-          "semantic_analysis",
-          "validator"
-        ]
-      },
-      "timestamp": "2026-11-22T20:54:25.332170+00:00"
-    },
-    {
-      "issue_id": "1bf0876e4f475d64",
-      "status": "detected",
-      "pass": 1,
-      "issue": {
-        "code": "LATE_BOUND_OBJECT_MEMBERS",
-        "severity": "blocking",
-        "priority": "blocking",
-        "subsystem": "type_resolution",
-        "message": "Late-bound COM/Object members",
-        "path": "semantic_analysis.json",
-        "artifact": "semantic_analysis",
-        "reported_by": [
-          "semantic_analysis",
-          "validator"
-        ]
-      },
-      "timestamp": "2026-11-22T20:54:25.332170+00:00"
-    },
-    {
-      "issue_id": "be179dca75047441",
-      "status": "detected",
-      "pass": 1,
-      "issue": {
-        "code": "SEMANTIC_ISSUE_COUNT",
-        "severity": "blocking",
-        "message": "issue_count=64"
-      },
-      "timestamp": "2026-11-22T20:54:25.332170+00:00"
-    },
-    {
-      "issue_id": "bac85a17c0fcb2ac",
-      "status": "detected",
-      "pass": 1,
-      "issue": {
-        "code": "PSEUDOCODE_COVERAGE_GAP",
-        "severity": "warning",
-        "message": "Detailed pseudocode section missing: RefreshMonthlySummary",
-        "procedure": "RefreshMonthlySummary"
-      },
-      "timestamp": "2026-11-22T20:54:25.332170+00:00"
-    },
-    {
-      "issue_id": "d8cdc528ce2be432",
-      "status": "detected",
-      "pass": "final_validation",
-      "issue": {
-        "code": "VBA_ERROR_HANDLING",
-        "severity": "blocking",
-        "message": "VBA On Error runtime semantics"
-      },
-      "timestamp": "2026-11-22T20:54:25.355020+00:00"
-    },
-    {
-      "issue_id": "b6277ffa76e2ac9c",
-      "status": "detected",
-      "pass": "final_validation",
-      "issue": {
-        "code": "LATE_BOUND_OBJECT_MEMBERS",
-        "severity": "blocking",
-        "message": "Late-bound COM/Object members"
-      },
-      "timestamp": "2026-11-22T20:54:25.355020+00:00"
-    },
-    {
-      "issue_id": "cdbb35c9869444f5",
-      "status": "detected_unresolved",
-      "addressed": false,
-      "changes": [],
-      "verification": {
-        "present_in_final_issue_set": true,
-        "absent_after_final_scan": false
-      },
-      "timestamp": "2026-11-22T20:54:25.355657+00:00"
-    },
-    {
-      "issue_id": "5587823c9eaf352d",
-      "status": "detected_unresolved",
-      "addressed": false,
-      "changes": [],
-      "verification": {
-        "present_in_final_issue_set": true,
-        "absent_after_final_scan": false
-      },
-      "timestamp": "2026-11-22T20:54:25.356423+00:00"
-    },
-    {
-      "issue_id": "1bf0876e4f475d64",
-      "status": "detected_unresolved",
-      "addressed": false,
-      "changes": [],
-      "verification": {
-        "present_in_final_issue_set": true,
-        "absent_after_final_scan": false
-      },
-      "timestamp": "2026-11-22T20:54:25.356854+00:00"
-    },
-    {
-      "issue_id": "be179dca75047441",
-      "status": "detected_unresolved",
-      "addressed": false,
-      "changes": [],
-      "verification": {
-        "present_in_final_issue_set": true,
-        "absent_after_final_scan": false
-      },
-      "timestamp": "2026-11-22T20:54:25.357250+00:00"
-    },
-    {
-      "issue_id": "bac85a17c0fcb2ac",
-      "status": "detected_unresolved",
-      "addressed": false,
-      "changes": [],
-      "verification": {
-        "present_in_final_issue_set": true,
-        "absent_after_final_scan": false
-      },
-      "timestamp": "2026-11-22T20:54:25.357649+00:00"
-    },
-    {
-      "issue_id": "d8cdc528ce2be432",
-      "status": "detected_unresolved",
-      "addressed": false,
-      "changes": [],
-      "verification": {
-        "present_in_final_issue_set": true,
-        "absent_after_final_scan": false
-      },
-      "timestamp": "2026-11-22T20:54:25.358052+00:00"
-    },
-    {
-      "issue_id": "b6277ffa76e2ac9c",
-      "status": "detected_unresolved",
-      "addressed": false,
-      "changes": [],
-      "verification": {
-        "present_in_final_issue_set": true,
-        "absent_after_final_scan": false
-      },
-      "timestamp": "2026-11-22T20:54:25.358494+00:00"
-    },
-    {
-      "status": "run_completed",
-      "issue_count": 7,
-      "addressed_issue_count": 0,
-      "unresolved_issue_count": 7,
-      "conversion_readiness": "NOT_CERTIFIED",
-      "timestamp": "2026-11-22T20:54:25.360320+00:00"
-    },
-    {
-      "status": "run_started",
-      "project_root": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_1",
-      "timestamp": "2026-11-22T20:57:21.591540+00:00"
+      "timestamp": "2026-11-22T21:13:11.292559+00:00"
     },
     {
       "issue_id": "cdbb35c9869444f5",
@@ -225,7 +33,7 @@
           }
         }
       },
-      "timestamp": "2026-11-22T20:57:21.602959+00:00"
+      "timestamp": "2026-11-22T21:13:11.303892+00:00"
     },
     {
       "issue_id": "5587823c9eaf352d",
@@ -244,7 +52,7 @@
           "validator"
         ]
       },
-      "timestamp": "2026-11-22T20:57:21.602959+00:00"
+      "timestamp": "2026-11-22T21:13:11.303892+00:00"
     },
     {
       "issue_id": "1bf0876e4f475d64",
@@ -263,7 +71,7 @@
           "validator"
         ]
       },
-      "timestamp": "2026-11-22T20:57:21.602959+00:00"
+      "timestamp": "2026-11-22T21:13:11.303892+00:00"
     },
     {
       "issue_id": "be179dca75047441",
@@ -274,7 +82,7 @@
         "severity": "blocking",
         "message": "issue_count=64"
       },
-      "timestamp": "2026-11-22T20:57:21.602959+00:00"
+      "timestamp": "2026-11-22T21:13:11.303892+00:00"
     },
     {
       "issue_id": "bac85a17c0fcb2ac",
@@ -286,7 +94,7 @@
         "message": "Detailed pseudocode section missing: RefreshMonthlySummary",
         "procedure": "RefreshMonthlySummary"
       },
-      "timestamp": "2026-11-22T20:57:21.602959+00:00"
+      "timestamp": "2026-11-22T21:13:11.303892+00:00"
     },
     {
       "issue_id": "d8cdc528ce2be432",
@@ -297,7 +105,7 @@
         "severity": "blocking",
         "message": "VBA On Error runtime semantics"
       },
-      "timestamp": "2026-11-22T20:57:21.617355+00:00"
+      "timestamp": "2026-11-22T21:13:11.314535+00:00"
     },
     {
       "issue_id": "b6277ffa76e2ac9c",
@@ -308,7 +116,7 @@
         "severity": "blocking",
         "message": "Late-bound COM/Object members"
       },
-      "timestamp": "2026-11-22T20:57:21.617355+00:00"
+      "timestamp": "2026-11-22T21:13:11.314535+00:00"
     },
     {
       "issue_id": "cdbb35c9869444f5",
@@ -329,7 +137,7 @@
           }
         }
       },
-      "timestamp": "2026-11-22T20:57:21.618121+00:00"
+      "timestamp": "2026-11-22T21:13:11.315008+00:00"
     },
     {
       "issue_id": "5587823c9eaf352d",
@@ -341,7 +149,7 @@
         "absent_after_final_scan": false,
         "downstream_resolution": null
       },
-      "timestamp": "2026-11-22T20:57:21.618782+00:00"
+      "timestamp": "2026-11-22T21:13:11.315385+00:00"
     },
     {
       "issue_id": "1bf0876e4f475d64",
@@ -353,7 +161,7 @@
         "absent_after_final_scan": false,
         "downstream_resolution": null
       },
-      "timestamp": "2026-11-22T20:57:21.619348+00:00"
+      "timestamp": "2026-11-22T21:13:11.315787+00:00"
     },
     {
       "issue_id": "be179dca75047441",
@@ -365,7 +173,7 @@
         "absent_after_final_scan": false,
         "downstream_resolution": null
       },
-      "timestamp": "2026-11-22T20:57:21.619744+00:00"
+      "timestamp": "2026-11-22T21:13:11.316160+00:00"
     },
     {
       "issue_id": "bac85a17c0fcb2ac",
@@ -377,7 +185,7 @@
         "absent_after_final_scan": false,
         "downstream_resolution": null
       },
-      "timestamp": "2026-11-22T20:57:21.620086+00:00"
+      "timestamp": "2026-11-22T21:13:11.316524+00:00"
     },
     {
       "issue_id": "d8cdc528ce2be432",
@@ -389,7 +197,7 @@
         "absent_after_final_scan": false,
         "downstream_resolution": null
       },
-      "timestamp": "2026-11-22T20:57:21.620483+00:00"
+      "timestamp": "2026-11-22T21:13:11.316911+00:00"
     },
     {
       "issue_id": "b6277ffa76e2ac9c",
@@ -401,7 +209,7 @@
         "absent_after_final_scan": false,
         "downstream_resolution": null
       },
-      "timestamp": "2026-11-22T20:57:21.620804+00:00"
+      "timestamp": "2026-11-22T21:13:11.317370+00:00"
     },
     {
       "status": "run_completed",
@@ -409,7 +217,7 @@
       "addressed_issue_count": 1,
       "unresolved_issue_count": 6,
       "conversion_readiness": "NOT_CERTIFIED",
-      "timestamp": "2026-11-22T20:57:21.622445+00:00"
+      "timestamp": "2026-11-22T21:13:11.319899+00:00"
     }
   ]
 }

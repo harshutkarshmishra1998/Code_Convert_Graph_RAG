@@ -1,0 +1,605 @@
+{
+  "schema_version": "1.0",
+  "source_file": "vba_sample_6.bas",
+  "source_sha256": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+  "source_language": "VBA",
+  "target_language": "Java",
+  "java_file": "vba_sample_6.java",
+  "procedure_count": 15,
+  "semantic_status": "blocked",
+  "compatibility_requirements": [
+    {
+      "code": "VBA_OPTION_COMPARE_TEXT",
+      "title": "Case-insensitive string comparison",
+      "severity": "review",
+      "target_guidance": "Preserve locale-aware VBA text-comparison semantics for affected string comparisons; do not assume Java String.equalsIgnoreCase is fully equivalent.",
+      "evidence": [
+        "Option Compare Text"
+      ]
+    },
+    {
+      "code": "VBA_OPTION_BASE_1",
+      "title": "One-based default array bounds",
+      "severity": "review",
+      "target_guidance": "Use an array abstraction that preserves explicit lower bounds and VBA default lower-bound rules.",
+      "evidence": [
+        "Option Base 1"
+      ]
+    },
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "title": "VBA On Error runtime semantics",
+      "severity": "blocking",
+      "target_guidance": "Implement a compatibility runtime for Resume Next, GoTo handler, GoTo 0, Err state and handler activation; this pass preserves directives but does not emulate execution.",
+      "evidence": [
+        {
+          "procedure": "ExecuteStressPipeline",
+          "mode": "goto_handler",
+          "handler": "ErrHandler"
+        },
+        {
+          "procedure": "InitInfrastructure",
+          "mode": "resume_next",
+          "handler": null
+        },
+        {
+          "procedure": "InitInfrastructure",
+          "mode": "disable_handler",
+          "handler": null
+        },
+        {
+          "procedure": "TryParseEntry",
+          "mode": "goto_handler",
+          "handler": "ParseFail"
+        },
+        {
+          "procedure": "DeduplicateBatchEntries",
+          "mode": "resume_next",
+          "handler": null
+        },
+        {
+          "procedure": "DeduplicateBatchEntries",
+          "mode": "disable_handler",
+          "handler": null
+        }
+      ]
+    },
+    {
+      "code": "VBA_GOSUB_RETURN",
+      "title": "Legacy GoSub/Return control flow",
+      "severity": "blocking",
+      "target_guidance": "Lower GoSub to an explicit continuation/return stack or a proven equivalent; never map Return to Java method return.",
+      "evidence": [
+        {
+          "procedure": "RunLegacyGoSubAudit",
+          "label": "ValidateSingleEntry"
+        }
+      ]
+    },
+    {
+      "code": "LATE_BOUND_OBJECT_MEMBERS",
+      "title": "Late-bound COM/Object members",
+      "severity": "blocking",
+      "target_guidance": "Define explicit Java interfaces/adapters for the actual COM object behavior. Object-typed references alone do not identify the target API.",
+      "evidence": [
+        {
+          "procedure": "DeduplicateBatchEntries",
+          "member": "Add",
+          "owner_type": "Object"
+        },
+        {
+          "procedure": "DeduplicateBatchEntries",
+          "member": "Exists",
+          "owner_type": "Object"
+        }
+      ]
+    },
+    {
+      "code": "COM_CREATEOBJECT",
+      "title": "COM object activation",
+      "severity": "blocking",
+      "target_guidance": "Replace ProgID-based activation with an explicit Java implementation or integration adapter; preserve fallback behavior.",
+      "evidence": [
+        {
+          "procedure": "InitInfrastructure",
+          "expression": "CreateObject(\"Scripting.Dictionary\")"
+        },
+        {
+          "procedure": "DeduplicateBatchEntries",
+          "expression": "CreateObject(\"Scripting.Dictionary\")"
+        }
+      ]
+    },
+    {
+      "code": "VBA_BYREF",
+      "title": "ByRef parameter mutation",
+      "severity": "review",
+      "target_guidance": "Generate mutable holders or pass mutable record/array references so writes in the callee are visible to the caller.",
+      "evidence": [
+        {
+          "caller": "ExecuteStressPipeline",
+          "target": "NormalizeEntryInPlace",
+          "parameter": "entry",
+          "argument_is_lvalue": true
+        },
+        {
+          "caller": "ExecuteStressPipeline",
+          "target": "TryParseEntry",
+          "parameter": "target",
+          "argument_is_lvalue": true
+        },
+        {
+          "caller": "ExecuteStressPipeline",
+          "target": "DeduplicateBatchEntries",
+          "parameter": "batch",
+          "argument_is_lvalue": true
+        },
+        {
+          "caller": "ExecuteStressPipeline",
+          "target": "RunLegacyGoSubAudit",
+          "parameter": "batch",
+          "argument_is_lvalue": true
+        },
+        {
+          "caller": "ExecuteStressPipeline",
+          "target": "RunLegacyGoSubAudit",
+          "parameter": "summaryStatus",
+          "argument_is_lvalue": true
+        },
+        {
+          "caller": "ExecuteStressPipeline",
+          "target": "BuildSummaryReport",
+          "parameter": "batch",
+          "argument_is_lvalue": true
+        }
+      ]
+    },
+    {
+      "code": "VBA_IIF_EAGER_EVALUATION",
+      "title": "IIf evaluates both result expressions",
+      "severity": "review",
+      "target_guidance": "Do not translate IIf to Java’s lazy conditional operator without checking side effects and exceptions; VBA IIf evaluates both branches.",
+      "evidence": [
+        {
+          "procedure": "BuildUpsertSql",
+          "source": "IIf(entry.IsReconciled, 1, 0)"
+        }
+      ]
+    },
+    {
+      "code": "VBA_DOEVENTS",
+      "title": "DoEvents cooperative yield",
+      "severity": "review",
+      "target_guidance": "Decide whether a Java event-loop/thread-yield equivalent is required; a no-op changes responsiveness semantics.",
+      "evidence": [
+        {
+          "procedure": "ExecuteStressPipeline",
+          "source": "DoEvents"
+        }
+      ]
+    },
+    {
+      "code": "VBA_DYNAMIC_ARRAYS",
+      "title": "Dynamic arrays, ReDim, Preserve and Erase",
+      "severity": "review",
+      "target_guidance": "Implement resizable arrays with preserved lower/upper bounds, element copying, and Erase semantics.",
+      "evidence": [
+        {
+          "procedure": "ExecuteStressPipeline",
+          "preserve": false
+        },
+        {
+          "procedure": "ExecuteStressPipeline",
+          "preserve": true
+        },
+        {
+          "procedure": "TryParseEntry",
+          "preserve": false
+        },
+        {
+          "procedure": "TryParseEntry",
+          "preserve": false
+        },
+        {
+          "procedure": "NormalizeEntryInPlace",
+          "preserve": false
+        },
+        {
+          "procedure": "NormalizeEntryInPlace",
+          "preserve": true
+        },
+        {
+          "procedure": "DeduplicateBatchEntries",
+          "preserve": false
+        },
+        {
+          "procedure": "DeduplicateBatchEntries",
+          "preserve": true
+        }
+      ]
+    },
+    {
+      "code": "VBA_CURRENCY",
+      "title": "VBA Currency fixed-point arithmetic",
+      "severity": "review",
+      "target_guidance": "Use fixed-point decimal arithmetic with four decimal places and verify rounding/overflow rules.",
+      "evidence": {
+        "type_occurrences": 4
+      }
+    },
+    {
+      "code": "VBA_DATE",
+      "title": "VBA Date representation",
+      "severity": "review",
+      "target_guidance": "Map VBA/OLE Automation dates carefully; verify serial-date conversions, timezone assumptions and date parsing/formatting.",
+      "evidence": {
+        "type_occurrences": 1
+      }
+    },
+    {
+      "code": "VBA_VARIANT",
+      "title": "Variant dynamic values",
+      "severity": "review",
+      "target_guidance": "Preserve runtime type changes, Empty/Null distinctions, arrays stored in Variant, and VBA conversion rules.",
+      "evidence": [
+        {
+          "procedure": "TryParseEntry",
+          "variable": "parts"
+        },
+        {
+          "procedure": "TryParseEntry",
+          "variable": "tagTokens"
+        },
+        {
+          "procedure": "EvaluateDependencyDepth",
+          "variable": "pairs"
+        },
+        {
+          "procedure": "EvaluateDependencyDepth",
+          "variable": "edgeParts"
+        }
+      ]
+    },
+    {
+      "code": "VBA_COLLECTION",
+      "title": "VBA Collection semantics",
+      "severity": "review",
+      "target_guidance": "Preserve insertion order, one-based Item indexing, Count, Add and Remove behavior.",
+      "evidence": [
+        {
+          "module": "ComplexConversionStressTest",
+          "variable": "m_AuditLog"
+        }
+      ]
+    },
+    {
+      "code": "VBA_ARRAY_INITIALIZATION_IDIOM",
+      "title": "Double-Not dynamic-array initialization check",
+      "severity": "blocking",
+      "target_guidance": "Confirm the source runtime meaning and replace with an explicit initialized/uninitialized array state in Java. Do not translate Not Not as ordinary boolean negation.",
+      "evidence": [
+        {
+          "procedure": "NormalizeEntryInPlace",
+          "source": "(Not Not entry.Tags) <> 0",
+          "operand_type": "array"
+        },
+        {
+          "procedure": "NormalizeEntryInPlace",
+          "source": "(Not Not entry.Tags) = 0",
+          "operand_type": "array"
+        }
+      ]
+    },
+    {
+      "code": "VBA_OBJECT_IDENTITY",
+      "title": "VBA Is object-reference comparison",
+      "severity": "review",
+      "target_guidance": "Preserve object identity/null comparison semantics; distinguish Is from value equality.",
+      "evidence": [
+        {
+          "procedure": "InitInfrastructure",
+          "operator": "is",
+          "source": "Err.Number <> 0 Or m_NodeRegistry Is Nothing"
+        },
+        {
+          "procedure": "InitInfrastructure",
+          "operator": "is",
+          "source": "m_AuditLog Is Nothing"
+        },
+        {
+          "procedure": "LogAudit",
+          "operator": "is",
+          "source": "m_AuditLog Is Nothing"
+        },
+        {
+          "procedure": "DeduplicateBatchEntries",
+          "operator": "is",
+          "source": "seenKeys Is Nothing"
+        },
+        {
+          "procedure": "BuildSummaryReport",
+          "operator": "is",
+          "source": "Not m_AuditLog Is Nothing And m_AuditLog.Count > 0"
+        },
+        {
+          "procedure": "GetAuditEntryCount",
+          "operator": "is",
+          "source": "m_AuditLog Is Nothing"
+        }
+      ]
+    },
+    {
+      "code": "VBA_BITWISE_LOGICAL_OPERATORS",
+      "title": "Bitwise logical operators on numeric values",
+      "severity": "review",
+      "target_guidance": "Preserve VBA bitwise behavior for numeric operands; do not map every And/Or expression to Java boolean operators.",
+      "evidence": [
+        {
+          "procedure": "ExecuteStressPipeline",
+          "operator": "and",
+          "source": "(modeMask And ModeNormalize) = ModeNormalize"
+        },
+        {
+          "procedure": "ExecuteStressPipeline",
+          "operator": "and",
+          "source": "(modeMask And ModeAggregate) = ModeAggregate"
+        },
+        {
+          "procedure": "ExecuteStressPipeline",
+          "operator": "and",
+          "source": "(modeMask And ModeDeduplicate) = ModeDeduplicate And batch.RecordCount > 1"
+        },
+        {
+          "procedure": "ExecuteStressPipeline",
+          "operator": "and",
+          "source": "(modeMask And ModeAudit) = ModeAudit"
+        }
+      ]
+    }
+  ],
+  "generated_with_runtime_requirements": true,
+  "compile_status": "passed",
+  "compiler_output": "",
+  "limitations": [
+    {
+      "code": "MODULE_TYPE_NOT_LOWERED",
+      "message": "Module declaration 'LedgerEntry' needs a target-language type mapping.",
+      "procedure": null,
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "MODULE_TYPE_NOT_LOWERED",
+      "message": "Module declaration 'BatchSummary' needs a target-language type mapping.",
+      "procedure": null,
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "MODULE_TYPE_NOT_LOWERED",
+      "message": "Module declaration 'InternalGraphNode' needs a target-language type mapping.",
+      "procedure": null,
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "message": "On Error runtime behavior needs a target implementation.",
+      "procedure": "ExecuteStressPipeline",
+      "source_location": {
+        "line": 60,
+        "end_line": 60,
+        "file": "vba_sample_6.bas"
+      },
+      "source_text": "On Error GoTo ErrHandler"
+    },
+    {
+      "code": "UNSUPPORTED_REDIM_TARGET",
+      "message": "ReDim target is not a local array variable.",
+      "procedure": "ExecuteStressPipeline",
+      "source_location": {
+        "line": 82,
+        "end_line": 82,
+        "file": "vba_sample_6.bas"
+      },
+      "source_text": "ReDim batch.Entries(1 To UBound(lines) - LBound(lines) + 1)"
+    },
+    {
+      "code": "UNSUPPORTED_REDIM_TARGET",
+      "message": "ReDim target is not a local array variable.",
+      "procedure": "ExecuteStressPipeline",
+      "source_location": {
+        "line": 115,
+        "end_line": 115,
+        "file": "vba_sample_6.bas"
+      },
+      "source_text": "ReDim Preserve batch.Entries(1 To batch.RecordCount)"
+    },
+    {
+      "code": "UNSUPPORTED_ERASE_TARGET",
+      "message": "Erase target is not a local array variable.",
+      "procedure": "ExecuteStressPipeline",
+      "source_location": {
+        "line": 117,
+        "end_line": 117,
+        "file": "vba_sample_6.bas"
+      },
+      "source_text": "Erase batch.Entries"
+    },
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "message": "On Error runtime behavior needs a target implementation.",
+      "procedure": "InitInfrastructure",
+      "source_location": {
+        "line": 145,
+        "end_line": 145,
+        "file": "vba_sample_6.bas"
+      },
+      "source_text": "On Error Resume Next"
+    },
+    {
+      "code": "VBA_COM_ADAPTER_REQUIRED",
+      "message": "CreateObject requires a Java adapter for the requested COM server.",
+      "procedure": "InitInfrastructure",
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "LATE_BOUND_OBJECT_CREATION",
+      "message": "VBA object construction requires a target-specific adapter.",
+      "procedure": "InitInfrastructure",
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "message": "On Error runtime behavior needs a target implementation.",
+      "procedure": "InitInfrastructure",
+      "source_location": {
+        "line": 151,
+        "end_line": 151,
+        "file": "vba_sample_6.bas"
+      },
+      "source_text": "On Error GoTo 0"
+    },
+    {
+      "code": "LATE_BOUND_OBJECT_CREATION",
+      "message": "VBA object construction requires a target-specific adapter.",
+      "procedure": "LogAudit",
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "message": "On Error runtime behavior needs a target implementation.",
+      "procedure": "TryParseEntry",
+      "source_location": {
+        "line": 183,
+        "end_line": 183,
+        "file": "vba_sample_6.bas"
+      },
+      "source_text": "On Error GoTo ParseFail"
+    },
+    {
+      "code": "VBA_LEGACY_JUMP",
+      "message": "goto control flow is explicitly marked for implementation.",
+      "procedure": "TryParseEntry",
+      "source_location": null,
+      "source_text": "GoTo ParseFail"
+    },
+    {
+      "code": "UNSUPPORTED_REDIM_TARGET",
+      "message": "ReDim target is not a local array variable.",
+      "procedure": "TryParseEntry",
+      "source_location": {
+        "line": 216,
+        "end_line": 216,
+        "file": "vba_sample_6.bas"
+      },
+      "source_text": "ReDim target.Tags(1 To UBound(tagTokens) - LBound(tagTokens) + 1)"
+    },
+    {
+      "code": "UNSUPPORTED_REDIM_TARGET",
+      "message": "ReDim target is not a local array variable.",
+      "procedure": "TryParseEntry",
+      "source_location": {
+        "line": 221,
+        "end_line": 221,
+        "file": "vba_sample_6.bas"
+      },
+      "source_text": "ReDim target.Tags(1 To 1)"
+    },
+    {
+      "code": "UNSUPPORTED_REDIM_TARGET",
+      "message": "ReDim target is not a local array variable.",
+      "procedure": "NormalizeEntryInPlace",
+      "source_location": {
+        "line": 260,
+        "end_line": 260,
+        "file": "vba_sample_6.bas"
+      },
+      "source_text": "ReDim entry.Tags(1 To 1)"
+    },
+    {
+      "code": "UNSUPPORTED_REDIM_TARGET",
+      "message": "ReDim target is not a local array variable.",
+      "procedure": "NormalizeEntryInPlace",
+      "source_location": {
+        "line": 263,
+        "end_line": 263,
+        "file": "vba_sample_6.bas"
+      },
+      "source_text": "ReDim Preserve entry.Tags(1 To UBound(entry.Tags) + 1)"
+    },
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "message": "On Error runtime behavior needs a target implementation.",
+      "procedure": "DeduplicateBatchEntries",
+      "source_location": {
+        "line": 280,
+        "end_line": 280,
+        "file": "vba_sample_6.bas"
+      },
+      "source_text": "On Error Resume Next"
+    },
+    {
+      "code": "VBA_COM_ADAPTER_REQUIRED",
+      "message": "CreateObject requires a Java adapter for the requested COM server.",
+      "procedure": "DeduplicateBatchEntries",
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "message": "On Error runtime behavior needs a target implementation.",
+      "procedure": "DeduplicateBatchEntries",
+      "source_location": {
+        "line": 282,
+        "end_line": 282,
+        "file": "vba_sample_6.bas"
+      },
+      "source_text": "On Error GoTo 0"
+    },
+    {
+      "code": "UNSUPPORTED_ERASE_TARGET",
+      "message": "Erase target is not a local array variable.",
+      "procedure": "DeduplicateBatchEntries",
+      "source_location": {
+        "line": 306,
+        "end_line": 306,
+        "file": "vba_sample_6.bas"
+      },
+      "source_text": "Erase batch.Entries"
+    },
+    {
+      "code": "VBA_LEGACY_JUMP",
+      "message": "gosub control flow is explicitly marked for implementation.",
+      "procedure": "RunLegacyGoSubAudit",
+      "source_location": {
+        "line": 327,
+        "end_line": 327,
+        "file": "vba_sample_6.bas"
+      },
+      "source_text": "GoSub ValidateSingleEntry"
+    },
+    {
+      "code": "VBA_LEGACY_JUMP",
+      "message": "gosub_return control flow is explicitly marked for implementation.",
+      "procedure": "RunLegacyGoSubAudit",
+      "source_location": {
+        "line": 345,
+        "end_line": 345,
+        "file": "vba_sample_6.bas"
+      },
+      "source_text": "Return"
+    },
+    {
+      "code": "LATE_BOUND_OBJECT_CREATION",
+      "message": "VBA object construction requires a target-specific adapter.",
+      "procedure": "ResetModuleState",
+      "source_location": null,
+      "source_text": null
+    }
+  ],
+  "note": "Compilation verifies Java syntax only, not behavioral equivalence or availability of VBA host adapters."
+}

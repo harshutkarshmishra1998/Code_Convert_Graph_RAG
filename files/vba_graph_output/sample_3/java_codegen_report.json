@@ -1,0 +1,214 @@
+{
+  "schema_version": "1.0",
+  "source_file": "vba_sample_3.bas",
+  "source_sha256": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+  "source_language": "VBA",
+  "target_language": "Java",
+  "java_file": "vba_sample_3.java",
+  "procedure_count": 1,
+  "semantic_status": "blocked",
+  "compatibility_requirements": [
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "title": "VBA On Error runtime semantics",
+      "severity": "blocking",
+      "target_guidance": "Implement a compatibility runtime for Resume Next, GoTo handler, GoTo 0, Err state and handler activation; this pass preserves directives but does not emulate execution.",
+      "evidence": [
+        {
+          "procedure": "ImportDailySales",
+          "mode": "goto_handler",
+          "handler": "HandleError"
+        }
+      ]
+    },
+    {
+      "code": "LATE_BOUND_OBJECT_MEMBERS",
+      "title": "Late-bound COM/Object members",
+      "severity": "blocking",
+      "target_guidance": "Define explicit Java interfaces/adapters for the actual COM object behavior. Object-typed references alone do not identify the target API.",
+      "evidence": [
+        {
+          "procedure": "ImportDailySales",
+          "member": "Raise",
+          "owner_type": null
+        },
+        {
+          "procedure": "ImportDailySales",
+          "member": "Type",
+          "owner_type": "Object"
+        },
+        {
+          "procedure": "ImportDailySales",
+          "member": "Charset",
+          "owner_type": "Object"
+        },
+        {
+          "procedure": "ImportDailySales",
+          "member": "Open",
+          "owner_type": "Object"
+        },
+        {
+          "procedure": "ImportDailySales",
+          "member": "LoadFromFile",
+          "owner_type": "Object"
+        },
+        {
+          "procedure": "ImportDailySales",
+          "member": "ReadText",
+          "owner_type": "Object"
+        },
+        {
+          "procedure": "ImportDailySales",
+          "member": "EOS",
+          "owner_type": "Object"
+        },
+        {
+          "procedure": "ImportDailySales",
+          "member": "Exists",
+          "owner_type": "Object"
+        },
+        {
+          "procedure": "ImportDailySales",
+          "member": "Add",
+          "owner_type": "Object"
+        },
+        {
+          "procedure": "ImportDailySales",
+          "member": "Close",
+          "owner_type": "Object"
+        },
+        {
+          "procedure": "ImportDailySales",
+          "member": "Worksheets",
+          "owner_type": null
+        },
+        {
+          "procedure": "ImportDailySales",
+          "member": "Row",
+          "owner_type": null
+        },
+        {
+          "procedure": "ImportDailySales",
+          "member": "End",
+          "owner_type": null
+        },
+        {
+          "procedure": "ImportDailySales",
+          "member": "Count",
+          "owner_type": null
+        },
+        {
+          "procedure": "ImportDailySales",
+          "member": "Value",
+          "owner_type": null
+        },
+        {
+          "procedure": "ImportDailySales",
+          "member": "State",
+          "owner_type": "Object"
+        }
+      ]
+    },
+    {
+      "code": "COM_CREATEOBJECT",
+      "title": "COM object activation",
+      "severity": "blocking",
+      "target_guidance": "Replace ProgID-based activation with an explicit Java implementation or integration adapter; preserve fallback behavior.",
+      "evidence": [
+        {
+          "procedure": "ImportDailySales",
+          "expression": "CreateObject(\"Scripting.Dictionary\")"
+        },
+        {
+          "procedure": "ImportDailySales",
+          "expression": "CreateObject(\"ADODB.Stream\")"
+        }
+      ]
+    },
+    {
+      "code": "VBA_CURRENCY",
+      "title": "VBA Currency fixed-point arithmetic",
+      "severity": "review",
+      "target_guidance": "Use fixed-point decimal arithmetic with four decimal places and verify rounding/overflow rules.",
+      "evidence": {
+        "type_occurrences": 1
+      }
+    },
+    {
+      "code": "VBA_DATE",
+      "title": "VBA Date representation",
+      "severity": "review",
+      "target_guidance": "Map VBA/OLE Automation dates carefully; verify serial-date conversions, timezone assumptions and date parsing/formatting.",
+      "evidence": {
+        "type_occurrences": 1
+      }
+    },
+    {
+      "code": "VBA_VARIANT",
+      "title": "Variant dynamic values",
+      "severity": "review",
+      "target_guidance": "Preserve runtime type changes, Empty/Null distinctions, arrays stored in Variant, and VBA conversion rules.",
+      "evidence": [
+        {
+          "procedure": "ImportDailySales",
+          "variable": "fields"
+        }
+      ]
+    },
+    {
+      "code": "VBA_OBJECT_IDENTITY",
+      "title": "VBA Is object-reference comparison",
+      "severity": "review",
+      "target_guidance": "Preserve object identity/null comparison semantics; distinguish Is from value equality.",
+      "evidence": [
+        {
+          "procedure": "ImportDailySales",
+          "operator": "is",
+          "source": "Not stream Is Nothing"
+        }
+      ]
+    }
+  ],
+  "generated_with_runtime_requirements": true,
+  "compile_status": "passed",
+  "compiler_output": "",
+  "limitations": [
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "message": "On Error runtime behavior needs a target implementation.",
+      "procedure": "ImportDailySales",
+      "source_location": {
+        "line": 13,
+        "end_line": 13,
+        "file": "vba_sample_3.bas"
+      },
+      "source_text": "On Error GoTo HandleError"
+    },
+    {
+      "code": "VBA_COM_ADAPTER_REQUIRED",
+      "message": "CreateObject requires a Java adapter for the requested COM server.",
+      "procedure": "ImportDailySales",
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "UNSUPPORTED_ASSIGNMENT_TARGET",
+      "message": "Assignment target cannot be lowered safely.",
+      "procedure": "ImportDailySales",
+      "source_location": {
+        "line": 39,
+        "end_line": 39,
+        "file": "vba_sample_3.bas"
+      },
+      "source_text": "salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount"
+    },
+    {
+      "code": "VBA_HOST_ADAPTER_REQUIRED",
+      "message": "VBA host object 'ThisWorkbook' requires an application-specific Java adapter.",
+      "procedure": "ImportDailySales",
+      "source_location": null,
+      "source_text": null
+    }
+  ],
+  "note": "Compilation verifies Java syntax only, not behavioral equivalence or availability of VBA host adapters."
+}

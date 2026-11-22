@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0",
+  "source_file": "vba_sample_1.bas",
+  "source_sha256": "364729d63817d3d67f1e5b799ab41a6e6fbbf32fee80266dc613f744b88feaff",
+  "source_language": "VBA",
+  "target_language": "Java",
+  "java_file": "vba_sample_1.java",
+  "procedure_count": 1,
+  "semantic_status": "blocked",
+  "compatibility_requirements": [
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "title": "VBA On Error runtime semantics",
+      "severity": "blocking",
+      "target_guidance": "Implement a compatibility runtime for Resume Next, GoTo handler, GoTo 0, Err state and handler activation; this pass preserves directives but does not emulate execution.",
+      "evidence": [
+        {
+          "procedure": "RefreshMonthlySummary",
+          "mode": "goto_handler",
+          "handler": "HandleError"
+        }
+      ]
+    },
+    {
+      "code": "LATE_BOUND_OBJECT_MEMBERS",
+      "title": "Late-bound COM/Object members",
+      "severity": "blocking",
+      "target_guidance": "Define explicit Java interfaces/adapters for the actual COM object behavior. Object-typed references alone do not identify the target API.",
+      "evidence": [
+        {
+          "procedure": "RefreshMonthlySummary",
+          "member": "Worksheets",
+          "owner_type": null
+        },
+        {
+          "procedure": "RefreshMonthlySummary",
+          "member": "Row",
+          "owner_type": null
+        },
+        {
+          "procedure": "RefreshMonthlySummary",
+          "member": "End",
+          "owner_type": null
+        },
+        {
+          "procedure": "RefreshMonthlySummary",
+          "member": "Cells",
+          "owner_type": "Worksheet"
+        },
+        {
+          "procedure": "RefreshMonthlySummary",
+          "member": "Count",
+          "owner_type": null
+        },
+        {
+          "procedure": "RefreshMonthlySummary",
+          "member": "Rows",
+          "owner_type": "Worksheet"
+        },
+        {
+          "procedure": "RefreshMonthlySummary",
+          "member": "Value",
+          "owner_type": null
+        },
+        {
+          "procedure": "RefreshMonthlySummary",
+          "member": "Color",
+          "owner_type": null
+        },
+        {
+          "procedure": "RefreshMonthlySummary",
+          "member": "Interior",
+          "owner_type": null
+        },
+        {
+          "procedure": "RefreshMonthlySummary",
+          "member": "AutoFit",
+          "owner_type": null
+        },
+        {
+          "procedure": "RefreshMonthlySummary",
+          "member": "Columns",
+          "owner_type": "Worksheet"
+        }
+      ]
+    }
+  ],
+  "generated_with_runtime_requirements": true,
+  "compile_status": "passed",
+  "compiler_output": "",
+  "limitations": [
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "message": "On Error runtime behavior needs a target implementation.",
+      "procedure": "RefreshMonthlySummary",
+      "source_location": {
+        "line": 10,
+        "end_line": 10,
+        "file": "vba_sample_1.bas"
+      },
+      "source_text": "On Error GoTo HandleError"
+    },
+    {
+      "code": "VBA_HOST_ADAPTER_REQUIRED",
+      "message": "VBA host object 'ThisWorkbook' requires an application-specific Java adapter.",
+      "procedure": "RefreshMonthlySummary",
+      "source_location": null,
+      "source_text": null
+    }
+  ],
+  "note": "Compilation verifies Java syntax only, not behavioral equivalence or availability of VBA host adapters."
+}

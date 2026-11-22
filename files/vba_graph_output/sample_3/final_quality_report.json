@@ -521,15 +521,7 @@
               "status": "passed"
             },
             {
-              "path": "llm_handoff.json",
-              "status": "passed"
-            },
-            {
-              "path": "llm_handoff.md",
-              "status": "passed"
-            },
-            {
-              "path": "llm_handoff_ImportDailySales.json",
+              "path": "java_codegen_report.json",
               "status": "passed"
             },
             {
@@ -554,6 +546,10 @@
             },
             {
               "path": "universal_ir.json",
+              "status": "passed"
+            },
+            {
+              "path": "vba_sample_3.java",
               "status": "passed"
             }
           ]
@@ -660,15 +656,7 @@
             "status": "passed"
           },
           {
-            "path": "llm_handoff.json",
-            "status": "passed"
-          },
-          {
-            "path": "llm_handoff.md",
-            "status": "passed"
-          },
-          {
-            "path": "llm_handoff_ImportDailySales.json",
+            "path": "java_codegen_report.json",
             "status": "passed"
           },
           {
@@ -693,6 +681,10 @@
           },
           {
             "path": "universal_ir.json",
+            "status": "passed"
+          },
+          {
+            "path": "vba_sample_3.java",
             "status": "passed"
           }
         ]

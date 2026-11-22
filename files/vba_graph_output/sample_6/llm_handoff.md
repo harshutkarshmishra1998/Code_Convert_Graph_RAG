@@ -12,17 +12,28 @@ LLM was called while creating it.
 - Semantic status: **blocked**
 - Migration readiness: **blocked**
 - Unresolved expressions: 0
-- Pseudocode available: **yes**
+- Pseudocode available: **no**
 - Intelligent fixer LLM enabled: **False**
 - Intelligent fixer issues: 1 addressed and verified,
-  29 unresolved
+  37 unresolved
 - Missing pseudocode procedure sections:
-  4
+  15
 - Procedures missing detailed pseudocode:
 - `ExecuteStressPipeline`
+- `InitInfrastructure`
+- `NextSequence`
 - `LogAudit`
+- `NormalizeLineEndings`
 - `TryParseEntry`
 - `NormalizeEntryInPlace`
+- `DeduplicateBatchEntries`
+- `RunLegacyGoSubAudit`
+- `EvaluateDependencyDepth`
+- `BuildUpsertSql`
+- `SanitizeSqlIdentifier`
+- `BuildSummaryReport`
+- `GetAuditEntryCount`
+- `ResetModuleState`
 
 ## Blocking compatibility requirements
 

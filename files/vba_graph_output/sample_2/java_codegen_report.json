@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "source_file": "vba_sample_2.bas",
+  "source_sha256": "10095d58ec66f1d8ba5f5fc42d7e175af3aff2c198044ee8d93956e86badb753",
+  "source_language": "VBA",
+  "target_language": "Java",
+  "java_file": "vba_sample_2.java",
+  "procedure_count": 1,
+  "semantic_status": "blocked",
+  "compatibility_requirements": [
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "title": "VBA On Error runtime semantics",
+      "severity": "blocking",
+      "target_guidance": "Implement a compatibility runtime for Resume Next, GoTo handler, GoTo 0, Err state and handler activation; this pass preserves directives but does not emulate execution.",
+      "evidence": [
+        {
+          "procedure": "NormalizeSku",
+          "mode": "goto_handler",
+          "handler": "InvalidSku"
+        }
+      ]
+    },
+    {
+      "code": "LATE_BOUND_OBJECT_MEMBERS",
+      "title": "Late-bound COM/Object members",
+      "severity": "blocking",
+      "target_guidance": "Define explicit Java interfaces/adapters for the actual COM object behavior. Object-typed references alone do not identify the target API.",
+      "evidence": [
+        {
+          "procedure": "NormalizeSku",
+          "member": "Raise",
+          "owner_type": null
+        }
+      ]
+    }
+  ],
+  "generated_with_runtime_requirements": true,
+  "compile_status": "passed",
+  "compiler_output": "",
+  "limitations": [
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "message": "On Error runtime behavior needs a target implementation.",
+      "procedure": "NormalizeSku",
+      "source_location": {
+        "line": 6,
+        "end_line": 6,
+        "file": "vba_sample_2.bas"
+      },
+      "source_text": "On Error GoTo InvalidSku"
+    }
+  ],
+  "note": "Compilation verifies Java syntax only, not behavioral equivalence or availability of VBA host adapters."
+}

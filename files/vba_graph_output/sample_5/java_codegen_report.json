@@ -1,0 +1,257 @@
+{
+  "schema_version": "1.0",
+  "source_file": "vba_sample_5.bas",
+  "source_sha256": "7599243eb5451741202a92e8f2d6254f463167ca9c90e129ee10df726fe244cb",
+  "source_language": "VBA",
+  "target_language": "Java",
+  "java_file": "vba_sample_5.java",
+  "procedure_count": 2,
+  "semantic_status": "blocked",
+  "compatibility_requirements": [
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "title": "VBA On Error runtime semantics",
+      "severity": "blocking",
+      "target_guidance": "Implement a compatibility runtime for Resume Next, GoTo handler, GoTo 0, Err state and handler activation; this pass preserves directives but does not emulate execution.",
+      "evidence": [
+        {
+          "procedure": "ReconcileInventory",
+          "mode": "goto_handler",
+          "handler": "HandleError"
+        },
+        {
+          "procedure": "LogInventoryError",
+          "mode": "resume_next",
+          "handler": null
+        }
+      ]
+    },
+    {
+      "code": "LATE_BOUND_OBJECT_MEMBERS",
+      "title": "Late-bound COM/Object members",
+      "severity": "blocking",
+      "target_guidance": "Define explicit Java interfaces/adapters for the actual COM object behavior. Object-typed references alone do not identify the target API.",
+      "evidence": [
+        {
+          "procedure": "ReconcileInventory",
+          "member": "EnableEvents",
+          "owner_type": null
+        },
+        {
+          "procedure": "ReconcileInventory",
+          "member": "Row",
+          "owner_type": null
+        },
+        {
+          "procedure": "ReconcileInventory",
+          "member": "End",
+          "owner_type": null
+        },
+        {
+          "procedure": "ReconcileInventory",
+          "member": "Cells",
+          "owner_type": "Worksheet"
+        },
+        {
+          "procedure": "ReconcileInventory",
+          "member": "Count",
+          "owner_type": null
+        },
+        {
+          "procedure": "ReconcileInventory",
+          "member": "Rows",
+          "owner_type": "Worksheet"
+        },
+        {
+          "procedure": "ReconcileInventory",
+          "member": "Value2",
+          "owner_type": null
+        },
+        {
+          "procedure": "ReconcileInventory",
+          "member": "Raise",
+          "owner_type": null
+        },
+        {
+          "procedure": "ReconcileInventory",
+          "member": "Exists",
+          "owner_type": "Object"
+        },
+        {
+          "procedure": "ReconcileInventory",
+          "member": "Add",
+          "owner_type": "Object"
+        },
+        {
+          "procedure": "ReconcileInventory",
+          "member": "Color",
+          "owner_type": null
+        },
+        {
+          "procedure": "ReconcileInventory",
+          "member": "Interior",
+          "owner_type": null
+        },
+        {
+          "procedure": "ReconcileInventory",
+          "member": "Value",
+          "owner_type": null
+        },
+        {
+          "procedure": "ReconcileInventory",
+          "member": "Sort",
+          "owner_type": null
+        },
+        {
+          "procedure": "ReconcileInventory",
+          "member": "Range",
+          "owner_type": "Worksheet"
+        },
+        {
+          "procedure": "LogInventoryError",
+          "member": "Worksheets",
+          "owner_type": null
+        },
+        {
+          "procedure": "LogInventoryError",
+          "member": "Row",
+          "owner_type": null
+        },
+        {
+          "procedure": "LogInventoryError",
+          "member": "End",
+          "owner_type": null
+        },
+        {
+          "procedure": "LogInventoryError",
+          "member": "Cells",
+          "owner_type": "Worksheet"
+        },
+        {
+          "procedure": "LogInventoryError",
+          "member": "Count",
+          "owner_type": null
+        },
+        {
+          "procedure": "LogInventoryError",
+          "member": "Rows",
+          "owner_type": "Worksheet"
+        },
+        {
+          "procedure": "LogInventoryError",
+          "member": "Value",
+          "owner_type": null
+        }
+      ]
+    },
+    {
+      "code": "COM_CREATEOBJECT",
+      "title": "COM object activation",
+      "severity": "blocking",
+      "target_guidance": "Replace ProgID-based activation with an explicit Java implementation or integration adapter; preserve fallback behavior.",
+      "evidence": [
+        {
+          "procedure": "ReconcileInventory",
+          "expression": "CreateObject(\"Scripting.Dictionary\")"
+        },
+        {
+          "procedure": "ReconcileInventory",
+          "expression": "CreateObject(\"Scripting.Dictionary\")"
+        }
+      ]
+    },
+    {
+      "code": "VBA_DATE",
+      "title": "VBA Date representation",
+      "severity": "review",
+      "target_guidance": "Map VBA/OLE Automation dates carefully; verify serial-date conversions, timezone assumptions and date parsing/formatting.",
+      "evidence": {
+        "type_occurrences": 1
+      }
+    },
+    {
+      "code": "VBA_OBJECT_IDENTITY",
+      "title": "VBA Is object-reference comparison",
+      "severity": "review",
+      "target_guidance": "Preserve object identity/null comparison semantics; distinguish Is from value equality.",
+      "evidence": [
+        {
+          "procedure": "LogInventoryError",
+          "operator": "is",
+          "source": "logSheet Is Nothing"
+        }
+      ]
+    }
+  ],
+  "generated_with_runtime_requirements": true,
+  "compile_status": "passed",
+  "compiler_output": "",
+  "limitations": [
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "message": "On Error runtime behavior needs a target implementation.",
+      "procedure": "ReconcileInventory",
+      "source_location": {
+        "line": 20,
+        "end_line": 20,
+        "file": "vba_sample_5.bas"
+      },
+      "source_text": "On Error GoTo HandleError"
+    },
+    {
+      "code": "VBA_HOST_ADAPTER_REQUIRED",
+      "message": "VBA host object 'Application' requires an application-specific Java adapter.",
+      "procedure": "ReconcileInventory",
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "VBA_COM_ADAPTER_REQUIRED",
+      "message": "CreateObject requires a Java adapter for the requested COM server.",
+      "procedure": "ReconcileInventory",
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "UNSUPPORTED_ASSIGNMENT_TARGET",
+      "message": "Assignment target cannot be lowered safely.",
+      "procedure": "ReconcileInventory",
+      "source_location": {
+        "line": 54,
+        "end_line": 54,
+        "file": "vba_sample_5.bas"
+      },
+      "source_text": "movementTotals(itemCode) = movementTotals(itemCode) + quantity"
+    },
+    {
+      "code": "VBA_LEGACY_JUMP",
+      "message": "goto control flow is explicitly marked for implementation.",
+      "procedure": "ReconcileInventory",
+      "source_location": {
+        "line": 92,
+        "end_line": 92,
+        "file": "vba_sample_5.bas"
+      },
+      "source_text": "GoTo CleanUp"
+    },
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "message": "On Error runtime behavior needs a target implementation.",
+      "procedure": "LogInventoryError",
+      "source_location": {
+        "line": 110,
+        "end_line": 110,
+        "file": "vba_sample_5.bas"
+      },
+      "source_text": "On Error Resume Next"
+    },
+    {
+      "code": "VBA_HOST_ADAPTER_REQUIRED",
+      "message": "VBA host object 'ThisWorkbook' requires an application-specific Java adapter.",
+      "procedure": "LogInventoryError",
+      "source_location": null,
+      "source_text": null
+    }
+  ],
+  "note": "Compilation verifies Java syntax only, not behavioral equivalence or availability of VBA host adapters."
+}

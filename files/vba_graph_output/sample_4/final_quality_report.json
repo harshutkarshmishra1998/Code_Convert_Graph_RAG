@@ -407,15 +407,7 @@
               "status": "passed"
             },
             {
-              "path": "llm_handoff.json",
-              "status": "passed"
-            },
-            {
-              "path": "llm_handoff.md",
-              "status": "passed"
-            },
-            {
-              "path": "llm_handoff_ConsolidateDepartmentFiles.json",
+              "path": "java_codegen_report.json",
               "status": "passed"
             },
             {
@@ -440,6 +432,10 @@
             },
             {
               "path": "universal_ir.json",
+              "status": "passed"
+            },
+            {
+              "path": "vba_sample_4.java",
               "status": "passed"
             }
           ]
@@ -544,15 +540,7 @@
             "status": "passed"
           },
           {
-            "path": "llm_handoff.json",
-            "status": "passed"
-          },
-          {
-            "path": "llm_handoff.md",
-            "status": "passed"
-          },
-          {
-            "path": "llm_handoff_ConsolidateDepartmentFiles.json",
+            "path": "java_codegen_report.json",
             "status": "passed"
           },
           {
@@ -577,6 +565,10 @@
           },
           {
             "path": "universal_ir.json",
+            "status": "passed"
+          },
+          {
+            "path": "vba_sample_4.java",
             "status": "passed"
           }
         ]

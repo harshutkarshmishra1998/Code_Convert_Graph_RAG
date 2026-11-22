@@ -17,18 +17,29 @@
     "semantic_error_count": 0,
     "unresolved_expression_count": 0,
     "opaque_statement_count": 0,
-    "pseudocode_available": true,
-    "missing_pseudocode_procedure_sections": 4,
+    "pseudocode_available": false,
+    "missing_pseudocode_procedure_sections": 15,
     "pseudocode_coverage_gaps": [
       "ExecuteStressPipeline",
+      "InitInfrastructure",
+      "NextSequence",
       "LogAudit",
+      "NormalizeLineEndings",
       "TryParseEntry",
-      "NormalizeEntryInPlace"
+      "NormalizeEntryInPlace",
+      "DeduplicateBatchEntries",
+      "RunLegacyGoSubAudit",
+      "EvaluateDependencyDepth",
+      "BuildUpsertSql",
+      "SanitizeSqlIdentifier",
+      "BuildSummaryReport",
+      "GetAuditEntryCount",
+      "ResetModuleState"
     ],
     "fixer_run_available": true,
     "fixer_llm_enabled": false,
     "fixer_addressed_issue_count": 1,
-    "fixer_unresolved_issue_count": 29
+    "fixer_unresolved_issue_count": 37
   },
   "shared_context": {
     "source": {
@@ -1972,7 +1983,7 @@
       "blocking_upstream_diagnostic_count": 0,
       "blocking_compatibility_requirement_count": 5,
       "frontend_hierarchy_repair_count": 0,
-      "pseudocode_procedure_sections_missing": 4,
+      "pseudocode_procedure_sections_missing": 15,
       "granular_segment_count": 228,
       "segment_kinds": {
         "PROCEDURE": 15,
@@ -2096,17 +2107,28 @@
     "semantic_errors": [],
     "pseudocode_coverage_gaps": [
       "ExecuteStressPipeline",
+      "InitInfrastructure",
+      "NextSequence",
       "LogAudit",
+      "NormalizeLineEndings",
       "TryParseEntry",
-      "NormalizeEntryInPlace"
+      "NormalizeEntryInPlace",
+      "DeduplicateBatchEntries",
+      "RunLegacyGoSubAudit",
+      "EvaluateDependencyDepth",
+      "BuildUpsertSql",
+      "SanitizeSqlIdentifier",
+      "BuildSummaryReport",
+      "GetAuditEntryCount",
+      "ResetModuleState"
     ],
     "intelligent_fixer": {
       "run_available": true,
       "llm_enabled": false,
       "conversion_readiness": "NOT_CERTIFIED",
-      "issue_count": 30,
+      "issue_count": 38,
       "addressed_issue_count": 1,
-      "unresolved_issue_count": 29
+      "unresolved_issue_count": 37
     },
     "artifact_files": {
       "graph": {
@@ -2131,43 +2153,33 @@
       },
       "universal_ir": {
         "file": "universal_ir.json",
-        "sha256": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1",
-        "size_bytes": 807320
+        "sha256": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a",
+        "size_bytes": 771948
       },
       "normalized_ir": {
         "file": "normalized_ir.json",
-        "sha256": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3",
-        "size_bytes": 1690025
+        "sha256": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b",
+        "size_bytes": 1654653
       },
       "semantic_analysis": {
         "file": "semantic_analysis.json",
-        "sha256": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2",
-        "size_bytes": 18795
+        "sha256": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21",
+        "size_bytes": 19086
       },
       "intelligent_fixer_log": {
         "file": "intelligent_fixer_log.json",
-        "sha256": "a79e6cfd78e84772f3c9865301071792e659aa54f85c663af5d7c31be50c2af0",
-        "size_bytes": 105217
+        "sha256": "221c74433c5c71c3b988d9b8942184b5b7657e627d42f075ef97b946106357b7",
+        "size_bytes": 32220
       },
       "final_quality_report": {
         "file": "final_quality_report.json",
-        "sha256": "35c32395ced40e67d2b4de406bd0ac2afc7a778b6487d936a400753f89cfc2fc",
-        "size_bytes": 49450
+        "sha256": "1a88559f83ccc33d5769c40cea60f0142ad24bdfb5da41bf6ec0498b72611797",
+        "size_bytes": 56858
       },
       "unresolved_issues": {
         "file": "unresolved_issues.json",
-        "sha256": "880a5e000fe81c933b3be0a4ee7849b39f0b2aaf2a32ce049c5baf8b30f3a9a1",
-        "size_bytes": 488682
-      },
-      "pseudocode": {
-        "file": "pseudocode.md",
-        "sha256": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0",
-        "size_bytes": 30408
-      },
-      "pseudocode_run": {
-        "file": "pseudocode_run.json",
-        "sha256": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf",
-        "size_bytes": 925
+        "sha256": "3a9f7db64c83462edb56b28538f5279dbd3361d857bbea71fea9797c9e3b1ef8",
+        "size_bytes": 425597
       }
     }
   },
@@ -2431,48 +2443,14 @@
       "direct_callees": []
     }
   ],
-  "pseudocode_run": {
-    "sample": "sample_6",
-    "graph_file": "graph.json",
-    "project": "vba_sample_6",
-    "node_count": 331,
-    "edge_count": 520,
-    "procedure_count": 15,
-    "diagnostics": [
-      {
-        "severity": "warning",
-        "code": "CROSS_NESTED_BLOCK_CLOSE",
-        "message": "End If closed a non-top IF frame; inspect nested syntax.",
-        "path": "vba_sample_6.bas",
-        "line": 223
-      },
-      {
-        "severity": "warning",
-        "code": "CROSS_NESTED_BLOCK_CLOSE",
-        "message": "End If closed a non-top IF frame; inspect nested syntax.",
-        "path": "vba_sample_6.bas",
-        "line": 256
-      },
-      {
-        "severity": "warning",
-        "code": "CROSS_NESTED_BLOCK_CLOSE",
-        "message": "End If closed a non-top IF frame; inspect nested syntax.",
-        "path": "vba_sample_6.bas",
-        "line": 472
-      }
-    ],
-    "generated_sections": 16,
-    "failed_sections": [],
-    "output_file": "pseudocode.md",
-    "status": "success"
-  },
+  "pseudocode_run": null,
   "intelligent_fixer": {
     "run_available": true,
     "llm_enabled": false,
     "conversion_readiness": "NOT_CERTIFIED",
-    "issue_count": 30,
+    "issue_count": 38,
     "addressed_issue_count": 1,
-    "unresolved_issue_count": 29,
+    "unresolved_issue_count": 37,
     "issues": [
       {
         "issue_id": "3b8e8663486ae9d1",
@@ -2959,84 +2937,6 @@
         }
       },
       {
-        "issue_id": "08e44f2b12f78bf2",
-        "issue": {
-          "code": "CROSS_NESTED_BLOCK_CLOSE",
-          "severity": "warning",
-          "priority": "high",
-          "subsystem": "frontend_control_flow",
-          "message": "End If closed a non-top IF frame; inspect nested syntax.",
-          "path": "vba_sample_6.bas",
-          "line": 223,
-          "artifact": "pseudocode_run",
-          "reported_by": [
-            "pseudocode_run"
-          ]
-        },
-        "detected": true,
-        "addressed": false,
-        "status": "detected_unresolved",
-        "changes": [],
-        "resolution_evidence": null,
-        "verification": {
-          "present_in_final_issue_set": true,
-          "absent_after_final_scan": false,
-          "downstream_resolution": null
-        }
-      },
-      {
-        "issue_id": "775d96c69b611473",
-        "issue": {
-          "code": "CROSS_NESTED_BLOCK_CLOSE",
-          "severity": "warning",
-          "priority": "high",
-          "subsystem": "frontend_control_flow",
-          "message": "End If closed a non-top IF frame; inspect nested syntax.",
-          "path": "vba_sample_6.bas",
-          "line": 256,
-          "artifact": "pseudocode_run",
-          "reported_by": [
-            "pseudocode_run"
-          ]
-        },
-        "detected": true,
-        "addressed": false,
-        "status": "detected_unresolved",
-        "changes": [],
-        "resolution_evidence": null,
-        "verification": {
-          "present_in_final_issue_set": true,
-          "absent_after_final_scan": false,
-          "downstream_resolution": null
-        }
-      },
-      {
-        "issue_id": "852578f6dd5c48dc",
-        "issue": {
-          "code": "CROSS_NESTED_BLOCK_CLOSE",
-          "severity": "warning",
-          "priority": "high",
-          "subsystem": "frontend_control_flow",
-          "message": "End If closed a non-top IF frame; inspect nested syntax.",
-          "path": "vba_sample_6.bas",
-          "line": 472,
-          "artifact": "pseudocode_run",
-          "reported_by": [
-            "pseudocode_run"
-          ]
-        },
-        "detected": true,
-        "addressed": false,
-        "status": "detected_unresolved",
-        "changes": [],
-        "resolution_evidence": null,
-        "verification": {
-          "present_in_final_issue_set": true,
-          "absent_after_final_scan": false,
-          "downstream_resolution": null
-        }
-      },
-      {
         "issue_id": "ed9313967888c4a2",
         "issue": {
           "code": "PSEUDOCODE_COVERAGE_GAP",
@@ -3056,12 +2956,69 @@
         }
       },
       {
+        "issue_id": "852fac0d1548a2f8",
+        "issue": {
+          "code": "PSEUDOCODE_COVERAGE_GAP",
+          "severity": "warning",
+          "message": "Detailed pseudocode section missing: InitInfrastructure",
+          "procedure": "InitInfrastructure"
+        },
+        "detected": true,
+        "addressed": false,
+        "status": "detected_unresolved",
+        "changes": [],
+        "resolution_evidence": null,
+        "verification": {
+          "present_in_final_issue_set": true,
+          "absent_after_final_scan": false,
+          "downstream_resolution": null
+        }
+      },
+      {
+        "issue_id": "f70079848422620c",
+        "issue": {
+          "code": "PSEUDOCODE_COVERAGE_GAP",
+          "severity": "warning",
+          "message": "Detailed pseudocode section missing: NextSequence",
+          "procedure": "NextSequence"
+        },
+        "detected": true,
+        "addressed": false,
+        "status": "detected_unresolved",
+        "changes": [],
+        "resolution_evidence": null,
+        "verification": {
+          "present_in_final_issue_set": true,
+          "absent_after_final_scan": false,
+          "downstream_resolution": null
+        }
+      },
+      {
         "issue_id": "ff18da0af55874c3",
         "issue": {
           "code": "PSEUDOCODE_COVERAGE_GAP",
           "severity": "warning",
           "message": "Detailed pseudocode section missing: LogAudit",
           "procedure": "LogAudit"
+        },
+        "detected": true,
+        "addressed": false,
+        "status": "detected_unresolved",
+        "changes": [],
+        "resolution_evidence": null,
+        "verification": {
+          "present_in_final_issue_set": true,
+          "absent_after_final_scan": false,
+          "downstream_resolution": null
+        }
+      },
+      {
+        "issue_id": "6e650211a86d6d5c",
+        "issue": {
+          "code": "PSEUDOCODE_COVERAGE_GAP",
+          "severity": "warning",
+          "message": "Detailed pseudocode section missing: NormalizeLineEndings",
+          "procedure": "NormalizeLineEndings"
         },
         "detected": true,
         "addressed": false,
@@ -3100,6 +3057,158 @@
           "severity": "warning",
           "message": "Detailed pseudocode section missing: NormalizeEntryInPlace",
           "procedure": "NormalizeEntryInPlace"
+        },
+        "detected": true,
+        "addressed": false,
+        "status": "detected_unresolved",
+        "changes": [],
+        "resolution_evidence": null,
+        "verification": {
+          "present_in_final_issue_set": true,
+          "absent_after_final_scan": false,
+          "downstream_resolution": null
+        }
+      },
+      {
+        "issue_id": "de20f64203d45500",
+        "issue": {
+          "code": "PSEUDOCODE_COVERAGE_GAP",
+          "severity": "warning",
+          "message": "Detailed pseudocode section missing: DeduplicateBatchEntries",
+          "procedure": "DeduplicateBatchEntries"
+        },
+        "detected": true,
+        "addressed": false,
+        "status": "detected_unresolved",
+        "changes": [],
+        "resolution_evidence": null,
+        "verification": {
+          "present_in_final_issue_set": true,
+          "absent_after_final_scan": false,
+          "downstream_resolution": null
+        }
+      },
+      {
+        "issue_id": "7491622fcccc96bf",
+        "issue": {
+          "code": "PSEUDOCODE_COVERAGE_GAP",
+          "severity": "warning",
+          "message": "Detailed pseudocode section missing: RunLegacyGoSubAudit",
+          "procedure": "RunLegacyGoSubAudit"
+        },
+        "detected": true,
+        "addressed": false,
+        "status": "detected_unresolved",
+        "changes": [],
+        "resolution_evidence": null,
+        "verification": {
+          "present_in_final_issue_set": true,
+          "absent_after_final_scan": false,
+          "downstream_resolution": null
+        }
+      },
+      {
+        "issue_id": "dd5e2607313fc07d",
+        "issue": {
+          "code": "PSEUDOCODE_COVERAGE_GAP",
+          "severity": "warning",
+          "message": "Detailed pseudocode section missing: EvaluateDependencyDepth",
+          "procedure": "EvaluateDependencyDepth"
+        },
+        "detected": true,
+        "addressed": false,
+        "status": "detected_unresolved",
+        "changes": [],
+        "resolution_evidence": null,
+        "verification": {
+          "present_in_final_issue_set": true,
+          "absent_after_final_scan": false,
+          "downstream_resolution": null
+        }
+      },
+      {
+        "issue_id": "9b0a3f6615f7dcae",
+        "issue": {
+          "code": "PSEUDOCODE_COVERAGE_GAP",
+          "severity": "warning",
+          "message": "Detailed pseudocode section missing: BuildUpsertSql",
+          "procedure": "BuildUpsertSql"
+        },
+        "detected": true,
+        "addressed": false,
+        "status": "detected_unresolved",
+        "changes": [],
+        "resolution_evidence": null,
+        "verification": {
+          "present_in_final_issue_set": true,
+          "absent_after_final_scan": false,
+          "downstream_resolution": null
+        }
+      },
+      {
+        "issue_id": "d5d2b981b9a85455",
+        "issue": {
+          "code": "PSEUDOCODE_COVERAGE_GAP",
+          "severity": "warning",
+          "message": "Detailed pseudocode section missing: SanitizeSqlIdentifier",
+          "procedure": "SanitizeSqlIdentifier"
+        },
+        "detected": true,
+        "addressed": false,
+        "status": "detected_unresolved",
+        "changes": [],
+        "resolution_evidence": null,
+        "verification": {
+          "present_in_final_issue_set": true,
+          "absent_after_final_scan": false,
+          "downstream_resolution": null
+        }
+      },
+      {
+        "issue_id": "9c557637e1fbe225",
+        "issue": {
+          "code": "PSEUDOCODE_COVERAGE_GAP",
+          "severity": "warning",
+          "message": "Detailed pseudocode section missing: BuildSummaryReport",
+          "procedure": "BuildSummaryReport"
+        },
+        "detected": true,
+        "addressed": false,
+        "status": "detected_unresolved",
+        "changes": [],
+        "resolution_evidence": null,
+        "verification": {
+          "present_in_final_issue_set": true,
+          "absent_after_final_scan": false,
+          "downstream_resolution": null
+        }
+      },
+      {
+        "issue_id": "fb31ff73626bbc76",
+        "issue": {
+          "code": "PSEUDOCODE_COVERAGE_GAP",
+          "severity": "warning",
+          "message": "Detailed pseudocode section missing: GetAuditEntryCount",
+          "procedure": "GetAuditEntryCount"
+        },
+        "detected": true,
+        "addressed": false,
+        "status": "detected_unresolved",
+        "changes": [],
+        "resolution_evidence": null,
+        "verification": {
+          "present_in_final_issue_set": true,
+          "absent_after_final_scan": false,
+          "downstream_resolution": null
+        }
+      },
+      {
+        "issue_id": "e023382534efb0a6",
+        "issue": {
+          "code": "PSEUDOCODE_COVERAGE_GAP",
+          "severity": "warning",
+          "message": "Detailed pseudocode section missing: ResetModuleState",
+          "procedure": "ResetModuleState"
         },
         "detected": true,
         "addressed": false,

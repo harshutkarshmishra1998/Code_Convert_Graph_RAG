@@ -1,0 +1,48 @@
+{
+  "source_file": "vba_sample_2.bas",
+  "output_directory": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_2",
+  "stages": [
+    {
+      "name": "VBA graph",
+      "return_code": 0,
+      "status": "completed"
+    },
+    {
+      "name": "Universal IR",
+      "return_code": 0,
+      "status": "completed"
+    },
+    {
+      "name": "Semantic analysis",
+      "return_code": 2,
+      "status": "completed",
+      "analysis_status": "blocked"
+    },
+    {
+      "name": "Pseudocode generation",
+      "status": "skipped",
+      "reason": "The pseudocode module sends source to an external LLM; this local pipeline does not make external requests."
+    },
+    {
+      "name": "Java generation and javac check",
+      "return_code": 0,
+      "status": "completed"
+    },
+    {
+      "name": "Intelligent-fixer audit",
+      "status": "completed",
+      "llm_enabled": false,
+      "auto_apply": false,
+      "conversion_readiness": "NOT_CERTIFIED",
+      "unresolved_issue_count": 6
+    },
+    {
+      "name": "LLM handoff artifacts",
+      "return_code": 0,
+      "status": "completed"
+    }
+  ],
+  "status": "completed",
+  "java_file": "vba_sample_2.java",
+  "java_compile_status": "passed"
+}

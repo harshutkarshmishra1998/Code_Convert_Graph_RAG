@@ -6,803 +6,8 @@
       "entry_point": {
         "source_file": "vba_sample_6.bas",
         "sample_folder": "sample_6",
-        "outputs_written_to": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6"
-      },
-      "llm_enabled": false,
-      "llm_adapter": null,
-      "checked_artifacts": [
-        {
-          "kind": "graph",
-          "path": "graph.json",
-          "sha256": "ad7b51532719a5641072b93c3acc4d1d787ec28f41ecfa1737c333f279ad93a2"
-        },
-        {
-          "kind": "segments",
-          "path": "segments.json",
-          "sha256": "eaf905f474ac337cdd6f6d836fd124eebdc0d1a37da9c9bec50248df04e50677"
-        },
-        {
-          "kind": "ir",
-          "path": "universal_ir.json",
-          "sha256": "e4bdc7e170864ad6326f7114cb48f1880a157a522666f5ede2df0031fa9ac35b"
-        },
-        {
-          "kind": "normalized_ir",
-          "path": "normalized_ir.json",
-          "sha256": "5c23f33081f1264133efb6ede0b47b2c12c9c36bca79723257c429f72994c943"
-        },
-        {
-          "kind": "semantic_analysis",
-          "path": "semantic_analysis.json",
-          "sha256": "38714b5abb88852a0c3472506d0b4f532eeb2b1e83ca47b67d623ca7cfcec209"
-        },
-        {
-          "kind": "manifest",
-          "path": "manifest.json",
-          "sha256": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5"
-        },
-        {
-          "kind": "pseudocode",
-          "path": "pseudocode.md",
-          "sha256": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0"
-        },
-        {
-          "kind": "pseudocode_run",
-          "path": "pseudocode_run.json",
-          "sha256": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf"
-        },
-        {
-          "kind": "report",
-          "path": "report.json",
-          "sha256": "24dda96e512ba554c251e8ce9af4ca723b32042843e6adcf31490eb2323692e8"
-        },
-        {
-          "kind": "source",
-          "path": "vba_sample_6.bas",
-          "sha256": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
-        }
-      ],
-      "issue_count": 32,
-      "addressed_issue_count": 0,
-      "unresolved_issue_count": 32,
-      "issues": [
-        {
-          "issue_id": "88c1bd8919712c63",
-          "issue": {
-            "code": "CROSS_NESTED_BLOCK_CLOSE",
-            "severity": "warning",
-            "priority": "high",
-            "subsystem": "frontend_control_flow",
-            "message": "End If closed a non-top IF frame; inspect nested syntax.",
-            "path": "vba_sample_6.bas",
-            "line": 223,
-            "artifact": "graph",
-            "reported_by": [
-              "graph",
-              "ir",
-              "semantic_analysis",
-              "pseudocode_run"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "25c4a3f4a03ace40",
-          "issue": {
-            "code": "CROSS_NESTED_BLOCK_CLOSE",
-            "severity": "warning",
-            "priority": "high",
-            "subsystem": "frontend_control_flow",
-            "message": "End If closed a non-top IF frame; inspect nested syntax.",
-            "path": "vba_sample_6.bas",
-            "line": 256,
-            "artifact": "graph",
-            "reported_by": [
-              "graph",
-              "ir",
-              "semantic_analysis",
-              "pseudocode_run"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "dc1e06fcd8aaf93b",
-          "issue": {
-            "code": "CROSS_NESTED_BLOCK_CLOSE",
-            "severity": "warning",
-            "priority": "high",
-            "subsystem": "frontend_control_flow",
-            "message": "End If closed a non-top IF frame; inspect nested syntax.",
-            "path": "vba_sample_6.bas",
-            "line": 472,
-            "artifact": "graph",
-            "reported_by": [
-              "graph",
-              "ir",
-              "semantic_analysis",
-              "pseudocode_run"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "3b8e8663486ae9d1",
-          "issue": {
-            "code": "IR_EXPRESSIONS_OPAQUE",
-            "severity": "warning",
-            "priority": "high",
-            "subsystem": "expression_frontend",
-            "message": "180 expression/control operands are preserved as source-backed opaque expressions, not parsed AST nodes.",
-            "path": "universal_ir.json",
-            "artifact": "ir",
-            "reported_by": [
-              "ir",
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "1d0419f90497a9c7",
-          "issue": {
-            "code": "IR_FRONTEND_HIERARCHY_REPAIRED",
-            "severity": "warning",
-            "priority": "high",
-            "subsystem": "frontend_control_flow",
-            "message": "Applied 24 deterministic hierarchy repairs using explicit FOR/Next boundaries.",
-            "path": "universal_ir.json",
-            "artifact": "ir",
-            "reported_by": [
-              "ir",
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "819cb004f8175b41",
-          "issue": {
-            "code": "VBA_OPTION_COMPARE_TEXT",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "Case-insensitive string comparison",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "0122a74b6408229e",
-          "issue": {
-            "code": "VBA_OPTION_BASE_1",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "One-based default array bounds",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "5587823c9eaf352d",
-          "issue": {
-            "code": "VBA_ERROR_HANDLING",
-            "severity": "blocking",
-            "priority": "blocking",
-            "subsystem": "runtime_semantics",
-            "message": "VBA On Error runtime semantics",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis",
-              "validator"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "23237f686b357dad",
-          "issue": {
-            "code": "VBA_GOSUB_RETURN",
-            "severity": "blocking",
-            "priority": "blocking",
-            "subsystem": "control_flow_lowering",
-            "message": "Legacy GoSub/Return control flow",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis",
-              "validator"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "1bf0876e4f475d64",
-          "issue": {
-            "code": "LATE_BOUND_OBJECT_MEMBERS",
-            "severity": "blocking",
-            "priority": "blocking",
-            "subsystem": "type_resolution",
-            "message": "Late-bound COM/Object members",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis",
-              "validator"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "e6de893d2fd87b83",
-          "issue": {
-            "code": "COM_CREATEOBJECT",
-            "severity": "blocking",
-            "priority": "blocking",
-            "subsystem": "runtime_interop",
-            "message": "COM object activation",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis",
-              "validator"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "ee88c76051b51797",
-          "issue": {
-            "code": "VBA_BYREF",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "ByRef parameter mutation",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "c1bc89f9cd8a864d",
-          "issue": {
-            "code": "VBA_IIF_EAGER_EVALUATION",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "IIf evaluates both result expressions",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "a62749e49ad875d5",
-          "issue": {
-            "code": "VBA_DOEVENTS",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "DoEvents cooperative yield",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "c843adf9733165d5",
-          "issue": {
-            "code": "VBA_DYNAMIC_ARRAYS",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "Dynamic arrays, ReDim, Preserve and Erase",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "8e38f66c50e020c6",
-          "issue": {
-            "code": "VBA_CURRENCY",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "VBA Currency fixed-point arithmetic",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "ca80ce08c602ddaa",
-          "issue": {
-            "code": "VBA_DATE",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "VBA Date representation",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "f3111e18a06811ac",
-          "issue": {
-            "code": "VBA_VARIANT",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "Variant dynamic values",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "e069497c27e85eb4",
-          "issue": {
-            "code": "VBA_COLLECTION",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "VBA Collection semantics",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "09ef64a26bcf64ab",
-          "issue": {
-            "code": "VBA_ARRAY_INITIALIZATION_IDIOM",
-            "severity": "blocking",
-            "priority": "blocking",
-            "subsystem": "array_semantics",
-            "message": "Double-Not dynamic-array initialization check",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis",
-              "validator"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "589f8fc907666ed0",
-          "issue": {
-            "code": "VBA_OBJECT_IDENTITY",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "VBA Is object-reference comparison",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "cac9c81a1f8996b7",
-          "issue": {
-            "code": "VBA_BITWISE_LOGICAL_OPERATORS",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "Bitwise logical operators on numeric values",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "c68af06289d2aaae",
-          "issue": {
-            "code": "REPORT_DIAGNOSTICS_PRESENT",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "3 diagnostics in graph report",
-            "path": "report.json",
-            "artifact": "report",
-            "reported_by": [
-              "report"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "ed9313967888c4a2",
-          "issue": {
-            "code": "PSEUDOCODE_COVERAGE_GAP",
-            "severity": "warning",
-            "message": "Detailed pseudocode section missing: ExecuteStressPipeline",
-            "procedure": "ExecuteStressPipeline"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "ff18da0af55874c3",
-          "issue": {
-            "code": "PSEUDOCODE_COVERAGE_GAP",
-            "severity": "warning",
-            "message": "Detailed pseudocode section missing: LogAudit",
-            "procedure": "LogAudit"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "b754410abfb99d3a",
-          "issue": {
-            "code": "PSEUDOCODE_COVERAGE_GAP",
-            "severity": "warning",
-            "message": "Detailed pseudocode section missing: TryParseEntry",
-            "procedure": "TryParseEntry"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "f3d2f7fda0291948",
-          "issue": {
-            "code": "PSEUDOCODE_COVERAGE_GAP",
-            "severity": "warning",
-            "message": "Detailed pseudocode section missing: NormalizeEntryInPlace",
-            "procedure": "NormalizeEntryInPlace"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "d8cdc528ce2be432",
-          "issue": {
-            "code": "VBA_ERROR_HANDLING",
-            "severity": "blocking",
-            "message": "VBA On Error runtime semantics"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "ae6b415040e7630f",
-          "issue": {
-            "code": "VBA_GOSUB_RETURN",
-            "severity": "blocking",
-            "message": "Legacy GoSub/Return control flow"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "b6277ffa76e2ac9c",
-          "issue": {
-            "code": "LATE_BOUND_OBJECT_MEMBERS",
-            "severity": "blocking",
-            "message": "Late-bound COM/Object members"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "8ac983f4e7056e25",
-          "issue": {
-            "code": "COM_CREATEOBJECT",
-            "severity": "blocking",
-            "message": "COM object activation"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "ed7a0e860828d305",
-          "issue": {
-            "code": "VBA_ARRAY_INITIALIZATION_IDIOM",
-            "severity": "blocking",
-            "message": "Double-Not dynamic-array initialization check"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        }
-      ],
-      "applied_changes": {},
-      "pseudocode_generation_check": {
-        "artifact": "pseudocode_run.json",
-        "issue_detected": true,
-        "current_run_passed": false,
-        "status": "success",
-        "generated_sections": 16,
-        "failed_sections": [],
-        "coverage_gap_count": 4,
-        "coverage_gaps": [
-          "ExecuteStressPipeline",
-          "LogAudit",
-          "TryParseEntry",
-          "NormalizeEntryInPlace"
-        ],
-        "known_previous_issue": {
-          "issue_id": "PSEUDOCODE_LLM_CLIENT_UNSUPPORTED",
-          "detected": true,
-          "detection_source": "previous user-reported pseudocode execution",
-          "description": "The configured LLM value was a model identifier, not an invokable chat client.",
-          "addressed": true,
-          "status": "addressed_and_verified",
-          "change": "The pseudocode LLM adapter now constructs a ChatGroq client from the configured model.",
-          "changed_file": "vba_to_java/pseudocode/generate_pseudocode.py",
-          "verification": {
-            "run_status": "success",
-            "generated_sections": 16,
-            "failed_sections": [],
-            "coverage_gap_count": 4
-          }
-        }
-      },
-      "timestamp": "2026-11-22T20:34:22.651755+00:00"
-    },
-    {
-      "project_root": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6",
-      "entry_point": {
-        "source_file": "vba_sample_6.bas",
-        "sample_folder": "sample_6",
-        "outputs_written_to": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6"
+        "outputs_written_to": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6",
+        "orchestrator": "vba_to_java.main"
       },
       "llm_enabled": false,
       "llm_adapter": null,
@@ -820,32 +25,22 @@
         {
           "kind": "ir",
           "path": "universal_ir.json",
-          "sha256": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1"
+          "sha256": "3e636f87b17ab436fdb2fb7dcd5f071eb1c419c9a900f0e6dc32f2251b6f6a5a"
         },
         {
           "kind": "normalized_ir",
           "path": "normalized_ir.json",
-          "sha256": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3"
+          "sha256": "0dbaf7a57ab48f73757bafc114af2a8e811e803815d8b630daa9f75e32c7510b"
         },
         {
           "kind": "semantic_analysis",
           "path": "semantic_analysis.json",
-          "sha256": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2"
+          "sha256": "3158e513cc00254299113c31bba488e3612890b9a0f193815983b1104f046a21"
         },
         {
           "kind": "manifest",
           "path": "manifest.json",
           "sha256": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5"
-        },
-        {
-          "kind": "pseudocode",
-          "path": "pseudocode.md",
-          "sha256": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0"
-        },
-        {
-          "kind": "pseudocode_run",
-          "path": "pseudocode_run.json",
-          "sha256": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf"
         },
         {
           "kind": "report",
@@ -858,749 +53,9 @@
           "sha256": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
         }
       ],
-      "issue_count": 30,
-      "addressed_issue_count": 0,
-      "unresolved_issue_count": 30,
-      "issues": [
-        {
-          "issue_id": "3b8e8663486ae9d1",
-          "issue": {
-            "code": "IR_EXPRESSIONS_OPAQUE",
-            "severity": "warning",
-            "priority": "high",
-            "subsystem": "expression_frontend",
-            "message": "180 expression/control operands are preserved as source-backed opaque expressions, not parsed AST nodes.",
-            "path": "universal_ir.json",
-            "artifact": "ir",
-            "reported_by": [
-              "ir",
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "819cb004f8175b41",
-          "issue": {
-            "code": "VBA_OPTION_COMPARE_TEXT",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "Case-insensitive string comparison",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "0122a74b6408229e",
-          "issue": {
-            "code": "VBA_OPTION_BASE_1",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "One-based default array bounds",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "5587823c9eaf352d",
-          "issue": {
-            "code": "VBA_ERROR_HANDLING",
-            "severity": "blocking",
-            "priority": "blocking",
-            "subsystem": "runtime_semantics",
-            "message": "VBA On Error runtime semantics",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis",
-              "validator"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "23237f686b357dad",
-          "issue": {
-            "code": "VBA_GOSUB_RETURN",
-            "severity": "blocking",
-            "priority": "blocking",
-            "subsystem": "control_flow_lowering",
-            "message": "Legacy GoSub/Return control flow",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis",
-              "validator"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "1bf0876e4f475d64",
-          "issue": {
-            "code": "LATE_BOUND_OBJECT_MEMBERS",
-            "severity": "blocking",
-            "priority": "blocking",
-            "subsystem": "type_resolution",
-            "message": "Late-bound COM/Object members",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis",
-              "validator"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "e6de893d2fd87b83",
-          "issue": {
-            "code": "COM_CREATEOBJECT",
-            "severity": "blocking",
-            "priority": "blocking",
-            "subsystem": "runtime_interop",
-            "message": "COM object activation",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis",
-              "validator"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "ee88c76051b51797",
-          "issue": {
-            "code": "VBA_BYREF",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "ByRef parameter mutation",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "c1bc89f9cd8a864d",
-          "issue": {
-            "code": "VBA_IIF_EAGER_EVALUATION",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "IIf evaluates both result expressions",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "a62749e49ad875d5",
-          "issue": {
-            "code": "VBA_DOEVENTS",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "DoEvents cooperative yield",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "c843adf9733165d5",
-          "issue": {
-            "code": "VBA_DYNAMIC_ARRAYS",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "Dynamic arrays, ReDim, Preserve and Erase",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "8e38f66c50e020c6",
-          "issue": {
-            "code": "VBA_CURRENCY",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "VBA Currency fixed-point arithmetic",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "ca80ce08c602ddaa",
-          "issue": {
-            "code": "VBA_DATE",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "VBA Date representation",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "f3111e18a06811ac",
-          "issue": {
-            "code": "VBA_VARIANT",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "Variant dynamic values",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "e069497c27e85eb4",
-          "issue": {
-            "code": "VBA_COLLECTION",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "VBA Collection semantics",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "09ef64a26bcf64ab",
-          "issue": {
-            "code": "VBA_ARRAY_INITIALIZATION_IDIOM",
-            "severity": "blocking",
-            "priority": "blocking",
-            "subsystem": "array_semantics",
-            "message": "Double-Not dynamic-array initialization check",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis",
-              "validator"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "589f8fc907666ed0",
-          "issue": {
-            "code": "VBA_OBJECT_IDENTITY",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "VBA Is object-reference comparison",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "cac9c81a1f8996b7",
-          "issue": {
-            "code": "VBA_BITWISE_LOGICAL_OPERATORS",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "Bitwise logical operators on numeric values",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "08e44f2b12f78bf2",
-          "issue": {
-            "code": "CROSS_NESTED_BLOCK_CLOSE",
-            "severity": "warning",
-            "priority": "high",
-            "subsystem": "frontend_control_flow",
-            "message": "End If closed a non-top IF frame; inspect nested syntax.",
-            "path": "vba_sample_6.bas",
-            "line": 223,
-            "artifact": "pseudocode_run",
-            "reported_by": [
-              "pseudocode_run"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "775d96c69b611473",
-          "issue": {
-            "code": "CROSS_NESTED_BLOCK_CLOSE",
-            "severity": "warning",
-            "priority": "high",
-            "subsystem": "frontend_control_flow",
-            "message": "End If closed a non-top IF frame; inspect nested syntax.",
-            "path": "vba_sample_6.bas",
-            "line": 256,
-            "artifact": "pseudocode_run",
-            "reported_by": [
-              "pseudocode_run"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "852578f6dd5c48dc",
-          "issue": {
-            "code": "CROSS_NESTED_BLOCK_CLOSE",
-            "severity": "warning",
-            "priority": "high",
-            "subsystem": "frontend_control_flow",
-            "message": "End If closed a non-top IF frame; inspect nested syntax.",
-            "path": "vba_sample_6.bas",
-            "line": 472,
-            "artifact": "pseudocode_run",
-            "reported_by": [
-              "pseudocode_run"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "ed9313967888c4a2",
-          "issue": {
-            "code": "PSEUDOCODE_COVERAGE_GAP",
-            "severity": "warning",
-            "message": "Detailed pseudocode section missing: ExecuteStressPipeline",
-            "procedure": "ExecuteStressPipeline"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "ff18da0af55874c3",
-          "issue": {
-            "code": "PSEUDOCODE_COVERAGE_GAP",
-            "severity": "warning",
-            "message": "Detailed pseudocode section missing: LogAudit",
-            "procedure": "LogAudit"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "b754410abfb99d3a",
-          "issue": {
-            "code": "PSEUDOCODE_COVERAGE_GAP",
-            "severity": "warning",
-            "message": "Detailed pseudocode section missing: TryParseEntry",
-            "procedure": "TryParseEntry"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "f3d2f7fda0291948",
-          "issue": {
-            "code": "PSEUDOCODE_COVERAGE_GAP",
-            "severity": "warning",
-            "message": "Detailed pseudocode section missing: NormalizeEntryInPlace",
-            "procedure": "NormalizeEntryInPlace"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "d8cdc528ce2be432",
-          "issue": {
-            "code": "VBA_ERROR_HANDLING",
-            "severity": "blocking",
-            "message": "VBA On Error runtime semantics"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "ae6b415040e7630f",
-          "issue": {
-            "code": "VBA_GOSUB_RETURN",
-            "severity": "blocking",
-            "message": "Legacy GoSub/Return control flow"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "b6277ffa76e2ac9c",
-          "issue": {
-            "code": "LATE_BOUND_OBJECT_MEMBERS",
-            "severity": "blocking",
-            "message": "Late-bound COM/Object members"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "8ac983f4e7056e25",
-          "issue": {
-            "code": "COM_CREATEOBJECT",
-            "severity": "blocking",
-            "message": "COM object activation"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        },
-        {
-          "issue_id": "ed7a0e860828d305",
-          "issue": {
-            "code": "VBA_ARRAY_INITIALIZATION_IDIOM",
-            "severity": "blocking",
-            "message": "Double-Not dynamic-array initialization check"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false
-          }
-        }
-      ],
-      "applied_changes": {},
-      "pseudocode_generation_check": {
-        "artifact": "pseudocode_run.json",
-        "issue_detected": true,
-        "current_run_passed": false,
-        "status": "success",
-        "generated_sections": 16,
-        "failed_sections": [],
-        "coverage_gap_count": 4,
-        "coverage_gaps": [
-          "ExecuteStressPipeline",
-          "LogAudit",
-          "TryParseEntry",
-          "NormalizeEntryInPlace"
-        ],
-        "known_previous_issue": {
-          "issue_id": "PSEUDOCODE_LLM_CLIENT_UNSUPPORTED",
-          "detected": true,
-          "detection_source": "previous user-reported pseudocode execution",
-          "description": "The configured LLM value was a model identifier, not an invokable chat client.",
-          "addressed": true,
-          "status": "addressed_and_verified",
-          "change": "The pseudocode LLM adapter now constructs a ChatGroq client from the configured model.",
-          "changed_file": "vba_to_java/pseudocode/generate_pseudocode.py",
-          "verification": {
-            "run_status": "success",
-            "generated_sections": 16,
-            "failed_sections": [],
-            "coverage_gap_count": 4
-          }
-        }
-      },
-      "timestamp": "2026-11-22T20:54:25.783091+00:00"
-    },
-    {
-      "project_root": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6",
-      "entry_point": {
-        "source_file": "vba_sample_6.bas",
-        "sample_folder": "sample_6",
-        "outputs_written_to": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6"
-      },
-      "llm_enabled": false,
-      "llm_adapter": null,
-      "checked_artifacts": [
-        {
-          "kind": "graph",
-          "path": "graph.json",
-          "sha256": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd"
-        },
-        {
-          "kind": "segments",
-          "path": "segments.json",
-          "sha256": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c"
-        },
-        {
-          "kind": "ir",
-          "path": "universal_ir.json",
-          "sha256": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1"
-        },
-        {
-          "kind": "normalized_ir",
-          "path": "normalized_ir.json",
-          "sha256": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3"
-        },
-        {
-          "kind": "semantic_analysis",
-          "path": "semantic_analysis.json",
-          "sha256": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2"
-        },
-        {
-          "kind": "manifest",
-          "path": "manifest.json",
-          "sha256": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5"
-        },
-        {
-          "kind": "pseudocode",
-          "path": "pseudocode.md",
-          "sha256": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0"
-        },
-        {
-          "kind": "pseudocode_run",
-          "path": "pseudocode_run.json",
-          "sha256": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf"
-        },
-        {
-          "kind": "report",
-          "path": "report.json",
-          "sha256": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b"
-        },
-        {
-          "kind": "source",
-          "path": "vba_sample_6.bas",
-          "sha256": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
-        }
-      ],
-      "issue_count": 30,
+      "issue_count": 38,
       "addressed_issue_count": 1,
-      "unresolved_issue_count": 29,
+      "unresolved_issue_count": 37,
       "issues": [
         {
           "issue_id": "3b8e8663486ae9d1",
@@ -2087,84 +542,6 @@
           }
         },
         {
-          "issue_id": "08e44f2b12f78bf2",
-          "issue": {
-            "code": "CROSS_NESTED_BLOCK_CLOSE",
-            "severity": "warning",
-            "priority": "high",
-            "subsystem": "frontend_control_flow",
-            "message": "End If closed a non-top IF frame; inspect nested syntax.",
-            "path": "vba_sample_6.bas",
-            "line": 223,
-            "artifact": "pseudocode_run",
-            "reported_by": [
-              "pseudocode_run"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "775d96c69b611473",
-          "issue": {
-            "code": "CROSS_NESTED_BLOCK_CLOSE",
-            "severity": "warning",
-            "priority": "high",
-            "subsystem": "frontend_control_flow",
-            "message": "End If closed a non-top IF frame; inspect nested syntax.",
-            "path": "vba_sample_6.bas",
-            "line": 256,
-            "artifact": "pseudocode_run",
-            "reported_by": [
-              "pseudocode_run"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "852578f6dd5c48dc",
-          "issue": {
-            "code": "CROSS_NESTED_BLOCK_CLOSE",
-            "severity": "warning",
-            "priority": "high",
-            "subsystem": "frontend_control_flow",
-            "message": "End If closed a non-top IF frame; inspect nested syntax.",
-            "path": "vba_sample_6.bas",
-            "line": 472,
-            "artifact": "pseudocode_run",
-            "reported_by": [
-              "pseudocode_run"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
           "issue_id": "ed9313967888c4a2",
           "issue": {
             "code": "PSEUDOCODE_COVERAGE_GAP",
@@ -2184,12 +561,69 @@
           }
         },
         {
+          "issue_id": "852fac0d1548a2f8",
+          "issue": {
+            "code": "PSEUDOCODE_COVERAGE_GAP",
+            "severity": "warning",
+            "message": "Detailed pseudocode section missing: InitInfrastructure",
+            "procedure": "InitInfrastructure"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
+          "issue_id": "f70079848422620c",
+          "issue": {
+            "code": "PSEUDOCODE_COVERAGE_GAP",
+            "severity": "warning",
+            "message": "Detailed pseudocode section missing: NextSequence",
+            "procedure": "NextSequence"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
           "issue_id": "ff18da0af55874c3",
           "issue": {
             "code": "PSEUDOCODE_COVERAGE_GAP",
             "severity": "warning",
             "message": "Detailed pseudocode section missing: LogAudit",
             "procedure": "LogAudit"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
+          "issue_id": "6e650211a86d6d5c",
+          "issue": {
+            "code": "PSEUDOCODE_COVERAGE_GAP",
+            "severity": "warning",
+            "message": "Detailed pseudocode section missing: NormalizeLineEndings",
+            "procedure": "NormalizeLineEndings"
           },
           "detected": true,
           "addressed": false,
@@ -2228,6 +662,158 @@
             "severity": "warning",
             "message": "Detailed pseudocode section missing: NormalizeEntryInPlace",
             "procedure": "NormalizeEntryInPlace"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
+          "issue_id": "de20f64203d45500",
+          "issue": {
+            "code": "PSEUDOCODE_COVERAGE_GAP",
+            "severity": "warning",
+            "message": "Detailed pseudocode section missing: DeduplicateBatchEntries",
+            "procedure": "DeduplicateBatchEntries"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
+          "issue_id": "7491622fcccc96bf",
+          "issue": {
+            "code": "PSEUDOCODE_COVERAGE_GAP",
+            "severity": "warning",
+            "message": "Detailed pseudocode section missing: RunLegacyGoSubAudit",
+            "procedure": "RunLegacyGoSubAudit"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
+          "issue_id": "dd5e2607313fc07d",
+          "issue": {
+            "code": "PSEUDOCODE_COVERAGE_GAP",
+            "severity": "warning",
+            "message": "Detailed pseudocode section missing: EvaluateDependencyDepth",
+            "procedure": "EvaluateDependencyDepth"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
+          "issue_id": "9b0a3f6615f7dcae",
+          "issue": {
+            "code": "PSEUDOCODE_COVERAGE_GAP",
+            "severity": "warning",
+            "message": "Detailed pseudocode section missing: BuildUpsertSql",
+            "procedure": "BuildUpsertSql"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
+          "issue_id": "d5d2b981b9a85455",
+          "issue": {
+            "code": "PSEUDOCODE_COVERAGE_GAP",
+            "severity": "warning",
+            "message": "Detailed pseudocode section missing: SanitizeSqlIdentifier",
+            "procedure": "SanitizeSqlIdentifier"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
+          "issue_id": "9c557637e1fbe225",
+          "issue": {
+            "code": "PSEUDOCODE_COVERAGE_GAP",
+            "severity": "warning",
+            "message": "Detailed pseudocode section missing: BuildSummaryReport",
+            "procedure": "BuildSummaryReport"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
+          "issue_id": "fb31ff73626bbc76",
+          "issue": {
+            "code": "PSEUDOCODE_COVERAGE_GAP",
+            "severity": "warning",
+            "message": "Detailed pseudocode section missing: GetAuditEntryCount",
+            "procedure": "GetAuditEntryCount"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
+          "issue_id": "e023382534efb0a6",
+          "issue": {
+            "code": "PSEUDOCODE_COVERAGE_GAP",
+            "severity": "warning",
+            "message": "Detailed pseudocode section missing: ResetModuleState",
+            "procedure": "ResetModuleState"
           },
           "detected": true,
           "addressed": false,
@@ -2333,865 +919,48 @@
       ],
       "applied_changes": {},
       "pseudocode_generation_check": {
-        "artifact": "pseudocode_run.json",
+        "artifact": null,
         "issue_detected": true,
         "current_run_passed": false,
-        "status": "success",
-        "generated_sections": 16,
+        "status": "not_available",
+        "generated_sections": 0,
         "failed_sections": [],
-        "coverage_gap_count": 4,
+        "coverage_gap_count": 15,
         "coverage_gaps": [
           "ExecuteStressPipeline",
+          "InitInfrastructure",
+          "NextSequence",
           "LogAudit",
+          "NormalizeLineEndings",
           "TryParseEntry",
-          "NormalizeEntryInPlace"
+          "NormalizeEntryInPlace",
+          "DeduplicateBatchEntries",
+          "RunLegacyGoSubAudit",
+          "EvaluateDependencyDepth",
+          "BuildUpsertSql",
+          "SanitizeSqlIdentifier",
+          "BuildSummaryReport",
+          "GetAuditEntryCount",
+          "ResetModuleState"
         ],
         "known_previous_issue": {
           "issue_id": "PSEUDOCODE_LLM_CLIENT_UNSUPPORTED",
           "detected": true,
           "detection_source": "previous user-reported pseudocode execution",
           "description": "The configured LLM value was a model identifier, not an invokable chat client.",
-          "addressed": true,
-          "status": "addressed_and_verified",
+          "addressed": false,
+          "status": "not_verified",
           "change": "The pseudocode LLM adapter now constructs a ChatGroq client from the configured model.",
           "changed_file": "vba_to_java/pseudocode/generate_pseudocode.py",
           "verification": {
-            "run_status": "success",
-            "generated_sections": 16,
+            "run_status": "not_available",
+            "generated_sections": 0,
             "failed_sections": [],
-            "coverage_gap_count": 4
+            "coverage_gap_count": 15
           }
         }
       },
-      "timestamp": "2026-11-22T20:57:14.483769+00:00"
-    },
-    {
-      "project_root": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6",
-      "entry_point": {
-        "source_file": "vba_sample_6.bas",
-        "sample_folder": "sample_6",
-        "outputs_written_to": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6"
-      },
-      "llm_enabled": false,
-      "llm_adapter": null,
-      "checked_artifacts": [
-        {
-          "kind": "graph",
-          "path": "graph.json",
-          "sha256": "53cc736f73fb38d2a52778bb7e5ba16dc1c98efe9700af56bed05f42acc528cd"
-        },
-        {
-          "kind": "segments",
-          "path": "segments.json",
-          "sha256": "29abcac98336b0df430eea65df8085579f1d983b7446722d1ffc65a6e034be4c"
-        },
-        {
-          "kind": "ir",
-          "path": "universal_ir.json",
-          "sha256": "4a36fde2f759bab3c51af274750cc9802ab55cc843fcb3b5affa3c32873482d1"
-        },
-        {
-          "kind": "normalized_ir",
-          "path": "normalized_ir.json",
-          "sha256": "effc546f22a02114d4e52bdec6bedd5c5104c2a7c1ee1c1a4f5340e0d2fc0bf3"
-        },
-        {
-          "kind": "semantic_analysis",
-          "path": "semantic_analysis.json",
-          "sha256": "3ca2a740469f27607b1b10a615522dc5530a4b5e83489df524375cff6f305ac2"
-        },
-        {
-          "kind": "manifest",
-          "path": "manifest.json",
-          "sha256": "d9caf780b901d0dcece971b952cff227bbb3fb85e82dd4829fbef184c06218b5"
-        },
-        {
-          "kind": "pseudocode",
-          "path": "pseudocode.md",
-          "sha256": "2591cf579df4c0f8309ea0357ff9eb431062ff1b16bdf9b35e2fe08c466a04e0"
-        },
-        {
-          "kind": "pseudocode_run",
-          "path": "pseudocode_run.json",
-          "sha256": "b45a469d9c197f14f10175a58aac1b29f4deee6cc67e75a69f0f51e3564474cf"
-        },
-        {
-          "kind": "report",
-          "path": "report.json",
-          "sha256": "53d21d247f65cfc21c2b930fef65d6ad9e418414a9ca5df223f32cf4087e5c5b"
-        },
-        {
-          "kind": "source",
-          "path": "vba_sample_6.bas",
-          "sha256": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736"
-        }
-      ],
-      "issue_count": 30,
-      "addressed_issue_count": 1,
-      "unresolved_issue_count": 29,
-      "issues": [
-        {
-          "issue_id": "3b8e8663486ae9d1",
-          "issue": {
-            "code": "IR_EXPRESSIONS_OPAQUE",
-            "severity": "warning",
-            "priority": "high",
-            "subsystem": "expression_frontend",
-            "message": "180 expression/control operands are preserved as source-backed opaque expressions, not parsed AST nodes.",
-            "path": "universal_ir.json",
-            "artifact": "ir",
-            "reported_by": [
-              "ir",
-              "semantic_analysis"
-            ],
-            "downstream_resolution": {
-              "status": "addressed_and_verified",
-              "method": "semantic_normalization",
-              "artifact": "normalized_ir.json",
-              "evidence": {
-                "parse_error_count": 0,
-                "unresolved_expression_count": 0,
-                "unresolved_node_count": 0
-              }
-            }
-          },
-          "detected": true,
-          "addressed": true,
-          "status": "addressed_and_verified",
-          "changes": [],
-          "resolution_evidence": {
-            "status": "addressed_and_verified",
-            "method": "semantic_normalization",
-            "artifact": "normalized_ir.json",
-            "evidence": {
-              "parse_error_count": 0,
-              "unresolved_expression_count": 0,
-              "unresolved_node_count": 0
-            }
-          },
-          "verification": {
-            "present_in_final_issue_set": false,
-            "absent_after_final_scan": true,
-            "downstream_resolution": {
-              "status": "addressed_and_verified",
-              "method": "semantic_normalization",
-              "artifact": "normalized_ir.json",
-              "evidence": {
-                "parse_error_count": 0,
-                "unresolved_expression_count": 0,
-                "unresolved_node_count": 0
-              }
-            }
-          }
-        },
-        {
-          "issue_id": "819cb004f8175b41",
-          "issue": {
-            "code": "VBA_OPTION_COMPARE_TEXT",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "Case-insensitive string comparison",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "0122a74b6408229e",
-          "issue": {
-            "code": "VBA_OPTION_BASE_1",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "One-based default array bounds",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "5587823c9eaf352d",
-          "issue": {
-            "code": "VBA_ERROR_HANDLING",
-            "severity": "blocking",
-            "priority": "blocking",
-            "subsystem": "runtime_semantics",
-            "message": "VBA On Error runtime semantics",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis",
-              "validator"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "23237f686b357dad",
-          "issue": {
-            "code": "VBA_GOSUB_RETURN",
-            "severity": "blocking",
-            "priority": "blocking",
-            "subsystem": "control_flow_lowering",
-            "message": "Legacy GoSub/Return control flow",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis",
-              "validator"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "1bf0876e4f475d64",
-          "issue": {
-            "code": "LATE_BOUND_OBJECT_MEMBERS",
-            "severity": "blocking",
-            "priority": "blocking",
-            "subsystem": "type_resolution",
-            "message": "Late-bound COM/Object members",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis",
-              "validator"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "e6de893d2fd87b83",
-          "issue": {
-            "code": "COM_CREATEOBJECT",
-            "severity": "blocking",
-            "priority": "blocking",
-            "subsystem": "runtime_interop",
-            "message": "COM object activation",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis",
-              "validator"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "ee88c76051b51797",
-          "issue": {
-            "code": "VBA_BYREF",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "ByRef parameter mutation",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "c1bc89f9cd8a864d",
-          "issue": {
-            "code": "VBA_IIF_EAGER_EVALUATION",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "IIf evaluates both result expressions",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "a62749e49ad875d5",
-          "issue": {
-            "code": "VBA_DOEVENTS",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "DoEvents cooperative yield",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "c843adf9733165d5",
-          "issue": {
-            "code": "VBA_DYNAMIC_ARRAYS",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "Dynamic arrays, ReDim, Preserve and Erase",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "8e38f66c50e020c6",
-          "issue": {
-            "code": "VBA_CURRENCY",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "VBA Currency fixed-point arithmetic",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "ca80ce08c602ddaa",
-          "issue": {
-            "code": "VBA_DATE",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "VBA Date representation",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "f3111e18a06811ac",
-          "issue": {
-            "code": "VBA_VARIANT",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "Variant dynamic values",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "e069497c27e85eb4",
-          "issue": {
-            "code": "VBA_COLLECTION",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "VBA Collection semantics",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "09ef64a26bcf64ab",
-          "issue": {
-            "code": "VBA_ARRAY_INITIALIZATION_IDIOM",
-            "severity": "blocking",
-            "priority": "blocking",
-            "subsystem": "array_semantics",
-            "message": "Double-Not dynamic-array initialization check",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis",
-              "validator"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "589f8fc907666ed0",
-          "issue": {
-            "code": "VBA_OBJECT_IDENTITY",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "VBA Is object-reference comparison",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "cac9c81a1f8996b7",
-          "issue": {
-            "code": "VBA_BITWISE_LOGICAL_OPERATORS",
-            "severity": "warning",
-            "priority": "normal",
-            "subsystem": "unknown",
-            "message": "Bitwise logical operators on numeric values",
-            "path": "semantic_analysis.json",
-            "artifact": "semantic_analysis",
-            "reported_by": [
-              "semantic_analysis"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "08e44f2b12f78bf2",
-          "issue": {
-            "code": "CROSS_NESTED_BLOCK_CLOSE",
-            "severity": "warning",
-            "priority": "high",
-            "subsystem": "frontend_control_flow",
-            "message": "End If closed a non-top IF frame; inspect nested syntax.",
-            "path": "vba_sample_6.bas",
-            "line": 223,
-            "artifact": "pseudocode_run",
-            "reported_by": [
-              "pseudocode_run"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "775d96c69b611473",
-          "issue": {
-            "code": "CROSS_NESTED_BLOCK_CLOSE",
-            "severity": "warning",
-            "priority": "high",
-            "subsystem": "frontend_control_flow",
-            "message": "End If closed a non-top IF frame; inspect nested syntax.",
-            "path": "vba_sample_6.bas",
-            "line": 256,
-            "artifact": "pseudocode_run",
-            "reported_by": [
-              "pseudocode_run"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "852578f6dd5c48dc",
-          "issue": {
-            "code": "CROSS_NESTED_BLOCK_CLOSE",
-            "severity": "warning",
-            "priority": "high",
-            "subsystem": "frontend_control_flow",
-            "message": "End If closed a non-top IF frame; inspect nested syntax.",
-            "path": "vba_sample_6.bas",
-            "line": 472,
-            "artifact": "pseudocode_run",
-            "reported_by": [
-              "pseudocode_run"
-            ]
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "ed9313967888c4a2",
-          "issue": {
-            "code": "PSEUDOCODE_COVERAGE_GAP",
-            "severity": "warning",
-            "message": "Detailed pseudocode section missing: ExecuteStressPipeline",
-            "procedure": "ExecuteStressPipeline"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "ff18da0af55874c3",
-          "issue": {
-            "code": "PSEUDOCODE_COVERAGE_GAP",
-            "severity": "warning",
-            "message": "Detailed pseudocode section missing: LogAudit",
-            "procedure": "LogAudit"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "b754410abfb99d3a",
-          "issue": {
-            "code": "PSEUDOCODE_COVERAGE_GAP",
-            "severity": "warning",
-            "message": "Detailed pseudocode section missing: TryParseEntry",
-            "procedure": "TryParseEntry"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "f3d2f7fda0291948",
-          "issue": {
-            "code": "PSEUDOCODE_COVERAGE_GAP",
-            "severity": "warning",
-            "message": "Detailed pseudocode section missing: NormalizeEntryInPlace",
-            "procedure": "NormalizeEntryInPlace"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "d8cdc528ce2be432",
-          "issue": {
-            "code": "VBA_ERROR_HANDLING",
-            "severity": "blocking",
-            "message": "VBA On Error runtime semantics"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "ae6b415040e7630f",
-          "issue": {
-            "code": "VBA_GOSUB_RETURN",
-            "severity": "blocking",
-            "message": "Legacy GoSub/Return control flow"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "b6277ffa76e2ac9c",
-          "issue": {
-            "code": "LATE_BOUND_OBJECT_MEMBERS",
-            "severity": "blocking",
-            "message": "Late-bound COM/Object members"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "8ac983f4e7056e25",
-          "issue": {
-            "code": "COM_CREATEOBJECT",
-            "severity": "blocking",
-            "message": "COM object activation"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        },
-        {
-          "issue_id": "ed7a0e860828d305",
-          "issue": {
-            "code": "VBA_ARRAY_INITIALIZATION_IDIOM",
-            "severity": "blocking",
-            "message": "Double-Not dynamic-array initialization check"
-          },
-          "detected": true,
-          "addressed": false,
-          "status": "detected_unresolved",
-          "changes": [],
-          "resolution_evidence": null,
-          "verification": {
-            "present_in_final_issue_set": true,
-            "absent_after_final_scan": false,
-            "downstream_resolution": null
-          }
-        }
-      ],
-      "applied_changes": {},
-      "pseudocode_generation_check": {
-        "artifact": "pseudocode_run.json",
-        "issue_detected": true,
-        "current_run_passed": false,
-        "status": "success",
-        "generated_sections": 16,
-        "failed_sections": [],
-        "coverage_gap_count": 4,
-        "coverage_gaps": [
-          "ExecuteStressPipeline",
-          "LogAudit",
-          "TryParseEntry",
-          "NormalizeEntryInPlace"
-        ],
-        "known_previous_issue": {
-          "issue_id": "PSEUDOCODE_LLM_CLIENT_UNSUPPORTED",
-          "detected": true,
-          "detection_source": "previous user-reported pseudocode execution",
-          "description": "The configured LLM value was a model identifier, not an invokable chat client.",
-          "addressed": true,
-          "status": "addressed_and_verified",
-          "change": "The pseudocode LLM adapter now constructs a ChatGroq client from the configured model.",
-          "changed_file": "vba_to_java/pseudocode/generate_pseudocode.py",
-          "verification": {
-            "run_status": "success",
-            "generated_sections": 16,
-            "failed_sections": [],
-            "coverage_gap_count": 4
-          }
-        }
-      },
-      "timestamp": "2026-11-22T20:57:22.052093+00:00"
+      "timestamp": "2026-11-22T21:13:14.623858+00:00"
     }
   ]
 }

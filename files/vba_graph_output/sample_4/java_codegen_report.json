@@ -1,0 +1,269 @@
+{
+  "schema_version": "1.0",
+  "source_file": "vba_sample_4.bas",
+  "source_sha256": "3a6100a24086f35320010e5524d9db8e8566e5965564172b12befffd97bd6f5a",
+  "source_language": "VBA",
+  "target_language": "Java",
+  "java_file": "vba_sample_4.java",
+  "procedure_count": 1,
+  "semantic_status": "blocked",
+  "compatibility_requirements": [
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "title": "VBA On Error runtime semantics",
+      "severity": "blocking",
+      "target_guidance": "Implement a compatibility runtime for Resume Next, GoTo handler, GoTo 0, Err state and handler activation; this pass preserves directives but does not emulate execution.",
+      "evidence": [
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "mode": "goto_handler",
+          "handler": "HandleError"
+        }
+      ]
+    },
+    {
+      "code": "LATE_BOUND_OBJECT_MEMBERS",
+      "title": "Late-bound COM/Object members",
+      "severity": "blocking",
+      "target_guidance": "Define explicit Java interfaces/adapters for the actual COM object behavior. Object-typed references alone do not identify the target API.",
+      "evidence": [
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Calculation",
+          "owner_type": null
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "EnableEvents",
+          "owner_type": null
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "ScreenUpdating",
+          "owner_type": null
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Raise",
+          "owner_type": null
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "FullName",
+          "owner_type": null
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "PathSeparator",
+          "owner_type": null
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "FolderExists",
+          "owner_type": "Object"
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Worksheets",
+          "owner_type": null
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "ClearContents",
+          "owner_type": null
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Cells",
+          "owner_type": "Worksheet"
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Open",
+          "owner_type": null
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Worksheets",
+          "owner_type": "Workbook"
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Row",
+          "owner_type": null
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "End",
+          "owner_type": null
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Count",
+          "owner_type": null
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Rows",
+          "owner_type": "Worksheet"
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Range",
+          "owner_type": "Worksheet"
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Value",
+          "owner_type": null
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Resize",
+          "owner_type": null
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Rows",
+          "owner_type": "Range"
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Columns",
+          "owner_type": "Range"
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Value",
+          "owner_type": "Range"
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Offset",
+          "owner_type": "Range"
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Close",
+          "owner_type": "Workbook"
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "AutoFit",
+          "owner_type": null
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Columns",
+          "owner_type": "Worksheet"
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Add",
+          "owner_type": null
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Name",
+          "owner_type": null
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "Range",
+          "owner_type": null
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "member": "SaveAs",
+          "owner_type": "Workbook"
+        }
+      ]
+    },
+    {
+      "code": "COM_CREATEOBJECT",
+      "title": "COM object activation",
+      "severity": "blocking",
+      "target_guidance": "Replace ProgID-based activation with an explicit Java implementation or integration adapter; preserve fallback behavior.",
+      "evidence": [
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "expression": "CreateObject(\"Scripting.FileSystemObject\")"
+        }
+      ]
+    },
+    {
+      "code": "VBA_OBJECT_IDENTITY",
+      "title": "VBA Is object-reference comparison",
+      "severity": "review",
+      "target_guidance": "Preserve object identity/null comparison semantics; distinguish Is from value equality.",
+      "evidence": [
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "operator": "is",
+          "source": "Not sourceBook Is Nothing"
+        },
+        {
+          "procedure": "ConsolidateDepartmentFiles",
+          "operator": "is",
+          "source": "Not outputBook Is Nothing"
+        }
+      ]
+    }
+  ],
+  "generated_with_runtime_requirements": true,
+  "compile_status": "passed",
+  "compiler_output": "",
+  "limitations": [
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "message": "On Error runtime behavior needs a target implementation.",
+      "procedure": "ConsolidateDepartmentFiles",
+      "source_location": {
+        "line": 18,
+        "end_line": 18,
+        "file": "vba_sample_4.bas"
+      },
+      "source_text": "On Error GoTo HandleError"
+    },
+    {
+      "code": "VBA_HOST_ADAPTER_REQUIRED",
+      "message": "VBA host object 'Application' requires an application-specific Java adapter.",
+      "procedure": "ConsolidateDepartmentFiles",
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "VBA_HOST_ADAPTER_REQUIRED",
+      "message": "VBA host object 'ThisWorkbook' requires an application-specific Java adapter.",
+      "procedure": "ConsolidateDepartmentFiles",
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "VBA_COM_ADAPTER_REQUIRED",
+      "message": "CreateObject requires a Java adapter for the requested COM server.",
+      "procedure": "ConsolidateDepartmentFiles",
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "VBA_HOST_ADAPTER_REQUIRED",
+      "message": "VBA host object 'Workbooks' requires an application-specific Java adapter.",
+      "procedure": "ConsolidateDepartmentFiles",
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "VBA_LEGACY_JUMP",
+      "message": "goto control flow is explicitly marked for implementation.",
+      "procedure": "ConsolidateDepartmentFiles",
+      "source_location": {
+        "line": 83,
+        "end_line": 83,
+        "file": "vba_sample_4.bas"
+      },
+      "source_text": "GoTo CleanUp"
+    }
+  ],
+  "note": "Compilation verifies Java syntax only, not behavioral equivalence or availability of VBA host adapters."
+}
