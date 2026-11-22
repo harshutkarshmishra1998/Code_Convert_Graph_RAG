@@ -66,5 +66,5 @@ def load_graph_from_jsonl(input_file_path: str):
 
 # CLI EN
 if __name__ == "__main__":
-    n = 2
-    load_graph_from_jsonl(f"files/sample_{n}.jsonl")
+    n = 6
+    load_graph_from_jsonl(f"files/vba_graph_output/sample_{n}/graph.json")
