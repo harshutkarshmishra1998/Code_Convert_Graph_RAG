@@ -1,0 +1,10 @@
+{
+  "project": "vba_sample_1",
+  "module_count": 1,
+  "procedure_count": 1,
+  "node_count": 30,
+  "edge_count": 48,
+  "segment_count": 25,
+  "diagnostic_count": 1,
+  "opaque_count": 1
+}

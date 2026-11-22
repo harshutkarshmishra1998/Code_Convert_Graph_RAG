@@ -1,0 +1,908 @@
+{
+  "schema_version": "1.0.0",
+  "language": "vba",
+  "project": {
+    "name": "vba_sample_2",
+    "node_id": "project_69c2501e4ba4737c"
+  },
+  "nodes": [
+    {
+      "id": "project_69c2501e4ba4737c",
+      "type": "PROJECT",
+      "name": "vba_sample_2",
+      "parent_id": null,
+      "source": null,
+      "metadata": {}
+    },
+    {
+      "id": "module_75491f8db87425ef",
+      "type": "MODULE",
+      "name": "vba_sample_2",
+      "parent_id": "project_69c2501e4ba4737c",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 1,
+        "end_line": 32,
+        "text": "Option Explicit\n\nPublic Function NormalizeSku(ByVal rawSku As Variant) As String\n    Dim normalized As String\n\n    On Error GoTo InvalidSku\n\n    If IsNull(rawSku) Or IsEmpty(rawSku) Then\n        Err.Raise vbObjectError + 1001, \"NormalizeSku\", \"SKU is required.\"\n    End If\n\n    If VarType(rawSku) <> vbString Then\n        Err.Raise vbObjectError + 1002, \"NormalizeSku\", \"SKU must be text.\"\n    End If\n\n    normalized = UCase$(Trim$(CStr(rawSku)))\n    If Len(normalized) < 4 Or Len(normalized) > 24 Then\n        Err.Raise vbObjectError + 1003, \"NormalizeSku\", \"SKU length is invalid.\"\n    End If\n\n    Select Case True\n        Case normalized Like \"*[!A-Z0-9-]*\"\n            Err.Raise vbObjectError + 1004, \"NormalizeSku\", \"SKU contains unsupported characters.\"\n        Case Else\n            NormalizeSku = normalized\n    End Select\n\n    Exit Function\n\nInvalidSku:\n    Err.Raise Err.Number, \"NormalizeSku\", Err.Description\nEnd Function\n"
+      },
+      "metadata": {
+        "kind": "STANDARD_MODULE",
+        "options": [
+          {
+            "source": "Option Explicit",
+            "location": {
+              "start_line": 1,
+              "end_line": 1
+            }
+          }
+        ],
+        "attributes": []
+      }
+    },
+    {
+      "id": "procedure_1e1ab4f77ef353c7",
+      "type": "PROCEDURE",
+      "name": "NormalizeSku",
+      "parent_id": "module_75491f8db87425ef",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 3,
+        "end_line": 32,
+        "text": "Public Function NormalizeSku(ByVal rawSku As Variant) As String\n    Dim normalized As String\n\n    On Error GoTo InvalidSku\n\n    If IsNull(rawSku) Or IsEmpty(rawSku) Then\n        Err.Raise vbObjectError + 1001, \"NormalizeSku\", \"SKU is required.\"\n    End If\n\n    If VarType(rawSku) <> vbString Then\n        Err.Raise vbObjectError + 1002, \"NormalizeSku\", \"SKU must be text.\"\n    End If\n\n    normalized = UCase$(Trim$(CStr(rawSku)))\n    If Len(normalized) < 4 Or Len(normalized) > 24 Then\n        Err.Raise vbObjectError + 1003, \"NormalizeSku\", \"SKU length is invalid.\"\n    End If\n\n    Select Case True\n        Case normalized Like \"*[!A-Z0-9-]*\"\n            Err.Raise vbObjectError + 1004, \"NormalizeSku\", \"SKU contains unsupported characters.\"\n        Case Else\n            NormalizeSku = normalized\n    End Select\n\n    Exit Function\n\nInvalidSku:\n    Err.Raise Err.Number, \"NormalizeSku\", Err.Description\nEnd Function"
+      },
+      "metadata": {
+        "kind": "FUNCTION",
+        "visibility": "PUBLIC",
+        "parameters": [
+          {
+            "name": "rawSku",
+            "passing": "Byval",
+            "optional": false,
+            "param_array": false,
+            "type": "Variant",
+            "default": null,
+            "source": "ByVal rawSku As Variant"
+          }
+        ],
+        "return_type": "String"
+      }
+    },
+    {
+      "id": "node_c340e5bc44887adb",
+      "type": "DECLARATION",
+      "name": "declaration_1",
+      "parent_id": "procedure_1e1ab4f77ef353c7",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 4,
+        "end_line": 4,
+        "text": "    Dim normalized As String"
+      },
+      "metadata": {
+        "type": "DECLARATION"
+      }
+    },
+    {
+      "id": "node_d333996995d4035c",
+      "type": "ERROR_CONTROL",
+      "name": "error_control_2",
+      "parent_id": "procedure_1e1ab4f77ef353c7",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 6,
+        "end_line": 6,
+        "text": "    On Error GoTo InvalidSku"
+      },
+      "metadata": {
+        "type": "ERROR_CONTROL"
+      }
+    },
+    {
+      "id": "node_2e08b0a64cb22886",
+      "type": "IF_BLOCK",
+      "name": "if_block_3",
+      "parent_id": "procedure_1e1ab4f77ef353c7",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 8,
+        "end_line": 8,
+        "text": "    If IsNull(rawSku) Or IsEmpty(rawSku) Then"
+      },
+      "metadata": {
+        "type": "IF_BLOCK",
+        "condition": {
+          "source": "IsNull(rawSku) Or IsEmpty(rawSku)",
+          "tokens": [
+            "IsNull",
+            "(",
+            "rawSku",
+            ")",
+            "Or",
+            "IsEmpty",
+            "(",
+            "rawSku",
+            ")"
+          ],
+          "identifiers": [
+            "IsNull",
+            "rawSku",
+            "IsEmpty",
+            "rawSku"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "branch_ec8bbecff98e6404",
+      "type": "IF_BRANCH",
+      "name": "IF",
+      "parent_id": "node_2e08b0a64cb22886",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 8,
+        "end_line": 8,
+        "text": ""
+      },
+      "metadata": {
+        "condition": {
+          "source": "IsNull(rawSku) Or IsEmpty(rawSku)",
+          "tokens": [
+            "IsNull",
+            "(",
+            "rawSku",
+            ")",
+            "Or",
+            "IsEmpty",
+            "(",
+            "rawSku",
+            ")"
+          ],
+          "identifiers": [
+            "IsNull",
+            "rawSku",
+            "IsEmpty",
+            "rawSku"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_5958bf06ecfd9545",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_1",
+      "parent_id": "branch_ec8bbecff98e6404",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 9,
+        "end_line": 9,
+        "text": "        Err.Raise vbObjectError + 1001, \"NormalizeSku\", \"SKU is required.\""
+      },
+      "metadata": {
+        "type": "CALL_OR_COMMAND",
+        "expression": {
+          "source": "Err.Raise vbObjectError + 1001, \"NormalizeSku\", \"SKU is required.\"",
+          "tokens": [
+            "Err",
+            ".",
+            "Raise",
+            "vbObjectError",
+            "+",
+            "1001",
+            ",",
+            "\"NormalizeSku\"",
+            ",",
+            "\"SKU is required.\""
+          ],
+          "identifiers": [
+            "Err",
+            "Raise",
+            "vbObjectError"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_9033b9a9f00eb47b",
+      "type": "IF_BLOCK",
+      "name": "if_block_4",
+      "parent_id": "procedure_1e1ab4f77ef353c7",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 12,
+        "end_line": 12,
+        "text": "    If VarType(rawSku) <> vbString Then"
+      },
+      "metadata": {
+        "type": "IF_BLOCK",
+        "condition": {
+          "source": "VarType(rawSku) <> vbString",
+          "tokens": [
+            "VarType",
+            "(",
+            "rawSku",
+            ")",
+            "<>",
+            "vbString"
+          ],
+          "identifiers": [
+            "VarType",
+            "rawSku",
+            "vbString"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "branch_11c0c1fabb77d655",
+      "type": "IF_BRANCH",
+      "name": "IF",
+      "parent_id": "node_9033b9a9f00eb47b",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 12,
+        "end_line": 12,
+        "text": ""
+      },
+      "metadata": {
+        "condition": {
+          "source": "VarType(rawSku) <> vbString",
+          "tokens": [
+            "VarType",
+            "(",
+            "rawSku",
+            ")",
+            "<>",
+            "vbString"
+          ],
+          "identifiers": [
+            "VarType",
+            "rawSku",
+            "vbString"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_60bc4c74b896e9f1",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_1",
+      "parent_id": "branch_11c0c1fabb77d655",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 13,
+        "end_line": 13,
+        "text": "        Err.Raise vbObjectError + 1002, \"NormalizeSku\", \"SKU must be text.\""
+      },
+      "metadata": {
+        "type": "CALL_OR_COMMAND",
+        "expression": {
+          "source": "Err.Raise vbObjectError + 1002, \"NormalizeSku\", \"SKU must be text.\"",
+          "tokens": [
+            "Err",
+            ".",
+            "Raise",
+            "vbObjectError",
+            "+",
+            "1002",
+            ",",
+            "\"NormalizeSku\"",
+            ",",
+            "\"SKU must be text.\""
+          ],
+          "identifiers": [
+            "Err",
+            "Raise",
+            "vbObjectError"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_9fc96cdede29ce1d",
+      "type": "ASSIGNMENT",
+      "name": "normalized",
+      "parent_id": "procedure_1e1ab4f77ef353c7",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 16,
+        "end_line": 16,
+        "text": "    normalized = UCase$(Trim$(CStr(rawSku)))"
+      },
+      "metadata": {
+        "type": "ASSIGNMENT",
+        "assignment_kind": "IMPLICIT",
+        "target": "normalized",
+        "expression": {
+          "source": "UCase$(Trim$(CStr(rawSku)))",
+          "tokens": [
+            "UCase",
+            "$",
+            "(",
+            "Trim",
+            "$",
+            "(",
+            "CStr",
+            "(",
+            "rawSku",
+            ")",
+            ")",
+            ")"
+          ],
+          "identifiers": [
+            "UCase",
+            "Trim",
+            "CStr",
+            "rawSku"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_f085f76e1954acc1",
+      "type": "IF_BLOCK",
+      "name": "if_block_6",
+      "parent_id": "procedure_1e1ab4f77ef353c7",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 17,
+        "end_line": 17,
+        "text": "    If Len(normalized) < 4 Or Len(normalized) > 24 Then"
+      },
+      "metadata": {
+        "type": "IF_BLOCK",
+        "condition": {
+          "source": "Len(normalized) < 4 Or Len(normalized) > 24",
+          "tokens": [
+            "Len",
+            "(",
+            "normalized",
+            ")",
+            "<",
+            "4",
+            "Or",
+            "Len",
+            "(",
+            "normalized",
+            ")",
+            ">",
+            "24"
+          ],
+          "identifiers": [
+            "Len",
+            "normalized",
+            "Len",
+            "normalized"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "branch_691b417fdfe2fc7e",
+      "type": "IF_BRANCH",
+      "name": "IF",
+      "parent_id": "node_f085f76e1954acc1",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 17,
+        "end_line": 17,
+        "text": ""
+      },
+      "metadata": {
+        "condition": {
+          "source": "Len(normalized) < 4 Or Len(normalized) > 24",
+          "tokens": [
+            "Len",
+            "(",
+            "normalized",
+            ")",
+            "<",
+            "4",
+            "Or",
+            "Len",
+            "(",
+            "normalized",
+            ")",
+            ">",
+            "24"
+          ],
+          "identifiers": [
+            "Len",
+            "normalized",
+            "Len",
+            "normalized"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_4af81e3c6f0b64b1",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_1",
+      "parent_id": "branch_691b417fdfe2fc7e",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 18,
+        "end_line": 18,
+        "text": "        Err.Raise vbObjectError + 1003, \"NormalizeSku\", \"SKU length is invalid.\""
+      },
+      "metadata": {
+        "type": "CALL_OR_COMMAND",
+        "expression": {
+          "source": "Err.Raise vbObjectError + 1003, \"NormalizeSku\", \"SKU length is invalid.\"",
+          "tokens": [
+            "Err",
+            ".",
+            "Raise",
+            "vbObjectError",
+            "+",
+            "1003",
+            ",",
+            "\"NormalizeSku\"",
+            ",",
+            "\"SKU length is invalid.\""
+          ],
+          "identifiers": [
+            "Err",
+            "Raise",
+            "vbObjectError"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_a5cbc6b3bed0f25a",
+      "type": "SELECT_BLOCK",
+      "name": "select_block_7",
+      "parent_id": "procedure_1e1ab4f77ef353c7",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 21,
+        "end_line": 21,
+        "text": "    Select Case True"
+      },
+      "metadata": {
+        "type": "SELECT_BLOCK",
+        "expression": {
+          "source": "True",
+          "tokens": [
+            "True"
+          ],
+          "identifiers": [],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "case_ed01cd3d24950a3a",
+      "type": "CASE_BRANCH",
+      "name": "normalized Like \"*[!A-Z0-9-]*\"",
+      "parent_id": "node_a5cbc6b3bed0f25a",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 21,
+        "end_line": 21,
+        "text": ""
+      },
+      "metadata": {
+        "condition_source": "normalized Like \"*[!A-Z0-9-]*\""
+      }
+    },
+    {
+      "id": "node_aa898f231fa91d16",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_1",
+      "parent_id": "case_ed01cd3d24950a3a",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 23,
+        "end_line": 23,
+        "text": "            Err.Raise vbObjectError + 1004, \"NormalizeSku\", \"SKU contains unsupported characters.\""
+      },
+      "metadata": {
+        "type": "CALL_OR_COMMAND",
+        "expression": {
+          "source": "Err.Raise vbObjectError + 1004, \"NormalizeSku\", \"SKU contains unsupported characters.\"",
+          "tokens": [
+            "Err",
+            ".",
+            "Raise",
+            "vbObjectError",
+            "+",
+            "1004",
+            ",",
+            "\"NormalizeSku\"",
+            ",",
+            "\"SKU contains unsupported characters.\""
+          ],
+          "identifiers": [
+            "Err",
+            "Raise",
+            "vbObjectError"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "case_fd2d2664062aeccd",
+      "type": "CASE_BRANCH",
+      "name": "Else",
+      "parent_id": "node_a5cbc6b3bed0f25a",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 21,
+        "end_line": 21,
+        "text": ""
+      },
+      "metadata": {
+        "condition_source": "Else"
+      }
+    },
+    {
+      "id": "node_d384efc6d7a8a88d",
+      "type": "ASSIGNMENT",
+      "name": "NormalizeSku",
+      "parent_id": "case_fd2d2664062aeccd",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 25,
+        "end_line": 25,
+        "text": "            NormalizeSku = normalized"
+      },
+      "metadata": {
+        "type": "ASSIGNMENT",
+        "assignment_kind": "IMPLICIT",
+        "target": "NormalizeSku",
+        "expression": {
+          "source": "normalized",
+          "tokens": [
+            "normalized"
+          ],
+          "identifiers": [
+            "normalized"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_8acff2418d26eaef",
+      "type": "EXIT",
+      "name": "Function",
+      "parent_id": "procedure_1e1ab4f77ef353c7",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 28,
+        "end_line": 28,
+        "text": "    Exit Function"
+      },
+      "metadata": {
+        "type": "EXIT",
+        "target": "Function"
+      }
+    },
+    {
+      "id": "node_9826d3c300cc1baf",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_9",
+      "parent_id": "procedure_1e1ab4f77ef353c7",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 30,
+        "end_line": 30,
+        "text": "InvalidSku:"
+      },
+      "metadata": {
+        "type": "CALL_OR_COMMAND",
+        "expression": {
+          "source": "InvalidSku",
+          "tokens": [
+            "InvalidSku"
+          ],
+          "identifiers": [
+            "InvalidSku"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_73eced853a73c9c3",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_10",
+      "parent_id": "procedure_1e1ab4f77ef353c7",
+      "source": {
+        "path": "vba_sample_2.bas",
+        "start_line": 31,
+        "end_line": 31,
+        "text": "    Err.Raise Err.Number, \"NormalizeSku\", Err.Description"
+      },
+      "metadata": {
+        "type": "CALL_OR_COMMAND",
+        "expression": {
+          "source": "Err.Raise Err.Number, \"NormalizeSku\", Err.Description",
+          "tokens": [
+            "Err",
+            ".",
+            "Raise",
+            "Err",
+            ".",
+            "Number",
+            ",",
+            "\"NormalizeSku\"",
+            ",",
+            "Err",
+            ".",
+            "Description"
+          ],
+          "identifiers": [
+            "Err",
+            "Raise",
+            "Err",
+            "Number",
+            "Err",
+            "Description"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "project_69c2501e4ba4737c",
+      "target": "module_75491f8db87425ef",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "module_75491f8db87425ef",
+      "target": "procedure_1e1ab4f77ef353c7",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "procedure_1e1ab4f77ef353c7",
+      "target": "node_c340e5bc44887adb",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "procedure_1e1ab4f77ef353c7",
+      "target": "node_d333996995d4035c",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_c340e5bc44887adb",
+      "target": "node_d333996995d4035c",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_1e1ab4f77ef353c7",
+      "target": "node_2e08b0a64cb22886",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_d333996995d4035c",
+      "target": "node_2e08b0a64cb22886",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_2e08b0a64cb22886",
+      "target": "branch_ec8bbecff98e6404",
+      "relation": "TRUE_BRANCH",
+      "evidence": {}
+    },
+    {
+      "source": "branch_ec8bbecff98e6404",
+      "target": "node_5958bf06ecfd9545",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "procedure_1e1ab4f77ef353c7",
+      "target": "node_9033b9a9f00eb47b",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_2e08b0a64cb22886",
+      "target": "node_9033b9a9f00eb47b",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_9033b9a9f00eb47b",
+      "target": "branch_11c0c1fabb77d655",
+      "relation": "TRUE_BRANCH",
+      "evidence": {}
+    },
+    {
+      "source": "branch_11c0c1fabb77d655",
+      "target": "node_60bc4c74b896e9f1",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "procedure_1e1ab4f77ef353c7",
+      "target": "node_9fc96cdede29ce1d",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_9033b9a9f00eb47b",
+      "target": "node_9fc96cdede29ce1d",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_1e1ab4f77ef353c7",
+      "target": "node_f085f76e1954acc1",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_9fc96cdede29ce1d",
+      "target": "node_f085f76e1954acc1",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_f085f76e1954acc1",
+      "target": "branch_691b417fdfe2fc7e",
+      "relation": "TRUE_BRANCH",
+      "evidence": {}
+    },
+    {
+      "source": "branch_691b417fdfe2fc7e",
+      "target": "node_4af81e3c6f0b64b1",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "procedure_1e1ab4f77ef353c7",
+      "target": "node_a5cbc6b3bed0f25a",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_f085f76e1954acc1",
+      "target": "node_a5cbc6b3bed0f25a",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_a5cbc6b3bed0f25a",
+      "target": "case_ed01cd3d24950a3a",
+      "relation": "CASE_BRANCH",
+      "evidence": {}
+    },
+    {
+      "source": "case_ed01cd3d24950a3a",
+      "target": "node_aa898f231fa91d16",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_a5cbc6b3bed0f25a",
+      "target": "case_fd2d2664062aeccd",
+      "relation": "CASE_BRANCH",
+      "evidence": {}
+    },
+    {
+      "source": "case_fd2d2664062aeccd",
+      "target": "node_d384efc6d7a8a88d",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "procedure_1e1ab4f77ef353c7",
+      "target": "node_8acff2418d26eaef",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_a5cbc6b3bed0f25a",
+      "target": "node_8acff2418d26eaef",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_1e1ab4f77ef353c7",
+      "target": "node_9826d3c300cc1baf",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_8acff2418d26eaef",
+      "target": "node_9826d3c300cc1baf",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_1e1ab4f77ef353c7",
+      "target": "node_73eced853a73c9c3",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_9826d3c300cc1baf",
+      "target": "node_73eced853a73c9c3",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_1e1ab4f77ef353c7",
+      "target": "procedure_1e1ab4f77ef353c7",
+      "relation": "REFERENCES",
+      "evidence": {
+        "path": "vba_sample_2.bas",
+        "line": 25
+      }
+    }
+  ],
+  "symbols": [
+    {
+      "id": "vba_sample_2.NormalizeSku.param.rawSku",
+      "name": "rawSku",
+      "kind": "PARAMETER",
+      "scope": "vba_sample_2.NormalizeSku",
+      "data_type": "Variant",
+      "passing": "Byval"
+    },
+    {
+      "id": "vba_sample_2.NormalizeSku.var.normalized",
+      "name": "normalized",
+      "kind": "LOCAL_OR_PARAMETER",
+      "scope": "vba_sample_2.NormalizeSku"
+    },
+    {
+      "id": "vba_sample_2.NormalizeSku.var.rawsku",
+      "name": "rawsku",
+      "kind": "LOCAL_OR_PARAMETER",
+      "scope": "vba_sample_2.NormalizeSku"
+    }
+  ],
+  "diagnostics": [],
+  "manifest": [
+    {
+      "path": "vba_sample_2.bas",
+      "kind": "source",
+      "encoding": "utf-8",
+      "sha256": "10095d58ec66f1d8ba5f5fc42d7e175af3aff2c198044ee8d93956e86badb753",
+      "size_bytes": 934
+    }
+  ]
+}

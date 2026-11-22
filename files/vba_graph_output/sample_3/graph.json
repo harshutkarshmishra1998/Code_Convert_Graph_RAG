@@ -1,0 +1,2485 @@
+{
+  "schema_version": "1.0.0",
+  "language": "vba",
+  "project": {
+    "name": "vba_sample_3",
+    "node_id": "project_47159d032a60272c"
+  },
+  "nodes": [
+    {
+      "id": "project_47159d032a60272c",
+      "type": "PROJECT",
+      "name": "vba_sample_3",
+      "parent_id": null,
+      "source": null,
+      "metadata": {}
+    },
+    {
+      "id": "module_168835884e64d2ab",
+      "type": "MODULE",
+      "name": "vba_sample_3",
+      "parent_id": "project_47159d032a60272c",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 1,
+        "end_line": 73,
+        "text": "Option Explicit\n\nPublic Sub ImportDailySales(ByVal tsvPath As String, ByVal reportDate As Date)\n    Dim stream As Object\n    Dim salesByRegion As Object\n    Dim fields As Variant\n    Dim lineText As String\n    Dim regionCode As String\n    Dim saleAmount As Currency\n    Dim lastRow As Long\n    Dim rowNumber As Long\n\n    On Error GoTo HandleError\n\n    If Len(Dir$(tsvPath)) = 0 Then\n        Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\"\n    End If\n\n    Set salesByRegion = CreateObject(\"Scripting.Dictionary\")\n    Set stream = CreateObject(\"ADODB.Stream\")\n    stream.Type = 2\n    stream.Charset = \"utf-8\"\n    stream.Open\n    stream.LoadFromFile tsvPath\n\n    If Not stream.EOS Then\n        lineText = stream.ReadText(-2)\n    End If\n\n    Do While Not stream.EOS\n        lineText = stream.ReadText(-2)\n        fields = Split(lineText, vbTab)\n\n        If UBound(fields) >= 2 Then\n            regionCode = UCase$(Trim$(CStr(fields(1))))\n            If IsNumeric(fields(2)) And Len(regionCode) > 0 Then\n                saleAmount = CCur(fields(2))\n                If salesByRegion.Exists(regionCode) Then\n                    salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount\n                Else\n                    salesByRegion.Add regionCode, saleAmount\n                End If\n            End If\n        End If\n    Loop\n\n    stream.Close\n    Set stream = Nothing\n\n    With ThisWorkbook.Worksheets(\"Daily Sales\")\n        lastRow = .Cells(.Rows.Count, \"A\").End(xlUp).Row\n        For rowNumber = 2 To lastRow\n            If IsDate(.Cells(rowNumber, \"A\").Value) Then\n                If DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate) Then\n                    regionCode = UCase$(Trim$(CStr(.Cells(rowNumber, \"B\").Value)))\n                    If salesByRegion.Exists(regionCode) Then\n                        .Cells(rowNumber, \"C\").Value = salesByRegion(regionCode)\n                    Else\n                        .Cells(rowNumber, \"C\").Value = 0\n                    End If\n                End If\n            End If\n        Next rowNumber\n    End With\n\n    Exit Sub\n\nHandleError:\n    If Not stream Is Nothing Then\n        If stream.State = 1 Then stream.Close\n    End If\n    Err.Raise Err.Number, \"ImportDailySales\", Err.Description\nEnd Sub\n"
+      },
+      "metadata": {
+        "kind": "STANDARD_MODULE",
+        "options": [
+          {
+            "source": "Option Explicit",
+            "location": {
+              "start_line": 1,
+              "end_line": 1
+            }
+          }
+        ],
+        "attributes": []
+      }
+    },
+    {
+      "id": "procedure_4cddda8433374681",
+      "type": "PROCEDURE",
+      "name": "ImportDailySales",
+      "parent_id": "module_168835884e64d2ab",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 3,
+        "end_line": 73,
+        "text": "Public Sub ImportDailySales(ByVal tsvPath As String, ByVal reportDate As Date)\n    Dim stream As Object\n    Dim salesByRegion As Object\n    Dim fields As Variant\n    Dim lineText As String\n    Dim regionCode As String\n    Dim saleAmount As Currency\n    Dim lastRow As Long\n    Dim rowNumber As Long\n\n    On Error GoTo HandleError\n\n    If Len(Dir$(tsvPath)) = 0 Then\n        Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\"\n    End If\n\n    Set salesByRegion = CreateObject(\"Scripting.Dictionary\")\n    Set stream = CreateObject(\"ADODB.Stream\")\n    stream.Type = 2\n    stream.Charset = \"utf-8\"\n    stream.Open\n    stream.LoadFromFile tsvPath\n\n    If Not stream.EOS Then\n        lineText = stream.ReadText(-2)\n    End If\n\n    Do While Not stream.EOS\n        lineText = stream.ReadText(-2)\n        fields = Split(lineText, vbTab)\n\n        If UBound(fields) >= 2 Then\n            regionCode = UCase$(Trim$(CStr(fields(1))))\n            If IsNumeric(fields(2)) And Len(regionCode) > 0 Then\n                saleAmount = CCur(fields(2))\n                If salesByRegion.Exists(regionCode) Then\n                    salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount\n                Else\n                    salesByRegion.Add regionCode, saleAmount\n                End If\n            End If\n        End If\n    Loop\n\n    stream.Close\n    Set stream = Nothing\n\n    With ThisWorkbook.Worksheets(\"Daily Sales\")\n        lastRow = .Cells(.Rows.Count, \"A\").End(xlUp).Row\n        For rowNumber = 2 To lastRow\n            If IsDate(.Cells(rowNumber, \"A\").Value) Then\n                If DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate) Then\n                    regionCode = UCase$(Trim$(CStr(.Cells(rowNumber, \"B\").Value)))\n                    If salesByRegion.Exists(regionCode) Then\n                        .Cells(rowNumber, \"C\").Value = salesByRegion(regionCode)\n                    Else\n                        .Cells(rowNumber, \"C\").Value = 0\n                    End If\n                End If\n            End If\n        Next rowNumber\n    End With\n\n    Exit Sub\n\nHandleError:\n    If Not stream Is Nothing Then\n        If stream.State = 1 Then stream.Close\n    End If\n    Err.Raise Err.Number, \"ImportDailySales\", Err.Description\nEnd Sub"
+      },
+      "metadata": {
+        "kind": "SUB",
+        "visibility": "PUBLIC",
+        "parameters": [
+          {
+            "name": "tsvPath",
+            "passing": "Byval",
+            "optional": false,
+            "param_array": false,
+            "type": "String",
+            "default": null,
+            "source": "ByVal tsvPath As String"
+          },
+          {
+            "name": "reportDate",
+            "passing": "Byval",
+            "optional": false,
+            "param_array": false,
+            "type": "Date",
+            "default": null,
+            "source": "ByVal reportDate As Date"
+          }
+        ],
+        "return_type": null
+      }
+    },
+    {
+      "id": "node_98302a1a872d41f5",
+      "type": "DECLARATION",
+      "name": "declaration_1",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 4,
+        "end_line": 4,
+        "text": "    Dim stream As Object"
+      },
+      "metadata": {
+        "type": "DECLARATION"
+      }
+    },
+    {
+      "id": "node_9f326b798a4aefac",
+      "type": "DECLARATION",
+      "name": "declaration_2",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 5,
+        "end_line": 5,
+        "text": "    Dim salesByRegion As Object"
+      },
+      "metadata": {
+        "type": "DECLARATION"
+      }
+    },
+    {
+      "id": "node_61cccadae65328db",
+      "type": "DECLARATION",
+      "name": "declaration_3",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 6,
+        "end_line": 6,
+        "text": "    Dim fields As Variant"
+      },
+      "metadata": {
+        "type": "DECLARATION"
+      }
+    },
+    {
+      "id": "node_e3588ae891994ae8",
+      "type": "DECLARATION",
+      "name": "declaration_4",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 7,
+        "end_line": 7,
+        "text": "    Dim lineText As String"
+      },
+      "metadata": {
+        "type": "DECLARATION"
+      }
+    },
+    {
+      "id": "node_4a851f554a2573e1",
+      "type": "DECLARATION",
+      "name": "declaration_5",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 8,
+        "end_line": 8,
+        "text": "    Dim regionCode As String"
+      },
+      "metadata": {
+        "type": "DECLARATION"
+      }
+    },
+    {
+      "id": "node_3438e5fc70cbbcaa",
+      "type": "DECLARATION",
+      "name": "declaration_6",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 9,
+        "end_line": 9,
+        "text": "    Dim saleAmount As Currency"
+      },
+      "metadata": {
+        "type": "DECLARATION"
+      }
+    },
+    {
+      "id": "node_2f307af5bca71e03",
+      "type": "DECLARATION",
+      "name": "declaration_7",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 10,
+        "end_line": 10,
+        "text": "    Dim lastRow As Long"
+      },
+      "metadata": {
+        "type": "DECLARATION"
+      }
+    },
+    {
+      "id": "node_30df7e463339f06b",
+      "type": "DECLARATION",
+      "name": "declaration_8",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 11,
+        "end_line": 11,
+        "text": "    Dim rowNumber As Long"
+      },
+      "metadata": {
+        "type": "DECLARATION"
+      }
+    },
+    {
+      "id": "node_ca8b01829ed47003",
+      "type": "ERROR_CONTROL",
+      "name": "error_control_9",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 13,
+        "end_line": 13,
+        "text": "    On Error GoTo HandleError"
+      },
+      "metadata": {
+        "type": "ERROR_CONTROL"
+      }
+    },
+    {
+      "id": "node_29fa6167529523d2",
+      "type": "IF_BLOCK",
+      "name": "if_block_10",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 15,
+        "end_line": 15,
+        "text": "    If Len(Dir$(tsvPath)) = 0 Then"
+      },
+      "metadata": {
+        "type": "IF_BLOCK",
+        "condition": {
+          "source": "Len(Dir$(tsvPath)) = 0",
+          "tokens": [
+            "Len",
+            "(",
+            "Dir",
+            "$",
+            "(",
+            "tsvPath",
+            ")",
+            ")",
+            "=",
+            "0"
+          ],
+          "identifiers": [
+            "Len",
+            "Dir",
+            "tsvPath"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "branch_7ee8f50391e9eab7",
+      "type": "IF_BRANCH",
+      "name": "IF",
+      "parent_id": "node_29fa6167529523d2",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 15,
+        "end_line": 15,
+        "text": ""
+      },
+      "metadata": {
+        "condition": {
+          "source": "Len(Dir$(tsvPath)) = 0",
+          "tokens": [
+            "Len",
+            "(",
+            "Dir",
+            "$",
+            "(",
+            "tsvPath",
+            ")",
+            ")",
+            "=",
+            "0"
+          ],
+          "identifiers": [
+            "Len",
+            "Dir",
+            "tsvPath"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_76779bfbc36e837c",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_1",
+      "parent_id": "branch_7ee8f50391e9eab7",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 16,
+        "end_line": 16,
+        "text": "        Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\""
+      },
+      "metadata": {
+        "type": "CALL_OR_COMMAND",
+        "expression": {
+          "source": "Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\"",
+          "tokens": [
+            "Err",
+            ".",
+            "Raise",
+            "vbObjectError",
+            "+",
+            "2001",
+            ",",
+            "\"ImportDailySales\"",
+            ",",
+            "\"Input file does not exist.\""
+          ],
+          "identifiers": [
+            "Err",
+            "Raise",
+            "vbObjectError"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_b381c92738556af3",
+      "type": "ASSIGNMENT",
+      "name": "salesByRegion",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 19,
+        "end_line": 19,
+        "text": "    Set salesByRegion = CreateObject(\"Scripting.Dictionary\")"
+      },
+      "metadata": {
+        "type": "ASSIGNMENT",
+        "assignment_kind": "SET",
+        "target": "salesByRegion",
+        "expression": {
+          "source": "CreateObject(\"Scripting.Dictionary\")",
+          "tokens": [
+            "CreateObject",
+            "(",
+            "\"Scripting.Dictionary\"",
+            ")"
+          ],
+          "identifiers": [
+            "CreateObject"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_83c204d7e2d609fa",
+      "type": "ASSIGNMENT",
+      "name": "stream",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 20,
+        "end_line": 20,
+        "text": "    Set stream = CreateObject(\"ADODB.Stream\")"
+      },
+      "metadata": {
+        "type": "ASSIGNMENT",
+        "assignment_kind": "SET",
+        "target": "stream",
+        "expression": {
+          "source": "CreateObject(\"ADODB.Stream\")",
+          "tokens": [
+            "CreateObject",
+            "(",
+            "\"ADODB.Stream\"",
+            ")"
+          ],
+          "identifiers": [
+            "CreateObject"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_fc8fdd1f377b8b27",
+      "type": "ASSIGNMENT",
+      "name": "stream.Type",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 21,
+        "end_line": 21,
+        "text": "    stream.Type = 2"
+      },
+      "metadata": {
+        "type": "ASSIGNMENT",
+        "assignment_kind": "IMPLICIT",
+        "target": "stream.Type",
+        "expression": {
+          "source": "2",
+          "tokens": [
+            "2"
+          ],
+          "identifiers": [],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_b01a53fee2d82ccb",
+      "type": "ASSIGNMENT",
+      "name": "stream.Charset",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 22,
+        "end_line": 22,
+        "text": "    stream.Charset = \"utf-8\""
+      },
+      "metadata": {
+        "type": "ASSIGNMENT",
+        "assignment_kind": "IMPLICIT",
+        "target": "stream.Charset",
+        "expression": {
+          "source": "\"utf-8\"",
+          "tokens": [
+            "\"utf-8\""
+          ],
+          "identifiers": [],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_819a008355cb2dc2",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_15",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 23,
+        "end_line": 23,
+        "text": "    stream.Open"
+      },
+      "metadata": {
+        "type": "CALL_OR_COMMAND",
+        "expression": {
+          "source": "stream.Open",
+          "tokens": [
+            "stream",
+            ".",
+            "Open"
+          ],
+          "identifiers": [
+            "stream",
+            "Open"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_fde8eeee6b89fa27",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_16",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 24,
+        "end_line": 24,
+        "text": "    stream.LoadFromFile tsvPath"
+      },
+      "metadata": {
+        "type": "CALL_OR_COMMAND",
+        "expression": {
+          "source": "stream.LoadFromFile tsvPath",
+          "tokens": [
+            "stream",
+            ".",
+            "LoadFromFile",
+            "tsvPath"
+          ],
+          "identifiers": [
+            "stream",
+            "LoadFromFile",
+            "tsvPath"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_6cfc22d75f14af44",
+      "type": "IF_BLOCK",
+      "name": "if_block_17",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 26,
+        "end_line": 26,
+        "text": "    If Not stream.EOS Then"
+      },
+      "metadata": {
+        "type": "IF_BLOCK",
+        "condition": {
+          "source": "Not stream.EOS",
+          "tokens": [
+            "Not",
+            "stream",
+            ".",
+            "EOS"
+          ],
+          "identifiers": [
+            "stream",
+            "EOS"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "branch_141e7e2458afe647",
+      "type": "IF_BRANCH",
+      "name": "IF",
+      "parent_id": "node_6cfc22d75f14af44",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 26,
+        "end_line": 26,
+        "text": ""
+      },
+      "metadata": {
+        "condition": {
+          "source": "Not stream.EOS",
+          "tokens": [
+            "Not",
+            "stream",
+            ".",
+            "EOS"
+          ],
+          "identifiers": [
+            "stream",
+            "EOS"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_bb5049f6354c45d5",
+      "type": "ASSIGNMENT",
+      "name": "lineText",
+      "parent_id": "branch_141e7e2458afe647",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 27,
+        "end_line": 27,
+        "text": "        lineText = stream.ReadText(-2)"
+      },
+      "metadata": {
+        "type": "ASSIGNMENT",
+        "assignment_kind": "IMPLICIT",
+        "target": "lineText",
+        "expression": {
+          "source": "stream.ReadText(-2)",
+          "tokens": [
+            "stream",
+            ".",
+            "ReadText",
+            "(",
+            "-",
+            "2",
+            ")"
+          ],
+          "identifiers": [
+            "stream",
+            "ReadText"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_e00f531a74c99164",
+      "type": "DO_LOOP_BLOCK",
+      "name": "do_loop_block_18",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 30,
+        "end_line": 30,
+        "text": "    Do While Not stream.EOS"
+      },
+      "metadata": {
+        "type": "DO_LOOP_BLOCK",
+        "test_position": "PRE",
+        "test": "WHILE",
+        "condition": {
+          "source": "Not stream.EOS",
+          "tokens": [
+            "Not",
+            "stream",
+            ".",
+            "EOS"
+          ],
+          "identifiers": [
+            "stream",
+            "EOS"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_0a5cda09fef0b6bc",
+      "type": "ASSIGNMENT",
+      "name": "lineText",
+      "parent_id": "node_e00f531a74c99164",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 31,
+        "end_line": 31,
+        "text": "        lineText = stream.ReadText(-2)"
+      },
+      "metadata": {
+        "type": "ASSIGNMENT",
+        "assignment_kind": "IMPLICIT",
+        "target": "lineText",
+        "expression": {
+          "source": "stream.ReadText(-2)",
+          "tokens": [
+            "stream",
+            ".",
+            "ReadText",
+            "(",
+            "-",
+            "2",
+            ")"
+          ],
+          "identifiers": [
+            "stream",
+            "ReadText"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_e9c4cbaf84b66be8",
+      "type": "ASSIGNMENT",
+      "name": "fields",
+      "parent_id": "node_e00f531a74c99164",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 32,
+        "end_line": 32,
+        "text": "        fields = Split(lineText, vbTab)"
+      },
+      "metadata": {
+        "type": "ASSIGNMENT",
+        "assignment_kind": "IMPLICIT",
+        "target": "fields",
+        "expression": {
+          "source": "Split(lineText, vbTab)",
+          "tokens": [
+            "Split",
+            "(",
+            "lineText",
+            ",",
+            "vbTab",
+            ")"
+          ],
+          "identifiers": [
+            "Split",
+            "lineText",
+            "vbTab"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_947af91b25c4255b",
+      "type": "IF_BLOCK",
+      "name": "if_block_3",
+      "parent_id": "node_e00f531a74c99164",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 34,
+        "end_line": 34,
+        "text": "        If UBound(fields) >= 2 Then"
+      },
+      "metadata": {
+        "type": "IF_BLOCK",
+        "condition": {
+          "source": "UBound(fields) >= 2",
+          "tokens": [
+            "UBound",
+            "(",
+            "fields",
+            ")",
+            ">=",
+            "2"
+          ],
+          "identifiers": [
+            "UBound",
+            "fields"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "branch_10eb961effedaace",
+      "type": "IF_BRANCH",
+      "name": "IF",
+      "parent_id": "node_947af91b25c4255b",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 34,
+        "end_line": 34,
+        "text": ""
+      },
+      "metadata": {
+        "condition": {
+          "source": "UBound(fields) >= 2",
+          "tokens": [
+            "UBound",
+            "(",
+            "fields",
+            ")",
+            ">=",
+            "2"
+          ],
+          "identifiers": [
+            "UBound",
+            "fields"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_cfe3bc7b7eac8d48",
+      "type": "ASSIGNMENT",
+      "name": "regionCode",
+      "parent_id": "branch_10eb961effedaace",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 35,
+        "end_line": 35,
+        "text": "            regionCode = UCase$(Trim$(CStr(fields(1))))"
+      },
+      "metadata": {
+        "type": "ASSIGNMENT",
+        "assignment_kind": "IMPLICIT",
+        "target": "regionCode",
+        "expression": {
+          "source": "UCase$(Trim$(CStr(fields(1))))",
+          "tokens": [
+            "UCase",
+            "$",
+            "(",
+            "Trim",
+            "$",
+            "(",
+            "CStr",
+            "(",
+            "fields",
+            "(",
+            "1",
+            ")",
+            ")",
+            ")",
+            ")"
+          ],
+          "identifiers": [
+            "UCase",
+            "Trim",
+            "CStr",
+            "fields"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_9e789145ad399d3e",
+      "type": "IF_BLOCK",
+      "name": "if_block_2",
+      "parent_id": "branch_10eb961effedaace",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 36,
+        "end_line": 36,
+        "text": "            If IsNumeric(fields(2)) And Len(regionCode) > 0 Then"
+      },
+      "metadata": {
+        "type": "IF_BLOCK",
+        "condition": {
+          "source": "IsNumeric(fields(2)) And Len(regionCode) > 0",
+          "tokens": [
+            "IsNumeric",
+            "(",
+            "fields",
+            "(",
+            "2",
+            ")",
+            ")",
+            "And",
+            "Len",
+            "(",
+            "regionCode",
+            ")",
+            ">",
+            "0"
+          ],
+          "identifiers": [
+            "IsNumeric",
+            "fields",
+            "Len",
+            "regionCode"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "branch_afcabbc4dfa26eca",
+      "type": "IF_BRANCH",
+      "name": "IF",
+      "parent_id": "node_9e789145ad399d3e",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 36,
+        "end_line": 36,
+        "text": ""
+      },
+      "metadata": {
+        "condition": {
+          "source": "IsNumeric(fields(2)) And Len(regionCode) > 0",
+          "tokens": [
+            "IsNumeric",
+            "(",
+            "fields",
+            "(",
+            "2",
+            ")",
+            ")",
+            "And",
+            "Len",
+            "(",
+            "regionCode",
+            ")",
+            ">",
+            "0"
+          ],
+          "identifiers": [
+            "IsNumeric",
+            "fields",
+            "Len",
+            "regionCode"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_e69e019d9352b8b2",
+      "type": "ASSIGNMENT",
+      "name": "saleAmount",
+      "parent_id": "branch_afcabbc4dfa26eca",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 37,
+        "end_line": 37,
+        "text": "                saleAmount = CCur(fields(2))"
+      },
+      "metadata": {
+        "type": "ASSIGNMENT",
+        "assignment_kind": "IMPLICIT",
+        "target": "saleAmount",
+        "expression": {
+          "source": "CCur(fields(2))",
+          "tokens": [
+            "CCur",
+            "(",
+            "fields",
+            "(",
+            "2",
+            ")",
+            ")"
+          ],
+          "identifiers": [
+            "CCur",
+            "fields"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_b63d1d6726090a3f",
+      "type": "IF_BLOCK",
+      "name": "if_block_2",
+      "parent_id": "branch_afcabbc4dfa26eca",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 38,
+        "end_line": 38,
+        "text": "                If salesByRegion.Exists(regionCode) Then"
+      },
+      "metadata": {
+        "type": "IF_BLOCK",
+        "condition": {
+          "source": "salesByRegion.Exists(regionCode)",
+          "tokens": [
+            "salesByRegion",
+            ".",
+            "Exists",
+            "(",
+            "regionCode",
+            ")"
+          ],
+          "identifiers": [
+            "salesByRegion",
+            "Exists",
+            "regionCode"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "branch_d9eb1b517692f733",
+      "type": "IF_BRANCH",
+      "name": "IF",
+      "parent_id": "node_b63d1d6726090a3f",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 38,
+        "end_line": 38,
+        "text": ""
+      },
+      "metadata": {
+        "condition": {
+          "source": "salesByRegion.Exists(regionCode)",
+          "tokens": [
+            "salesByRegion",
+            ".",
+            "Exists",
+            "(",
+            "regionCode",
+            ")"
+          ],
+          "identifiers": [
+            "salesByRegion",
+            "Exists",
+            "regionCode"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_565f7b88ac9d51e1",
+      "type": "ASSIGNMENT",
+      "name": "salesByRegion(regionCode)",
+      "parent_id": "branch_d9eb1b517692f733",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 39,
+        "end_line": 39,
+        "text": "                    salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount"
+      },
+      "metadata": {
+        "type": "ASSIGNMENT",
+        "assignment_kind": "IMPLICIT",
+        "target": "salesByRegion(regionCode)",
+        "expression": {
+          "source": "salesByRegion(regionCode) + saleAmount",
+          "tokens": [
+            "salesByRegion",
+            "(",
+            "regionCode",
+            ")",
+            "+",
+            "saleAmount"
+          ],
+          "identifiers": [
+            "salesByRegion",
+            "regionCode",
+            "saleAmount"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "branch_febe148c5f720a7c",
+      "type": "ELSE_BRANCH",
+      "name": "ELSE",
+      "parent_id": "node_b63d1d6726090a3f",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 38,
+        "end_line": 38,
+        "text": ""
+      },
+      "metadata": {}
+    },
+    {
+      "id": "node_88654bae4872c579",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_1",
+      "parent_id": "branch_febe148c5f720a7c",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 41,
+        "end_line": 41,
+        "text": "                    salesByRegion.Add regionCode, saleAmount"
+      },
+      "metadata": {
+        "type": "CALL_OR_COMMAND",
+        "expression": {
+          "source": "salesByRegion.Add regionCode, saleAmount",
+          "tokens": [
+            "salesByRegion",
+            ".",
+            "Add",
+            "regionCode",
+            ",",
+            "saleAmount"
+          ],
+          "identifiers": [
+            "salesByRegion",
+            "Add",
+            "regionCode",
+            "saleAmount"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_f914ab53083b273f",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_19",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 47,
+        "end_line": 47,
+        "text": "    stream.Close"
+      },
+      "metadata": {
+        "type": "CALL_OR_COMMAND",
+        "expression": {
+          "source": "stream.Close",
+          "tokens": [
+            "stream",
+            ".",
+            "Close"
+          ],
+          "identifiers": [
+            "stream",
+            "Close"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_ae0c8c4d9831ed5f",
+      "type": "ASSIGNMENT",
+      "name": "stream",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 48,
+        "end_line": 48,
+        "text": "    Set stream = Nothing"
+      },
+      "metadata": {
+        "type": "ASSIGNMENT",
+        "assignment_kind": "SET",
+        "target": "stream",
+        "expression": {
+          "source": "Nothing",
+          "tokens": [
+            "Nothing"
+          ],
+          "identifiers": [],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_319541c20c3a3234",
+      "type": "WITH_BLOCK",
+      "name": "with_block_21",
+      "parent_id": "procedure_4cddda8433374681",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 50,
+        "end_line": 50,
+        "text": "    With ThisWorkbook.Worksheets(\"Daily Sales\")"
+      },
+      "metadata": {
+        "type": "WITH_BLOCK",
+        "expression": {
+          "source": "ThisWorkbook.Worksheets(\"Daily Sales\")",
+          "tokens": [
+            "ThisWorkbook",
+            ".",
+            "Worksheets",
+            "(",
+            "\"Daily Sales\"",
+            ")"
+          ],
+          "identifiers": [
+            "ThisWorkbook",
+            "Worksheets"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_8d522938b4051cbf",
+      "type": "ASSIGNMENT",
+      "name": "lastRow",
+      "parent_id": "node_319541c20c3a3234",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 51,
+        "end_line": 51,
+        "text": "        lastRow = .Cells(.Rows.Count, \"A\").End(xlUp).Row"
+      },
+      "metadata": {
+        "type": "ASSIGNMENT",
+        "assignment_kind": "IMPLICIT",
+        "target": "lastRow",
+        "expression": {
+          "source": ".Cells(.Rows.Count, \"A\").End(xlUp).Row",
+          "tokens": [
+            ".",
+            "Cells",
+            "(",
+            ".",
+            "Rows",
+            ".",
+            "Count",
+            ",",
+            "\"A\"",
+            ")",
+            ".",
+            "End",
+            "(",
+            "xlUp",
+            ")",
+            ".",
+            "Row"
+          ],
+          "identifiers": [
+            "Cells",
+            "Rows",
+            "Count",
+            "End",
+            "xlUp",
+            "Row"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_2263c18c12396662",
+      "type": "FOR_BLOCK",
+      "name": "for_block_2",
+      "parent_id": "node_319541c20c3a3234",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 52,
+        "end_line": 52,
+        "text": "        For rowNumber = 2 To lastRow"
+      },
+      "metadata": {
+        "type": "FOR_BLOCK",
+        "variable": "rowNumber",
+        "start": {
+          "source": "2",
+          "tokens": [
+            "2"
+          ],
+          "identifiers": [],
+          "parse_status": "tokenized_not_fully_parsed"
+        },
+        "end": {
+          "source": "lastRow",
+          "tokens": [
+            "lastRow"
+          ],
+          "identifiers": [
+            "lastRow"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        },
+        "step": null
+      }
+    },
+    {
+      "id": "node_87c70155542b8634",
+      "type": "IF_BLOCK",
+      "name": "if_block_1",
+      "parent_id": "node_2263c18c12396662",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 53,
+        "end_line": 53,
+        "text": "            If IsDate(.Cells(rowNumber, \"A\").Value) Then"
+      },
+      "metadata": {
+        "type": "IF_BLOCK",
+        "condition": {
+          "source": "IsDate(.Cells(rowNumber, \"A\").Value)",
+          "tokens": [
+            "IsDate",
+            "(",
+            ".",
+            "Cells",
+            "(",
+            "rowNumber",
+            ",",
+            "\"A\"",
+            ")",
+            ".",
+            "Value",
+            ")"
+          ],
+          "identifiers": [
+            "IsDate",
+            "Cells",
+            "rowNumber",
+            "Value"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "branch_b185a4c849462a4b",
+      "type": "IF_BRANCH",
+      "name": "IF",
+      "parent_id": "node_87c70155542b8634",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 53,
+        "end_line": 53,
+        "text": ""
+      },
+      "metadata": {
+        "condition": {
+          "source": "IsDate(.Cells(rowNumber, \"A\").Value)",
+          "tokens": [
+            "IsDate",
+            "(",
+            ".",
+            "Cells",
+            "(",
+            "rowNumber",
+            ",",
+            "\"A\"",
+            ")",
+            ".",
+            "Value",
+            ")"
+          ],
+          "identifiers": [
+            "IsDate",
+            "Cells",
+            "rowNumber",
+            "Value"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_d274a91c5946693d",
+      "type": "IF_BLOCK",
+      "name": "if_block_1",
+      "parent_id": "branch_b185a4c849462a4b",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 54,
+        "end_line": 54,
+        "text": "                If DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate) Then"
+      },
+      "metadata": {
+        "type": "IF_BLOCK",
+        "condition": {
+          "source": "DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate)",
+          "tokens": [
+            "DateValue",
+            "(",
+            ".",
+            "Cells",
+            "(",
+            "rowNumber",
+            ",",
+            "\"A\"",
+            ")",
+            ".",
+            "Value",
+            ")",
+            "=",
+            "DateValue",
+            "(",
+            "reportDate",
+            ")"
+          ],
+          "identifiers": [
+            "DateValue",
+            "Cells",
+            "rowNumber",
+            "Value",
+            "DateValue",
+            "reportDate"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "branch_4541554066a068f4",
+      "type": "IF_BRANCH",
+      "name": "IF",
+      "parent_id": "node_d274a91c5946693d",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 54,
+        "end_line": 54,
+        "text": ""
+      },
+      "metadata": {
+        "condition": {
+          "source": "DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate)",
+          "tokens": [
+            "DateValue",
+            "(",
+            ".",
+            "Cells",
+            "(",
+            "rowNumber",
+            ",",
+            "\"A\"",
+            ")",
+            ".",
+            "Value",
+            ")",
+            "=",
+            "DateValue",
+            "(",
+            "reportDate",
+            ")"
+          ],
+          "identifiers": [
+            "DateValue",
+            "Cells",
+            "rowNumber",
+            "Value",
+            "DateValue",
+            "reportDate"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_ad2d8c474571f313",
+      "type": "ASSIGNMENT",
+      "name": "regionCode",
+      "parent_id": "branch_4541554066a068f4",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 55,
+        "end_line": 55,
+        "text": "                    regionCode = UCase$(Trim$(CStr(.Cells(rowNumber, \"B\").Value)))"
+      },
+      "metadata": {
+        "type": "ASSIGNMENT",
+        "assignment_kind": "IMPLICIT",
+        "target": "regionCode",
+        "expression": {
+          "source": "UCase$(Trim$(CStr(.Cells(rowNumber, \"B\").Value)))",
+          "tokens": [
+            "UCase",
+            "$",
+            "(",
+            "Trim",
+            "$",
+            "(",
+            "CStr",
+            "(",
+            ".",
+            "Cells",
+            "(",
+            "rowNumber",
+            ",",
+            "\"B\"",
+            ")",
+            ".",
+            "Value",
+            ")",
+            ")",
+            ")"
+          ],
+          "identifiers": [
+            "UCase",
+            "Trim",
+            "CStr",
+            "Cells",
+            "rowNumber",
+            "Value"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_79be3bda63d2ad9f",
+      "type": "IF_BLOCK",
+      "name": "if_block_2",
+      "parent_id": "branch_4541554066a068f4",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 56,
+        "end_line": 56,
+        "text": "                    If salesByRegion.Exists(regionCode) Then"
+      },
+      "metadata": {
+        "type": "IF_BLOCK",
+        "condition": {
+          "source": "salesByRegion.Exists(regionCode)",
+          "tokens": [
+            "salesByRegion",
+            ".",
+            "Exists",
+            "(",
+            "regionCode",
+            ")"
+          ],
+          "identifiers": [
+            "salesByRegion",
+            "Exists",
+            "regionCode"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "branch_229bdb7b11e21624",
+      "type": "IF_BRANCH",
+      "name": "IF",
+      "parent_id": "node_79be3bda63d2ad9f",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 56,
+        "end_line": 56,
+        "text": ""
+      },
+      "metadata": {
+        "condition": {
+          "source": "salesByRegion.Exists(regionCode)",
+          "tokens": [
+            "salesByRegion",
+            ".",
+            "Exists",
+            "(",
+            "regionCode",
+            ")"
+          ],
+          "identifiers": [
+            "salesByRegion",
+            "Exists",
+            "regionCode"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_6b6710b78ab78362",
+      "type": "ASSIGNMENT",
+      "name": ".Cells(rowNumber, \"C\").Value",
+      "parent_id": "branch_229bdb7b11e21624",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 57,
+        "end_line": 57,
+        "text": "                        .Cells(rowNumber, \"C\").Value = salesByRegion(regionCode)"
+      },
+      "metadata": {
+        "type": "ASSIGNMENT",
+        "assignment_kind": "IMPLICIT",
+        "target": ".Cells(rowNumber, \"C\").Value",
+        "expression": {
+          "source": "salesByRegion(regionCode)",
+          "tokens": [
+            "salesByRegion",
+            "(",
+            "regionCode",
+            ")"
+          ],
+          "identifiers": [
+            "salesByRegion",
+            "regionCode"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "branch_c54895c2eb8ba66d",
+      "type": "ELSE_BRANCH",
+      "name": "ELSE",
+      "parent_id": "node_79be3bda63d2ad9f",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 56,
+        "end_line": 56,
+        "text": ""
+      },
+      "metadata": {}
+    },
+    {
+      "id": "node_cbab6df102d41bc3",
+      "type": "ASSIGNMENT",
+      "name": ".Cells(rowNumber, \"C\").Value",
+      "parent_id": "branch_c54895c2eb8ba66d",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 59,
+        "end_line": 59,
+        "text": "                        .Cells(rowNumber, \"C\").Value = 0"
+      },
+      "metadata": {
+        "type": "ASSIGNMENT",
+        "assignment_kind": "IMPLICIT",
+        "target": ".Cells(rowNumber, \"C\").Value",
+        "expression": {
+          "source": "0",
+          "tokens": [
+            "0"
+          ],
+          "identifiers": [],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_147b1e90bdd09b8a",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_2",
+      "parent_id": "node_2263c18c12396662",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 63,
+        "end_line": 63,
+        "text": "        Next rowNumber"
+      },
+      "metadata": {
+        "type": "CALL_OR_COMMAND",
+        "expression": {
+          "source": "Next rowNumber",
+          "tokens": [
+            "Next",
+            "rowNumber"
+          ],
+          "identifiers": [
+            "Next",
+            "rowNumber"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_4754d88c4debd5e0",
+      "type": "UNMATCHED_BLOCK_TERMINATOR",
+      "name": "unmatched_block_terminator_3",
+      "parent_id": "node_2263c18c12396662",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 64,
+        "end_line": 64,
+        "text": "    End With"
+      },
+      "metadata": {
+        "type": "UNMATCHED_BLOCK_TERMINATOR"
+      }
+    },
+    {
+      "id": "node_6b608ebae69e730f",
+      "type": "EXIT",
+      "name": "Sub",
+      "parent_id": "node_2263c18c12396662",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 66,
+        "end_line": 66,
+        "text": "    Exit Sub"
+      },
+      "metadata": {
+        "type": "EXIT",
+        "target": "Sub"
+      }
+    },
+    {
+      "id": "node_c5801de05e048b65",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_5",
+      "parent_id": "node_2263c18c12396662",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 68,
+        "end_line": 68,
+        "text": "HandleError:"
+      },
+      "metadata": {
+        "type": "CALL_OR_COMMAND",
+        "expression": {
+          "source": "HandleError",
+          "tokens": [
+            "HandleError"
+          ],
+          "identifiers": [
+            "HandleError"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_58b8565565db55a6",
+      "type": "IF_BLOCK",
+      "name": "if_block_6",
+      "parent_id": "node_2263c18c12396662",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 69,
+        "end_line": 69,
+        "text": "    If Not stream Is Nothing Then"
+      },
+      "metadata": {
+        "type": "IF_BLOCK",
+        "condition": {
+          "source": "Not stream Is Nothing",
+          "tokens": [
+            "Not",
+            "stream",
+            "Is",
+            "Nothing"
+          ],
+          "identifiers": [
+            "stream"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "branch_d6eba57d28745506",
+      "type": "IF_BRANCH",
+      "name": "IF",
+      "parent_id": "node_58b8565565db55a6",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 69,
+        "end_line": 69,
+        "text": ""
+      },
+      "metadata": {
+        "condition": {
+          "source": "Not stream Is Nothing",
+          "tokens": [
+            "Not",
+            "stream",
+            "Is",
+            "Nothing"
+          ],
+          "identifiers": [
+            "stream"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_427c1832c37fd5e2",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_1",
+      "parent_id": "branch_d6eba57d28745506",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 70,
+        "end_line": 70,
+        "text": "        If stream.State = 1 Then stream.Close"
+      },
+      "metadata": {
+        "type": "CALL_OR_COMMAND",
+        "expression": {
+          "source": "If stream.State = 1 Then stream.Close",
+          "tokens": [
+            "If",
+            "stream",
+            ".",
+            "State",
+            "=",
+            "1",
+            "Then",
+            "stream",
+            ".",
+            "Close"
+          ],
+          "identifiers": [
+            "If",
+            "stream",
+            "State",
+            "Then",
+            "stream",
+            "Close"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    },
+    {
+      "id": "node_30c36d50158f1de5",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_7",
+      "parent_id": "node_2263c18c12396662",
+      "source": {
+        "path": "vba_sample_3.bas",
+        "start_line": 72,
+        "end_line": 72,
+        "text": "    Err.Raise Err.Number, \"ImportDailySales\", Err.Description"
+      },
+      "metadata": {
+        "type": "CALL_OR_COMMAND",
+        "expression": {
+          "source": "Err.Raise Err.Number, \"ImportDailySales\", Err.Description",
+          "tokens": [
+            "Err",
+            ".",
+            "Raise",
+            "Err",
+            ".",
+            "Number",
+            ",",
+            "\"ImportDailySales\"",
+            ",",
+            "Err",
+            ".",
+            "Description"
+          ],
+          "identifiers": [
+            "Err",
+            "Raise",
+            "Err",
+            "Number",
+            "Err",
+            "Description"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "project_47159d032a60272c",
+      "target": "module_168835884e64d2ab",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "module_168835884e64d2ab",
+      "target": "procedure_4cddda8433374681",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_98302a1a872d41f5",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_9f326b798a4aefac",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_98302a1a872d41f5",
+      "target": "node_9f326b798a4aefac",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_61cccadae65328db",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_9f326b798a4aefac",
+      "target": "node_61cccadae65328db",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_e3588ae891994ae8",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_61cccadae65328db",
+      "target": "node_e3588ae891994ae8",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_4a851f554a2573e1",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_e3588ae891994ae8",
+      "target": "node_4a851f554a2573e1",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_3438e5fc70cbbcaa",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_4a851f554a2573e1",
+      "target": "node_3438e5fc70cbbcaa",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_2f307af5bca71e03",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_3438e5fc70cbbcaa",
+      "target": "node_2f307af5bca71e03",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_30df7e463339f06b",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_2f307af5bca71e03",
+      "target": "node_30df7e463339f06b",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_ca8b01829ed47003",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_30df7e463339f06b",
+      "target": "node_ca8b01829ed47003",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_29fa6167529523d2",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_ca8b01829ed47003",
+      "target": "node_29fa6167529523d2",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_29fa6167529523d2",
+      "target": "branch_7ee8f50391e9eab7",
+      "relation": "TRUE_BRANCH",
+      "evidence": {}
+    },
+    {
+      "source": "branch_7ee8f50391e9eab7",
+      "target": "node_76779bfbc36e837c",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_b381c92738556af3",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_29fa6167529523d2",
+      "target": "node_b381c92738556af3",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_83c204d7e2d609fa",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_b381c92738556af3",
+      "target": "node_83c204d7e2d609fa",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_fc8fdd1f377b8b27",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_83c204d7e2d609fa",
+      "target": "node_fc8fdd1f377b8b27",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_b01a53fee2d82ccb",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_fc8fdd1f377b8b27",
+      "target": "node_b01a53fee2d82ccb",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_819a008355cb2dc2",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_b01a53fee2d82ccb",
+      "target": "node_819a008355cb2dc2",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_fde8eeee6b89fa27",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_819a008355cb2dc2",
+      "target": "node_fde8eeee6b89fa27",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_6cfc22d75f14af44",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_fde8eeee6b89fa27",
+      "target": "node_6cfc22d75f14af44",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_6cfc22d75f14af44",
+      "target": "branch_141e7e2458afe647",
+      "relation": "TRUE_BRANCH",
+      "evidence": {}
+    },
+    {
+      "source": "branch_141e7e2458afe647",
+      "target": "node_bb5049f6354c45d5",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_e00f531a74c99164",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_6cfc22d75f14af44",
+      "target": "node_e00f531a74c99164",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_e00f531a74c99164",
+      "target": "node_0a5cda09fef0b6bc",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_e00f531a74c99164",
+      "target": "node_e9c4cbaf84b66be8",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_0a5cda09fef0b6bc",
+      "target": "node_e9c4cbaf84b66be8",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_e00f531a74c99164",
+      "target": "node_947af91b25c4255b",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_e9c4cbaf84b66be8",
+      "target": "node_947af91b25c4255b",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_947af91b25c4255b",
+      "target": "branch_10eb961effedaace",
+      "relation": "TRUE_BRANCH",
+      "evidence": {}
+    },
+    {
+      "source": "branch_10eb961effedaace",
+      "target": "node_cfe3bc7b7eac8d48",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "branch_10eb961effedaace",
+      "target": "node_9e789145ad399d3e",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_cfe3bc7b7eac8d48",
+      "target": "node_9e789145ad399d3e",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_9e789145ad399d3e",
+      "target": "branch_afcabbc4dfa26eca",
+      "relation": "TRUE_BRANCH",
+      "evidence": {}
+    },
+    {
+      "source": "branch_afcabbc4dfa26eca",
+      "target": "node_e69e019d9352b8b2",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "branch_afcabbc4dfa26eca",
+      "target": "node_b63d1d6726090a3f",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_e69e019d9352b8b2",
+      "target": "node_b63d1d6726090a3f",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_b63d1d6726090a3f",
+      "target": "branch_d9eb1b517692f733",
+      "relation": "TRUE_BRANCH",
+      "evidence": {}
+    },
+    {
+      "source": "branch_d9eb1b517692f733",
+      "target": "node_565f7b88ac9d51e1",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_b63d1d6726090a3f",
+      "target": "branch_febe148c5f720a7c",
+      "relation": "FALSE_BRANCH",
+      "evidence": {}
+    },
+    {
+      "source": "branch_febe148c5f720a7c",
+      "target": "node_88654bae4872c579",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_f914ab53083b273f",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_e00f531a74c99164",
+      "target": "node_f914ab53083b273f",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_ae0c8c4d9831ed5f",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_f914ab53083b273f",
+      "target": "node_ae0c8c4d9831ed5f",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "procedure_4cddda8433374681",
+      "target": "node_319541c20c3a3234",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_ae0c8c4d9831ed5f",
+      "target": "node_319541c20c3a3234",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_319541c20c3a3234",
+      "target": "node_8d522938b4051cbf",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_319541c20c3a3234",
+      "target": "node_2263c18c12396662",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_8d522938b4051cbf",
+      "target": "node_2263c18c12396662",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_2263c18c12396662",
+      "target": "node_87c70155542b8634",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_87c70155542b8634",
+      "target": "branch_b185a4c849462a4b",
+      "relation": "TRUE_BRANCH",
+      "evidence": {}
+    },
+    {
+      "source": "branch_b185a4c849462a4b",
+      "target": "node_d274a91c5946693d",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_d274a91c5946693d",
+      "target": "branch_4541554066a068f4",
+      "relation": "TRUE_BRANCH",
+      "evidence": {}
+    },
+    {
+      "source": "branch_4541554066a068f4",
+      "target": "node_ad2d8c474571f313",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "branch_4541554066a068f4",
+      "target": "node_79be3bda63d2ad9f",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_ad2d8c474571f313",
+      "target": "node_79be3bda63d2ad9f",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_79be3bda63d2ad9f",
+      "target": "branch_229bdb7b11e21624",
+      "relation": "TRUE_BRANCH",
+      "evidence": {}
+    },
+    {
+      "source": "branch_229bdb7b11e21624",
+      "target": "node_6b6710b78ab78362",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_79be3bda63d2ad9f",
+      "target": "branch_c54895c2eb8ba66d",
+      "relation": "FALSE_BRANCH",
+      "evidence": {}
+    },
+    {
+      "source": "branch_c54895c2eb8ba66d",
+      "target": "node_cbab6df102d41bc3",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_2263c18c12396662",
+      "target": "node_147b1e90bdd09b8a",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_87c70155542b8634",
+      "target": "node_147b1e90bdd09b8a",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_2263c18c12396662",
+      "target": "node_4754d88c4debd5e0",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_147b1e90bdd09b8a",
+      "target": "node_4754d88c4debd5e0",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_2263c18c12396662",
+      "target": "node_6b608ebae69e730f",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_4754d88c4debd5e0",
+      "target": "node_6b608ebae69e730f",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_2263c18c12396662",
+      "target": "node_c5801de05e048b65",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_6b608ebae69e730f",
+      "target": "node_c5801de05e048b65",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_2263c18c12396662",
+      "target": "node_58b8565565db55a6",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_c5801de05e048b65",
+      "target": "node_58b8565565db55a6",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    },
+    {
+      "source": "node_58b8565565db55a6",
+      "target": "branch_d6eba57d28745506",
+      "relation": "TRUE_BRANCH",
+      "evidence": {}
+    },
+    {
+      "source": "branch_d6eba57d28745506",
+      "target": "node_427c1832c37fd5e2",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_2263c18c12396662",
+      "target": "node_30c36d50158f1de5",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_58b8565565db55a6",
+      "target": "node_30c36d50158f1de5",
+      "relation": "NEXT",
+      "evidence": {
+        "order": "source"
+      }
+    }
+  ],
+  "symbols": [
+    {
+      "id": "vba_sample_3.ImportDailySales.param.tsvPath",
+      "name": "tsvPath",
+      "kind": "PARAMETER",
+      "scope": "vba_sample_3.ImportDailySales",
+      "data_type": "String",
+      "passing": "Byval"
+    },
+    {
+      "id": "vba_sample_3.ImportDailySales.param.reportDate",
+      "name": "reportDate",
+      "kind": "PARAMETER",
+      "scope": "vba_sample_3.ImportDailySales",
+      "data_type": "Date",
+      "passing": "Byval"
+    },
+    {
+      "id": "vba_sample_3.ImportDailySales.var.fields",
+      "name": "fields",
+      "kind": "LOCAL_OR_PARAMETER",
+      "scope": "vba_sample_3.ImportDailySales"
+    },
+    {
+      "id": "vba_sample_3.ImportDailySales.var.lastrow",
+      "name": "lastrow",
+      "kind": "LOCAL_OR_PARAMETER",
+      "scope": "vba_sample_3.ImportDailySales"
+    },
+    {
+      "id": "vba_sample_3.ImportDailySales.var.linetext",
+      "name": "linetext",
+      "kind": "LOCAL_OR_PARAMETER",
+      "scope": "vba_sample_3.ImportDailySales"
+    },
+    {
+      "id": "vba_sample_3.ImportDailySales.var.regioncode",
+      "name": "regioncode",
+      "kind": "LOCAL_OR_PARAMETER",
+      "scope": "vba_sample_3.ImportDailySales"
+    },
+    {
+      "id": "vba_sample_3.ImportDailySales.var.reportdate",
+      "name": "reportdate",
+      "kind": "LOCAL_OR_PARAMETER",
+      "scope": "vba_sample_3.ImportDailySales"
+    },
+    {
+      "id": "vba_sample_3.ImportDailySales.var.rownumber",
+      "name": "rownumber",
+      "kind": "LOCAL_OR_PARAMETER",
+      "scope": "vba_sample_3.ImportDailySales"
+    },
+    {
+      "id": "vba_sample_3.ImportDailySales.var.saleamount",
+      "name": "saleamount",
+      "kind": "LOCAL_OR_PARAMETER",
+      "scope": "vba_sample_3.ImportDailySales"
+    },
+    {
+      "id": "vba_sample_3.ImportDailySales.var.salesbyregion",
+      "name": "salesbyregion",
+      "kind": "LOCAL_OR_PARAMETER",
+      "scope": "vba_sample_3.ImportDailySales"
+    },
+    {
+      "id": "vba_sample_3.ImportDailySales.var.stream",
+      "name": "stream",
+      "kind": "LOCAL_OR_PARAMETER",
+      "scope": "vba_sample_3.ImportDailySales"
+    },
+    {
+      "id": "vba_sample_3.ImportDailySales.var.tsvpath",
+      "name": "tsvpath",
+      "kind": "LOCAL_OR_PARAMETER",
+      "scope": "vba_sample_3.ImportDailySales"
+    }
+  ],
+  "diagnostics": [],
+  "manifest": [
+    {
+      "path": "vba_sample_3.bas",
+      "kind": "source",
+      "encoding": "utf-8",
+      "sha256": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+      "size_bytes": 2301
+    }
+  ]
+}
