@@ -22,6 +22,45 @@ from ..validation.compile_validator import CompileValidator
 from ..validation.behavioral_validator import BehavioralValidator
 
 
+def _count_kinds(value, kinds):
+    if isinstance(value, dict):
+        return int(value.get("kind") in kinds) + sum(
+            _count_kinds(child, kinds) for child in value.values()
+        )
+    if isinstance(value, list):
+        return sum(_count_kinds(child, kinds) for child in value)
+    return 0
+
+
+def _mark_downstream_resolutions(issues, artifacts):
+    normalized_data = artifacts.get("normalized_ir", {}).get("data")
+    semantic_data = artifacts.get("semantic_analysis", {}).get("data", {})
+    semantic_summary = semantic_data.get("summary", {})
+    unresolved_nodes = _count_kinds(
+        normalized_data,
+        {"unsupported", "unresolved_expression", "unresolved_lvalue", "unresolved_call"},
+    )
+    if (
+        not isinstance(normalized_data, dict)
+        or semantic_summary.get("parse_error_count", 0) != 0
+        or semantic_summary.get("unresolved_expression_count", 0) != 0
+        or unresolved_nodes != 0
+    ):
+        return
+    for issue in issues:
+        if issue.get("code") == "IR_EXPRESSIONS_OPAQUE":
+            issue["downstream_resolution"] = {
+                "status": "addressed_and_verified",
+                "method": "semantic_normalization",
+                "artifact": "normalized_ir.json",
+                "evidence": {
+                    "parse_error_count": 0,
+                    "unresolved_expression_count": 0,
+                    "unresolved_node_count": 0,
+                },
+            }
+
+
 class IntelligentFixer:
     def __init__(self, project_root, llm=None, reviewer_llm=None, rebuilders=None,
                  compile_runner=None, behavioral_oracle=None, allow_auto_apply=False,
@@ -60,6 +99,7 @@ class IntelligentFixer:
                 raw.extend(self.logs.parse(item["text"], item["path"]))
             if kind in {"graph", "ir", "semantic_analysis", "pseudocode_run", "report"} and "data" in item:
                 raw.extend(self.logs.from_artifact(kind, item["data"], item["path"]))
+        _mark_downstream_resolutions(raw, artifacts)
         dedup = {}
         for item in raw:
             key = (item.get("code"), item.get("path"), item.get("line"), item.get("message"))
@@ -293,7 +333,9 @@ class IntelligentFixer:
 
         unresolved = []
         if last:
-            unresolved.extend(last["issues"])
+            unresolved.extend(
+                item for item in last["issues"] if not item.get("downstream_resolution")
+            )
             unresolved.extend(last["audit"].get("findings", []))
             unresolved.extend(last["structural"].get("issues", []))
             unresolved.extend(last["semantic"].get("issues", []))
@@ -335,7 +377,9 @@ class IntelligentFixer:
         for item_id, issue in all_issue_ids.items():
             remaining = item_id in unresolved_by_id
             changes = applied_by_id.get(item_id, [])
-            if changes and not remaining:
+            if issue.get("downstream_resolution") and not remaining:
+                status = "addressed_and_verified"
+            elif changes and not remaining:
                 status = "addressed_and_verified"
             elif changes:
                 status = "patch_applied_but_issue_remains"
@@ -350,9 +394,11 @@ class IntelligentFixer:
                 "addressed": status == "addressed_and_verified",
                 "status": status,
                 "changes": changes,
+                "resolution_evidence": issue.get("downstream_resolution"),
                 "verification": {
                     "present_in_final_issue_set": remaining,
                     "absent_after_final_scan": not remaining,
+                    "downstream_resolution": issue.get("downstream_resolution"),
                 },
             }
             issue_resolution_log.append(record)
@@ -430,6 +476,7 @@ class IntelligentFixer:
         keys = (
             "code", "severity", "priority", "subsystem", "message", "description",
             "path", "line", "procedure", "artifact", "reported_by",
+            "downstream_resolution",
         )
         return {key: issue[key] for key in keys if issue.get(key) is not None}
 

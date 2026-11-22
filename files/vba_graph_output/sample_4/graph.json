@@ -405,15 +405,15 @@
       }
     },
     {
-      "id": "node_a2e8e325ba724ff7",
+      "id": "node_349730c7c2f2b84c",
       "type": "IF_BLOCK",
       "name": "if_block_19",
       "parent_id": "procedure_6e9fd3d7f861eda9",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 25,
-        "end_line": 25,
-        "text": "    If LCase$(Right$(outputPath, 5)) <> \".xlsx\" Then"
+        "end_line": 27,
+        "text": "    If LCase$(Right$(outputPath, 5)) <> \".xlsx\" Then\n        Err.Raise vbObjectError + 3002, \"ConsolidateDepartmentFiles\", \"Output path must use the .xlsx extension.\"\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -440,18 +440,25 @@
             "outputPath"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 27,
+            "end_line": 27
+          }
         }
       }
     },
     {
-      "id": "branch_c11fceed8b563ffa",
+      "id": "branch_47d8c86c838f2ecc",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_a2e8e325ba724ff7",
+      "parent_id": "node_349730c7c2f2b84c",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 25,
-        "end_line": 25,
+        "end_line": 27,
         "text": ""
       },
       "metadata": {
@@ -482,10 +489,10 @@
       }
     },
     {
-      "id": "node_bc73ec27d90d0752",
+      "id": "node_9cfe1121c2c2bfdd",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_1",
-      "parent_id": "branch_c11fceed8b563ffa",
+      "parent_id": "branch_47d8c86c838f2ecc",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 26,
@@ -518,15 +525,15 @@
       }
     },
     {
-      "id": "node_199539ca9556c40e",
+      "id": "node_28495d46a7c66869",
       "type": "IF_BLOCK",
       "name": "if_block_20",
       "parent_id": "procedure_6e9fd3d7f861eda9",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 28,
-        "end_line": 28,
-        "text": "    If StrComp(outputPath, ThisWorkbook.FullName, vbTextCompare) = 0 Then"
+        "end_line": 30,
+        "text": "    If StrComp(outputPath, ThisWorkbook.FullName, vbTextCompare) = 0 Then\n        Err.Raise vbObjectError + 3003, \"ConsolidateDepartmentFiles\", \"Output cannot replace the macro workbook.\"\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -554,18 +561,25 @@
             "vbTextCompare"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 30,
+            "end_line": 30
+          }
         }
       }
     },
     {
-      "id": "branch_ec8798079e692cbd",
+      "id": "branch_cbbfd0c30055deed",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_199539ca9556c40e",
+      "parent_id": "node_28495d46a7c66869",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 28,
-        "end_line": 28,
+        "end_line": 30,
         "text": ""
       },
       "metadata": {
@@ -597,10 +611,10 @@
       }
     },
     {
-      "id": "node_c6ad17fc548c5634",
+      "id": "node_a414b9dcc0339554",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_1",
-      "parent_id": "branch_ec8798079e692cbd",
+      "parent_id": "branch_cbbfd0c30055deed",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 29,
@@ -633,15 +647,15 @@
       }
     },
     {
-      "id": "node_4656135333a70d6e",
+      "id": "node_82d6698770b3669b",
       "type": "IF_BLOCK",
       "name": "if_block_21",
       "parent_id": "procedure_6e9fd3d7f861eda9",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 31,
-        "end_line": 31,
-        "text": "    If Right$(inputFolder, 1) <> Application.PathSeparator Then"
+        "end_line": 33,
+        "text": "    If Right$(inputFolder, 1) <> Application.PathSeparator Then\n        inputFolder = inputFolder & Application.PathSeparator\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -667,18 +681,25 @@
             "PathSeparator"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 33,
+            "end_line": 33
+          }
         }
       }
     },
     {
-      "id": "branch_a413266e3869eb21",
+      "id": "branch_0ea5a5fbdddf6b60",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_4656135333a70d6e",
+      "parent_id": "node_82d6698770b3669b",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 31,
-        "end_line": 31,
+        "end_line": 33,
         "text": ""
       },
       "metadata": {
@@ -708,10 +729,10 @@
       }
     },
     {
-      "id": "node_e352ad7996a1c25b",
+      "id": "node_4e8d92ca9ac5be8b",
       "type": "ASSIGNMENT",
       "name": "inputFolder",
-      "parent_id": "branch_a413266e3869eb21",
+      "parent_id": "branch_0ea5a5fbdddf6b60",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 32,
@@ -771,15 +792,15 @@
       }
     },
     {
-      "id": "node_8d4f1adf426c31ac",
+      "id": "node_5b6964e2c144f7c3",
       "type": "IF_BLOCK",
       "name": "if_block_23",
       "parent_id": "procedure_6e9fd3d7f861eda9",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 35,
-        "end_line": 35,
-        "text": "    If Not fileSystem.FolderExists(inputFolder) Then"
+        "end_line": 37,
+        "text": "    If Not fileSystem.FolderExists(inputFolder) Then\n        Err.Raise vbObjectError + 3001, \"ConsolidateDepartmentFiles\", \"Input folder is unavailable.\"\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -800,18 +821,25 @@
             "inputFolder"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 37,
+            "end_line": 37
+          }
         }
       }
     },
     {
-      "id": "branch_10b4540cc16be760",
+      "id": "branch_70749ae5d1ebb57c",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_8d4f1adf426c31ac",
+      "parent_id": "node_5b6964e2c144f7c3",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 35,
-        "end_line": 35,
+        "end_line": 37,
         "text": ""
       },
       "metadata": {
@@ -836,10 +864,10 @@
       }
     },
     {
-      "id": "node_5c997388e3e42aaa",
+      "id": "node_9c75324153ce3773",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_1",
-      "parent_id": "branch_10b4540cc16be760",
+      "parent_id": "branch_70749ae5d1ebb57c",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 36,
@@ -1097,15 +1125,15 @@
       }
     },
     {
-      "id": "node_0b3215046410ee44",
+      "id": "node_9a16b0423d82fb52",
       "type": "DO_LOOP_BLOCK",
       "name": "do_loop_block_32",
       "parent_id": "procedure_6e9fd3d7f861eda9",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 48,
-        "end_line": 48,
-        "text": "    Do While Len(fileName) > 0"
+        "end_line": 71,
+        "text": "    Do While Len(fileName) > 0\n        If StrComp(inputFolder & fileName, ThisWorkbook.FullName, vbTextCompare) <> 0 Then\n            Set sourceBook = Workbooks.Open(Filename:=inputFolder & fileName, ReadOnly:=True)\n            Set sourceSheet = sourceBook.Worksheets(1)\n            lastRow = sourceSheet.Cells(sourceSheet.Rows.Count, \"A\").End(xlUp).Row\n\n            If lastRow >= 1 Then\n                Set sourceRange = sourceSheet.Range(\"A1:F\" & lastRow)\n                If nextRow = 1 Then\n                    targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count, sourceRange.Columns.Count).Value = sourceRange.Value\n                    nextRow = nextRow + sourceRange.Rows.Count\n                ElseIf sourceRange.Rows.Count > 1 Then\n                    targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value = _\n                        sourceRange.Offset(1, 0).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value\n                    nextRow = nextRow + sourceRange.Rows.Count - 1\n                End If\n            End If\n\n            sourceBook.Close SaveChanges:=False\n            Set sourceBook = Nothing\n            processedFiles = processedFiles + 1\n        End If\n        fileName = Dir$()\n    Loop"
       },
       "metadata": {
         "type": "DO_LOOP_BLOCK",
@@ -1126,19 +1154,26 @@
             "fileName"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "Loop",
+          "location": {
+            "start_line": 71,
+            "end_line": 71
+          }
         }
       }
     },
     {
-      "id": "node_c323545aa34e57f4",
+      "id": "node_8e0507dae6620278",
       "type": "IF_BLOCK",
       "name": "if_block_1",
-      "parent_id": "node_0b3215046410ee44",
+      "parent_id": "node_9a16b0423d82fb52",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 49,
-        "end_line": 49,
-        "text": "        If StrComp(inputFolder & fileName, ThisWorkbook.FullName, vbTextCompare) <> 0 Then"
+        "end_line": 69,
+        "text": "        If StrComp(inputFolder & fileName, ThisWorkbook.FullName, vbTextCompare) <> 0 Then\n            Set sourceBook = Workbooks.Open(Filename:=inputFolder & fileName, ReadOnly:=True)\n            Set sourceSheet = sourceBook.Worksheets(1)\n            lastRow = sourceSheet.Cells(sourceSheet.Rows.Count, \"A\").End(xlUp).Row\n\n            If lastRow >= 1 Then\n                Set sourceRange = sourceSheet.Range(\"A1:F\" & lastRow)\n                If nextRow = 1 Then\n                    targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count, sourceRange.Columns.Count).Value = sourceRange.Value\n                    nextRow = nextRow + sourceRange.Rows.Count\n                ElseIf sourceRange.Rows.Count > 1 Then\n                    targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value = _\n                        sourceRange.Offset(1, 0).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value\n                    nextRow = nextRow + sourceRange.Rows.Count - 1\n                End If\n            End If\n\n            sourceBook.Close SaveChanges:=False\n            Set sourceBook = Nothing\n            processedFiles = processedFiles + 1\n        End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -1169,18 +1204,25 @@
             "vbTextCompare"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 69,
+            "end_line": 69
+          }
         }
       }
     },
     {
-      "id": "branch_654082ffac84d6cc",
+      "id": "branch_878fb7e9dad54009",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_c323545aa34e57f4",
+      "parent_id": "node_8e0507dae6620278",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 49,
-        "end_line": 49,
+        "end_line": 69,
         "text": ""
       },
       "metadata": {
@@ -1215,10 +1257,10 @@
       }
     },
     {
-      "id": "node_d19c60ed38768299",
+      "id": "node_b037f03adbfa5e73",
       "type": "ASSIGNMENT",
       "name": "sourceBook",
-      "parent_id": "branch_654082ffac84d6cc",
+      "parent_id": "branch_878fb7e9dad54009",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 50,
@@ -1260,10 +1302,10 @@
       }
     },
     {
-      "id": "node_a06dae257b2e522a",
+      "id": "node_bec7c42ae192dda1",
       "type": "ASSIGNMENT",
       "name": "sourceSheet",
-      "parent_id": "branch_654082ffac84d6cc",
+      "parent_id": "branch_878fb7e9dad54009",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 51,
@@ -1293,10 +1335,10 @@
       }
     },
     {
-      "id": "node_0ebbb5d5aee41892",
+      "id": "node_6b91df1c9f39812e",
       "type": "ASSIGNMENT",
       "name": "lastRow",
-      "parent_id": "branch_654082ffac84d6cc",
+      "parent_id": "branch_878fb7e9dad54009",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 52,
@@ -1345,15 +1387,15 @@
       }
     },
     {
-      "id": "node_0b2584a7ed84ddcb",
+      "id": "node_f20808fbc778ef12",
       "type": "IF_BLOCK",
       "name": "if_block_4",
-      "parent_id": "branch_654082ffac84d6cc",
+      "parent_id": "branch_878fb7e9dad54009",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 54,
-        "end_line": 54,
-        "text": "            If lastRow >= 1 Then"
+        "end_line": 64,
+        "text": "            If lastRow >= 1 Then\n                Set sourceRange = sourceSheet.Range(\"A1:F\" & lastRow)\n                If nextRow = 1 Then\n                    targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count, sourceRange.Columns.Count).Value = sourceRange.Value\n                    nextRow = nextRow + sourceRange.Rows.Count\n                ElseIf sourceRange.Rows.Count > 1 Then\n                    targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value = _\n                        sourceRange.Offset(1, 0).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value\n                    nextRow = nextRow + sourceRange.Rows.Count - 1\n                End If\n            End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -1368,18 +1410,25 @@
             "lastRow"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 64,
+            "end_line": 64
+          }
         }
       }
     },
     {
-      "id": "branch_8f28bacd9728ba7c",
+      "id": "branch_07b75f4f3fa3b648",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_0b2584a7ed84ddcb",
+      "parent_id": "node_f20808fbc778ef12",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 54,
-        "end_line": 54,
+        "end_line": 64,
         "text": ""
       },
       "metadata": {
@@ -1398,10 +1447,10 @@
       }
     },
     {
-      "id": "node_b07055287e54053e",
+      "id": "node_7c10526166e8ad95",
       "type": "ASSIGNMENT",
       "name": "sourceRange",
-      "parent_id": "branch_8f28bacd9728ba7c",
+      "parent_id": "branch_07b75f4f3fa3b648",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 55,
@@ -1434,15 +1483,15 @@
       }
     },
     {
-      "id": "node_7741d49693821979",
+      "id": "node_4df739dbda286b9d",
       "type": "IF_BLOCK",
       "name": "if_block_2",
-      "parent_id": "branch_8f28bacd9728ba7c",
+      "parent_id": "branch_07b75f4f3fa3b648",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 56,
-        "end_line": 56,
-        "text": "                If nextRow = 1 Then"
+        "end_line": 63,
+        "text": "                If nextRow = 1 Then\n                    targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count, sourceRange.Columns.Count).Value = sourceRange.Value\n                    nextRow = nextRow + sourceRange.Rows.Count\n                ElseIf sourceRange.Rows.Count > 1 Then\n                    targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value = _\n                        sourceRange.Offset(1, 0).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value\n                    nextRow = nextRow + sourceRange.Rows.Count - 1\n                End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -1457,18 +1506,25 @@
             "nextRow"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 63,
+            "end_line": 63
+          }
         }
       }
     },
     {
-      "id": "branch_3499fee84bbb696e",
+      "id": "branch_7b8c706e58c25f5c",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_7741d49693821979",
+      "parent_id": "node_4df739dbda286b9d",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 56,
-        "end_line": 56,
+        "end_line": 63,
         "text": ""
       },
       "metadata": {
@@ -1487,10 +1543,10 @@
       }
     },
     {
-      "id": "node_70a39205ad5dffb8",
+      "id": "node_d092dafc04991b5f",
       "type": "ASSIGNMENT",
       "name": "targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count, sourceRange.Columns.Count).Value",
-      "parent_id": "branch_3499fee84bbb696e",
+      "parent_id": "branch_7b8c706e58c25f5c",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 57,
@@ -1517,10 +1573,10 @@
       }
     },
     {
-      "id": "node_ae66d631a7f75c37",
+      "id": "node_cef0b015be65c91a",
       "type": "ASSIGNMENT",
       "name": "nextRow",
-      "parent_id": "branch_3499fee84bbb696e",
+      "parent_id": "branch_7b8c706e58c25f5c",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 58,
@@ -1553,14 +1609,14 @@
       }
     },
     {
-      "id": "branch_e603f54767443c01",
+      "id": "branch_c79a55e560153725",
       "type": "ELSEIF_BRANCH",
       "name": "ELSEIF",
-      "parent_id": "node_7741d49693821979",
+      "parent_id": "node_4df739dbda286b9d",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 56,
-        "end_line": 56,
+        "end_line": 63,
         "text": ""
       },
       "metadata": {
@@ -1585,10 +1641,10 @@
       }
     },
     {
-      "id": "node_96a7f21a2e7b3b71",
+      "id": "node_95e7784222f19719",
       "type": "ASSIGNMENT",
       "name": "targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value",
-      "parent_id": "branch_e603f54767443c01",
+      "parent_id": "branch_c79a55e560153725",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 60,
@@ -1647,10 +1703,10 @@
       }
     },
     {
-      "id": "node_b38f06e74904b850",
+      "id": "node_e2936ad7ad725816",
       "type": "ASSIGNMENT",
       "name": "nextRow",
-      "parent_id": "branch_e603f54767443c01",
+      "parent_id": "branch_c79a55e560153725",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 62,
@@ -1685,10 +1741,10 @@
       }
     },
     {
-      "id": "node_ae23cc6a30658ae4",
-      "type": "ASSIGNMENT",
-      "name": "sourceBook.Close SaveChanges:",
-      "parent_id": "branch_654082ffac84d6cc",
+      "id": "node_6baf23f5791263d7",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_5",
+      "parent_id": "branch_878fb7e9dad54009",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 66,
@@ -1696,24 +1752,31 @@
         "text": "            sourceBook.Close SaveChanges:=False"
       },
       "metadata": {
-        "type": "ASSIGNMENT",
-        "assignment_kind": "IMPLICIT",
-        "target": "sourceBook.Close SaveChanges:",
+        "type": "CALL_OR_COMMAND",
         "expression": {
-          "source": "False",
+          "source": "sourceBook.Close SaveChanges:=False",
           "tokens": [
+            "sourceBook",
+            ".",
+            "Close",
+            "SaveChanges",
+            ":=",
             "False"
           ],
-          "identifiers": [],
+          "identifiers": [
+            "sourceBook",
+            "Close",
+            "SaveChanges"
+          ],
           "parse_status": "tokenized_not_fully_parsed"
         }
       }
     },
     {
-      "id": "node_f7b70f1a4a3604df",
+      "id": "node_41cd584452de9426",
       "type": "ASSIGNMENT",
       "name": "sourceBook",
-      "parent_id": "branch_654082ffac84d6cc",
+      "parent_id": "branch_878fb7e9dad54009",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 67,
@@ -1735,10 +1798,10 @@
       }
     },
     {
-      "id": "node_454084c814f6794d",
+      "id": "node_80d74bfe7dbe0c3e",
       "type": "ASSIGNMENT",
       "name": "processedFiles",
-      "parent_id": "branch_654082ffac84d6cc",
+      "parent_id": "branch_878fb7e9dad54009",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 68,
@@ -1764,10 +1827,10 @@
       }
     },
     {
-      "id": "node_e245fd50caee0be1",
+      "id": "node_8409343d455efe46",
       "type": "ASSIGNMENT",
       "name": "fileName",
-      "parent_id": "node_0b3215046410ee44",
+      "parent_id": "node_9a16b0423d82fb52",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 70,
@@ -1794,9 +1857,9 @@
       }
     },
     {
-      "id": "node_ea5a3d87b67894d2",
-      "type": "OPAQUE_STATEMENT",
-      "name": "opaque_statement_33",
+      "id": "node_6fc1b262e0f7f2e4",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_33",
       "parent_id": "procedure_6e9fd3d7f861eda9",
       "source": {
         "path": "vba_sample_4.bas",
@@ -1805,8 +1868,26 @@
         "text": "    targetSheet.Columns(\"A:F\").AutoFit"
       },
       "metadata": {
-        "type": "OPAQUE_STATEMENT",
-        "parse_status": "unparsed"
+        "type": "CALL_OR_COMMAND",
+        "expression": {
+          "source": "targetSheet.Columns(\"A:F\").AutoFit",
+          "tokens": [
+            "targetSheet",
+            ".",
+            "Columns",
+            "(",
+            "\"A:F\"",
+            ")",
+            ".",
+            "AutoFit"
+          ],
+          "identifiers": [
+            "targetSheet",
+            "Columns",
+            "AutoFit"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        }
       }
     },
     {
@@ -1869,15 +1950,15 @@
       }
     },
     {
-      "id": "node_0461104f00db17e0",
+      "id": "node_b57f76072e085cf1",
       "type": "IF_BLOCK",
       "name": "if_block_36",
       "parent_id": "procedure_6e9fd3d7f861eda9",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 76,
-        "end_line": 76,
-        "text": "    If nextRow > 1 Then"
+        "end_line": 79,
+        "text": "    If nextRow > 1 Then\n        outputBook.Worksheets(1).Range(\"A1:F\" & nextRow - 1).Value = _\n            targetSheet.Range(\"A1:F\" & nextRow - 1).Value\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -1892,18 +1973,25 @@
             "nextRow"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 79,
+            "end_line": 79
+          }
         }
       }
     },
     {
-      "id": "branch_c1f11743aabc8613",
+      "id": "branch_e93db331c1e1f693",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_0461104f00db17e0",
+      "parent_id": "node_b57f76072e085cf1",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 76,
-        "end_line": 76,
+        "end_line": 79,
         "text": ""
       },
       "metadata": {
@@ -1922,10 +2010,10 @@
       }
     },
     {
-      "id": "node_e11578a1a9774c3b",
+      "id": "node_8b99b63d7476fddb",
       "type": "ASSIGNMENT",
       "name": "outputBook.Worksheets(1).Range(\"A1:F\" & nextRow - 1).Value",
-      "parent_id": "branch_c1f11743aabc8613",
+      "parent_id": "branch_e93db331c1e1f693",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 77,
@@ -1963,9 +2051,9 @@
       }
     },
     {
-      "id": "node_d0f3ee5c9ad30a2c",
-      "type": "ASSIGNMENT",
-      "name": "outputBook.SaveAs Filename:",
+      "id": "node_93581797d07c3c48",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_37",
       "parent_id": "procedure_6e9fd3d7f861eda9",
       "source": {
         "path": "vba_sample_4.bas",
@@ -1974,12 +2062,15 @@
         "text": "    outputBook.SaveAs Filename:=outputPath, FileFormat:=xlOpenXMLWorkbook"
       },
       "metadata": {
-        "type": "ASSIGNMENT",
-        "assignment_kind": "IMPLICIT",
-        "target": "outputBook.SaveAs Filename:",
+        "type": "CALL_OR_COMMAND",
         "expression": {
-          "source": "outputPath, FileFormat:=xlOpenXMLWorkbook",
+          "source": "outputBook.SaveAs Filename:=outputPath, FileFormat:=xlOpenXMLWorkbook",
           "tokens": [
+            "outputBook",
+            ".",
+            "SaveAs",
+            "Filename",
+            ":=",
             "outputPath",
             ",",
             "FileFormat",
@@ -1987,6 +2078,9 @@
             "xlOpenXMLWorkbook"
           ],
           "identifiers": [
+            "outputBook",
+            "SaveAs",
+            "Filename",
             "outputPath",
             "FileFormat",
             "xlOpenXMLWorkbook"
@@ -1996,9 +2090,9 @@
       }
     },
     {
-      "id": "node_d4e1f8ea737aa219",
-      "type": "ASSIGNMENT",
-      "name": "outputBook.Close SaveChanges:",
+      "id": "node_295181d4d2a0eaae",
+      "type": "CALL_OR_COMMAND",
+      "name": "call_or_command_38",
       "parent_id": "procedure_6e9fd3d7f861eda9",
       "source": {
         "path": "vba_sample_4.bas",
@@ -2007,15 +2101,22 @@
         "text": "    outputBook.Close SaveChanges:=False"
       },
       "metadata": {
-        "type": "ASSIGNMENT",
-        "assignment_kind": "IMPLICIT",
-        "target": "outputBook.Close SaveChanges:",
+        "type": "CALL_OR_COMMAND",
         "expression": {
-          "source": "False",
+          "source": "outputBook.Close SaveChanges:=False",
           "tokens": [
+            "outputBook",
+            ".",
+            "Close",
+            "SaveChanges",
+            ":=",
             "False"
           ],
-          "identifiers": [],
+          "identifiers": [
+            "outputBook",
+            "Close",
+            "SaveChanges"
+          ],
           "parse_status": "tokenized_not_fully_parsed"
         }
       }
@@ -2063,9 +2164,9 @@
       }
     },
     {
-      "id": "node_5a1c75b0f7901db7",
-      "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_41",
+      "id": "node_57581d04c18d2781",
+      "type": "LABEL",
+      "name": "HandleError",
       "parent_id": "procedure_6e9fd3d7f861eda9",
       "source": {
         "path": "vba_sample_4.bas",
@@ -2074,17 +2175,8 @@
         "text": "HandleError:"
       },
       "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "HandleError",
-          "tokens": [
-            "HandleError"
-          ],
-          "identifiers": [
-            "HandleError"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
+        "type": "LABEL",
+        "name": "HandleError"
       }
     },
     {
@@ -2210,9 +2302,9 @@
       }
     },
     {
-      "id": "node_13e70e4dab8ff1aa",
-      "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_45",
+      "id": "node_d42cd877b1b98f27",
+      "type": "LABEL",
+      "name": "CleanUp",
       "parent_id": "procedure_6e9fd3d7f861eda9",
       "source": {
         "path": "vba_sample_4.bas",
@@ -2221,17 +2313,8 @@
         "text": "CleanUp:"
       },
       "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "CleanUp",
-          "tokens": [
-            "CleanUp"
-          ],
-          "identifiers": [
-            "CleanUp"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
+        "type": "LABEL",
+        "name": "CleanUp"
       }
     },
     {
@@ -2316,15 +2399,15 @@
       }
     },
     {
-      "id": "node_d6681165af302856",
+      "id": "node_378091aa0e56b9f3",
       "type": "IF_BLOCK",
       "name": "if_block_49",
       "parent_id": "procedure_6e9fd3d7f861eda9",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 94,
-        "end_line": 94,
-        "text": "    If Err.Number = 0 Then"
+        "end_line": 96,
+        "text": "    If Err.Number = 0 Then\n        MsgBox \"Consolidated \" & processedFiles & \" department files.\", vbInformation\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -2342,18 +2425,25 @@
             "Number"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 96,
+            "end_line": 96
+          }
         }
       }
     },
     {
-      "id": "branch_91be0349b6259854",
+      "id": "branch_815b771379969d9c",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_d6681165af302856",
+      "parent_id": "node_378091aa0e56b9f3",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 94,
-        "end_line": 94,
+        "end_line": 96,
         "text": ""
       },
       "metadata": {
@@ -2375,10 +2465,10 @@
       }
     },
     {
-      "id": "node_e64f0b86d0d42542",
+      "id": "node_7a361c89868a19a6",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_1",
-      "parent_id": "branch_91be0349b6259854",
+      "parent_id": "branch_815b771379969d9c",
       "source": {
         "path": "vba_sample_4.bas",
         "start_line": 95,
@@ -2668,79 +2758,79 @@
     },
     {
       "source": "procedure_6e9fd3d7f861eda9",
-      "target": "node_a2e8e325ba724ff7",
+      "target": "node_349730c7c2f2b84c",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_a29effdd18484915",
-      "target": "node_a2e8e325ba724ff7",
+      "target": "node_349730c7c2f2b84c",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_a2e8e325ba724ff7",
-      "target": "branch_c11fceed8b563ffa",
+      "source": "node_349730c7c2f2b84c",
+      "target": "branch_47d8c86c838f2ecc",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_c11fceed8b563ffa",
-      "target": "node_bc73ec27d90d0752",
+      "source": "branch_47d8c86c838f2ecc",
+      "target": "node_9cfe1121c2c2bfdd",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "procedure_6e9fd3d7f861eda9",
-      "target": "node_199539ca9556c40e",
+      "target": "node_28495d46a7c66869",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_a2e8e325ba724ff7",
-      "target": "node_199539ca9556c40e",
+      "source": "node_349730c7c2f2b84c",
+      "target": "node_28495d46a7c66869",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_199539ca9556c40e",
-      "target": "branch_ec8798079e692cbd",
+      "source": "node_28495d46a7c66869",
+      "target": "branch_cbbfd0c30055deed",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_ec8798079e692cbd",
-      "target": "node_c6ad17fc548c5634",
+      "source": "branch_cbbfd0c30055deed",
+      "target": "node_a414b9dcc0339554",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "procedure_6e9fd3d7f861eda9",
-      "target": "node_4656135333a70d6e",
+      "target": "node_82d6698770b3669b",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_199539ca9556c40e",
-      "target": "node_4656135333a70d6e",
+      "source": "node_28495d46a7c66869",
+      "target": "node_82d6698770b3669b",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_4656135333a70d6e",
-      "target": "branch_a413266e3869eb21",
+      "source": "node_82d6698770b3669b",
+      "target": "branch_0ea5a5fbdddf6b60",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_a413266e3869eb21",
-      "target": "node_e352ad7996a1c25b",
+      "source": "branch_0ea5a5fbdddf6b60",
+      "target": "node_4e8d92ca9ac5be8b",
       "relation": "CONTAINS",
       "evidence": {}
     },
@@ -2751,7 +2841,7 @@
       "evidence": {}
     },
     {
-      "source": "node_4656135333a70d6e",
+      "source": "node_82d6698770b3669b",
       "target": "node_328e3955440bd2f9",
       "relation": "NEXT",
       "evidence": {
@@ -2760,27 +2850,27 @@
     },
     {
       "source": "procedure_6e9fd3d7f861eda9",
-      "target": "node_8d4f1adf426c31ac",
+      "target": "node_5b6964e2c144f7c3",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_328e3955440bd2f9",
-      "target": "node_8d4f1adf426c31ac",
+      "target": "node_5b6964e2c144f7c3",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_8d4f1adf426c31ac",
-      "target": "branch_10b4540cc16be760",
+      "source": "node_5b6964e2c144f7c3",
+      "target": "branch_70749ae5d1ebb57c",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_10b4540cc16be760",
-      "target": "node_5c997388e3e42aaa",
+      "source": "branch_70749ae5d1ebb57c",
+      "target": "node_9c75324153ce3773",
       "relation": "CONTAINS",
       "evidence": {}
     },
@@ -2791,7 +2881,7 @@
       "evidence": {}
     },
     {
-      "source": "node_8d4f1adf426c31ac",
+      "source": "node_5b6964e2c144f7c3",
       "target": "node_066aaca6ba97f91c",
       "relation": "NEXT",
       "evidence": {
@@ -2898,207 +2988,207 @@
     },
     {
       "source": "procedure_6e9fd3d7f861eda9",
-      "target": "node_0b3215046410ee44",
+      "target": "node_9a16b0423d82fb52",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_b519b3a267f93c47",
-      "target": "node_0b3215046410ee44",
+      "target": "node_9a16b0423d82fb52",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_0b3215046410ee44",
-      "target": "node_c323545aa34e57f4",
+      "source": "node_9a16b0423d82fb52",
+      "target": "node_8e0507dae6620278",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_c323545aa34e57f4",
-      "target": "branch_654082ffac84d6cc",
+      "source": "node_8e0507dae6620278",
+      "target": "branch_878fb7e9dad54009",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_654082ffac84d6cc",
-      "target": "node_d19c60ed38768299",
+      "source": "branch_878fb7e9dad54009",
+      "target": "node_b037f03adbfa5e73",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_654082ffac84d6cc",
-      "target": "node_a06dae257b2e522a",
+      "source": "branch_878fb7e9dad54009",
+      "target": "node_bec7c42ae192dda1",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_d19c60ed38768299",
-      "target": "node_a06dae257b2e522a",
+      "source": "node_b037f03adbfa5e73",
+      "target": "node_bec7c42ae192dda1",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "branch_654082ffac84d6cc",
-      "target": "node_0ebbb5d5aee41892",
+      "source": "branch_878fb7e9dad54009",
+      "target": "node_6b91df1c9f39812e",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_a06dae257b2e522a",
-      "target": "node_0ebbb5d5aee41892",
+      "source": "node_bec7c42ae192dda1",
+      "target": "node_6b91df1c9f39812e",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "branch_654082ffac84d6cc",
-      "target": "node_0b2584a7ed84ddcb",
+      "source": "branch_878fb7e9dad54009",
+      "target": "node_f20808fbc778ef12",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_0ebbb5d5aee41892",
-      "target": "node_0b2584a7ed84ddcb",
+      "source": "node_6b91df1c9f39812e",
+      "target": "node_f20808fbc778ef12",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_0b2584a7ed84ddcb",
-      "target": "branch_8f28bacd9728ba7c",
+      "source": "node_f20808fbc778ef12",
+      "target": "branch_07b75f4f3fa3b648",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_8f28bacd9728ba7c",
-      "target": "node_b07055287e54053e",
+      "source": "branch_07b75f4f3fa3b648",
+      "target": "node_7c10526166e8ad95",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_8f28bacd9728ba7c",
-      "target": "node_7741d49693821979",
+      "source": "branch_07b75f4f3fa3b648",
+      "target": "node_4df739dbda286b9d",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_b07055287e54053e",
-      "target": "node_7741d49693821979",
+      "source": "node_7c10526166e8ad95",
+      "target": "node_4df739dbda286b9d",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_7741d49693821979",
-      "target": "branch_3499fee84bbb696e",
+      "source": "node_4df739dbda286b9d",
+      "target": "branch_7b8c706e58c25f5c",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_3499fee84bbb696e",
-      "target": "node_70a39205ad5dffb8",
+      "source": "branch_7b8c706e58c25f5c",
+      "target": "node_d092dafc04991b5f",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_3499fee84bbb696e",
-      "target": "node_ae66d631a7f75c37",
+      "source": "branch_7b8c706e58c25f5c",
+      "target": "node_cef0b015be65c91a",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_70a39205ad5dffb8",
-      "target": "node_ae66d631a7f75c37",
+      "source": "node_d092dafc04991b5f",
+      "target": "node_cef0b015be65c91a",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_7741d49693821979",
-      "target": "branch_e603f54767443c01",
+      "source": "node_4df739dbda286b9d",
+      "target": "branch_c79a55e560153725",
       "relation": "ELSEIF_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_e603f54767443c01",
-      "target": "node_96a7f21a2e7b3b71",
+      "source": "branch_c79a55e560153725",
+      "target": "node_95e7784222f19719",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_e603f54767443c01",
-      "target": "node_b38f06e74904b850",
+      "source": "branch_c79a55e560153725",
+      "target": "node_e2936ad7ad725816",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_96a7f21a2e7b3b71",
-      "target": "node_b38f06e74904b850",
+      "source": "node_95e7784222f19719",
+      "target": "node_e2936ad7ad725816",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "branch_654082ffac84d6cc",
-      "target": "node_ae23cc6a30658ae4",
+      "source": "branch_878fb7e9dad54009",
+      "target": "node_6baf23f5791263d7",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_0b2584a7ed84ddcb",
-      "target": "node_ae23cc6a30658ae4",
+      "source": "node_f20808fbc778ef12",
+      "target": "node_6baf23f5791263d7",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "branch_654082ffac84d6cc",
-      "target": "node_f7b70f1a4a3604df",
+      "source": "branch_878fb7e9dad54009",
+      "target": "node_41cd584452de9426",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_ae23cc6a30658ae4",
-      "target": "node_f7b70f1a4a3604df",
+      "source": "node_6baf23f5791263d7",
+      "target": "node_41cd584452de9426",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "branch_654082ffac84d6cc",
-      "target": "node_454084c814f6794d",
+      "source": "branch_878fb7e9dad54009",
+      "target": "node_80d74bfe7dbe0c3e",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_f7b70f1a4a3604df",
-      "target": "node_454084c814f6794d",
+      "source": "node_41cd584452de9426",
+      "target": "node_80d74bfe7dbe0c3e",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_0b3215046410ee44",
-      "target": "node_e245fd50caee0be1",
+      "source": "node_9a16b0423d82fb52",
+      "target": "node_8409343d455efe46",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_c323545aa34e57f4",
-      "target": "node_e245fd50caee0be1",
+      "source": "node_8e0507dae6620278",
+      "target": "node_8409343d455efe46",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -3106,13 +3196,13 @@
     },
     {
       "source": "procedure_6e9fd3d7f861eda9",
-      "target": "node_ea5a3d87b67894d2",
+      "target": "node_6fc1b262e0f7f2e4",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_0b3215046410ee44",
-      "target": "node_ea5a3d87b67894d2",
+      "source": "node_9a16b0423d82fb52",
+      "target": "node_6fc1b262e0f7f2e4",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -3125,7 +3215,7 @@
       "evidence": {}
     },
     {
-      "source": "node_ea5a3d87b67894d2",
+      "source": "node_6fc1b262e0f7f2e4",
       "target": "node_9cdb4ac406aefd4c",
       "relation": "NEXT",
       "evidence": {
@@ -3148,39 +3238,39 @@
     },
     {
       "source": "procedure_6e9fd3d7f861eda9",
-      "target": "node_0461104f00db17e0",
+      "target": "node_b57f76072e085cf1",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_5b4b8b3d829ed5be",
-      "target": "node_0461104f00db17e0",
+      "target": "node_b57f76072e085cf1",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_0461104f00db17e0",
-      "target": "branch_c1f11743aabc8613",
+      "source": "node_b57f76072e085cf1",
+      "target": "branch_e93db331c1e1f693",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_c1f11743aabc8613",
-      "target": "node_e11578a1a9774c3b",
+      "source": "branch_e93db331c1e1f693",
+      "target": "node_8b99b63d7476fddb",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "procedure_6e9fd3d7f861eda9",
-      "target": "node_d0f3ee5c9ad30a2c",
+      "target": "node_93581797d07c3c48",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_0461104f00db17e0",
-      "target": "node_d0f3ee5c9ad30a2c",
+      "source": "node_b57f76072e085cf1",
+      "target": "node_93581797d07c3c48",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -3188,13 +3278,13 @@
     },
     {
       "source": "procedure_6e9fd3d7f861eda9",
-      "target": "node_d4e1f8ea737aa219",
+      "target": "node_295181d4d2a0eaae",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_d0f3ee5c9ad30a2c",
-      "target": "node_d4e1f8ea737aa219",
+      "source": "node_93581797d07c3c48",
+      "target": "node_295181d4d2a0eaae",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -3207,7 +3297,7 @@
       "evidence": {}
     },
     {
-      "source": "node_d4e1f8ea737aa219",
+      "source": "node_295181d4d2a0eaae",
       "target": "node_747d3a5bca2f94cf",
       "relation": "NEXT",
       "evidence": {
@@ -3230,13 +3320,13 @@
     },
     {
       "source": "procedure_6e9fd3d7f861eda9",
-      "target": "node_5a1c75b0f7901db7",
+      "target": "node_57581d04c18d2781",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_9260dc397152700b",
-      "target": "node_5a1c75b0f7901db7",
+      "target": "node_57581d04c18d2781",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -3249,7 +3339,7 @@
       "evidence": {}
     },
     {
-      "source": "node_5a1c75b0f7901db7",
+      "source": "node_57581d04c18d2781",
       "target": "node_afab99ce367849ce",
       "relation": "NEXT",
       "evidence": {
@@ -3286,13 +3376,13 @@
     },
     {
       "source": "procedure_6e9fd3d7f861eda9",
-      "target": "node_13e70e4dab8ff1aa",
+      "target": "node_d42cd877b1b98f27",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_cf897a784348665a",
-      "target": "node_13e70e4dab8ff1aa",
+      "target": "node_d42cd877b1b98f27",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -3305,7 +3395,7 @@
       "evidence": {}
     },
     {
-      "source": "node_13e70e4dab8ff1aa",
+      "source": "node_d42cd877b1b98f27",
       "target": "node_aac625933d01ee14",
       "relation": "NEXT",
       "evidence": {
@@ -3342,27 +3432,27 @@
     },
     {
       "source": "procedure_6e9fd3d7f861eda9",
-      "target": "node_d6681165af302856",
+      "target": "node_378091aa0e56b9f3",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_80f5a5e5d9d5408e",
-      "target": "node_d6681165af302856",
+      "target": "node_378091aa0e56b9f3",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_d6681165af302856",
-      "target": "branch_91be0349b6259854",
+      "source": "node_378091aa0e56b9f3",
+      "target": "branch_815b771379969d9c",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_91be0349b6259854",
-      "target": "node_e64f0b86d0d42542",
+      "source": "branch_815b771379969d9c",
+      "target": "node_7a361c89868a19a6",
       "relation": "CONTAINS",
       "evidence": {}
     }
@@ -3475,16 +3565,7 @@
       "scope": "vba_sample_4.ConsolidateDepartmentFiles"
     }
   ],
-  "diagnostics": [
-    {
-      "severity": "warning",
-      "code": "OPAQUE_STATEMENT",
-      "message": "Statement retained verbatim but not structurally interpreted.",
-      "path": "vba_sample_4.bas",
-      "line": 73,
-      "source": "targetSheet.Columns(\"A:F\").AutoFit"
-    }
-  ],
+  "diagnostics": [],
   "manifest": [
     {
       "path": "vba_sample_4.bas",

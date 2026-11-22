@@ -1,0 +1,362 @@
+{
+  "schema_version": "1.0",
+  "issues": [
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "severity": "blocking",
+      "message": "VBA On Error runtime semantics",
+      "details": {
+        "code": "VBA_ERROR_HANDLING",
+        "title": "VBA On Error runtime semantics",
+        "severity": "blocking",
+        "target_guidance": "Implement a compatibility runtime for Resume Next, GoTo handler, GoTo 0, Err state and handler activation; this pass preserves directives but does not emulate execution.",
+        "evidence": [
+          {
+            "procedure": "RefreshMonthlySummary",
+            "mode": "goto_handler",
+            "handler": "HandleError"
+          }
+        ]
+      },
+      "path": "semantic_analysis.json",
+      "artifact": "semantic_analysis",
+      "reported_by": [
+        "semantic_analysis",
+        "validator"
+      ],
+      "subsystem": "runtime_semantics",
+      "priority": "blocking",
+      "auto_fix_policy": "source_evidence_and_independent_validation_required",
+      "id": "5587823c9eaf352d",
+      "context": {
+        "source": {
+          "available": true,
+          "path": "vba_sample_1.bas",
+          "line_range": [
+            3,
+            36
+          ],
+          "text": "3: Public Sub RefreshMonthlySummary()\n4:     Dim sourceSheet As Worksheet\n5:     Dim reportSheet As Worksheet\n6:     Dim lastRow As Long\n7:     Dim rowNumber As Long\n8:     Dim reportRow As Long\n9: \n10:     On Error GoTo HandleError\n11: \n12:     Set sourceSheet = ThisWorkbook.Worksheets(\"Transactions\")\n13:     Set reportSheet = ThisWorkbook.Worksheets(\"Monthly Summary\")\n14:     lastRow = sourceSheet.Cells(sourceSheet.Rows.Count, \"A\").End(xlUp).Row\n15:     reportRow = 2\n16: \n17:     For rowNumber = 2 To lastRow\n18:         If Len(Trim$(CStr(sourceSheet.Cells(rowNumber, \"A\").Value))) > 0 Then\n19:             If IsDate(sourceSheet.Cells(rowNumber, \"B\").Value) Then\n20:                 reportSheet.Cells(reportRow, \"A\").Value = sourceSheet.Cells(rowNumber, \"A\").Value\n21:                 reportSheet.Cells(reportRow, \"B\").Value = CDate(sourceSheet.Cells(rowNumber, \"B\").Value)\n22:                 reportSheet.Cells(reportRow, \"C\").Value = sourceSheet.Cells(rowNumber, \"C\").Value\n23:                 reportRow = reportRow + 1\n24:             Else\n25:                 sourceSheet.Cells(rowNumber, \"B\").Interior.Color = vbYellow\n26:             End If\n27:         End If\n28:     Next rowNumber\n29: \n30:     reportSheet.Columns(\"A:C\").AutoFit\n31:     MsgBox \"Summary refreshed with \" & (reportRow - 2) & \" records.\", vbInformation\n32:     Exit Sub\n33: \n34: HandleError:\n35:     MsgBox \"Unable to refresh the monthly summary: \" & Err.Description, vbExclamation\n36: End Sub",
+          "sha256": "364729d63817d3d67f1e5b799ab41a6e6fbbf32fee80266dc613f744b88feaff",
+          "procedure": "RefreshMonthlySummary"
+        },
+        "procedure": {
+          "procedure_names": [],
+          "graph_procedures": [
+            {
+              "id": "procedure_717ab93df6b2eebd",
+              "name": "RefreshMonthlySummary",
+              "source": {
+                "path": "vba_sample_1.bas",
+                "start_line": 3,
+                "end_line": 36,
+                "text": "Public Sub RefreshMonthlySummary()\n    Dim sourceSheet As Worksheet\n    Dim reportSheet As Worksheet\n    Dim lastRow As Long\n    Dim rowNumber As Long\n    Dim reportRow As Long\n\n    On Error GoTo HandleError\n\n    Set sourceSheet = ThisWorkbook.Worksheets(\"Transactions\")\n    Set reportSheet = ThisWorkbook.Worksheets(\"Monthly Summary\")\n    lastRow = sourceSheet.Cells(sourceSheet.Rows.Count, \"A\").End(xlUp).Row\n    reportRow = 2\n\n    For rowNumber = 2 To lastRow\n        If Len(Trim$(CStr(sourceSheet.Cells(rowNumber, \"A\").Value))) > 0 Then\n            If IsDate(sourceSheet.Cells(rowNumber, \"B\").Value) Then\n                reportSheet.Cells(reportRow, \"A\").Value = sourceSheet.Cells(rowNumber, \"A\").Value\n                reportSheet.Cells(reportRow, \"B\").Value = CDate(sourceSheet.Cells(rowNumber, \"B\").Value)\n                reportSheet.Cells(reportRow, \"C\").Value = sourceSheet.Cells(rowNumber, \"C\").Value\n                reportRow = reportRow + 1\n            Else\n                sourceSheet.Cells(rowNumber, \"B\").Interior.Color = vbYellow\n            End If\n        End If\n    Next rowNumber\n\n    reportSheet.Columns(\"A:C\").AutoFit\n    MsgBox \"Summary refreshed with \" & (reportRow - 2) & \" records.\", vbInformation\n    Exit Sub\n\nHandleError:\n    MsgBox \"Unable to refresh the monthly summary: \" & Err.Description, vbExclamation\nEnd Sub"
+              }
+            }
+          ]
+        },
+        "producer_code": [],
+        "dependencies": {
+          "artifact_hashes": {
+            "graph": "175477cd878a8576c0594d559be300e59cc0f2d9d2bde6af65febb6c596ab84e",
+            "segments": "64e2299404e25d8d61347bda8808eb653946cf51c8149f92222bc49a68ad2624",
+            "ir": "76acf4f755d1abaf6c16b05a33a963d0e2ccd9fc630b1724b2a06757a8b43e4c",
+            "normalized_ir": "4333358ef6326820789f34b5e7ff6e384cc5cb0f374dd6523b5a0436ed1a0f45",
+            "semantic_analysis": "3d146a4dea38c4e6f2627f893945e62928e720e03beb8b8c8c5468f5c4f8c594",
+            "manifest": "e3aae377531237410aee067f4b807474edd2a2e4e45942fb5604efca363de65c",
+            "report": "3610b95c09f4e02e6db9082e2e4cf3a98562186a1097868cd3df0ae5a630886a",
+            "source": "364729d63817d3d67f1e5b799ab41a6e6fbbf32fee80266dc613f744b88feaff"
+          },
+          "related_artifacts": [
+            "source",
+            "ir",
+            "normalized_ir",
+            "semantic_analysis"
+          ],
+          "symbols": []
+        },
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_1.bas",
+              "actual": "364729d63817d3d67f1e5b799ab41a6e6fbbf32fee80266dc613f744b88feaff",
+              "expected": "364729d63817d3d67f1e5b799ab41a6e6fbbf32fee80266dc613f744b88feaff",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "root_cause": {
+        "hypotheses": [
+          "Target backend lacks an explicit lowering/runtime implementation"
+        ],
+        "source_available": true,
+        "source_lines": [
+          3,
+          36
+        ],
+        "confidence": "medium",
+        "recommended_action": "inspect_producer_and_rebuild_downstream",
+        "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
+      },
+      "investigation": {
+        "summary": "No LLM configured; deterministic evidence package only.",
+        "evidence_sufficient": true,
+        "root_cause": {
+          "hypotheses": [
+            "Target backend lacks an explicit lowering/runtime implementation"
+          ],
+          "source_available": true,
+          "source_lines": [
+            3,
+            36
+          ],
+          "confidence": "medium",
+          "recommended_action": "inspect_producer_and_rebuild_downstream",
+          "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
+        },
+        "recommended_next_step": "inspect producer code and regenerate"
+      },
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "LATE_BOUND_OBJECT_MEMBERS",
+      "severity": "blocking",
+      "message": "Late-bound COM/Object members",
+      "details": {
+        "code": "LATE_BOUND_OBJECT_MEMBERS",
+        "title": "Late-bound COM/Object members",
+        "severity": "blocking",
+        "target_guidance": "Define explicit Java interfaces/adapters for the actual COM object behavior. Object-typed references alone do not identify the target API.",
+        "evidence": [
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "Worksheets",
+            "owner_type": null
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "Row",
+            "owner_type": null
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "End",
+            "owner_type": null
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "Cells",
+            "owner_type": "Worksheet"
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "Count",
+            "owner_type": null
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "Rows",
+            "owner_type": "Worksheet"
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "Value",
+            "owner_type": null
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "Color",
+            "owner_type": null
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "Interior",
+            "owner_type": null
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "AutoFit",
+            "owner_type": null
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "Columns",
+            "owner_type": "Worksheet"
+          }
+        ]
+      },
+      "path": "semantic_analysis.json",
+      "artifact": "semantic_analysis",
+      "reported_by": [
+        "semantic_analysis",
+        "validator"
+      ],
+      "subsystem": "type_resolution",
+      "priority": "blocking",
+      "auto_fix_policy": "source_evidence_and_independent_validation_required",
+      "id": "1bf0876e4f475d64",
+      "context": {
+        "source": {
+          "available": true,
+          "path": "vba_sample_1.bas",
+          "line_range": [
+            3,
+            36
+          ],
+          "text": "3: Public Sub RefreshMonthlySummary()\n4:     Dim sourceSheet As Worksheet\n5:     Dim reportSheet As Worksheet\n6:     Dim lastRow As Long\n7:     Dim rowNumber As Long\n8:     Dim reportRow As Long\n9: \n10:     On Error GoTo HandleError\n11: \n12:     Set sourceSheet = ThisWorkbook.Worksheets(\"Transactions\")\n13:     Set reportSheet = ThisWorkbook.Worksheets(\"Monthly Summary\")\n14:     lastRow = sourceSheet.Cells(sourceSheet.Rows.Count, \"A\").End(xlUp).Row\n15:     reportRow = 2\n16: \n17:     For rowNumber = 2 To lastRow\n18:         If Len(Trim$(CStr(sourceSheet.Cells(rowNumber, \"A\").Value))) > 0 Then\n19:             If IsDate(sourceSheet.Cells(rowNumber, \"B\").Value) Then\n20:                 reportSheet.Cells(reportRow, \"A\").Value = sourceSheet.Cells(rowNumber, \"A\").Value\n21:                 reportSheet.Cells(reportRow, \"B\").Value = CDate(sourceSheet.Cells(rowNumber, \"B\").Value)\n22:                 reportSheet.Cells(reportRow, \"C\").Value = sourceSheet.Cells(rowNumber, \"C\").Value\n23:                 reportRow = reportRow + 1\n24:             Else\n25:                 sourceSheet.Cells(rowNumber, \"B\").Interior.Color = vbYellow\n26:             End If\n27:         End If\n28:     Next rowNumber\n29: \n30:     reportSheet.Columns(\"A:C\").AutoFit\n31:     MsgBox \"Summary refreshed with \" & (reportRow - 2) & \" records.\", vbInformation\n32:     Exit Sub\n33: \n34: HandleError:\n35:     MsgBox \"Unable to refresh the monthly summary: \" & Err.Description, vbExclamation\n36: End Sub",
+          "sha256": "364729d63817d3d67f1e5b799ab41a6e6fbbf32fee80266dc613f744b88feaff",
+          "procedure": "RefreshMonthlySummary"
+        },
+        "procedure": {
+          "procedure_names": [],
+          "graph_procedures": [
+            {
+              "id": "procedure_717ab93df6b2eebd",
+              "name": "RefreshMonthlySummary",
+              "source": {
+                "path": "vba_sample_1.bas",
+                "start_line": 3,
+                "end_line": 36,
+                "text": "Public Sub RefreshMonthlySummary()\n    Dim sourceSheet As Worksheet\n    Dim reportSheet As Worksheet\n    Dim lastRow As Long\n    Dim rowNumber As Long\n    Dim reportRow As Long\n\n    On Error GoTo HandleError\n\n    Set sourceSheet = ThisWorkbook.Worksheets(\"Transactions\")\n    Set reportSheet = ThisWorkbook.Worksheets(\"Monthly Summary\")\n    lastRow = sourceSheet.Cells(sourceSheet.Rows.Count, \"A\").End(xlUp).Row\n    reportRow = 2\n\n    For rowNumber = 2 To lastRow\n        If Len(Trim$(CStr(sourceSheet.Cells(rowNumber, \"A\").Value))) > 0 Then\n            If IsDate(sourceSheet.Cells(rowNumber, \"B\").Value) Then\n                reportSheet.Cells(reportRow, \"A\").Value = sourceSheet.Cells(rowNumber, \"A\").Value\n                reportSheet.Cells(reportRow, \"B\").Value = CDate(sourceSheet.Cells(rowNumber, \"B\").Value)\n                reportSheet.Cells(reportRow, \"C\").Value = sourceSheet.Cells(rowNumber, \"C\").Value\n                reportRow = reportRow + 1\n            Else\n                sourceSheet.Cells(rowNumber, \"B\").Interior.Color = vbYellow\n            End If\n        End If\n    Next rowNumber\n\n    reportSheet.Columns(\"A:C\").AutoFit\n    MsgBox \"Summary refreshed with \" & (reportRow - 2) & \" records.\", vbInformation\n    Exit Sub\n\nHandleError:\n    MsgBox \"Unable to refresh the monthly summary: \" & Err.Description, vbExclamation\nEnd Sub"
+              }
+            }
+          ]
+        },
+        "producer_code": [],
+        "dependencies": {
+          "artifact_hashes": {
+            "graph": "175477cd878a8576c0594d559be300e59cc0f2d9d2bde6af65febb6c596ab84e",
+            "segments": "64e2299404e25d8d61347bda8808eb653946cf51c8149f92222bc49a68ad2624",
+            "ir": "76acf4f755d1abaf6c16b05a33a963d0e2ccd9fc630b1724b2a06757a8b43e4c",
+            "normalized_ir": "4333358ef6326820789f34b5e7ff6e384cc5cb0f374dd6523b5a0436ed1a0f45",
+            "semantic_analysis": "3d146a4dea38c4e6f2627f893945e62928e720e03beb8b8c8c5468f5c4f8c594",
+            "manifest": "e3aae377531237410aee067f4b807474edd2a2e4e45942fb5604efca363de65c",
+            "report": "3610b95c09f4e02e6db9082e2e4cf3a98562186a1097868cd3df0ae5a630886a",
+            "source": "364729d63817d3d67f1e5b799ab41a6e6fbbf32fee80266dc613f744b88feaff"
+          },
+          "related_artifacts": [
+            "source",
+            "ir",
+            "normalized_ir",
+            "semantic_analysis"
+          ],
+          "symbols": []
+        },
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_1.bas",
+              "actual": "364729d63817d3d67f1e5b799ab41a6e6fbbf32fee80266dc613f744b88feaff",
+              "expected": "364729d63817d3d67f1e5b799ab41a6e6fbbf32fee80266dc613f744b88feaff",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "root_cause": {
+        "hypotheses": [
+          "Insufficient diagnostic-specific evidence; inspect source and producing stage"
+        ],
+        "source_available": true,
+        "source_lines": [
+          3,
+          36
+        ],
+        "confidence": "medium",
+        "recommended_action": "inspect_producer_and_rebuild_downstream",
+        "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
+      },
+      "investigation": {
+        "summary": "No LLM configured; deterministic evidence package only.",
+        "evidence_sufficient": true,
+        "root_cause": {
+          "hypotheses": [
+            "Insufficient diagnostic-specific evidence; inspect source and producing stage"
+          ],
+          "source_available": true,
+          "source_lines": [
+            3,
+            36
+          ],
+          "confidence": "medium",
+          "recommended_action": "inspect_producer_and_rebuild_downstream",
+          "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
+        },
+        "recommended_next_step": "inspect producer code and regenerate"
+      },
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "SEMANTIC_ISSUE_COUNT",
+      "severity": "blocking",
+      "message": "issue_count=64",
+      "context": {
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_1.bas",
+              "actual": "364729d63817d3d67f1e5b799ab41a6e6fbbf32fee80266dc613f744b88feaff",
+              "expected": "364729d63817d3d67f1e5b799ab41a6e6fbbf32fee80266dc613f744b88feaff",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "id": "be179dca75047441",
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "PSEUDOCODE_COVERAGE_GAP",
+      "severity": "warning",
+      "procedure": "RefreshMonthlySummary",
+      "message": "Detailed pseudocode section missing: RefreshMonthlySummary",
+      "context": {
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_1.bas",
+              "actual": "364729d63817d3d67f1e5b799ab41a6e6fbbf32fee80266dc613f744b88feaff",
+              "expected": "364729d63817d3d67f1e5b799ab41a6e6fbbf32fee80266dc613f744b88feaff",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "id": "bac85a17c0fcb2ac",
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "severity": "blocking",
+      "message": "VBA On Error runtime semantics",
+      "target_guidance": "Implement a compatibility runtime for Resume Next, GoTo handler, GoTo 0, Err state and handler activation; this pass preserves directives but does not emulate execution.",
+      "id": "d8cdc528ce2be432",
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "LATE_BOUND_OBJECT_MEMBERS",
+      "severity": "blocking",
+      "message": "Late-bound COM/Object members",
+      "target_guidance": "Define explicit Java interfaces/adapters for the actual COM object behavior. Object-typed references alone do not identify the target API.",
+      "id": "b6277ffa76e2ac9c",
+      "status": "unresolved_or_unverified"
+    }
+  ]
+}

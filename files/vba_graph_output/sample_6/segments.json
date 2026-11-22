@@ -96,20 +96,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_db27b137e01dc292",
-    "parent_id": "node_aea662614d6f67b9",
+    "id": "segment_9102bad0199ce29e",
+    "parent_id": "node_97010a8356f861d4",
     "kind": "IF_BLOCK",
     "name": "if_block_8",
     "path": "vba_sample_6.bas",
     "start_line": 69,
-    "end_line": 69,
-    "source": "    If Len(Trim$(rawPayload)) = 0 Then",
+    "end_line": 73,
+    "source": "    If Len(Trim$(rawPayload)) = 0 Then\n        outReport = \"EMPTY_PAYLOAD\"\n        ExecuteStressPipeline = False\n        Exit Function\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_d7c003447e7b1094",
-    "parent_id": "node_ce6edafb8243df56",
+    "id": "segment_3eb2fbcad49730c6",
+    "parent_id": "node_ed3372f19b7eb158",
     "kind": "ASSIGNMENT",
     "name": "outReport",
     "path": "vba_sample_6.bas",
@@ -120,8 +120,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_46afea24ce33745c",
-    "parent_id": "node_1cbe4f4def5ff158",
+    "id": "segment_bed9d7093a6467c2",
+    "parent_id": "node_97f3cb32523e4d3f",
     "kind": "ASSIGNMENT",
     "name": "ExecuteStressPipeline",
     "path": "vba_sample_6.bas",
@@ -132,8 +132,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_822ff59f3a4a7296",
-    "parent_id": "node_9b8d0c1012c63b83",
+    "id": "segment_b15ea458859d598b",
+    "parent_id": "node_51122a6ca7da9103",
     "kind": "EXIT",
     "name": "Function",
     "path": "vba_sample_6.bas",
@@ -228,32 +228,32 @@
     "annotations": {}
   },
   {
-    "id": "segment_dcc54a16a3474f07",
-    "parent_id": "node_215a176359ab6cb4",
+    "id": "segment_f8b82d155d7ffe25",
+    "parent_id": "node_8fe6a84c83bed0fb",
     "kind": "FOR_BLOCK",
     "name": "for_block_16",
     "path": "vba_sample_6.bas",
     "start_line": 84,
-    "end_line": 84,
-    "source": "    For idx = LBound(lines) To UBound(lines)",
+    "end_line": 112,
+    "source": "    For idx = LBound(lines) To UBound(lines)\n        If idx - LBound(lines) + 1 > maxIterations Then\n            LogAudit \"WARN: Max iteration cap reached at row \" & CStr(idx)\n            Exit For\n        End If\n\n        If Len(Trim$(lines(idx))) > 0 Then\n            If TryParseEntry(lines(idx), idx, batch.Entries(batch.RecordCount + 1)) Then\n                batch.RecordCount = batch.RecordCount + 1\n\n                If (modeMask And ModeNormalize) = ModeNormalize Then\n                    NormalizeEntryInPlace batch.Entries(batch.RecordCount)\n                End If\n\n                tempAmount = batch.Entries(batch.RecordCount).Amount\n                If (modeMask And ModeAggregate) = ModeAggregate Then\n                    batch.TotalAmount = batch.TotalAmount + tempAmount\n                End If\n\n                processedCount = processedCount + 1\n            Else\n                LogAudit \"SKIP: Malformed row \" & CStr(idx) & \" -> \" & Left$(lines(idx), 60)\n            End If\n        End If\n\n        If (idx Mod 250) = 0 Then\n            DoEvents\n        End If\n    Next idx",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_39ef3deeeacfb2ae",
-    "parent_id": "node_2e00ffa06525df02",
+    "id": "segment_61b9f3691cff8836",
+    "parent_id": "node_4c6adb46c3abd747",
     "kind": "IF_BLOCK",
     "name": "if_block_1",
     "path": "vba_sample_6.bas",
     "start_line": 85,
-    "end_line": 85,
-    "source": "        If idx - LBound(lines) + 1 > maxIterations Then",
+    "end_line": 88,
+    "source": "        If idx - LBound(lines) + 1 > maxIterations Then\n            LogAudit \"WARN: Max iteration cap reached at row \" & CStr(idx)\n            Exit For\n        End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_a52251358d3d9e75",
-    "parent_id": "node_cf96d6f3e6e7b8a5",
+    "id": "segment_1a5df049ba5856ee",
+    "parent_id": "node_c6cf19a7e6ef123b",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_6.bas",
@@ -264,8 +264,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_80fa9e2f042cd90e",
-    "parent_id": "node_feb01514a3689373",
+    "id": "segment_c71b34a356967525",
+    "parent_id": "node_fafc81206a2025e7",
     "kind": "EXIT",
     "name": "For",
     "path": "vba_sample_6.bas",
@@ -276,32 +276,32 @@
     "annotations": {}
   },
   {
-    "id": "segment_ad2ceef7f34249dc",
-    "parent_id": "node_4779d7d581374396",
+    "id": "segment_83362f2b4d7ac0e4",
+    "parent_id": "node_6f3fbda94b851118",
     "kind": "IF_BLOCK",
     "name": "if_block_2",
     "path": "vba_sample_6.bas",
     "start_line": 90,
-    "end_line": 90,
-    "source": "        If Len(Trim$(lines(idx))) > 0 Then",
+    "end_line": 107,
+    "source": "        If Len(Trim$(lines(idx))) > 0 Then\n            If TryParseEntry(lines(idx), idx, batch.Entries(batch.RecordCount + 1)) Then\n                batch.RecordCount = batch.RecordCount + 1\n\n                If (modeMask And ModeNormalize) = ModeNormalize Then\n                    NormalizeEntryInPlace batch.Entries(batch.RecordCount)\n                End If\n\n                tempAmount = batch.Entries(batch.RecordCount).Amount\n                If (modeMask And ModeAggregate) = ModeAggregate Then\n                    batch.TotalAmount = batch.TotalAmount + tempAmount\n                End If\n\n                processedCount = processedCount + 1\n            Else\n                LogAudit \"SKIP: Malformed row \" & CStr(idx) & \" -> \" & Left$(lines(idx), 60)\n            End If\n        End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_8632c599393f7da7",
-    "parent_id": "node_dc351022af90ea30",
+    "id": "segment_fb957e5af2208112",
+    "parent_id": "node_bf36ae17e0e0bfb1",
     "kind": "IF_BLOCK",
     "name": "if_block_1",
     "path": "vba_sample_6.bas",
     "start_line": 91,
-    "end_line": 91,
-    "source": "            If TryParseEntry(lines(idx), idx, batch.Entries(batch.RecordCount + 1)) Then",
+    "end_line": 106,
+    "source": "            If TryParseEntry(lines(idx), idx, batch.Entries(batch.RecordCount + 1)) Then\n                batch.RecordCount = batch.RecordCount + 1\n\n                If (modeMask And ModeNormalize) = ModeNormalize Then\n                    NormalizeEntryInPlace batch.Entries(batch.RecordCount)\n                End If\n\n                tempAmount = batch.Entries(batch.RecordCount).Amount\n                If (modeMask And ModeAggregate) = ModeAggregate Then\n                    batch.TotalAmount = batch.TotalAmount + tempAmount\n                End If\n\n                processedCount = processedCount + 1\n            Else\n                LogAudit \"SKIP: Malformed row \" & CStr(idx) & \" -> \" & Left$(lines(idx), 60)\n            End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_835a1a188fcb6418",
-    "parent_id": "node_eec034a4f3d65d90",
+    "id": "segment_fe66221763ea4502",
+    "parent_id": "node_1b40273dac6d0ce8",
     "kind": "ASSIGNMENT",
     "name": "batch.RecordCount",
     "path": "vba_sample_6.bas",
@@ -312,20 +312,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_bca6a90d93f3a05f",
-    "parent_id": "node_ba2d2254c2b6f626",
+    "id": "segment_e64e7f5828c6420a",
+    "parent_id": "node_71d1bd1349f2ed7e",
     "kind": "IF_BLOCK",
     "name": "if_block_2",
     "path": "vba_sample_6.bas",
     "start_line": 94,
-    "end_line": 94,
-    "source": "                If (modeMask And ModeNormalize) = ModeNormalize Then",
+    "end_line": 96,
+    "source": "                If (modeMask And ModeNormalize) = ModeNormalize Then\n                    NormalizeEntryInPlace batch.Entries(batch.RecordCount)\n                End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_c3ca09b60420d4a0",
-    "parent_id": "node_26bc623aae263c15",
+    "id": "segment_d746b7526c07dc87",
+    "parent_id": "node_fdc9617535ea343e",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_6.bas",
@@ -336,8 +336,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_8a1f04414faba216",
-    "parent_id": "node_a01509be11b28606",
+    "id": "segment_d79aa22ec467311f",
+    "parent_id": "node_8639238b2ee81650",
     "kind": "ASSIGNMENT",
     "name": "tempAmount",
     "path": "vba_sample_6.bas",
@@ -348,20 +348,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_fc53d4382b5d9c2f",
-    "parent_id": "node_fe18c1d3a9c4a3f2",
+    "id": "segment_d0b9fb1aea3a5811",
+    "parent_id": "node_2dfb05ca6c19e1cc",
     "kind": "IF_BLOCK",
     "name": "if_block_4",
     "path": "vba_sample_6.bas",
     "start_line": 99,
-    "end_line": 99,
-    "source": "                If (modeMask And ModeAggregate) = ModeAggregate Then",
+    "end_line": 101,
+    "source": "                If (modeMask And ModeAggregate) = ModeAggregate Then\n                    batch.TotalAmount = batch.TotalAmount + tempAmount\n                End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_7a0437bc1540bda8",
-    "parent_id": "node_df5ea32f7b28861f",
+    "id": "segment_72b9fa2f8684cecd",
+    "parent_id": "node_b45856911d186a5e",
     "kind": "ASSIGNMENT",
     "name": "batch.TotalAmount",
     "path": "vba_sample_6.bas",
@@ -372,8 +372,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_50ac59c1ed1a8653",
-    "parent_id": "node_9def85f229020f31",
+    "id": "segment_37b4fb215fc423aa",
+    "parent_id": "node_f678b9588710a1ff",
     "kind": "ASSIGNMENT",
     "name": "processedCount",
     "path": "vba_sample_6.bas",
@@ -384,8 +384,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_edf301c6253716e5",
-    "parent_id": "node_0d7857cbb0ee6994",
+    "id": "segment_eef02c8ada100106",
+    "parent_id": "node_3ea2d00167c2218e",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_6.bas",
@@ -396,20 +396,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_194e0d1cfb62f444",
-    "parent_id": "node_4095eaa1822f4a14",
+    "id": "segment_8aac8b40654e7a80",
+    "parent_id": "node_67b70541c59f389b",
     "kind": "IF_BLOCK",
     "name": "if_block_3",
     "path": "vba_sample_6.bas",
     "start_line": 109,
-    "end_line": 109,
-    "source": "        If (idx Mod 250) = 0 Then",
+    "end_line": 111,
+    "source": "        If (idx Mod 250) = 0 Then\n            DoEvents\n        End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_67c19e880e084978",
-    "parent_id": "node_b8fe2dd1ee3fae4d",
+    "id": "segment_6f8d9072f688dbfc",
+    "parent_id": "node_2aa3b925a66dbc69",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_6.bas",
@@ -420,32 +420,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_5f0b6868823b155e",
-    "parent_id": "node_5e72e3d4739c1df4",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_4",
-    "path": "vba_sample_6.bas",
-    "start_line": 112,
-    "end_line": 112,
-    "source": "    Next idx",
-    "summary": null,
-    "annotations": {}
-  },
-  {
-    "id": "segment_c3078df512dc9385",
-    "parent_id": "node_598cc540ec6e4742",
+    "id": "segment_f0ffb3649d901f8a",
+    "parent_id": "node_de69f2784230788f",
     "kind": "IF_BLOCK",
-    "name": "if_block_5",
+    "name": "if_block_17",
     "path": "vba_sample_6.bas",
     "start_line": 114,
-    "end_line": 114,
-    "source": "    If batch.RecordCount > 0 Then",
+    "end_line": 118,
+    "source": "    If batch.RecordCount > 0 Then\n        ReDim Preserve batch.Entries(1 To batch.RecordCount)\n    Else\n        Erase batch.Entries\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_a76dc523e292db81",
-    "parent_id": "node_4bb76b3020a99b43",
+    "id": "segment_a799b7530e019dee",
+    "parent_id": "node_3f520a05c8acbe24",
     "kind": "DECLARATION",
     "name": "declaration_1",
     "path": "vba_sample_6.bas",
@@ -456,8 +444,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_034ac38229d1fe78",
-    "parent_id": "node_1daca8acaf467cf0",
+    "id": "segment_064037827a1b2043",
+    "parent_id": "node_3b0c3a75e4310fd6",
     "kind": "DECLARATION",
     "name": "declaration_1",
     "path": "vba_sample_6.bas",
@@ -468,20 +456,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_2caf6b19d74bd26a",
-    "parent_id": "node_0a4ba404c5acc79d",
+    "id": "segment_9b66f599e9a6c44c",
+    "parent_id": "node_f723f5e75a5eecbb",
     "kind": "IF_BLOCK",
-    "name": "if_block_6",
+    "name": "if_block_18",
     "path": "vba_sample_6.bas",
     "start_line": 120,
-    "end_line": 120,
-    "source": "    If (modeMask And ModeDeduplicate) = ModeDeduplicate And batch.RecordCount > 1 Then",
+    "end_line": 122,
+    "source": "    If (modeMask And ModeDeduplicate) = ModeDeduplicate And batch.RecordCount > 1 Then\n        DeduplicateBatchEntries batch\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_46c1f83dfe4334eb",
-    "parent_id": "node_89e5dfb8242da3d0",
+    "id": "segment_f9abf0b66554ede4",
+    "parent_id": "node_c6567d38d6e349ac",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_6.bas",
@@ -492,20 +480,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_9749e3b9014d4c11",
-    "parent_id": "node_fc00f20fb67b805f",
+    "id": "segment_bf348f6ef14707fe",
+    "parent_id": "node_866d0ecb0d1d98a7",
     "kind": "IF_BLOCK",
-    "name": "if_block_7",
+    "name": "if_block_19",
     "path": "vba_sample_6.bas",
     "start_line": 124,
-    "end_line": 124,
-    "source": "    If (modeMask And ModeAudit) = ModeAudit Then",
+    "end_line": 128,
+    "source": "    If (modeMask And ModeAudit) = ModeAudit Then\n        RunLegacyGoSubAudit batch, statusMsg\n    Else\n        statusMsg = \"AUDIT_SKIPPED\"\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_3bcdee524b0366b9",
-    "parent_id": "node_fa867ce821f9046a",
+    "id": "segment_bc92814ef466ff8d",
+    "parent_id": "node_43c87eac9f9460f5",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_6.bas",
@@ -516,8 +504,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_3aaf33d9517f9e7a",
-    "parent_id": "node_f4192e12d8f04e6a",
+    "id": "segment_4ec93cab938b0a61",
+    "parent_id": "node_55fc428270e6cca1",
     "kind": "ASSIGNMENT",
     "name": "statusMsg",
     "path": "vba_sample_6.bas",
@@ -528,8 +516,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_1de97e76eb877800",
-    "parent_id": "node_411ed0f00149f58d",
+    "id": "segment_da64819752adc60a",
+    "parent_id": "node_909dfacd73eb8320",
     "kind": "ASSIGNMENT",
     "name": "outReport",
     "path": "vba_sample_6.bas",
@@ -540,8 +528,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_7b1f38057b3cf830",
-    "parent_id": "node_794f8673dbd4afe7",
+    "id": "segment_e69dcd601fc851de",
+    "parent_id": "node_4d46898f32b7dd60",
     "kind": "ASSIGNMENT",
     "name": "ExecuteStressPipeline",
     "path": "vba_sample_6.bas",
@@ -552,8 +540,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_84e2828b271d20ee",
-    "parent_id": "node_f5fe3ced7f660b0b",
+    "id": "segment_e45898d4bbfd97b2",
+    "parent_id": "node_1167a0321fe9d836",
     "kind": "EXIT",
     "name": "Function",
     "path": "vba_sample_6.bas",
@@ -564,10 +552,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_7324a2e9b0cb6551",
-    "parent_id": "node_06fffd078acb134d",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_11",
+    "id": "segment_41850c09d2f914d9",
+    "parent_id": "node_084f70a1e2737e21",
+    "kind": "LABEL",
+    "name": "ErrHandler",
     "path": "vba_sample_6.bas",
     "start_line": 134,
     "end_line": 134,
@@ -576,8 +564,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_590d84aa847d0898",
-    "parent_id": "node_0dc2ba7235fff9df",
+    "id": "segment_ad1d1328eee1d9dc",
+    "parent_id": "node_01de2bc4142c223e",
     "kind": "ASSIGNMENT",
     "name": "outReport",
     "path": "vba_sample_6.bas",
@@ -588,10 +576,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_66697b333125f79d",
-    "parent_id": "node_8c587b845bda7a9f",
+    "id": "segment_0fed428a50b408df",
+    "parent_id": "node_4d5816dbbf3f01fb",
     "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_13",
+    "name": "call_or_command_25",
     "path": "vba_sample_6.bas",
     "start_line": 136,
     "end_line": 136,
@@ -600,8 +588,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_4eded9916e287d73",
-    "parent_id": "node_c8ff3e1ca8c690f2",
+    "id": "segment_816f8a8962742eef",
+    "parent_id": "node_02899bf13f51f5e3",
     "kind": "ASSIGNMENT",
     "name": "ExecuteStressPipeline",
     "path": "vba_sample_6.bas",
@@ -648,20 +636,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_58c407f8759a67ce",
-    "parent_id": "node_3f1ce866ba0d84ec",
+    "id": "segment_b3ffecc6a717f6b2",
+    "parent_id": "node_78f182050ae3d66a",
     "kind": "IF_BLOCK",
     "name": "if_block_3",
     "path": "vba_sample_6.bas",
     "start_line": 147,
-    "end_line": 147,
-    "source": "    If Err.Number <> 0 Or m_NodeRegistry Is Nothing Then",
+    "end_line": 150,
+    "source": "    If Err.Number <> 0 Or m_NodeRegistry Is Nothing Then\n        Err.Clear\n        Set m_NodeRegistry = New Collection\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_9a41bcbd4110f9c7",
-    "parent_id": "node_d831e5362b6e3f4d",
+    "id": "segment_8724417e7adf9e39",
+    "parent_id": "node_cfd569f11f81187d",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_6.bas",
@@ -672,8 +660,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_e1da4c2cd4e57efb",
-    "parent_id": "node_e2cea7c9ceb50e57",
+    "id": "segment_9ed2cc1ae513a64e",
+    "parent_id": "node_52abbc2b3cfeeda5",
     "kind": "ASSIGNMENT",
     "name": "m_NodeRegistry",
     "path": "vba_sample_6.bas",
@@ -696,20 +684,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_c54ea767d8c80200",
-    "parent_id": "node_6a8f088e4a556f91",
+    "id": "segment_d9ac087e28f31faf",
+    "parent_id": "node_24f1ed972f5f2486",
     "kind": "IF_BLOCK",
     "name": "if_block_5",
     "path": "vba_sample_6.bas",
     "start_line": 153,
-    "end_line": 153,
-    "source": "    If m_AuditLog Is Nothing Then",
+    "end_line": 155,
+    "source": "    If m_AuditLog Is Nothing Then\n        Set m_AuditLog = New Collection\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_88a0283922b47801",
-    "parent_id": "node_12cc7c39c9ce24f5",
+    "id": "segment_70be19aaca94cfca",
+    "parent_id": "node_38dd48a5cbc79cc9",
     "kind": "ASSIGNMENT",
     "name": "m_AuditLog",
     "path": "vba_sample_6.bas",
@@ -960,20 +948,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_d8276081bef1888c",
-    "parent_id": "node_7efc4ca17feb331a",
+    "id": "segment_ca485d915a648abe",
+    "parent_id": "node_3ef226c43b8e3b48",
     "kind": "IF_BLOCK",
     "name": "if_block_9",
     "path": "vba_sample_6.bas",
     "start_line": 194,
-    "end_line": 194,
-    "source": "    If IsNumeric(Trim$(parts(LBound(parts)))) Then",
+    "end_line": 198,
+    "source": "    If IsNumeric(Trim$(parts(LBound(parts)))) Then\n        target.EntryId = CLng(Trim$(parts(LBound(parts))))\n    Else\n        target.EntryId = fallbackId\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_0f1960a710fcaf63",
-    "parent_id": "node_039d543899f34c47",
+    "id": "segment_37b998d8c848d8cd",
+    "parent_id": "node_a8e3fa57ed2e9bca",
     "kind": "ASSIGNMENT",
     "name": "target.EntryId",
     "path": "vba_sample_6.bas",
@@ -984,8 +972,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_28f31a91856c8ae9",
-    "parent_id": "node_20184205ade54941",
+    "id": "segment_6aeefacc9c2bb25d",
+    "parent_id": "node_31c16c5fcc56e29e",
     "kind": "ASSIGNMENT",
     "name": "target.EntryId",
     "path": "vba_sample_6.bas",
@@ -1044,20 +1032,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_37341f81d89b929e",
-    "parent_id": "node_ce14680a94492020",
+    "id": "segment_5588346ac9c7023c",
+    "parent_id": "node_22a3757cc99ce5c4",
     "kind": "IF_BLOCK",
     "name": "if_block_14",
     "path": "vba_sample_6.bas",
     "start_line": 206,
-    "end_line": 206,
-    "source": "    If IsDate(Trim$(CStr(parts(LBound(parts) + 3)))) Then",
+    "end_line": 210,
+    "source": "    If IsDate(Trim$(CStr(parts(LBound(parts) + 3)))) Then\n        target.PostedDate = CDate(Trim$(CStr(parts(LBound(parts) + 3))))\n    Else\n        target.PostedDate = Date\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_5d74bb0fb217d37c",
-    "parent_id": "node_3e73f7f90f8291ce",
+    "id": "segment_05d29e5efc2dbded",
+    "parent_id": "node_36e9e826cbfcf5e3",
     "kind": "ASSIGNMENT",
     "name": "target.PostedDate",
     "path": "vba_sample_6.bas",
@@ -1068,8 +1056,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_84916552385e2ea7",
-    "parent_id": "node_989d00868408b3fd",
+    "id": "segment_5937d479352f6c57",
+    "parent_id": "node_c14c3b6a8276c534",
     "kind": "ASSIGNMENT",
     "name": "target.PostedDate",
     "path": "vba_sample_6.bas",
@@ -1092,20 +1080,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_161de4775a0ea368",
-    "parent_id": "node_89250deb55b34335",
+    "id": "segment_26eb2a58a017b43f",
+    "parent_id": "node_52d2138d44ba8ab6",
     "kind": "IF_BLOCK",
     "name": "if_block_16",
     "path": "vba_sample_6.bas",
     "start_line": 214,
-    "end_line": 214,
-    "source": "    If UBound(parts) - LBound(parts) + 1 >= 5 And Len(Trim$(CStr(parts(LBound(parts) + 4)))) > 0 Then",
+    "end_line": 223,
+    "source": "    If UBound(parts) - LBound(parts) + 1 >= 5 And Len(Trim$(CStr(parts(LBound(parts) + 4)))) > 0 Then\n        tagTokens = Split(CStr(parts(LBound(parts) + 4)), \",\")\n        ReDim target.Tags(1 To UBound(tagTokens) - LBound(tagTokens) + 1)\n        For i = LBound(tagTokens) To UBound(tagTokens)\n            target.Tags(i - LBound(tagTokens) + 1) = LCase$(Trim$(CStr(tagTokens(i))))\n        Next i\n    Else\n        ReDim target.Tags(1 To 1)\n        target.Tags(1) = \"untagged\"\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_57df4d136606d325",
-    "parent_id": "node_58c4cf31134c7b42",
+    "id": "segment_de0723cc05891b69",
+    "parent_id": "node_0c2a9919a8f4babd",
     "kind": "ASSIGNMENT",
     "name": "tagTokens",
     "path": "vba_sample_6.bas",
@@ -1116,8 +1104,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_4854929ab41fef5e",
-    "parent_id": "node_d2d2cda947391025",
+    "id": "segment_b896d7261ffa2126",
+    "parent_id": "node_2d65287d4997a4b5",
     "kind": "DECLARATION",
     "name": "declaration_2",
     "path": "vba_sample_6.bas",
@@ -1128,20 +1116,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_abf2c366812bc7a3",
-    "parent_id": "node_3f70c0e3711c1fd4",
+    "id": "segment_886d09fe0a9c02a4",
+    "parent_id": "node_e2b12ce2b4639f34",
     "kind": "FOR_BLOCK",
     "name": "for_block_3",
     "path": "vba_sample_6.bas",
     "start_line": 217,
-    "end_line": 217,
-    "source": "        For i = LBound(tagTokens) To UBound(tagTokens)",
+    "end_line": 219,
+    "source": "        For i = LBound(tagTokens) To UBound(tagTokens)\n            target.Tags(i - LBound(tagTokens) + 1) = LCase$(Trim$(CStr(tagTokens(i))))\n        Next i",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_1183627c42e27c96",
-    "parent_id": "node_28112d3c87e5ccab",
+    "id": "segment_0e44547b2ad42049",
+    "parent_id": "node_2ffef688fb0b555e",
     "kind": "ASSIGNMENT",
     "name": "target.Tags(i - LBound(tagTokens) + 1)",
     "path": "vba_sample_6.bas",
@@ -1152,34 +1140,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_e2ecb0702920b39f",
-    "parent_id": "node_3c4afcbad673f25c",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_2",
-    "path": "vba_sample_6.bas",
-    "start_line": 219,
-    "end_line": 219,
-    "source": "        Next i",
-    "summary": null,
-    "annotations": {}
-  },
-  {
-    "id": "segment_3db00137a50e1b5c",
-    "parent_id": "node_a52b3a4b9cc9a545",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_3",
-    "path": "vba_sample_6.bas",
-    "start_line": 220,
-    "end_line": 220,
-    "source": "    Else",
-    "summary": null,
-    "annotations": {}
-  },
-  {
-    "id": "segment_db765914dfaf5b3d",
-    "parent_id": "node_84cf2d5d08a8f38b",
+    "id": "segment_ce90c3d86bb3d623",
+    "parent_id": "node_1cc0234171518559",
     "kind": "DECLARATION",
-    "name": "declaration_4",
+    "name": "declaration_1",
     "path": "vba_sample_6.bas",
     "start_line": 221,
     "end_line": 221,
@@ -1188,8 +1152,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_436e4d7bb81d7059",
-    "parent_id": "node_053e853662f572f9",
+    "id": "segment_56a1fb652df4ccae",
+    "parent_id": "node_3a1f5f092aaf418c",
     "kind": "ASSIGNMENT",
     "name": "target.Tags(1)",
     "path": "vba_sample_6.bas",
@@ -1224,10 +1188,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_345ef8e03246fb5c",
-    "parent_id": "node_0e6a310e50e0f681",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_19",
+    "id": "segment_8f328951081ef6d5",
+    "parent_id": "node_a733f78453709363",
+    "kind": "LABEL",
+    "name": "ParseFail",
     "path": "vba_sample_6.bas",
     "start_line": 228,
     "end_line": 228,
@@ -1308,20 +1272,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_b62e4daf7ec1b617",
-    "parent_id": "node_61e6af0d1b3f409f",
+    "id": "segment_f67c0d059ce7b5f9",
+    "parent_id": "node_51e59ec53ef6b98f",
     "kind": "IF_BLOCK",
     "name": "if_block_5",
     "path": "vba_sample_6.bas",
     "start_line": 242,
-    "end_line": 242,
-    "source": "    If entry.Amount < 0@ Then",
+    "end_line": 248,
+    "source": "    If entry.Amount < 0@ Then\n        entry.IsReconciled = False\n    ElseIf entry.Amount >= 10000@ Then\n        entry.IsReconciled = False\n    Else\n        entry.IsReconciled = True\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_8b3c52f3ed0d6408",
-    "parent_id": "node_6ccaf08151161e0a",
+    "id": "segment_29e58872f3500162",
+    "parent_id": "node_cae4c1723af59675",
     "kind": "ASSIGNMENT",
     "name": "entry.IsReconciled",
     "path": "vba_sample_6.bas",
@@ -1332,8 +1296,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_e05854964ae3dbb0",
-    "parent_id": "node_43ac1487fda8608f",
+    "id": "segment_673836010eb53200",
+    "parent_id": "node_8d69510eb01d9d41",
     "kind": "ASSIGNMENT",
     "name": "entry.IsReconciled",
     "path": "vba_sample_6.bas",
@@ -1344,8 +1308,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_74e3ecfc7b6de012",
-    "parent_id": "node_645cd40dde5390b6",
+    "id": "segment_ff11772155530a49",
+    "parent_id": "node_c711f8b79dd1f572",
     "kind": "ASSIGNMENT",
     "name": "entry.IsReconciled",
     "path": "vba_sample_6.bas",
@@ -1368,32 +1332,32 @@
     "annotations": {}
   },
   {
-    "id": "segment_499a2effb4d621d0",
-    "parent_id": "node_5653de368a0032f9",
+    "id": "segment_2d34dd27d74d4d27",
+    "parent_id": "node_91c0e7afa6263c54",
     "kind": "IF_BLOCK",
     "name": "if_block_7",
     "path": "vba_sample_6.bas",
     "start_line": 251,
-    "end_line": 251,
-    "source": "    If (Not Not entry.Tags) <> 0 Then",
+    "end_line": 256,
+    "source": "    If (Not Not entry.Tags) <> 0 Then\n        For i = LBound(entry.Tags) To UBound(entry.Tags)\n            entry.Tags(i) = Trim$(entry.Tags(i))\n            If entry.Tags(i) = \"core\" Then hasCoreTag = True\n        Next i\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_8cb534507103f121",
-    "parent_id": "node_341246740e8902eb",
+    "id": "segment_067a8a425dba07c3",
+    "parent_id": "node_99579ee9a40d0e69",
     "kind": "FOR_BLOCK",
     "name": "for_block_1",
     "path": "vba_sample_6.bas",
     "start_line": 252,
-    "end_line": 252,
-    "source": "        For i = LBound(entry.Tags) To UBound(entry.Tags)",
+    "end_line": 255,
+    "source": "        For i = LBound(entry.Tags) To UBound(entry.Tags)\n            entry.Tags(i) = Trim$(entry.Tags(i))\n            If entry.Tags(i) = \"core\" Then hasCoreTag = True\n        Next i",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_a7b45ade97fdc96a",
-    "parent_id": "node_509c30eccc45e14a",
+    "id": "segment_112b656c3b33210d",
+    "parent_id": "node_f5e5f7255f3178d9",
     "kind": "ASSIGNMENT",
     "name": "entry.Tags(i)",
     "path": "vba_sample_6.bas",
@@ -1404,8 +1368,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_2347154c403c4aa7",
-    "parent_id": "node_a2a50ec2e796e60b",
+    "id": "segment_30fb7116ce743571",
+    "parent_id": "node_4f0c954e94e9b368",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_2",
     "path": "vba_sample_6.bas",
@@ -1416,44 +1380,32 @@
     "annotations": {}
   },
   {
-    "id": "segment_90ce6b354332abc5",
-    "parent_id": "node_060a546ba4cbd0f7",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_3",
-    "path": "vba_sample_6.bas",
-    "start_line": 255,
-    "end_line": 255,
-    "source": "        Next i",
-    "summary": null,
-    "annotations": {}
-  },
-  {
-    "id": "segment_e695275e6afd6410",
-    "parent_id": "node_e38f9889a27fb0c3",
+    "id": "segment_6517f6ae74e2b563",
+    "parent_id": "node_83442f28e378cdce",
     "kind": "IF_BLOCK",
     "name": "if_block_8",
     "path": "vba_sample_6.bas",
     "start_line": 258,
-    "end_line": 258,
-    "source": "    If Not hasCoreTag Then",
+    "end_line": 266,
+    "source": "    If Not hasCoreTag Then\n        If (Not Not entry.Tags) = 0 Then\n            ReDim entry.Tags(1 To 1)\n            entry.Tags(1) = \"core\"\n        Else\n            ReDim Preserve entry.Tags(1 To UBound(entry.Tags) + 1)\n            entry.Tags(UBound(entry.Tags)) = \"core\"\n        End If\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_e87f8633aa30b949",
-    "parent_id": "node_e02b73d82c7afb11",
+    "id": "segment_aaec25ee84da35a3",
+    "parent_id": "node_dace8a5ff43af25d",
     "kind": "IF_BLOCK",
     "name": "if_block_1",
     "path": "vba_sample_6.bas",
     "start_line": 259,
-    "end_line": 259,
-    "source": "        If (Not Not entry.Tags) = 0 Then",
+    "end_line": 265,
+    "source": "        If (Not Not entry.Tags) = 0 Then\n            ReDim entry.Tags(1 To 1)\n            entry.Tags(1) = \"core\"\n        Else\n            ReDim Preserve entry.Tags(1 To UBound(entry.Tags) + 1)\n            entry.Tags(UBound(entry.Tags)) = \"core\"\n        End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_31aee1303fdd3162",
-    "parent_id": "node_272c6228549f35b4",
+    "id": "segment_38d85221e951a607",
+    "parent_id": "node_a84cb7522bbbf75b",
     "kind": "DECLARATION",
     "name": "declaration_1",
     "path": "vba_sample_6.bas",
@@ -1464,8 +1416,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_74a5f59ecca4433f",
-    "parent_id": "node_a25c41b6e120d103",
+    "id": "segment_a4b311cde1c0df15",
+    "parent_id": "node_f24c43cd89b8a55c",
     "kind": "ASSIGNMENT",
     "name": "entry.Tags(1)",
     "path": "vba_sample_6.bas",
@@ -1476,8 +1428,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_1535791f484584a3",
-    "parent_id": "node_15ec310cbc4f2833",
+    "id": "segment_9b20d223aa4615af",
+    "parent_id": "node_cccf21ba5e3b4a28",
     "kind": "DECLARATION",
     "name": "declaration_1",
     "path": "vba_sample_6.bas",
@@ -1488,8 +1440,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_9880fce9574af9dd",
-    "parent_id": "node_d6540e9db9f4fbd1",
+    "id": "segment_4b0a1ba91d03e7ee",
+    "parent_id": "node_94ea09f773c8fbf6",
     "kind": "ASSIGNMENT",
     "name": "entry.Tags(UBound(entry.Tags))",
     "path": "vba_sample_6.bas",
@@ -1668,20 +1620,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_264e616adc0ac20f",
-    "parent_id": "node_1fc5072e0af929d0",
+    "id": "segment_40cd3ab2e96b0464",
+    "parent_id": "node_e3675e89be830644",
     "kind": "FOR_BLOCK",
     "name": "for_block_14",
     "path": "vba_sample_6.bas",
     "start_line": 290,
-    "end_line": 290,
-    "source": "    For i = LBound(batch.Entries) To UBound(batch.Entries)",
+    "end_line": 300,
+    "source": "    For i = LBound(batch.Entries) To UBound(batch.Entries)\n        key = CStr(batch.Entries(i).EntryId) & \"::\" & batch.Entries(i).AccountCode\n        If Not seenKeys.Exists(key) Then\n            seenKeys.Add key, i\n            keptCount = keptCount + 1\n            kept(keptCount) = batch.Entries(i)\n            newTotal = newTotal + batch.Entries(i).Amount\n        Else\n            LogAudit \"DEDUP: Dropped duplicate key \" & key\n        End If\n    Next i",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_50da3caa71633e09",
-    "parent_id": "node_6e7cd8bf45cbc255",
+    "id": "segment_62de4262d6edb783",
+    "parent_id": "node_14b3de1510d59966",
     "kind": "ASSIGNMENT",
     "name": "key",
     "path": "vba_sample_6.bas",
@@ -1692,20 +1644,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_16930402918f6d36",
-    "parent_id": "node_b0bbed75e4faa856",
+    "id": "segment_2c4f4110c7b40599",
+    "parent_id": "node_d133e2cc2016b6f1",
     "kind": "IF_BLOCK",
     "name": "if_block_2",
     "path": "vba_sample_6.bas",
     "start_line": 292,
-    "end_line": 292,
-    "source": "        If Not seenKeys.Exists(key) Then",
+    "end_line": 299,
+    "source": "        If Not seenKeys.Exists(key) Then\n            seenKeys.Add key, i\n            keptCount = keptCount + 1\n            kept(keptCount) = batch.Entries(i)\n            newTotal = newTotal + batch.Entries(i).Amount\n        Else\n            LogAudit \"DEDUP: Dropped duplicate key \" & key\n        End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_62340fc97f6ce955",
-    "parent_id": "node_6999e76df3e581cf",
+    "id": "segment_4525b94bb23a25d2",
+    "parent_id": "node_d9a86142717ebddc",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_6.bas",
@@ -1716,8 +1668,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_b6dfd0b6fc9d96a7",
-    "parent_id": "node_ce3018f3884445d7",
+    "id": "segment_a05fdad84499fd7d",
+    "parent_id": "node_34ea3f3c8307f1ed",
     "kind": "ASSIGNMENT",
     "name": "keptCount",
     "path": "vba_sample_6.bas",
@@ -1728,8 +1680,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_b66fa12f6fad3bb5",
-    "parent_id": "node_f1de2eea59c25338",
+    "id": "segment_60bc09c0c1bdd66f",
+    "parent_id": "node_ef88546d891cb6ea",
     "kind": "ASSIGNMENT",
     "name": "kept(keptCount)",
     "path": "vba_sample_6.bas",
@@ -1740,8 +1692,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_770d28f23f384f28",
-    "parent_id": "node_79b0a720a6b7464d",
+    "id": "segment_f52cc6de90a3b6cf",
+    "parent_id": "node_2ab0bd50d5afd2c2",
     "kind": "ASSIGNMENT",
     "name": "newTotal",
     "path": "vba_sample_6.bas",
@@ -1752,8 +1704,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_8c8d31bc6359f754",
-    "parent_id": "node_68380935d350d3ea",
+    "id": "segment_2db93735101cfb3d",
+    "parent_id": "node_9fa0b0f52140cb0e",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_6.bas",
@@ -1764,32 +1716,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_120e6239d1589c7d",
-    "parent_id": "node_e4c4cec3bff2439d",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_3",
-    "path": "vba_sample_6.bas",
-    "start_line": 300,
-    "end_line": 300,
-    "source": "    Next i",
-    "summary": null,
-    "annotations": {}
-  },
-  {
-    "id": "segment_05b78b5dc5b6e0e0",
-    "parent_id": "node_fe2499d3c3e9969e",
+    "id": "segment_6919a9889bed1eb6",
+    "parent_id": "node_6596bbbc190148ce",
     "kind": "IF_BLOCK",
-    "name": "if_block_4",
+    "name": "if_block_15",
     "path": "vba_sample_6.bas",
     "start_line": 302,
-    "end_line": 302,
-    "source": "    If keptCount > 0 Then",
+    "end_line": 307,
+    "source": "    If keptCount > 0 Then\n        ReDim Preserve kept(1 To keptCount)\n        batch.Entries = kept\n    Else\n        Erase batch.Entries\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_0691e00ce1b527e6",
-    "parent_id": "node_4f7a2f2c551883d5",
+    "id": "segment_ac6bbdec3e121368",
+    "parent_id": "node_637da41c162a5d19",
     "kind": "DECLARATION",
     "name": "declaration_1",
     "path": "vba_sample_6.bas",
@@ -1800,8 +1740,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_748da7d72d8baa6c",
-    "parent_id": "node_1950ac8cebfd2c26",
+    "id": "segment_85d91a9011023884",
+    "parent_id": "node_405b9a7d2c5269df",
     "kind": "ASSIGNMENT",
     "name": "batch.Entries",
     "path": "vba_sample_6.bas",
@@ -1812,8 +1752,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_989a0da8b0579e95",
-    "parent_id": "node_3bed871832c855ad",
+    "id": "segment_d262f1eea9f2ff2e",
+    "parent_id": "node_4cb73453f67105fa",
     "kind": "DECLARATION",
     "name": "declaration_1",
     "path": "vba_sample_6.bas",
@@ -1824,8 +1764,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_7309c7b74436dbf8",
-    "parent_id": "node_ea98d20000ebf7f9",
+    "id": "segment_23b825c918e34dd5",
+    "parent_id": "node_2da71d5a4a1c2284",
     "kind": "ASSIGNMENT",
     "name": "batch.RecordCount",
     "path": "vba_sample_6.bas",
@@ -1836,8 +1776,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_1d704778f63b9e86",
-    "parent_id": "node_4eb4c29aa53364d6",
+    "id": "segment_97b91899123d0a47",
+    "parent_id": "node_b9cb40156bce9734",
     "kind": "ASSIGNMENT",
     "name": "batch.TotalAmount",
     "path": "vba_sample_6.bas",
@@ -1920,20 +1860,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_9d4fdfefd99638bc",
-    "parent_id": "node_0f5ffec81fa528c2",
+    "id": "segment_a2f41e5b3c0d62d5",
+    "parent_id": "node_cce7c46834e3d5cf",
     "kind": "FOR_BLOCK",
     "name": "for_block_6",
     "path": "vba_sample_6.bas",
     "start_line": 325,
-    "end_line": 325,
-    "source": "    For i = LBound(batch.Entries) To UBound(batch.Entries)",
+    "end_line": 332,
+    "source": "    For i = LBound(batch.Entries) To UBound(batch.Entries)\n        currentCheckId = batch.Entries(i).EntryId\n        GoSub ValidateSingleEntry\n        If checkResult <> \"OK\" Then\n            flaggedCount = flaggedCount + 1\n            LogAudit \"FLAG [\" & CStr(currentCheckId) & \"]: \" & checkResult\n        End If\n    Next i",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_a0b35c97ec0272dc",
-    "parent_id": "node_2c858543a758c897",
+    "id": "segment_61cbac7cd7df89b0",
+    "parent_id": "node_5f6dd0f21a90d34d",
     "kind": "ASSIGNMENT",
     "name": "currentCheckId",
     "path": "vba_sample_6.bas",
@@ -1944,8 +1884,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_4524fd61448aa68f",
-    "parent_id": "node_8869cb146f121934",
+    "id": "segment_feaa828678e6f888",
+    "parent_id": "node_dd620dce91f7a989",
     "kind": "JUMP",
     "name": "ValidateSingleEntry",
     "path": "vba_sample_6.bas",
@@ -1956,20 +1896,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_c03e1c61bc648ff9",
-    "parent_id": "node_a0344ff817d15da7",
+    "id": "segment_23055aed3a48b99f",
+    "parent_id": "node_e3c7999c6d2f15b6",
     "kind": "IF_BLOCK",
     "name": "if_block_3",
     "path": "vba_sample_6.bas",
     "start_line": 328,
-    "end_line": 328,
-    "source": "        If checkResult <> \"OK\" Then",
+    "end_line": 331,
+    "source": "        If checkResult <> \"OK\" Then\n            flaggedCount = flaggedCount + 1\n            LogAudit \"FLAG [\" & CStr(currentCheckId) & \"]: \" & checkResult\n        End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_3c039f38fecdc8ea",
-    "parent_id": "node_cfbdf9a7e1a5d9d6",
+    "id": "segment_f24996ed0174906d",
+    "parent_id": "node_10d4251c2bc7425e",
     "kind": "ASSIGNMENT",
     "name": "flaggedCount",
     "path": "vba_sample_6.bas",
@@ -1980,8 +1920,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_4179eb7dab037962",
-    "parent_id": "node_fa1917e41de276b9",
+    "id": "segment_854baf0963b6b779",
+    "parent_id": "node_b8d82f36b8dc7ed5",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_2",
     "path": "vba_sample_6.bas",
@@ -1992,20 +1932,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_332d9c23abb0821c",
-    "parent_id": "node_3ae76171b33af152",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_4",
-    "path": "vba_sample_6.bas",
-    "start_line": 332,
-    "end_line": 332,
-    "source": "    Next i",
-    "summary": null,
-    "annotations": {}
-  },
-  {
-    "id": "segment_74f9cd0751561272",
-    "parent_id": "node_2496540888ca71b2",
+    "id": "segment_ed0536de5e651013",
+    "parent_id": "node_c1d88043be7a4acf",
     "kind": "ASSIGNMENT",
     "name": "summaryStatus",
     "path": "vba_sample_6.bas",
@@ -2016,8 +1944,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_0e4ef499e0978803",
-    "parent_id": "node_47a9ba6648803a9e",
+    "id": "segment_fbf3f7e608524d9c",
+    "parent_id": "node_f4b34556b755a112",
     "kind": "EXIT",
     "name": "Sub",
     "path": "vba_sample_6.bas",
@@ -2028,10 +1956,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_8d722344ae8d9ee9",
-    "parent_id": "node_27d5c8f0f1cfa31f",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_7",
+    "id": "segment_01926fb0ae469630",
+    "parent_id": "node_f0aebbbf0414ea63",
+    "kind": "LABEL",
+    "name": "ValidateSingleEntry",
     "path": "vba_sample_6.bas",
     "start_line": 337,
     "end_line": 337,
@@ -2040,20 +1968,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_8788e3353d9e2815",
-    "parent_id": "node_ec4bbfbf75561d18",
+    "id": "segment_88de4dc97ffde8a5",
+    "parent_id": "node_a69ff6d80906edd3",
     "kind": "IF_BLOCK",
-    "name": "if_block_8",
+    "name": "if_block_10",
     "path": "vba_sample_6.bas",
     "start_line": 338,
-    "end_line": 338,
-    "source": "    If batch.Entries(i).Amount = 0@ Then",
+    "end_line": 344,
+    "source": "    If batch.Entries(i).Amount = 0@ Then\n        checkResult = \"ZERO_AMOUNT\"\n    ElseIf Year(batch.Entries(i).PostedDate) < 1990 Or Year(batch.Entries(i).PostedDate) > 2099 Then\n        checkResult = \"OUT_OF_RANGE_DATE\"\n    Else\n        checkResult = \"OK\"\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_a8b446612e5167a3",
-    "parent_id": "node_2cf4f32af2af4386",
+    "id": "segment_87ef6f045b7f7e54",
+    "parent_id": "node_a6c21b14becec38a",
     "kind": "ASSIGNMENT",
     "name": "checkResult",
     "path": "vba_sample_6.bas",
@@ -2064,8 +1992,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_21a11f81def5c947",
-    "parent_id": "node_ec4527cad638066d",
+    "id": "segment_10178513f95681ad",
+    "parent_id": "node_22636a60f3aeaa4a",
     "kind": "ASSIGNMENT",
     "name": "checkResult",
     "path": "vba_sample_6.bas",
@@ -2076,8 +2004,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_4b20e2c88505817b",
-    "parent_id": "node_62c1dd85e41310dc",
+    "id": "segment_8fdf6ddadd4b1b6b",
+    "parent_id": "node_18006073000ff587",
     "kind": "ASSIGNMENT",
     "name": "checkResult",
     "path": "vba_sample_6.bas",
@@ -2088,10 +2016,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_edf10a36a58e1259",
-    "parent_id": "node_bef80d30fea56438",
+    "id": "segment_19a681d449a5edcb",
+    "parent_id": "node_fc034b1f6d2560b2",
     "kind": "RETURN_CONTROL",
-    "name": "return_control_9",
+    "name": "return_control_11",
     "path": "vba_sample_6.bas",
     "start_line": 345,
     "end_line": 345,
@@ -2196,20 +2124,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_a98ac082ac1093c7",
-    "parent_id": "node_facd7eddb3cfb3a3",
+    "id": "segment_7fa2a8bb4c6de47d",
+    "parent_id": "node_f387427c953713ba",
     "kind": "IF_BLOCK",
     "name": "if_block_8",
     "path": "vba_sample_6.bas",
     "start_line": 366,
-    "end_line": 366,
-    "source": "    If currentDepth >= maxDepth Then",
+    "end_line": 369,
+    "source": "    If currentDepth >= maxDepth Then\n        EvaluateDependencyDepth = currentDepth\n        Exit Function\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_57217a1edb3695ab",
-    "parent_id": "node_f1fb309d81e94d89",
+    "id": "segment_288446afc145199c",
+    "parent_id": "node_f3c7ae5381ed9a89",
     "kind": "ASSIGNMENT",
     "name": "EvaluateDependencyDepth",
     "path": "vba_sample_6.bas",
@@ -2220,8 +2148,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_b43f6867646ef213",
-    "parent_id": "node_ec6e84c8aea95e97",
+    "id": "segment_3d4bd7c46f22527d",
+    "parent_id": "node_13c94b051041d6df",
     "kind": "EXIT",
     "name": "Function",
     "path": "vba_sample_6.bas",
@@ -2232,20 +2160,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_fb8d54cb0b58bc0d",
-    "parent_id": "node_b2a4d7acd45ec6dd",
+    "id": "segment_79daedb8032da262",
+    "parent_id": "node_502bb902b978c55d",
     "kind": "IF_BLOCK",
     "name": "if_block_9",
     "path": "vba_sample_6.bas",
     "start_line": 371,
-    "end_line": 371,
-    "source": "    If Len(Trim$(edgesSpec)) = 0 Or Len(Trim$(startNode)) = 0 Then",
+    "end_line": 374,
+    "source": "    If Len(Trim$(edgesSpec)) = 0 Or Len(Trim$(startNode)) = 0 Then\n        EvaluateDependencyDepth = currentDepth\n        Exit Function\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_51d02c9fbc11dc1c",
-    "parent_id": "node_93531d1316ffc01d",
+    "id": "segment_3b1417308aafb0b6",
+    "parent_id": "node_7d08e8be8ac892f9",
     "kind": "ASSIGNMENT",
     "name": "EvaluateDependencyDepth",
     "path": "vba_sample_6.bas",
@@ -2256,8 +2184,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_6d61e372fe4dbff3",
-    "parent_id": "node_ce40574c5341f3cb",
+    "id": "segment_3e8dc7e2cf9b8aa8",
+    "parent_id": "node_e58ec67f1b6407fd",
     "kind": "EXIT",
     "name": "Function",
     "path": "vba_sample_6.bas",
@@ -2292,20 +2220,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_8d832ffbc109ecb7",
-    "parent_id": "node_37c750cc7bc47056",
+    "id": "segment_ccf67fd2c0f592f8",
+    "parent_id": "node_52bbb4547a6ef4be",
     "kind": "FOR_BLOCK",
     "name": "for_block_12",
     "path": "vba_sample_6.bas",
     "start_line": 379,
-    "end_line": 379,
-    "source": "    For i = LBound(pairs) To UBound(pairs)",
+    "end_line": 394,
+    "source": "    For i = LBound(pairs) To UBound(pairs)\n        edgeParts = Split(CStr(pairs(i)), \">\")\n        If UBound(edgeParts) - LBound(edgeParts) + 1 = 2 Then\n            srcNode = Trim$(CStr(edgeParts(LBound(edgeParts))))\n            dstNode = Trim$(CStr(edgeParts(LBound(edgeParts) + 1)))\n\n            If StrComp(srcNode, Trim$(startNode), vbTextCompare) = 0 And Len(dstNode) > 0 Then\n                If StrComp(dstNode, srcNode, vbTextCompare) <> 0 Then\n                    childDepth = EvaluateDependencyDepth(edgesSpec, dstNode, currentDepth + 1, maxDepth)\n                    If childDepth > maxChildDepth Then\n                        maxChildDepth = childDepth\n                    End If\n                End If\n            End If\n        End If\n    Next i",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_a39059a02bc33d43",
-    "parent_id": "node_b039891d68bbddb7",
+    "id": "segment_277d9b149f891f5d",
+    "parent_id": "node_d6466628cf80d2d0",
     "kind": "ASSIGNMENT",
     "name": "edgeParts",
     "path": "vba_sample_6.bas",
@@ -2316,20 +2244,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_4426984825f5e04f",
-    "parent_id": "node_fe34c76a77abd702",
+    "id": "segment_4290df89e02348aa",
+    "parent_id": "node_078d332431af9af4",
     "kind": "IF_BLOCK",
     "name": "if_block_2",
     "path": "vba_sample_6.bas",
     "start_line": 381,
-    "end_line": 381,
-    "source": "        If UBound(edgeParts) - LBound(edgeParts) + 1 = 2 Then",
+    "end_line": 393,
+    "source": "        If UBound(edgeParts) - LBound(edgeParts) + 1 = 2 Then\n            srcNode = Trim$(CStr(edgeParts(LBound(edgeParts))))\n            dstNode = Trim$(CStr(edgeParts(LBound(edgeParts) + 1)))\n\n            If StrComp(srcNode, Trim$(startNode), vbTextCompare) = 0 And Len(dstNode) > 0 Then\n                If StrComp(dstNode, srcNode, vbTextCompare) <> 0 Then\n                    childDepth = EvaluateDependencyDepth(edgesSpec, dstNode, currentDepth + 1, maxDepth)\n                    If childDepth > maxChildDepth Then\n                        maxChildDepth = childDepth\n                    End If\n                End If\n            End If\n        End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_57cbac02e2d546f4",
-    "parent_id": "node_315f3f17117ac43f",
+    "id": "segment_f6767f3da4723bd0",
+    "parent_id": "node_75a749ef41da4612",
     "kind": "ASSIGNMENT",
     "name": "srcNode",
     "path": "vba_sample_6.bas",
@@ -2340,8 +2268,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_25412a954a0bfdc2",
-    "parent_id": "node_19dff37bab7277dc",
+    "id": "segment_99b726f916558616",
+    "parent_id": "node_3fd91dcdb1fdc336",
     "kind": "ASSIGNMENT",
     "name": "dstNode",
     "path": "vba_sample_6.bas",
@@ -2352,32 +2280,32 @@
     "annotations": {}
   },
   {
-    "id": "segment_d9dfd4432dd427d8",
-    "parent_id": "node_016bd1e78cc5bcb8",
+    "id": "segment_b50bdabf1056e272",
+    "parent_id": "node_e3b1f5c28ccb33aa",
     "kind": "IF_BLOCK",
     "name": "if_block_3",
     "path": "vba_sample_6.bas",
     "start_line": 385,
-    "end_line": 385,
-    "source": "            If StrComp(srcNode, Trim$(startNode), vbTextCompare) = 0 And Len(dstNode) > 0 Then",
+    "end_line": 392,
+    "source": "            If StrComp(srcNode, Trim$(startNode), vbTextCompare) = 0 And Len(dstNode) > 0 Then\n                If StrComp(dstNode, srcNode, vbTextCompare) <> 0 Then\n                    childDepth = EvaluateDependencyDepth(edgesSpec, dstNode, currentDepth + 1, maxDepth)\n                    If childDepth > maxChildDepth Then\n                        maxChildDepth = childDepth\n                    End If\n                End If\n            End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_fa803941763c2dfb",
-    "parent_id": "node_9327a029a78512a9",
+    "id": "segment_c76ff85d6f80ffd1",
+    "parent_id": "node_006eb50933962a1c",
     "kind": "IF_BLOCK",
     "name": "if_block_1",
     "path": "vba_sample_6.bas",
     "start_line": 386,
-    "end_line": 386,
-    "source": "                If StrComp(dstNode, srcNode, vbTextCompare) <> 0 Then",
+    "end_line": 391,
+    "source": "                If StrComp(dstNode, srcNode, vbTextCompare) <> 0 Then\n                    childDepth = EvaluateDependencyDepth(edgesSpec, dstNode, currentDepth + 1, maxDepth)\n                    If childDepth > maxChildDepth Then\n                        maxChildDepth = childDepth\n                    End If\n                End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_54d6d579ba9dd88f",
-    "parent_id": "node_3dcade2365cd545f",
+    "id": "segment_1b14e7aa0ee7bd61",
+    "parent_id": "node_5d06f1153e3be63c",
     "kind": "ASSIGNMENT",
     "name": "childDepth",
     "path": "vba_sample_6.bas",
@@ -2388,20 +2316,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_44221123e466ead7",
-    "parent_id": "node_c2e3c9a9fbd33e81",
+    "id": "segment_7b4b556dc01f9c8f",
+    "parent_id": "node_1d42771ad170e68d",
     "kind": "IF_BLOCK",
     "name": "if_block_2",
     "path": "vba_sample_6.bas",
     "start_line": 388,
-    "end_line": 388,
-    "source": "                    If childDepth > maxChildDepth Then",
+    "end_line": 390,
+    "source": "                    If childDepth > maxChildDepth Then\n                        maxChildDepth = childDepth\n                    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_0b1b2224c9354128",
-    "parent_id": "node_b494edcd96ac0347",
+    "id": "segment_de31e209535af0bd",
+    "parent_id": "node_2259db84dd325e42",
     "kind": "ASSIGNMENT",
     "name": "maxChildDepth",
     "path": "vba_sample_6.bas",
@@ -2412,20 +2340,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_121522237b5ab2d1",
-    "parent_id": "node_983366628e1ba824",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_3",
-    "path": "vba_sample_6.bas",
-    "start_line": 394,
-    "end_line": 394,
-    "source": "    Next i",
-    "summary": null,
-    "annotations": {}
-  },
-  {
-    "id": "segment_48cec1328a24e6cb",
-    "parent_id": "node_cdcec246d516507a",
+    "id": "segment_ab9e965f185fd490",
+    "parent_id": "node_4c405fb017e062d9",
     "kind": "ASSIGNMENT",
     "name": "EvaluateDependencyDepth",
     "path": "vba_sample_6.bas",
@@ -2616,20 +2532,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_aca08f6d47f44f4a",
-    "parent_id": "node_1814f17bfddd4435",
+    "id": "segment_3442da4da797385e",
+    "parent_id": "node_5bfd4a2ae95c5a17",
     "kind": "FOR_BLOCK",
     "name": "for_block_5",
     "path": "vba_sample_6.bas",
     "start_line": 433,
-    "end_line": 433,
-    "source": "    For i = 1 To Len(ident)",
+    "end_line": 439,
+    "source": "    For i = 1 To Len(ident)\n        ch = Mid$(ident, i, 1)\n        If (ch >= \"A\" And ch <= \"Z\") Or (ch >= \"a\" And ch <= \"z\") Or _\n           (ch >= \"0\" And ch <= \"9\") Or ch = \"_\" Or ch = \".\" Then\n            outStr = outStr & ch\n        End If\n    Next i",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_0bfef57fae472579",
-    "parent_id": "node_0b21f7881b6d7bdd",
+    "id": "segment_0c7c6647261efeaf",
+    "parent_id": "node_5e86aca737717970",
     "kind": "ASSIGNMENT",
     "name": "ch",
     "path": "vba_sample_6.bas",
@@ -2640,20 +2556,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_98febe391838013e",
-    "parent_id": "node_c3a6302e29ccc136",
+    "id": "segment_2ce308b0f1444f02",
+    "parent_id": "node_f4a73101d9578ff3",
     "kind": "IF_BLOCK",
     "name": "if_block_2",
     "path": "vba_sample_6.bas",
     "start_line": 435,
-    "end_line": 436,
-    "source": "        If (ch >= \"A\" And ch <= \"Z\") Or (ch >= \"a\" And ch <= \"z\") Or _\n           (ch >= \"0\" And ch <= \"9\") Or ch = \"_\" Or ch = \".\" Then",
+    "end_line": 438,
+    "source": "        If (ch >= \"A\" And ch <= \"Z\") Or (ch >= \"a\" And ch <= \"z\") Or _\n           (ch >= \"0\" And ch <= \"9\") Or ch = \"_\" Or ch = \".\" Then\n            outStr = outStr & ch\n        End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_9cab5aab08250bf7",
-    "parent_id": "node_655e381e6a7b1841",
+    "id": "segment_903a9e87373ecaa8",
+    "parent_id": "node_6b66aee87f9422d7",
     "kind": "ASSIGNMENT",
     "name": "outStr",
     "path": "vba_sample_6.bas",
@@ -2664,22 +2580,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_3d90725c2344986b",
-    "parent_id": "node_316db758ded4fbf5",
+    "id": "segment_2a55e5a8e245e5da",
+    "parent_id": "node_b6caf0196700c3c5",
     "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_3",
-    "path": "vba_sample_6.bas",
-    "start_line": 439,
-    "end_line": 439,
-    "source": "    Next i",
-    "summary": null,
-    "annotations": {}
-  },
-  {
-    "id": "segment_2369a7c4ade28d98",
-    "parent_id": "node_782537bbe7481a2e",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_4",
+    "name": "call_or_command_6",
     "path": "vba_sample_6.bas",
     "start_line": 441,
     "end_line": 441,
@@ -2688,8 +2592,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_8e14a91325d29d66",
-    "parent_id": "node_0d3d3f47361d3be3",
+    "id": "segment_34f36c0f932ed87e",
+    "parent_id": "node_677438c930033b51",
     "kind": "ASSIGNMENT",
     "name": "SanitizeSqlIdentifier",
     "path": "vba_sample_6.bas",
@@ -2832,20 +2736,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_77be96f5da052a68",
-    "parent_id": "node_230e6824f049a683",
+    "id": "segment_5aa97043b09ae3ec",
+    "parent_id": "node_6c7286fc4911f8c2",
     "kind": "IF_BLOCK",
     "name": "if_block_11",
     "path": "vba_sample_6.bas",
     "start_line": 465,
-    "end_line": 465,
-    "source": "    If Not m_AuditLog Is Nothing And m_AuditLog.Count > 0 Then",
+    "end_line": 472,
+    "source": "    If Not m_AuditLog Is Nothing And m_AuditLog.Count > 0 Then\n        sb = sb & \"--- RECENT AUDIT LOGS ---\" & vbCrLf\n        logLimit = m_AuditLog.Count\n        If logLimit > 15 Then logLimit = 15\n        For i = 1 To logLimit\n            sb = sb & CStr(m_AuditLog(i)) & vbCrLf\n        Next i\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_969c8dda5d6edae7",
-    "parent_id": "node_54656175a954af5d",
+    "id": "segment_3532746ad7df2760",
+    "parent_id": "node_4b33f95937a7b839",
     "kind": "ASSIGNMENT",
     "name": "sb",
     "path": "vba_sample_6.bas",
@@ -2856,8 +2760,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_1f6e6a645d668a6c",
-    "parent_id": "node_2a9817808e061f4a",
+    "id": "segment_348282aa1a603871",
+    "parent_id": "node_dcf1b02c254546e1",
     "kind": "ASSIGNMENT",
     "name": "logLimit",
     "path": "vba_sample_6.bas",
@@ -2868,8 +2772,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_61ff1a113a68ec1c",
-    "parent_id": "node_f61cf4428dddc3ce",
+    "id": "segment_eedfc6cfb93e3ff4",
+    "parent_id": "node_0c6ff2f49a4f609d",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_3",
     "path": "vba_sample_6.bas",
@@ -2880,38 +2784,26 @@
     "annotations": {}
   },
   {
-    "id": "segment_30a7befd1e4bb1b6",
-    "parent_id": "node_22fbce8ada1c01e4",
+    "id": "segment_f35aee2faf08a31c",
+    "parent_id": "node_c50fc0de2e759f74",
     "kind": "FOR_BLOCK",
     "name": "for_block_4",
     "path": "vba_sample_6.bas",
     "start_line": 469,
-    "end_line": 469,
-    "source": "        For i = 1 To logLimit",
+    "end_line": 471,
+    "source": "        For i = 1 To logLimit\n            sb = sb & CStr(m_AuditLog(i)) & vbCrLf\n        Next i",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_d4cdaaff392da34d",
-    "parent_id": "node_f9ac3078a53f2ea1",
+    "id": "segment_5522c1f051f5d728",
+    "parent_id": "node_262b23c355dcdd9e",
     "kind": "ASSIGNMENT",
     "name": "sb",
     "path": "vba_sample_6.bas",
     "start_line": 470,
     "end_line": 470,
     "source": "            sb = sb & CStr(m_AuditLog(i)) & vbCrLf",
-    "summary": null,
-    "annotations": {}
-  },
-  {
-    "id": "segment_5a3b950bb3e3418c",
-    "parent_id": "node_3ba95d646ed03646",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_2",
-    "path": "vba_sample_6.bas",
-    "start_line": 471,
-    "end_line": 471,
-    "source": "        Next i",
     "summary": null,
     "annotations": {}
   },
@@ -2940,20 +2832,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_c6df5ab7bd866a82",
-    "parent_id": "node_30991a8c2b67146a",
+    "id": "segment_10af8df2921303b6",
+    "parent_id": "node_5b5f666e8e3a4a38",
     "kind": "IF_BLOCK",
     "name": "if_block_1",
     "path": "vba_sample_6.bas",
     "start_line": 478,
-    "end_line": 478,
-    "source": "    If m_AuditLog Is Nothing Then",
+    "end_line": 482,
+    "source": "    If m_AuditLog Is Nothing Then\n        GetAuditEntryCount = 0\n    Else\n        GetAuditEntryCount = m_AuditLog.Count\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_1c1d5416dcf8319e",
-    "parent_id": "node_ef2fc27235e97df9",
+    "id": "segment_880ba9bc49be559d",
+    "parent_id": "node_8ddf2b67e9489a50",
     "kind": "ASSIGNMENT",
     "name": "GetAuditEntryCount",
     "path": "vba_sample_6.bas",
@@ -2964,8 +2856,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_be37deee3d441e4c",
-    "parent_id": "node_a9ae55225d08bd61",
+    "id": "segment_4202ec2999ee384b",
+    "parent_id": "node_ab2d79d6de2f583e",
     "kind": "ASSIGNMENT",
     "name": "GetAuditEntryCount",
     "path": "vba_sample_6.bas",

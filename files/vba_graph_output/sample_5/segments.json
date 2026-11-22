@@ -264,20 +264,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_30393020d67befe3",
-    "parent_id": "node_2535bb6ab0c43035",
+    "id": "segment_9e3fab4e92b0e839",
+    "parent_id": "node_d433a42f6a84031c",
     "kind": "FOR_BLOCK",
     "name": "for_block_22",
     "path": "vba_sample_5.bas",
     "start_line": 31,
-    "end_line": 31,
-    "source": "    For rowNumber = 2 To lastInventoryRow",
+    "end_line": 43,
+    "source": "    For rowNumber = 2 To lastInventoryRow\n        itemCode = UCase$(Trim$(CStr(inventorySheet.Cells(rowNumber, \"A\").Value2)))\n        If Len(itemCode) > 0 Then\n            If IsNumeric(inventorySheet.Cells(rowNumber, \"B\").Value2) Then\n                If inventory.Exists(itemCode) Then\n                    Err.Raise vbObjectError + 4001, \"ReconcileInventory\", \"Duplicate inventory item: \" & itemCode\n                End If\n                inventory.Add itemCode, CDbl(inventorySheet.Cells(rowNumber, \"B\").Value2)\n            Else\n                inventorySheet.Cells(rowNumber, \"B\").Interior.Color = vbRed\n            End If\n        End If\n    Next rowNumber",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_91942bd9b1522b2b",
-    "parent_id": "node_c45d35af467a537a",
+    "id": "segment_f0c72787fabe56e2",
+    "parent_id": "node_1b5b694971390eb6",
     "kind": "ASSIGNMENT",
     "name": "itemCode",
     "path": "vba_sample_5.bas",
@@ -288,44 +288,44 @@
     "annotations": {}
   },
   {
-    "id": "segment_a73cb54e8da3dd19",
-    "parent_id": "node_db0516611496bbe4",
+    "id": "segment_0f7831c278625b60",
+    "parent_id": "node_6990d3122b460549",
     "kind": "IF_BLOCK",
     "name": "if_block_2",
     "path": "vba_sample_5.bas",
     "start_line": 33,
-    "end_line": 33,
-    "source": "        If Len(itemCode) > 0 Then",
+    "end_line": 42,
+    "source": "        If Len(itemCode) > 0 Then\n            If IsNumeric(inventorySheet.Cells(rowNumber, \"B\").Value2) Then\n                If inventory.Exists(itemCode) Then\n                    Err.Raise vbObjectError + 4001, \"ReconcileInventory\", \"Duplicate inventory item: \" & itemCode\n                End If\n                inventory.Add itemCode, CDbl(inventorySheet.Cells(rowNumber, \"B\").Value2)\n            Else\n                inventorySheet.Cells(rowNumber, \"B\").Interior.Color = vbRed\n            End If\n        End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_1323c5d9c1607708",
-    "parent_id": "node_4e995f2977578195",
+    "id": "segment_f9e3a891a06d266a",
+    "parent_id": "node_e38c15414d192a53",
     "kind": "IF_BLOCK",
     "name": "if_block_1",
     "path": "vba_sample_5.bas",
     "start_line": 34,
-    "end_line": 34,
-    "source": "            If IsNumeric(inventorySheet.Cells(rowNumber, \"B\").Value2) Then",
+    "end_line": 41,
+    "source": "            If IsNumeric(inventorySheet.Cells(rowNumber, \"B\").Value2) Then\n                If inventory.Exists(itemCode) Then\n                    Err.Raise vbObjectError + 4001, \"ReconcileInventory\", \"Duplicate inventory item: \" & itemCode\n                End If\n                inventory.Add itemCode, CDbl(inventorySheet.Cells(rowNumber, \"B\").Value2)\n            Else\n                inventorySheet.Cells(rowNumber, \"B\").Interior.Color = vbRed\n            End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_566b15a56dafe039",
-    "parent_id": "node_2684bf1feb053042",
+    "id": "segment_60a1db93912f7264",
+    "parent_id": "node_6ee3e433e7e3b803",
     "kind": "IF_BLOCK",
     "name": "if_block_1",
     "path": "vba_sample_5.bas",
     "start_line": 35,
-    "end_line": 35,
-    "source": "                If inventory.Exists(itemCode) Then",
+    "end_line": 37,
+    "source": "                If inventory.Exists(itemCode) Then\n                    Err.Raise vbObjectError + 4001, \"ReconcileInventory\", \"Duplicate inventory item: \" & itemCode\n                End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_0164748625eea7a5",
-    "parent_id": "node_200959c4fe82082e",
+    "id": "segment_85e0604ffb19efea",
+    "parent_id": "node_11d7f7fa4890c37a",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_5.bas",
@@ -336,8 +336,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_fedb9311472772a5",
-    "parent_id": "node_7d45f198001217fd",
+    "id": "segment_4a75f1708eec38c2",
+    "parent_id": "node_a33c630d94500120",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_2",
     "path": "vba_sample_5.bas",
@@ -348,8 +348,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_a2958713b1c58963",
-    "parent_id": "node_61240f3ca582d92e",
+    "id": "segment_96624b1937de6079",
+    "parent_id": "node_516e93d62b335888",
     "kind": "ASSIGNMENT",
     "name": "inventorySheet.Cells(rowNumber, \"B\").Interior.Color",
     "path": "vba_sample_5.bas",
@@ -360,32 +360,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_99642f74a08f46ca",
-    "parent_id": "node_d7677756ab1b1326",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_3",
-    "path": "vba_sample_5.bas",
-    "start_line": 43,
-    "end_line": 43,
-    "source": "    Next rowNumber",
-    "summary": null,
-    "annotations": {}
-  },
-  {
-    "id": "segment_f699c9809c52c5ef",
-    "parent_id": "node_a4d9818566746884",
+    "id": "segment_f101c4f6eccdb809",
+    "parent_id": "node_0d25a9bdb410c3eb",
     "kind": "FOR_BLOCK",
-    "name": "for_block_4",
+    "name": "for_block_23",
     "path": "vba_sample_5.bas",
     "start_line": 45,
-    "end_line": 45,
-    "source": "    For rowNumber = 2 To lastMovementRow",
+    "end_line": 60,
+    "source": "    For rowNumber = 2 To lastMovementRow\n        itemCode = UCase$(Trim$(CStr(movementSheet.Cells(rowNumber, \"A\").Value2)))\n        If IsDate(movementSheet.Cells(rowNumber, \"B\").Value2) _\n            And IsNumeric(movementSheet.Cells(rowNumber, \"C\").Value2) Then\n            transactionDate = CDate(movementSheet.Cells(rowNumber, \"B\").Value2)\n            quantity = CDbl(movementSheet.Cells(rowNumber, \"C\").Value2)\n\n            If DateDiff(\"d\", transactionDate, Date) <= 30 And transactionDate <= Date Then\n                If movementTotals.Exists(itemCode) Then\n                    movementTotals(itemCode) = movementTotals(itemCode) + quantity\n                Else\n                    movementTotals.Add itemCode, quantity\n                End If\n            End If\n        End If\n    Next rowNumber",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_730516d471dd034a",
-    "parent_id": "node_9534a12e71fe6719",
+    "id": "segment_7519a7aa0d88f0e0",
+    "parent_id": "node_bfef43ce314d6431",
     "kind": "ASSIGNMENT",
     "name": "itemCode",
     "path": "vba_sample_5.bas",
@@ -396,20 +384,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_43a8ad118ac76e45",
-    "parent_id": "node_86e990a44dc1eb60",
+    "id": "segment_fddcc07a1f521f81",
+    "parent_id": "node_1f91b3440b576cdf",
     "kind": "IF_BLOCK",
     "name": "if_block_2",
     "path": "vba_sample_5.bas",
     "start_line": 47,
-    "end_line": 48,
-    "source": "        If IsDate(movementSheet.Cells(rowNumber, \"B\").Value2) _\n            And IsNumeric(movementSheet.Cells(rowNumber, \"C\").Value2) Then",
+    "end_line": 59,
+    "source": "        If IsDate(movementSheet.Cells(rowNumber, \"B\").Value2) _\n            And IsNumeric(movementSheet.Cells(rowNumber, \"C\").Value2) Then\n            transactionDate = CDate(movementSheet.Cells(rowNumber, \"B\").Value2)\n            quantity = CDbl(movementSheet.Cells(rowNumber, \"C\").Value2)\n\n            If DateDiff(\"d\", transactionDate, Date) <= 30 And transactionDate <= Date Then\n                If movementTotals.Exists(itemCode) Then\n                    movementTotals(itemCode) = movementTotals(itemCode) + quantity\n                Else\n                    movementTotals.Add itemCode, quantity\n                End If\n            End If\n        End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_8b2962e6eea5746c",
-    "parent_id": "node_60ca173ddd949ed3",
+    "id": "segment_6998463f3c7a21de",
+    "parent_id": "node_3895250f27cc8db6",
     "kind": "ASSIGNMENT",
     "name": "transactionDate",
     "path": "vba_sample_5.bas",
@@ -420,8 +408,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_4601e5b5be2577c7",
-    "parent_id": "node_a400415771810664",
+    "id": "segment_d49bc8f85c955dc0",
+    "parent_id": "node_c4f2312e0c7d59ab",
     "kind": "ASSIGNMENT",
     "name": "quantity",
     "path": "vba_sample_5.bas",
@@ -432,32 +420,32 @@
     "annotations": {}
   },
   {
-    "id": "segment_3ab100e593488cf8",
-    "parent_id": "node_fca14ec969eaa872",
+    "id": "segment_6208fb21ebf6b057",
+    "parent_id": "node_aba0f0382a432313",
     "kind": "IF_BLOCK",
     "name": "if_block_3",
     "path": "vba_sample_5.bas",
     "start_line": 52,
-    "end_line": 52,
-    "source": "            If DateDiff(\"d\", transactionDate, Date) <= 30 And transactionDate <= Date Then",
+    "end_line": 58,
+    "source": "            If DateDiff(\"d\", transactionDate, Date) <= 30 And transactionDate <= Date Then\n                If movementTotals.Exists(itemCode) Then\n                    movementTotals(itemCode) = movementTotals(itemCode) + quantity\n                Else\n                    movementTotals.Add itemCode, quantity\n                End If\n            End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_3b9d84ed0fb68ef0",
-    "parent_id": "node_58d21da19dc87f91",
+    "id": "segment_545d0dfc362f79b0",
+    "parent_id": "node_e96c4bb19b2feb21",
     "kind": "IF_BLOCK",
     "name": "if_block_1",
     "path": "vba_sample_5.bas",
     "start_line": 53,
-    "end_line": 53,
-    "source": "                If movementTotals.Exists(itemCode) Then",
+    "end_line": 57,
+    "source": "                If movementTotals.Exists(itemCode) Then\n                    movementTotals(itemCode) = movementTotals(itemCode) + quantity\n                Else\n                    movementTotals.Add itemCode, quantity\n                End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_9852865f69ac293f",
-    "parent_id": "node_1d5369055e3fc70b",
+    "id": "segment_91e4c1ba89b22dba",
+    "parent_id": "node_8b546ddb09e26e04",
     "kind": "ASSIGNMENT",
     "name": "movementTotals(itemCode)",
     "path": "vba_sample_5.bas",
@@ -468,8 +456,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_9bda1fc2dcde4f7b",
-    "parent_id": "node_15a55c4756052521",
+    "id": "segment_707150ef29c745de",
+    "parent_id": "node_0a1a58068c0a8d36",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_5.bas",
@@ -480,32 +468,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_02110008eb043d25",
-    "parent_id": "node_c2ebfcf1a33882ac",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_3",
-    "path": "vba_sample_5.bas",
-    "start_line": 60,
-    "end_line": 60,
-    "source": "    Next rowNumber",
-    "summary": null,
-    "annotations": {}
-  },
-  {
-    "id": "segment_3f5cad563d270357",
-    "parent_id": "node_e7d63ed35cf45565",
+    "id": "segment_d01737319f1a42f6",
+    "parent_id": "node_d7af7f0c393c47b9",
     "kind": "FOR_BLOCK",
-    "name": "for_block_4",
+    "name": "for_block_24",
     "path": "vba_sample_5.bas",
     "start_line": 62,
-    "end_line": 62,
-    "source": "    For rowNumber = 2 To lastInventoryRow",
+    "end_line": 88,
+    "source": "    For rowNumber = 2 To lastInventoryRow\n        itemCode = UCase$(Trim$(CStr(inventorySheet.Cells(rowNumber, \"A\").Value2)))\n        If inventory.Exists(itemCode) Then\n            quantity = inventory(itemCode)\n            If movementTotals.Exists(itemCode) Then\n                quantity = quantity + movementTotals(itemCode)\n            End If\n\n            Select Case True\n                Case quantity < 0\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"INVESTIGATE\"\n                Case quantity = 0\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"OUT OF STOCK\"\n                Case quantity < 5\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"REORDER\"\n                Case Else\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"OK\"\n            End Select\n            inventorySheet.Cells(rowNumber, \"D\").Value = quantity\n        End If\n\n        elapsedSeconds = Timer - startedAt\n        If elapsedSeconds < 0 Then elapsedSeconds = elapsedSeconds + 86400\n        If elapsedSeconds > LOCK_TIMEOUT_SECONDS Then\n            Err.Raise vbObjectError + 4002, \"ReconcileInventory\", \"Reconciliation exceeded its time limit.\"\n        End If\n    Next rowNumber",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_c058a98692e375e9",
-    "parent_id": "node_2eb31d5b365d7b5d",
+    "id": "segment_d8b48e15ca978dcf",
+    "parent_id": "node_606f9187265672cf",
     "kind": "ASSIGNMENT",
     "name": "itemCode",
     "path": "vba_sample_5.bas",
@@ -516,20 +492,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_f2444edf67c158f5",
-    "parent_id": "node_e467dccdbdfa7aaf",
+    "id": "segment_3305a6dcaf83ef58",
+    "parent_id": "node_ba836698315d50d6",
     "kind": "IF_BLOCK",
     "name": "if_block_2",
     "path": "vba_sample_5.bas",
     "start_line": 64,
-    "end_line": 64,
-    "source": "        If inventory.Exists(itemCode) Then",
+    "end_line": 81,
+    "source": "        If inventory.Exists(itemCode) Then\n            quantity = inventory(itemCode)\n            If movementTotals.Exists(itemCode) Then\n                quantity = quantity + movementTotals(itemCode)\n            End If\n\n            Select Case True\n                Case quantity < 0\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"INVESTIGATE\"\n                Case quantity = 0\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"OUT OF STOCK\"\n                Case quantity < 5\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"REORDER\"\n                Case Else\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"OK\"\n            End Select\n            inventorySheet.Cells(rowNumber, \"D\").Value = quantity\n        End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_215f710b02a97e66",
-    "parent_id": "node_b18f0118e01177b1",
+    "id": "segment_96d8ec0da5d32727",
+    "parent_id": "node_30552a8a065e4e35",
     "kind": "ASSIGNMENT",
     "name": "quantity",
     "path": "vba_sample_5.bas",
@@ -540,20 +516,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_5571b8a7f4d120db",
-    "parent_id": "node_18ce6d5b37c57d6b",
+    "id": "segment_03d5d98c37343c9e",
+    "parent_id": "node_a2e100dd7ba6a70b",
     "kind": "IF_BLOCK",
     "name": "if_block_2",
     "path": "vba_sample_5.bas",
     "start_line": 66,
-    "end_line": 66,
-    "source": "            If movementTotals.Exists(itemCode) Then",
+    "end_line": 68,
+    "source": "            If movementTotals.Exists(itemCode) Then\n                quantity = quantity + movementTotals(itemCode)\n            End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_309be8efa4e31623",
-    "parent_id": "node_17c23711c892c7f8",
+    "id": "segment_b80b1419dc81b937",
+    "parent_id": "node_0a49061ea07e5f8f",
     "kind": "ASSIGNMENT",
     "name": "quantity",
     "path": "vba_sample_5.bas",
@@ -564,20 +540,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_09af205056ada7e2",
-    "parent_id": "node_bbdf77ae8709e5f1",
+    "id": "segment_71cd1c9d62851edf",
+    "parent_id": "node_8f801327f46c3c32",
     "kind": "SELECT_BLOCK",
     "name": "select_block_3",
     "path": "vba_sample_5.bas",
     "start_line": 70,
-    "end_line": 70,
-    "source": "            Select Case True",
+    "end_line": 79,
+    "source": "            Select Case True\n                Case quantity < 0\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"INVESTIGATE\"\n                Case quantity = 0\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"OUT OF STOCK\"\n                Case quantity < 5\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"REORDER\"\n                Case Else\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"OK\"\n            End Select",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_b08120aa4901f41b",
-    "parent_id": "node_83480a31dff61e91",
+    "id": "segment_35d5be3479e4ab1c",
+    "parent_id": "node_b8e40c33e916f6ee",
     "kind": "ASSIGNMENT",
     "name": "inventorySheet.Cells(rowNumber, \"C\").Value",
     "path": "vba_sample_5.bas",
@@ -588,8 +564,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_1296603368e936e7",
-    "parent_id": "node_686447be98900ce5",
+    "id": "segment_4f7142c9b335d46d",
+    "parent_id": "node_80651bd0beb42e37",
     "kind": "ASSIGNMENT",
     "name": "inventorySheet.Cells(rowNumber, \"C\").Value",
     "path": "vba_sample_5.bas",
@@ -600,8 +576,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_8c0e1eb20f01b066",
-    "parent_id": "node_70a942bfeab113f4",
+    "id": "segment_26c6b6526c108170",
+    "parent_id": "node_7aa5adf724d34fc0",
     "kind": "ASSIGNMENT",
     "name": "inventorySheet.Cells(rowNumber, \"C\").Value",
     "path": "vba_sample_5.bas",
@@ -612,8 +588,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_a4fec13e98aaa751",
-    "parent_id": "node_fbe97c6f3b033cc6",
+    "id": "segment_fb247d8e81370e6f",
+    "parent_id": "node_41af8a896f36ae74",
     "kind": "ASSIGNMENT",
     "name": "inventorySheet.Cells(rowNumber, \"C\").Value",
     "path": "vba_sample_5.bas",
@@ -624,8 +600,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_600ce8608cab6adc",
-    "parent_id": "node_64e506416b99ad05",
+    "id": "segment_01295ff04d799a81",
+    "parent_id": "node_8cace9eebf603e6d",
     "kind": "ASSIGNMENT",
     "name": "inventorySheet.Cells(rowNumber, \"D\").Value",
     "path": "vba_sample_5.bas",
@@ -636,8 +612,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_8450ef4107bd7871",
-    "parent_id": "node_cf1dcc2526a29a6f",
+    "id": "segment_f0bcded15a875f23",
+    "parent_id": "node_0d7a30ac24cd6126",
     "kind": "ASSIGNMENT",
     "name": "elapsedSeconds",
     "path": "vba_sample_5.bas",
@@ -648,8 +624,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_806cbf020420c76e",
-    "parent_id": "node_81e678505243a1e1",
+    "id": "segment_673eb72e4ca998c5",
+    "parent_id": "node_f0145781ae6800c2",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_4",
     "path": "vba_sample_5.bas",
@@ -660,20 +636,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_51b15429b74ad1ef",
-    "parent_id": "node_637310e910a4077c",
+    "id": "segment_3646c80ec99341c4",
+    "parent_id": "node_682965e18204cb14",
     "kind": "IF_BLOCK",
     "name": "if_block_5",
     "path": "vba_sample_5.bas",
     "start_line": 85,
-    "end_line": 85,
-    "source": "        If elapsedSeconds > LOCK_TIMEOUT_SECONDS Then",
+    "end_line": 87,
+    "source": "        If elapsedSeconds > LOCK_TIMEOUT_SECONDS Then\n            Err.Raise vbObjectError + 4002, \"ReconcileInventory\", \"Reconciliation exceeded its time limit.\"\n        End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_f68c0837538b80f2",
-    "parent_id": "node_a3c8eb0ea7a5eb4f",
+    "id": "segment_a5282a15caf835e3",
+    "parent_id": "node_b7a9abb7edb1c52b",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_5.bas",
@@ -684,22 +660,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_833392df527f4996",
-    "parent_id": "node_8507804fc1b1984e",
+    "id": "segment_104fb64cbb98f0b6",
+    "parent_id": "node_b40ca6ba13b5e605",
     "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_6",
-    "path": "vba_sample_5.bas",
-    "start_line": 88,
-    "end_line": 88,
-    "source": "    Next rowNumber",
-    "summary": null,
-    "annotations": {}
-  },
-  {
-    "id": "segment_c4b8efec9b3ca755",
-    "parent_id": "node_222498b47b0e5158",
-    "kind": "ASSIGNMENT",
-    "name": "inventorySheet.Range(\"A1:D\" & lastInventoryRow).Sort Key1:",
+    "name": "call_or_command_25",
     "path": "vba_sample_5.bas",
     "start_line": 90,
     "end_line": 91,
@@ -708,8 +672,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_8867e025220fd97e",
-    "parent_id": "node_f1fc71456fab8db0",
+    "id": "segment_2f45fa093927a929",
+    "parent_id": "node_e8550434d8161da0",
     "kind": "JUMP",
     "name": "CleanUp",
     "path": "vba_sample_5.bas",
@@ -720,10 +684,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_4e30f8a479b215ad",
-    "parent_id": "node_12144f7b4336bb6c",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_9",
+    "id": "segment_7b919d5d5e5218f2",
+    "parent_id": "node_0669fbe3db77baca",
+    "kind": "LABEL",
+    "name": "HandleError",
     "path": "vba_sample_5.bas",
     "start_line": 94,
     "end_line": 94,
@@ -732,8 +696,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_199beff07fb8c211",
-    "parent_id": "node_44807f962e01b9b4",
+    "id": "segment_dcc5bdc2c6fcbfbf",
+    "parent_id": "node_950dec90e704c118",
     "kind": "ASSIGNMENT",
     "name": "failureNumber",
     "path": "vba_sample_5.bas",
@@ -744,8 +708,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_3614e14f236fc108",
-    "parent_id": "node_f086a36199b178b2",
+    "id": "segment_e48425c783e92438",
+    "parent_id": "node_c1f3d1919a61f187",
     "kind": "ASSIGNMENT",
     "name": "failureDescription",
     "path": "vba_sample_5.bas",
@@ -756,10 +720,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_5182c741081a8831",
-    "parent_id": "node_0d58634fef3ef115",
+    "id": "segment_9c0ed1f0dda2935b",
+    "parent_id": "node_166c37a6a1166372",
     "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_12",
+    "name": "call_or_command_30",
     "path": "vba_sample_5.bas",
     "start_line": 97,
     "end_line": 97,
@@ -768,10 +732,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_c58d08ed934c2ad9",
-    "parent_id": "node_3ead3c3f2381326b",
+    "id": "segment_a56d8188f6d5aae6",
+    "parent_id": "node_19a4c426200b0aef",
     "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_13",
+    "name": "call_or_command_31",
     "path": "vba_sample_5.bas",
     "start_line": 98,
     "end_line": 98,
@@ -780,10 +744,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_3e3c794bfc936479",
-    "parent_id": "node_2cdbdbf24f16ebca",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_14",
+    "id": "segment_2dec947f6e50b6ad",
+    "parent_id": "node_1992514e813b4e66",
+    "kind": "LABEL",
+    "name": "CleanUp",
     "path": "vba_sample_5.bas",
     "start_line": 100,
     "end_line": 100,
@@ -792,8 +756,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_c7ee3f8246be4a01",
-    "parent_id": "node_0ed5713abd5c2751",
+    "id": "segment_c460f92b0f476034",
+    "parent_id": "node_400f249f5110eba8",
     "kind": "ASSIGNMENT",
     "name": "Application.EnableEvents",
     "path": "vba_sample_5.bas",
@@ -804,8 +768,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_615fef9de82f6392",
-    "parent_id": "node_abfc56633217b979",
+    "id": "segment_87ee0bc2c2f49f75",
+    "parent_id": "node_a7bc082b492e80d8",
     "kind": "ASSIGNMENT",
     "name": "movementTotals",
     "path": "vba_sample_5.bas",
@@ -816,8 +780,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_e610f68c802d01b9",
-    "parent_id": "node_853c28380dbd48ca",
+    "id": "segment_67ac3fd423c46725",
+    "parent_id": "node_e756a6df25c0b724",
     "kind": "ASSIGNMENT",
     "name": "inventory",
     "path": "vba_sample_5.bas",

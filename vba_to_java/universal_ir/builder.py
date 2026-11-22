@@ -112,6 +112,22 @@ def _provenance(node: dict[str, Any], segment_ids: list[str], source_path: str |
     return result
 
 
+def _terminator_metadata(node: dict[str, Any], source_path: str | None) -> dict[str, Any] | None:
+    terminator = (node.get("metadata") or {}).get("terminator")
+    if not isinstance(terminator, dict):
+        return None
+    location = terminator.get("location") or {}
+    source = node.get("source") or {}
+    return {
+        "source_text": terminator.get("source", ""),
+        "source_location": {
+            "file": source_path or source.get("path"),
+            "line": location.get("start_line", source.get("end_line", 0)),
+            "end_line": location.get("end_line", location.get("start_line", source.get("end_line", 0))),
+        },
+    }
+
+
 def _decl_from_line(line: str, node: dict[str, Any], seg_ids: list[str], source_path: str | None) -> dict[str, Any]:
     clean = line.strip()
     vis = "private" if clean.lower().startswith("private ") else "public" if clean.lower().startswith("public ") else "default"
@@ -229,15 +245,77 @@ def _statement(node: dict[str, Any], children: list[dict[str, Any]], seg_ids: li
         return {"id": sid, "kind": "for", "variable": meta.get("variable", ""),
                 "start": ex("start"), "end": ex("end"), "step": ex("step"), "body": body,
                 "provenance": prov, "semantics": {"source_control_type": "FOR_BLOCK", "raw_header": raw,
-                                                     "terminator": terminator}}
-    # Preserve nested block-like constructs we cannot safely lower yet.
-    if typ in {"WHILE_BLOCK", "DO_BLOCK", "SELECT_BLOCK", "WITH_BLOCK", "CASE_BLOCK"}:
+                                                     "terminator": terminator or _terminator_metadata(node, source_path)}}
+    if typ == "FOR_EACH_BLOCK":
         body = []
         for child in children:
             stmt = _statement(child, child.get("_children", []), child.get("_segment_ids", []), source_path)
             if stmt is not None: body.append(stmt)
-        return {"id": sid, "kind": "unsupported", "body": body,
-                "semantics": {"reason": f"Control construct {typ} requires a dedicated frontend mapping", "raw_source": raw}, "provenance": prov}
+        collection = (meta.get("collection") or {}).get("source")
+        return {"id": sid, "kind": "for_each", "variable": meta.get("variable", ""),
+                "iterable": _expr(collection), "body": body, "provenance": prov,
+                "semantics": {"source_control_type": typ, "raw_header": raw,
+                              "terminator": _terminator_metadata(node, source_path)}}
+    if typ == "WHILE_BLOCK":
+        body = [
+            stmt for child in children
+            if (stmt := _statement(child, child.get("_children", []), child.get("_segment_ids", []), source_path)) is not None
+        ]
+        condition = (meta.get("condition") or {}).get("source")
+        return {"id": sid, "kind": "while", "condition": _expr(condition), "body": body,
+                "provenance": prov,
+                "semantics": {"source_control_type": typ, "raw_header": raw,
+                              "terminator": _terminator_metadata(node, source_path)}}
+    if typ == "DO_LOOP_BLOCK":
+        body = [
+            stmt for child in children
+            if (stmt := _statement(child, child.get("_children", []), child.get("_segment_ids", []), source_path)) is not None
+        ]
+        test = str(meta.get("test") or "WHILE").upper()
+        kind = "do_until" if test == "UNTIL" else "do_while"
+        condition = (meta.get("condition") or {}).get("source")
+        return {"id": sid, "kind": kind, "condition": _expr(condition) if condition else None,
+                "body": body, "provenance": prov,
+                "semantics": {"source_control_type": typ, "test": test,
+                              "test_position": meta.get("test_position"),
+                              "unconditional": condition is None,
+                              "terminator": _terminator_metadata(node, source_path)}}
+    if typ == "SELECT_BLOCK":
+        branches = []
+        for case in children:
+            if case.get("type") != "CASE_BRANCH":
+                continue
+            condition_source = (case.get("metadata") or {}).get("condition_source", "")
+            is_else = str(condition_source).strip().casefold() == "else"
+            body = [
+                stmt for child in case.get("_children", [])
+                if (stmt := _statement(child, child.get("_children", []), child.get("_segment_ids", []), source_path)) is not None
+            ]
+            branches.append({
+                "branch_kind": "case_else" if is_else else "case",
+                "condition": None if is_else else _expr(condition_source),
+                "body": body,
+                "provenance": _provenance(case, case.get("_segment_ids", []), source_path,
+                                           case.get("_segment_sources")),
+            })
+        expression = (meta.get("expression") or {}).get("source")
+        return {"id": sid, "kind": "switch", "expression": _expr(expression),
+                "branches": branches, "provenance": prov,
+                "semantics": {"source_control_type": typ, "raw_header": raw,
+                              "has_default_case": any(b["branch_kind"] == "case_else" for b in branches),
+                              "terminator": _terminator_metadata(node, source_path)}}
+    if typ == "WITH_BLOCK":
+        body = [
+            stmt for child in children
+            if (stmt := _statement(child, child.get("_children", []), child.get("_segment_ids", []), source_path)) is not None
+        ]
+        expression = (meta.get("expression") or {}).get("source")
+        return {"id": sid, "kind": "with", "expression": _expr(expression), "body": body,
+                "provenance": prov,
+                "semantics": {"source_control_type": typ, "raw_header": raw,
+                              "terminator": _terminator_metadata(node, source_path)}}
+    if typ == "CASE_BRANCH":
+        return None
     if typ == "ERROR_CONTROL":
         match = re.search(r"On\s+Error\s+(GoTo\s+\w+|Resume\s+Next|GoTo\s+0)", raw, re.I)
         form = match.group(1) if match else "unparsed"
@@ -257,6 +335,9 @@ def _statement(node: dict[str, Any], children: list[dict[str, Any]], seg_ids: li
         return {"id": sid, "kind": "gosub_return", "provenance": prov,
                 "semantics": {"legacy_gosub_return": True, "raw_source": raw,
                               "note": "VBA Return in a GoSub routine resumes after the GoSub call; it is not a function return."}}
+    if typ == "LABEL":
+        return {"id": sid, "kind": "label", "label": meta.get("name") or node.get("name", ""),
+                "provenance": prov, "semantics": {"source_label": True, "raw_source": raw}}
     if typ == "EXIT":
         return {"id": sid, "kind": "exit", "exit_target": (meta.get("target") or node.get("name", "")).lower(),
                 "provenance": prov}

@@ -228,20 +228,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_812e671334792554",
-    "parent_id": "node_a2e8e325ba724ff7",
+    "id": "segment_246233758295b3f3",
+    "parent_id": "node_349730c7c2f2b84c",
     "kind": "IF_BLOCK",
     "name": "if_block_19",
     "path": "vba_sample_4.bas",
     "start_line": 25,
-    "end_line": 25,
-    "source": "    If LCase$(Right$(outputPath, 5)) <> \".xlsx\" Then",
+    "end_line": 27,
+    "source": "    If LCase$(Right$(outputPath, 5)) <> \".xlsx\" Then\n        Err.Raise vbObjectError + 3002, \"ConsolidateDepartmentFiles\", \"Output path must use the .xlsx extension.\"\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_1815eff5326a65c1",
-    "parent_id": "node_bc73ec27d90d0752",
+    "id": "segment_41c54756cf51d9ec",
+    "parent_id": "node_9cfe1121c2c2bfdd",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_4.bas",
@@ -252,20 +252,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_886cb37fd6908421",
-    "parent_id": "node_199539ca9556c40e",
+    "id": "segment_ab64ee58d8e4b2a9",
+    "parent_id": "node_28495d46a7c66869",
     "kind": "IF_BLOCK",
     "name": "if_block_20",
     "path": "vba_sample_4.bas",
     "start_line": 28,
-    "end_line": 28,
-    "source": "    If StrComp(outputPath, ThisWorkbook.FullName, vbTextCompare) = 0 Then",
+    "end_line": 30,
+    "source": "    If StrComp(outputPath, ThisWorkbook.FullName, vbTextCompare) = 0 Then\n        Err.Raise vbObjectError + 3003, \"ConsolidateDepartmentFiles\", \"Output cannot replace the macro workbook.\"\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_04e9a9d7139941c2",
-    "parent_id": "node_c6ad17fc548c5634",
+    "id": "segment_d0757f2ffc9603aa",
+    "parent_id": "node_a414b9dcc0339554",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_4.bas",
@@ -276,20 +276,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_c353f5acbd0525f9",
-    "parent_id": "node_4656135333a70d6e",
+    "id": "segment_f3b016841e6a7b5b",
+    "parent_id": "node_82d6698770b3669b",
     "kind": "IF_BLOCK",
     "name": "if_block_21",
     "path": "vba_sample_4.bas",
     "start_line": 31,
-    "end_line": 31,
-    "source": "    If Right$(inputFolder, 1) <> Application.PathSeparator Then",
+    "end_line": 33,
+    "source": "    If Right$(inputFolder, 1) <> Application.PathSeparator Then\n        inputFolder = inputFolder & Application.PathSeparator\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_2f851fbcfeeeade1",
-    "parent_id": "node_e352ad7996a1c25b",
+    "id": "segment_c413ca9e19d9c21a",
+    "parent_id": "node_4e8d92ca9ac5be8b",
     "kind": "ASSIGNMENT",
     "name": "inputFolder",
     "path": "vba_sample_4.bas",
@@ -312,20 +312,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_375d1aecdd3a76a6",
-    "parent_id": "node_8d4f1adf426c31ac",
+    "id": "segment_a92d176a33b8f9ed",
+    "parent_id": "node_5b6964e2c144f7c3",
     "kind": "IF_BLOCK",
     "name": "if_block_23",
     "path": "vba_sample_4.bas",
     "start_line": 35,
-    "end_line": 35,
-    "source": "    If Not fileSystem.FolderExists(inputFolder) Then",
+    "end_line": 37,
+    "source": "    If Not fileSystem.FolderExists(inputFolder) Then\n        Err.Raise vbObjectError + 3001, \"ConsolidateDepartmentFiles\", \"Input folder is unavailable.\"\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_71e9945142f21f8a",
-    "parent_id": "node_5c997388e3e42aaa",
+    "id": "segment_888e99cd192af900",
+    "parent_id": "node_9c75324153ce3773",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_4.bas",
@@ -432,32 +432,32 @@
     "annotations": {}
   },
   {
-    "id": "segment_280eebe438bed69d",
-    "parent_id": "node_0b3215046410ee44",
+    "id": "segment_b3e41a28da2cddcc",
+    "parent_id": "node_9a16b0423d82fb52",
     "kind": "DO_LOOP_BLOCK",
     "name": "do_loop_block_32",
     "path": "vba_sample_4.bas",
     "start_line": 48,
-    "end_line": 48,
-    "source": "    Do While Len(fileName) > 0",
+    "end_line": 71,
+    "source": "    Do While Len(fileName) > 0\n        If StrComp(inputFolder & fileName, ThisWorkbook.FullName, vbTextCompare) <> 0 Then\n            Set sourceBook = Workbooks.Open(Filename:=inputFolder & fileName, ReadOnly:=True)\n            Set sourceSheet = sourceBook.Worksheets(1)\n            lastRow = sourceSheet.Cells(sourceSheet.Rows.Count, \"A\").End(xlUp).Row\n\n            If lastRow >= 1 Then\n                Set sourceRange = sourceSheet.Range(\"A1:F\" & lastRow)\n                If nextRow = 1 Then\n                    targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count, sourceRange.Columns.Count).Value = sourceRange.Value\n                    nextRow = nextRow + sourceRange.Rows.Count\n                ElseIf sourceRange.Rows.Count > 1 Then\n                    targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value = _\n                        sourceRange.Offset(1, 0).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value\n                    nextRow = nextRow + sourceRange.Rows.Count - 1\n                End If\n            End If\n\n            sourceBook.Close SaveChanges:=False\n            Set sourceBook = Nothing\n            processedFiles = processedFiles + 1\n        End If\n        fileName = Dir$()\n    Loop",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_719a277dd8137178",
-    "parent_id": "node_c323545aa34e57f4",
+    "id": "segment_8d649d75ec9add0c",
+    "parent_id": "node_8e0507dae6620278",
     "kind": "IF_BLOCK",
     "name": "if_block_1",
     "path": "vba_sample_4.bas",
     "start_line": 49,
-    "end_line": 49,
-    "source": "        If StrComp(inputFolder & fileName, ThisWorkbook.FullName, vbTextCompare) <> 0 Then",
+    "end_line": 69,
+    "source": "        If StrComp(inputFolder & fileName, ThisWorkbook.FullName, vbTextCompare) <> 0 Then\n            Set sourceBook = Workbooks.Open(Filename:=inputFolder & fileName, ReadOnly:=True)\n            Set sourceSheet = sourceBook.Worksheets(1)\n            lastRow = sourceSheet.Cells(sourceSheet.Rows.Count, \"A\").End(xlUp).Row\n\n            If lastRow >= 1 Then\n                Set sourceRange = sourceSheet.Range(\"A1:F\" & lastRow)\n                If nextRow = 1 Then\n                    targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count, sourceRange.Columns.Count).Value = sourceRange.Value\n                    nextRow = nextRow + sourceRange.Rows.Count\n                ElseIf sourceRange.Rows.Count > 1 Then\n                    targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value = _\n                        sourceRange.Offset(1, 0).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value\n                    nextRow = nextRow + sourceRange.Rows.Count - 1\n                End If\n            End If\n\n            sourceBook.Close SaveChanges:=False\n            Set sourceBook = Nothing\n            processedFiles = processedFiles + 1\n        End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_c3e227f663fb505d",
-    "parent_id": "node_d19c60ed38768299",
+    "id": "segment_59a49da96c579f9e",
+    "parent_id": "node_b037f03adbfa5e73",
     "kind": "ASSIGNMENT",
     "name": "sourceBook",
     "path": "vba_sample_4.bas",
@@ -468,8 +468,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_d727556747a98810",
-    "parent_id": "node_a06dae257b2e522a",
+    "id": "segment_d7974ebb5e618a10",
+    "parent_id": "node_bec7c42ae192dda1",
     "kind": "ASSIGNMENT",
     "name": "sourceSheet",
     "path": "vba_sample_4.bas",
@@ -480,8 +480,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_7e342a525c69b774",
-    "parent_id": "node_0ebbb5d5aee41892",
+    "id": "segment_7ab31d3bee3f0c43",
+    "parent_id": "node_6b91df1c9f39812e",
     "kind": "ASSIGNMENT",
     "name": "lastRow",
     "path": "vba_sample_4.bas",
@@ -492,20 +492,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_20ae62ef579905b5",
-    "parent_id": "node_0b2584a7ed84ddcb",
+    "id": "segment_e61df23f3bc04736",
+    "parent_id": "node_f20808fbc778ef12",
     "kind": "IF_BLOCK",
     "name": "if_block_4",
     "path": "vba_sample_4.bas",
     "start_line": 54,
-    "end_line": 54,
-    "source": "            If lastRow >= 1 Then",
+    "end_line": 64,
+    "source": "            If lastRow >= 1 Then\n                Set sourceRange = sourceSheet.Range(\"A1:F\" & lastRow)\n                If nextRow = 1 Then\n                    targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count, sourceRange.Columns.Count).Value = sourceRange.Value\n                    nextRow = nextRow + sourceRange.Rows.Count\n                ElseIf sourceRange.Rows.Count > 1 Then\n                    targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value = _\n                        sourceRange.Offset(1, 0).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value\n                    nextRow = nextRow + sourceRange.Rows.Count - 1\n                End If\n            End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_3b9b30dd883875ae",
-    "parent_id": "node_b07055287e54053e",
+    "id": "segment_890456c5ac0ab540",
+    "parent_id": "node_7c10526166e8ad95",
     "kind": "ASSIGNMENT",
     "name": "sourceRange",
     "path": "vba_sample_4.bas",
@@ -516,20 +516,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_422b1d4d3732c41e",
-    "parent_id": "node_7741d49693821979",
+    "id": "segment_231dfc2af1c9e46e",
+    "parent_id": "node_4df739dbda286b9d",
     "kind": "IF_BLOCK",
     "name": "if_block_2",
     "path": "vba_sample_4.bas",
     "start_line": 56,
-    "end_line": 56,
-    "source": "                If nextRow = 1 Then",
+    "end_line": 63,
+    "source": "                If nextRow = 1 Then\n                    targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count, sourceRange.Columns.Count).Value = sourceRange.Value\n                    nextRow = nextRow + sourceRange.Rows.Count\n                ElseIf sourceRange.Rows.Count > 1 Then\n                    targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value = _\n                        sourceRange.Offset(1, 0).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value\n                    nextRow = nextRow + sourceRange.Rows.Count - 1\n                End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_8366d477256df8ab",
-    "parent_id": "node_70a39205ad5dffb8",
+    "id": "segment_a3d0f9500de94557",
+    "parent_id": "node_d092dafc04991b5f",
     "kind": "ASSIGNMENT",
     "name": "targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count, sourceRange.Columns.Count).Value",
     "path": "vba_sample_4.bas",
@@ -540,8 +540,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_7f72388cdf6f0a30",
-    "parent_id": "node_ae66d631a7f75c37",
+    "id": "segment_64102220d1fb142a",
+    "parent_id": "node_cef0b015be65c91a",
     "kind": "ASSIGNMENT",
     "name": "nextRow",
     "path": "vba_sample_4.bas",
@@ -552,8 +552,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_3059bb36abd3d329",
-    "parent_id": "node_96a7f21a2e7b3b71",
+    "id": "segment_b1d71c71eeb9e6ce",
+    "parent_id": "node_95e7784222f19719",
     "kind": "ASSIGNMENT",
     "name": "targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value",
     "path": "vba_sample_4.bas",
@@ -564,8 +564,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_d7944af5adbb044b",
-    "parent_id": "node_b38f06e74904b850",
+    "id": "segment_30ad93c8ef2ade24",
+    "parent_id": "node_e2936ad7ad725816",
     "kind": "ASSIGNMENT",
     "name": "nextRow",
     "path": "vba_sample_4.bas",
@@ -576,10 +576,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_9b6f08d924b6a28f",
-    "parent_id": "node_ae23cc6a30658ae4",
-    "kind": "ASSIGNMENT",
-    "name": "sourceBook.Close SaveChanges:",
+    "id": "segment_303c4e3566c270d8",
+    "parent_id": "node_6baf23f5791263d7",
+    "kind": "CALL_OR_COMMAND",
+    "name": "call_or_command_5",
     "path": "vba_sample_4.bas",
     "start_line": 66,
     "end_line": 66,
@@ -588,8 +588,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_5456c0dba6fb3673",
-    "parent_id": "node_f7b70f1a4a3604df",
+    "id": "segment_60550133cb6fea96",
+    "parent_id": "node_41cd584452de9426",
     "kind": "ASSIGNMENT",
     "name": "sourceBook",
     "path": "vba_sample_4.bas",
@@ -600,8 +600,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_d290733b328f311d",
-    "parent_id": "node_454084c814f6794d",
+    "id": "segment_4b8e65384f0e3ccb",
+    "parent_id": "node_80d74bfe7dbe0c3e",
     "kind": "ASSIGNMENT",
     "name": "processedFiles",
     "path": "vba_sample_4.bas",
@@ -612,8 +612,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_1de397694f6fd655",
-    "parent_id": "node_e245fd50caee0be1",
+    "id": "segment_b9ec35fb56cee545",
+    "parent_id": "node_8409343d455efe46",
     "kind": "ASSIGNMENT",
     "name": "fileName",
     "path": "vba_sample_4.bas",
@@ -624,10 +624,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_c79e6bea074283b7",
-    "parent_id": "node_ea5a3d87b67894d2",
-    "kind": "OPAQUE_STATEMENT",
-    "name": "opaque_statement_33",
+    "id": "segment_3ecb8c06adcc4162",
+    "parent_id": "node_6fc1b262e0f7f2e4",
+    "kind": "CALL_OR_COMMAND",
+    "name": "call_or_command_33",
     "path": "vba_sample_4.bas",
     "start_line": 73,
     "end_line": 73,
@@ -660,20 +660,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_cecc3c703f4b2ed3",
-    "parent_id": "node_0461104f00db17e0",
+    "id": "segment_345054b14f1acaee",
+    "parent_id": "node_b57f76072e085cf1",
     "kind": "IF_BLOCK",
     "name": "if_block_36",
     "path": "vba_sample_4.bas",
     "start_line": 76,
-    "end_line": 76,
-    "source": "    If nextRow > 1 Then",
+    "end_line": 79,
+    "source": "    If nextRow > 1 Then\n        outputBook.Worksheets(1).Range(\"A1:F\" & nextRow - 1).Value = _\n            targetSheet.Range(\"A1:F\" & nextRow - 1).Value\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_99280aa06dd3ffcc",
-    "parent_id": "node_e11578a1a9774c3b",
+    "id": "segment_51bca4294335d678",
+    "parent_id": "node_8b99b63d7476fddb",
     "kind": "ASSIGNMENT",
     "name": "outputBook.Worksheets(1).Range(\"A1:F\" & nextRow - 1).Value",
     "path": "vba_sample_4.bas",
@@ -684,10 +684,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_48e0a3cc8191eb23",
-    "parent_id": "node_d0f3ee5c9ad30a2c",
-    "kind": "ASSIGNMENT",
-    "name": "outputBook.SaveAs Filename:",
+    "id": "segment_a5fc409aae835ba2",
+    "parent_id": "node_93581797d07c3c48",
+    "kind": "CALL_OR_COMMAND",
+    "name": "call_or_command_37",
     "path": "vba_sample_4.bas",
     "start_line": 80,
     "end_line": 80,
@@ -696,10 +696,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_2bd3acc2f3040c81",
-    "parent_id": "node_d4e1f8ea737aa219",
-    "kind": "ASSIGNMENT",
-    "name": "outputBook.Close SaveChanges:",
+    "id": "segment_a03da4f5a7bab6cd",
+    "parent_id": "node_295181d4d2a0eaae",
+    "kind": "CALL_OR_COMMAND",
+    "name": "call_or_command_38",
     "path": "vba_sample_4.bas",
     "start_line": 81,
     "end_line": 81,
@@ -732,10 +732,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_bba70c3c96f3ef27",
-    "parent_id": "node_5a1c75b0f7901db7",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_41",
+    "id": "segment_218f06228490438a",
+    "parent_id": "node_57581d04c18d2781",
+    "kind": "LABEL",
+    "name": "HandleError",
     "path": "vba_sample_4.bas",
     "start_line": 85,
     "end_line": 85,
@@ -780,10 +780,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_eb4e331a62758fd0",
-    "parent_id": "node_13e70e4dab8ff1aa",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_45",
+    "id": "segment_1d083e9ad25f3f73",
+    "parent_id": "node_d42cd877b1b98f27",
+    "kind": "LABEL",
+    "name": "CleanUp",
     "path": "vba_sample_4.bas",
     "start_line": 90,
     "end_line": 90,
@@ -828,20 +828,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_f548767ff53961f3",
-    "parent_id": "node_d6681165af302856",
+    "id": "segment_93e66629ba2b61e8",
+    "parent_id": "node_378091aa0e56b9f3",
     "kind": "IF_BLOCK",
     "name": "if_block_49",
     "path": "vba_sample_4.bas",
     "start_line": 94,
-    "end_line": 94,
-    "source": "    If Err.Number = 0 Then",
+    "end_line": 96,
+    "source": "    If Err.Number = 0 Then\n        MsgBox \"Consolidated \" & processedFiles & \" department files.\", vbInformation\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_ea98518f98e6d609",
-    "parent_id": "node_e64f0b86d0d42542",
+    "id": "segment_1af79d3ea187b153",
+    "parent_id": "node_7a361c89868a19a6",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_4.bas",

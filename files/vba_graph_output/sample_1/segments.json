@@ -132,44 +132,44 @@
     "annotations": {}
   },
   {
-    "id": "segment_53d39c20ceeab405",
-    "parent_id": "node_f047b69289f68be9",
+    "id": "segment_dc55d45a48ee1dfd",
+    "parent_id": "node_48c442f15d72c8f7",
     "kind": "FOR_BLOCK",
     "name": "for_block_11",
     "path": "vba_sample_1.bas",
     "start_line": 17,
-    "end_line": 17,
-    "source": "    For rowNumber = 2 To lastRow",
+    "end_line": 28,
+    "source": "    For rowNumber = 2 To lastRow\n        If Len(Trim$(CStr(sourceSheet.Cells(rowNumber, \"A\").Value))) > 0 Then\n            If IsDate(sourceSheet.Cells(rowNumber, \"B\").Value) Then\n                reportSheet.Cells(reportRow, \"A\").Value = sourceSheet.Cells(rowNumber, \"A\").Value\n                reportSheet.Cells(reportRow, \"B\").Value = CDate(sourceSheet.Cells(rowNumber, \"B\").Value)\n                reportSheet.Cells(reportRow, \"C\").Value = sourceSheet.Cells(rowNumber, \"C\").Value\n                reportRow = reportRow + 1\n            Else\n                sourceSheet.Cells(rowNumber, \"B\").Interior.Color = vbYellow\n            End If\n        End If\n    Next rowNumber",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_a87d28036a6caa99",
-    "parent_id": "node_8d5e9b8656cd2b91",
+    "id": "segment_e63760698cdac4e7",
+    "parent_id": "node_1e403110d1e0515e",
     "kind": "IF_BLOCK",
     "name": "if_block_1",
     "path": "vba_sample_1.bas",
     "start_line": 18,
-    "end_line": 18,
-    "source": "        If Len(Trim$(CStr(sourceSheet.Cells(rowNumber, \"A\").Value))) > 0 Then",
+    "end_line": 27,
+    "source": "        If Len(Trim$(CStr(sourceSheet.Cells(rowNumber, \"A\").Value))) > 0 Then\n            If IsDate(sourceSheet.Cells(rowNumber, \"B\").Value) Then\n                reportSheet.Cells(reportRow, \"A\").Value = sourceSheet.Cells(rowNumber, \"A\").Value\n                reportSheet.Cells(reportRow, \"B\").Value = CDate(sourceSheet.Cells(rowNumber, \"B\").Value)\n                reportSheet.Cells(reportRow, \"C\").Value = sourceSheet.Cells(rowNumber, \"C\").Value\n                reportRow = reportRow + 1\n            Else\n                sourceSheet.Cells(rowNumber, \"B\").Interior.Color = vbYellow\n            End If\n        End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_c84dea0e0bafb015",
-    "parent_id": "node_e42e9bdc770a10f3",
+    "id": "segment_6d6e5b8417471b6a",
+    "parent_id": "node_15b81dfa97d2fa0f",
     "kind": "IF_BLOCK",
     "name": "if_block_1",
     "path": "vba_sample_1.bas",
     "start_line": 19,
-    "end_line": 19,
-    "source": "            If IsDate(sourceSheet.Cells(rowNumber, \"B\").Value) Then",
+    "end_line": 26,
+    "source": "            If IsDate(sourceSheet.Cells(rowNumber, \"B\").Value) Then\n                reportSheet.Cells(reportRow, \"A\").Value = sourceSheet.Cells(rowNumber, \"A\").Value\n                reportSheet.Cells(reportRow, \"B\").Value = CDate(sourceSheet.Cells(rowNumber, \"B\").Value)\n                reportSheet.Cells(reportRow, \"C\").Value = sourceSheet.Cells(rowNumber, \"C\").Value\n                reportRow = reportRow + 1\n            Else\n                sourceSheet.Cells(rowNumber, \"B\").Interior.Color = vbYellow\n            End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_2504759e26b72d57",
-    "parent_id": "node_9159215095068f0a",
+    "id": "segment_bbc8da21079d40dd",
+    "parent_id": "node_0bb6358eff2d2011",
     "kind": "ASSIGNMENT",
     "name": "reportSheet.Cells(reportRow, \"A\").Value",
     "path": "vba_sample_1.bas",
@@ -180,8 +180,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_2e266129c78051b4",
-    "parent_id": "node_1922fd35feac5cc9",
+    "id": "segment_268bbd6cba6499c2",
+    "parent_id": "node_b987061180bc60e8",
     "kind": "ASSIGNMENT",
     "name": "reportSheet.Cells(reportRow, \"B\").Value",
     "path": "vba_sample_1.bas",
@@ -192,8 +192,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_2249cb244a98494c",
-    "parent_id": "node_a929e4f3225c534d",
+    "id": "segment_9207e255585a8dbe",
+    "parent_id": "node_e8dda9f9346f34ab",
     "kind": "ASSIGNMENT",
     "name": "reportSheet.Cells(reportRow, \"C\").Value",
     "path": "vba_sample_1.bas",
@@ -204,8 +204,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_9dc28d2c879f56da",
-    "parent_id": "node_355077d20135868e",
+    "id": "segment_9f1116209e0eda10",
+    "parent_id": "node_0a1a80ee952210be",
     "kind": "ASSIGNMENT",
     "name": "reportRow",
     "path": "vba_sample_1.bas",
@@ -216,8 +216,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_133dfae075e80082",
-    "parent_id": "node_2b184db70a2e4e7d",
+    "id": "segment_0ef6c637223bd89d",
+    "parent_id": "node_343520607d77bd8d",
     "kind": "ASSIGNMENT",
     "name": "sourceSheet.Cells(rowNumber, \"B\").Interior.Color",
     "path": "vba_sample_1.bas",
@@ -228,22 +228,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_dd16b44a45548ac7",
-    "parent_id": "node_fae0081f5d6f1e5a",
+    "id": "segment_b5dd19cf6a339504",
+    "parent_id": "node_892cf7b143d60427",
     "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_2",
-    "path": "vba_sample_1.bas",
-    "start_line": 28,
-    "end_line": 28,
-    "source": "    Next rowNumber",
-    "summary": null,
-    "annotations": {}
-  },
-  {
-    "id": "segment_0d67981f4811a1d3",
-    "parent_id": "node_a03b17b9ec4dc5fb",
-    "kind": "OPAQUE_STATEMENT",
-    "name": "opaque_statement_3",
+    "name": "call_or_command_12",
     "path": "vba_sample_1.bas",
     "start_line": 30,
     "end_line": 30,
@@ -252,10 +240,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_261b3cf6f357e611",
-    "parent_id": "node_ab0326cf784f8252",
+    "id": "segment_5988c8060b2567e5",
+    "parent_id": "node_7e1e74d894a4441e",
     "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_4",
+    "name": "call_or_command_13",
     "path": "vba_sample_1.bas",
     "start_line": 31,
     "end_line": 31,
@@ -264,8 +252,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_c72f0d51f6213a64",
-    "parent_id": "node_596c96b569c53185",
+    "id": "segment_9782b34c327c42ab",
+    "parent_id": "node_ae0ba7e2a1139fca",
     "kind": "EXIT",
     "name": "Sub",
     "path": "vba_sample_1.bas",
@@ -276,10 +264,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_213e6e59711283de",
-    "parent_id": "node_c461469cd601c3ed",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_6",
+    "id": "segment_f9686961c3967d3c",
+    "parent_id": "node_47215e7623a9ad5f",
+    "kind": "LABEL",
+    "name": "HandleError",
     "path": "vba_sample_1.bas",
     "start_line": 34,
     "end_line": 34,
@@ -288,10 +276,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_544ec8602974edda",
-    "parent_id": "node_cc1b2274031cb087",
+    "id": "segment_d4ab425b9dcabc5b",
+    "parent_id": "node_a4bfa5aa67027dec",
     "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_7",
+    "name": "call_or_command_16",
     "path": "vba_sample_1.bas",
     "start_line": 35,
     "end_line": 35,

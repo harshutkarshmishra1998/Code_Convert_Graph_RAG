@@ -1,0 +1,627 @@
+{
+  "schema_version": "1.0",
+  "runs": [
+    {
+      "project_root": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_4",
+      "entry_point": {
+        "source_file": "vba_sample_4.bas",
+        "sample_folder": "sample_4",
+        "outputs_written_to": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_4"
+      },
+      "llm_enabled": false,
+      "llm_adapter": null,
+      "checked_artifacts": [
+        {
+          "kind": "graph",
+          "path": "graph.json",
+          "sha256": "a3f3821abe179a0841a20d4ba7927361d8d88c0ae0be9673b39361f94a215ea5"
+        },
+        {
+          "kind": "segments",
+          "path": "segments.json",
+          "sha256": "d2f5ddb63e55c279761a72e28e0b2000260599cd570a2b3778ab7b955d70eaf4"
+        },
+        {
+          "kind": "ir",
+          "path": "universal_ir.json",
+          "sha256": "68598299a301b8718a22a995e875208ff475048a078613379b620368f4290f26"
+        },
+        {
+          "kind": "normalized_ir",
+          "path": "normalized_ir.json",
+          "sha256": "c3745f122e3697d4b716853741a534a3cd918e0592eaa9a7221794aea204ce30"
+        },
+        {
+          "kind": "semantic_analysis",
+          "path": "semantic_analysis.json",
+          "sha256": "3fca9cc2ad432774f4de9203aa59fb126ad07d567cb7f7291fe00fb579bfe592"
+        },
+        {
+          "kind": "manifest",
+          "path": "manifest.json",
+          "sha256": "97bf47ce82c51df49f5d1c374e0ae1f7700a542547517e76f65fa2c363dae753"
+        },
+        {
+          "kind": "report",
+          "path": "report.json",
+          "sha256": "000fd1add75af5308342823319efa3797177e8c2e41f5a26052d48e152cf0261"
+        },
+        {
+          "kind": "source",
+          "path": "vba_sample_4.bas",
+          "sha256": "3a6100a24086f35320010e5524d9db8e8566e5965564172b12befffd97bd6f5a"
+        }
+      ],
+      "issue_count": 10,
+      "addressed_issue_count": 0,
+      "unresolved_issue_count": 10,
+      "issues": [
+        {
+          "issue_id": "5575e98cbd48bc60",
+          "issue": {
+            "code": "IR_EXPRESSIONS_OPAQUE",
+            "severity": "warning",
+            "priority": "high",
+            "subsystem": "expression_frontend",
+            "message": "55 expression/control operands are preserved as source-backed opaque expressions, not parsed AST nodes.",
+            "path": "universal_ir.json",
+            "artifact": "ir",
+            "reported_by": [
+              "ir",
+              "semantic_analysis"
+            ]
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false
+          }
+        },
+        {
+          "issue_id": "5587823c9eaf352d",
+          "issue": {
+            "code": "VBA_ERROR_HANDLING",
+            "severity": "blocking",
+            "priority": "blocking",
+            "subsystem": "runtime_semantics",
+            "message": "VBA On Error runtime semantics",
+            "path": "semantic_analysis.json",
+            "artifact": "semantic_analysis",
+            "reported_by": [
+              "semantic_analysis",
+              "validator"
+            ]
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false
+          }
+        },
+        {
+          "issue_id": "1bf0876e4f475d64",
+          "issue": {
+            "code": "LATE_BOUND_OBJECT_MEMBERS",
+            "severity": "blocking",
+            "priority": "blocking",
+            "subsystem": "type_resolution",
+            "message": "Late-bound COM/Object members",
+            "path": "semantic_analysis.json",
+            "artifact": "semantic_analysis",
+            "reported_by": [
+              "semantic_analysis",
+              "validator"
+            ]
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false
+          }
+        },
+        {
+          "issue_id": "e6de893d2fd87b83",
+          "issue": {
+            "code": "COM_CREATEOBJECT",
+            "severity": "blocking",
+            "priority": "blocking",
+            "subsystem": "runtime_interop",
+            "message": "COM object activation",
+            "path": "semantic_analysis.json",
+            "artifact": "semantic_analysis",
+            "reported_by": [
+              "semantic_analysis",
+              "validator"
+            ]
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false
+          }
+        },
+        {
+          "issue_id": "589f8fc907666ed0",
+          "issue": {
+            "code": "VBA_OBJECT_IDENTITY",
+            "severity": "warning",
+            "priority": "normal",
+            "subsystem": "unknown",
+            "message": "VBA Is object-reference comparison",
+            "path": "semantic_analysis.json",
+            "artifact": "semantic_analysis",
+            "reported_by": [
+              "semantic_analysis"
+            ]
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false
+          }
+        },
+        {
+          "issue_id": "b13e23e6c8cfe606",
+          "issue": {
+            "code": "SEMANTIC_ISSUE_COUNT",
+            "severity": "blocking",
+            "message": "issue_count=158"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false
+          }
+        },
+        {
+          "issue_id": "89459fa66c0f0071",
+          "issue": {
+            "code": "PSEUDOCODE_COVERAGE_GAP",
+            "severity": "warning",
+            "message": "Detailed pseudocode section missing: ConsolidateDepartmentFiles",
+            "procedure": "ConsolidateDepartmentFiles"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false
+          }
+        },
+        {
+          "issue_id": "d8cdc528ce2be432",
+          "issue": {
+            "code": "VBA_ERROR_HANDLING",
+            "severity": "blocking",
+            "message": "VBA On Error runtime semantics"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false
+          }
+        },
+        {
+          "issue_id": "b6277ffa76e2ac9c",
+          "issue": {
+            "code": "LATE_BOUND_OBJECT_MEMBERS",
+            "severity": "blocking",
+            "message": "Late-bound COM/Object members"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false
+          }
+        },
+        {
+          "issue_id": "8ac983f4e7056e25",
+          "issue": {
+            "code": "COM_CREATEOBJECT",
+            "severity": "blocking",
+            "message": "COM object activation"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false
+          }
+        }
+      ],
+      "applied_changes": {},
+      "pseudocode_generation_check": {
+        "artifact": null,
+        "issue_detected": true,
+        "current_run_passed": false,
+        "status": "not_available",
+        "generated_sections": 0,
+        "failed_sections": [],
+        "coverage_gap_count": 1,
+        "coverage_gaps": [
+          "ConsolidateDepartmentFiles"
+        ],
+        "known_previous_issue": {
+          "issue_id": "PSEUDOCODE_LLM_CLIENT_UNSUPPORTED",
+          "detected": true,
+          "detection_source": "previous user-reported pseudocode execution",
+          "description": "The configured LLM value was a model identifier, not an invokable chat client.",
+          "addressed": false,
+          "status": "not_verified",
+          "change": "The pseudocode LLM adapter now constructs a ChatGroq client from the configured model.",
+          "changed_file": "vba_to_java/pseudocode/generate_pseudocode.py",
+          "verification": {
+            "run_status": "not_available",
+            "generated_sections": 0,
+            "failed_sections": [],
+            "coverage_gap_count": 1
+          }
+        }
+      },
+      "timestamp": "2026-11-22T20:54:25.497000+00:00"
+    },
+    {
+      "project_root": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_4",
+      "entry_point": {
+        "source_file": "vba_sample_4.bas",
+        "sample_folder": "sample_4",
+        "outputs_written_to": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_4"
+      },
+      "llm_enabled": false,
+      "llm_adapter": null,
+      "checked_artifacts": [
+        {
+          "kind": "graph",
+          "path": "graph.json",
+          "sha256": "a3f3821abe179a0841a20d4ba7927361d8d88c0ae0be9673b39361f94a215ea5"
+        },
+        {
+          "kind": "segments",
+          "path": "segments.json",
+          "sha256": "d2f5ddb63e55c279761a72e28e0b2000260599cd570a2b3778ab7b955d70eaf4"
+        },
+        {
+          "kind": "ir",
+          "path": "universal_ir.json",
+          "sha256": "68598299a301b8718a22a995e875208ff475048a078613379b620368f4290f26"
+        },
+        {
+          "kind": "normalized_ir",
+          "path": "normalized_ir.json",
+          "sha256": "c3745f122e3697d4b716853741a534a3cd918e0592eaa9a7221794aea204ce30"
+        },
+        {
+          "kind": "semantic_analysis",
+          "path": "semantic_analysis.json",
+          "sha256": "3fca9cc2ad432774f4de9203aa59fb126ad07d567cb7f7291fe00fb579bfe592"
+        },
+        {
+          "kind": "manifest",
+          "path": "manifest.json",
+          "sha256": "97bf47ce82c51df49f5d1c374e0ae1f7700a542547517e76f65fa2c363dae753"
+        },
+        {
+          "kind": "report",
+          "path": "report.json",
+          "sha256": "000fd1add75af5308342823319efa3797177e8c2e41f5a26052d48e152cf0261"
+        },
+        {
+          "kind": "source",
+          "path": "vba_sample_4.bas",
+          "sha256": "3a6100a24086f35320010e5524d9db8e8566e5965564172b12befffd97bd6f5a"
+        }
+      ],
+      "issue_count": 10,
+      "addressed_issue_count": 1,
+      "unresolved_issue_count": 9,
+      "issues": [
+        {
+          "issue_id": "5575e98cbd48bc60",
+          "issue": {
+            "code": "IR_EXPRESSIONS_OPAQUE",
+            "severity": "warning",
+            "priority": "high",
+            "subsystem": "expression_frontend",
+            "message": "55 expression/control operands are preserved as source-backed opaque expressions, not parsed AST nodes.",
+            "path": "universal_ir.json",
+            "artifact": "ir",
+            "reported_by": [
+              "ir",
+              "semantic_analysis"
+            ],
+            "downstream_resolution": {
+              "status": "addressed_and_verified",
+              "method": "semantic_normalization",
+              "artifact": "normalized_ir.json",
+              "evidence": {
+                "parse_error_count": 0,
+                "unresolved_expression_count": 0,
+                "unresolved_node_count": 0
+              }
+            }
+          },
+          "detected": true,
+          "addressed": true,
+          "status": "addressed_and_verified",
+          "changes": [],
+          "resolution_evidence": {
+            "status": "addressed_and_verified",
+            "method": "semantic_normalization",
+            "artifact": "normalized_ir.json",
+            "evidence": {
+              "parse_error_count": 0,
+              "unresolved_expression_count": 0,
+              "unresolved_node_count": 0
+            }
+          },
+          "verification": {
+            "present_in_final_issue_set": false,
+            "absent_after_final_scan": true,
+            "downstream_resolution": {
+              "status": "addressed_and_verified",
+              "method": "semantic_normalization",
+              "artifact": "normalized_ir.json",
+              "evidence": {
+                "parse_error_count": 0,
+                "unresolved_expression_count": 0,
+                "unresolved_node_count": 0
+              }
+            }
+          }
+        },
+        {
+          "issue_id": "5587823c9eaf352d",
+          "issue": {
+            "code": "VBA_ERROR_HANDLING",
+            "severity": "blocking",
+            "priority": "blocking",
+            "subsystem": "runtime_semantics",
+            "message": "VBA On Error runtime semantics",
+            "path": "semantic_analysis.json",
+            "artifact": "semantic_analysis",
+            "reported_by": [
+              "semantic_analysis",
+              "validator"
+            ]
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
+          "issue_id": "1bf0876e4f475d64",
+          "issue": {
+            "code": "LATE_BOUND_OBJECT_MEMBERS",
+            "severity": "blocking",
+            "priority": "blocking",
+            "subsystem": "type_resolution",
+            "message": "Late-bound COM/Object members",
+            "path": "semantic_analysis.json",
+            "artifact": "semantic_analysis",
+            "reported_by": [
+              "semantic_analysis",
+              "validator"
+            ]
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
+          "issue_id": "e6de893d2fd87b83",
+          "issue": {
+            "code": "COM_CREATEOBJECT",
+            "severity": "blocking",
+            "priority": "blocking",
+            "subsystem": "runtime_interop",
+            "message": "COM object activation",
+            "path": "semantic_analysis.json",
+            "artifact": "semantic_analysis",
+            "reported_by": [
+              "semantic_analysis",
+              "validator"
+            ]
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
+          "issue_id": "589f8fc907666ed0",
+          "issue": {
+            "code": "VBA_OBJECT_IDENTITY",
+            "severity": "warning",
+            "priority": "normal",
+            "subsystem": "unknown",
+            "message": "VBA Is object-reference comparison",
+            "path": "semantic_analysis.json",
+            "artifact": "semantic_analysis",
+            "reported_by": [
+              "semantic_analysis"
+            ]
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
+          "issue_id": "b13e23e6c8cfe606",
+          "issue": {
+            "code": "SEMANTIC_ISSUE_COUNT",
+            "severity": "blocking",
+            "message": "issue_count=158"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
+          "issue_id": "89459fa66c0f0071",
+          "issue": {
+            "code": "PSEUDOCODE_COVERAGE_GAP",
+            "severity": "warning",
+            "message": "Detailed pseudocode section missing: ConsolidateDepartmentFiles",
+            "procedure": "ConsolidateDepartmentFiles"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
+          "issue_id": "d8cdc528ce2be432",
+          "issue": {
+            "code": "VBA_ERROR_HANDLING",
+            "severity": "blocking",
+            "message": "VBA On Error runtime semantics"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
+          "issue_id": "b6277ffa76e2ac9c",
+          "issue": {
+            "code": "LATE_BOUND_OBJECT_MEMBERS",
+            "severity": "blocking",
+            "message": "Late-bound COM/Object members"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        },
+        {
+          "issue_id": "8ac983f4e7056e25",
+          "issue": {
+            "code": "COM_CREATEOBJECT",
+            "severity": "blocking",
+            "message": "COM object activation"
+          },
+          "detected": true,
+          "addressed": false,
+          "status": "detected_unresolved",
+          "changes": [],
+          "resolution_evidence": null,
+          "verification": {
+            "present_in_final_issue_set": true,
+            "absent_after_final_scan": false,
+            "downstream_resolution": null
+          }
+        }
+      ],
+      "applied_changes": {},
+      "pseudocode_generation_check": {
+        "artifact": null,
+        "issue_detected": true,
+        "current_run_passed": false,
+        "status": "not_available",
+        "generated_sections": 0,
+        "failed_sections": [],
+        "coverage_gap_count": 1,
+        "coverage_gaps": [
+          "ConsolidateDepartmentFiles"
+        ],
+        "known_previous_issue": {
+          "issue_id": "PSEUDOCODE_LLM_CLIENT_UNSUPPORTED",
+          "detected": true,
+          "detection_source": "previous user-reported pseudocode execution",
+          "description": "The configured LLM value was a model identifier, not an invokable chat client.",
+          "addressed": false,
+          "status": "not_verified",
+          "change": "The pseudocode LLM adapter now constructs a ChatGroq client from the configured model.",
+          "changed_file": "vba_to_java/pseudocode/generate_pseudocode.py",
+          "verification": {
+            "run_status": "not_available",
+            "generated_sections": 0,
+            "failed_sections": [],
+            "coverage_gap_count": 1
+          }
+        }
+      },
+      "timestamp": "2026-11-22T20:57:21.749560+00:00"
+    }
+  ]
+}

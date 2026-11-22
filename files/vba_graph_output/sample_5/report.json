@@ -2,9 +2,9 @@
   "project": "vba_sample_5",
   "module_count": 1,
   "procedure_count": 2,
-  "node_count": 98,
-  "edge_count": 156,
-  "segment_count": 80,
+  "node_count": 95,
+  "edge_count": 150,
+  "segment_count": 77,
   "diagnostic_count": 0,
   "opaque_count": 0
 }

@@ -638,15 +638,15 @@
       }
     },
     {
-      "id": "node_aea662614d6f67b9",
+      "id": "node_97010a8356f861d4",
       "type": "IF_BLOCK",
       "name": "if_block_8",
       "parent_id": "procedure_3f3c2e33f7565363",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 69,
-        "end_line": 69,
-        "text": "    If Len(Trim$(rawPayload)) = 0 Then"
+        "end_line": 73,
+        "text": "    If Len(Trim$(rawPayload)) = 0 Then\n        outReport = \"EMPTY_PAYLOAD\"\n        ExecuteStressPipeline = False\n        Exit Function\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -670,18 +670,25 @@
             "rawPayload"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 73,
+            "end_line": 73
+          }
         }
       }
     },
     {
-      "id": "branch_de50f804879220b7",
+      "id": "branch_bf9955b0784c8e26",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_aea662614d6f67b9",
+      "parent_id": "node_97010a8356f861d4",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 69,
-        "end_line": 69,
+        "end_line": 73,
         "text": ""
       },
       "metadata": {
@@ -709,10 +716,10 @@
       }
     },
     {
-      "id": "node_ce6edafb8243df56",
+      "id": "node_ed3372f19b7eb158",
       "type": "ASSIGNMENT",
       "name": "outReport",
-      "parent_id": "branch_de50f804879220b7",
+      "parent_id": "branch_bf9955b0784c8e26",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 70,
@@ -734,10 +741,10 @@
       }
     },
     {
-      "id": "node_1cbe4f4def5ff158",
+      "id": "node_97f3cb32523e4d3f",
       "type": "ASSIGNMENT",
       "name": "ExecuteStressPipeline",
-      "parent_id": "branch_de50f804879220b7",
+      "parent_id": "branch_bf9955b0784c8e26",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 71,
@@ -759,10 +766,10 @@
       }
     },
     {
-      "id": "node_9b8d0c1012c63b83",
+      "id": "node_51122a6ca7da9103",
       "type": "EXIT",
       "name": "Function",
-      "parent_id": "branch_de50f804879220b7",
+      "parent_id": "branch_bf9955b0784c8e26",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 72,
@@ -978,15 +985,15 @@
       }
     },
     {
-      "id": "node_215a176359ab6cb4",
+      "id": "node_8fe6a84c83bed0fb",
       "type": "FOR_BLOCK",
       "name": "for_block_16",
       "parent_id": "procedure_3f3c2e33f7565363",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 84,
-        "end_line": 84,
-        "text": "    For idx = LBound(lines) To UBound(lines)"
+        "end_line": 112,
+        "text": "    For idx = LBound(lines) To UBound(lines)\n        If idx - LBound(lines) + 1 > maxIterations Then\n            LogAudit \"WARN: Max iteration cap reached at row \" & CStr(idx)\n            Exit For\n        End If\n\n        If Len(Trim$(lines(idx))) > 0 Then\n            If TryParseEntry(lines(idx), idx, batch.Entries(batch.RecordCount + 1)) Then\n                batch.RecordCount = batch.RecordCount + 1\n\n                If (modeMask And ModeNormalize) = ModeNormalize Then\n                    NormalizeEntryInPlace batch.Entries(batch.RecordCount)\n                End If\n\n                tempAmount = batch.Entries(batch.RecordCount).Amount\n                If (modeMask And ModeAggregate) = ModeAggregate Then\n                    batch.TotalAmount = batch.TotalAmount + tempAmount\n                End If\n\n                processedCount = processedCount + 1\n            Else\n                LogAudit \"SKIP: Malformed row \" & CStr(idx) & \" -> \" & Left$(lines(idx), 60)\n            End If\n        End If\n\n        If (idx Mod 250) = 0 Then\n            DoEvents\n        End If\n    Next idx"
       },
       "metadata": {
         "type": "FOR_BLOCK",
@@ -1019,19 +1026,26 @@
           ],
           "parse_status": "tokenized_not_fully_parsed"
         },
-        "step": null
+        "step": null,
+        "terminator": {
+          "source": "Next idx",
+          "location": {
+            "start_line": 112,
+            "end_line": 112
+          }
+        }
       }
     },
     {
-      "id": "node_2e00ffa06525df02",
+      "id": "node_4c6adb46c3abd747",
       "type": "IF_BLOCK",
       "name": "if_block_1",
-      "parent_id": "node_215a176359ab6cb4",
+      "parent_id": "node_8fe6a84c83bed0fb",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 85,
-        "end_line": 85,
-        "text": "        If idx - LBound(lines) + 1 > maxIterations Then"
+        "end_line": 88,
+        "text": "        If idx - LBound(lines) + 1 > maxIterations Then\n            LogAudit \"WARN: Max iteration cap reached at row \" & CStr(idx)\n            Exit For\n        End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -1056,18 +1070,25 @@
             "maxIterations"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 88,
+            "end_line": 88
+          }
         }
       }
     },
     {
-      "id": "branch_6d3927b968e88acf",
+      "id": "branch_847ec920e384408b",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_2e00ffa06525df02",
+      "parent_id": "node_4c6adb46c3abd747",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 85,
-        "end_line": 85,
+        "end_line": 88,
         "text": ""
       },
       "metadata": {
@@ -1096,10 +1117,10 @@
       }
     },
     {
-      "id": "node_cf96d6f3e6e7b8a5",
+      "id": "node_c6cf19a7e6ef123b",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_1",
-      "parent_id": "branch_6d3927b968e88acf",
+      "parent_id": "branch_847ec920e384408b",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 86,
@@ -1129,10 +1150,10 @@
       }
     },
     {
-      "id": "node_feb01514a3689373",
+      "id": "node_fafc81206a2025e7",
       "type": "EXIT",
       "name": "For",
-      "parent_id": "branch_6d3927b968e88acf",
+      "parent_id": "branch_847ec920e384408b",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 87,
@@ -1145,15 +1166,15 @@
       }
     },
     {
-      "id": "node_4779d7d581374396",
+      "id": "node_6f3fbda94b851118",
       "type": "IF_BLOCK",
       "name": "if_block_2",
-      "parent_id": "node_215a176359ab6cb4",
+      "parent_id": "node_8fe6a84c83bed0fb",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 90,
-        "end_line": 90,
-        "text": "        If Len(Trim$(lines(idx))) > 0 Then"
+        "end_line": 107,
+        "text": "        If Len(Trim$(lines(idx))) > 0 Then\n            If TryParseEntry(lines(idx), idx, batch.Entries(batch.RecordCount + 1)) Then\n                batch.RecordCount = batch.RecordCount + 1\n\n                If (modeMask And ModeNormalize) = ModeNormalize Then\n                    NormalizeEntryInPlace batch.Entries(batch.RecordCount)\n                End If\n\n                tempAmount = batch.Entries(batch.RecordCount).Amount\n                If (modeMask And ModeAggregate) = ModeAggregate Then\n                    batch.TotalAmount = batch.TotalAmount + tempAmount\n                End If\n\n                processedCount = processedCount + 1\n            Else\n                LogAudit \"SKIP: Malformed row \" & CStr(idx) & \" -> \" & Left$(lines(idx), 60)\n            End If\n        End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -1181,18 +1202,25 @@
             "idx"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 107,
+            "end_line": 107
+          }
         }
       }
     },
     {
-      "id": "branch_eb0ce0d6395bf847",
+      "id": "branch_09aab9acd35a6c86",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_4779d7d581374396",
+      "parent_id": "node_6f3fbda94b851118",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 90,
-        "end_line": 90,
+        "end_line": 107,
         "text": ""
       },
       "metadata": {
@@ -1224,15 +1252,15 @@
       }
     },
     {
-      "id": "node_dc351022af90ea30",
+      "id": "node_bf36ae17e0e0bfb1",
       "type": "IF_BLOCK",
       "name": "if_block_1",
-      "parent_id": "branch_eb0ce0d6395bf847",
+      "parent_id": "branch_09aab9acd35a6c86",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 91,
-        "end_line": 91,
-        "text": "            If TryParseEntry(lines(idx), idx, batch.Entries(batch.RecordCount + 1)) Then"
+        "end_line": 106,
+        "text": "            If TryParseEntry(lines(idx), idx, batch.Entries(batch.RecordCount + 1)) Then\n                batch.RecordCount = batch.RecordCount + 1\n\n                If (modeMask And ModeNormalize) = ModeNormalize Then\n                    NormalizeEntryInPlace batch.Entries(batch.RecordCount)\n                End If\n\n                tempAmount = batch.Entries(batch.RecordCount).Amount\n                If (modeMask And ModeAggregate) = ModeAggregate Then\n                    batch.TotalAmount = batch.TotalAmount + tempAmount\n                End If\n\n                processedCount = processedCount + 1\n            Else\n                LogAudit \"SKIP: Malformed row \" & CStr(idx) & \" -> \" & Left$(lines(idx), 60)\n            End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -1271,18 +1299,25 @@
             "RecordCount"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 106,
+            "end_line": 106
+          }
         }
       }
     },
     {
-      "id": "branch_0e70aad7ed83f34c",
+      "id": "branch_99c2f7d46263fda3",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_dc351022af90ea30",
+      "parent_id": "node_bf36ae17e0e0bfb1",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 91,
-        "end_line": 91,
+        "end_line": 106,
         "text": ""
       },
       "metadata": {
@@ -1325,10 +1360,10 @@
       }
     },
     {
-      "id": "node_eec034a4f3d65d90",
+      "id": "node_1b40273dac6d0ce8",
       "type": "ASSIGNMENT",
       "name": "batch.RecordCount",
-      "parent_id": "branch_0e70aad7ed83f34c",
+      "parent_id": "branch_99c2f7d46263fda3",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 92,
@@ -1357,15 +1392,15 @@
       }
     },
     {
-      "id": "node_ba2d2254c2b6f626",
+      "id": "node_71d1bd1349f2ed7e",
       "type": "IF_BLOCK",
       "name": "if_block_2",
-      "parent_id": "branch_0e70aad7ed83f34c",
+      "parent_id": "branch_99c2f7d46263fda3",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 94,
-        "end_line": 94,
-        "text": "                If (modeMask And ModeNormalize) = ModeNormalize Then"
+        "end_line": 96,
+        "text": "                If (modeMask And ModeNormalize) = ModeNormalize Then\n                    NormalizeEntryInPlace batch.Entries(batch.RecordCount)\n                End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -1386,18 +1421,25 @@
             "ModeNormalize"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 96,
+            "end_line": 96
+          }
         }
       }
     },
     {
-      "id": "branch_65a467bf313ba18e",
+      "id": "branch_8d2ceb84304ebe16",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_ba2d2254c2b6f626",
+      "parent_id": "node_71d1bd1349f2ed7e",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 94,
-        "end_line": 94,
+        "end_line": 96,
         "text": ""
       },
       "metadata": {
@@ -1422,10 +1464,10 @@
       }
     },
     {
-      "id": "node_26bc623aae263c15",
+      "id": "node_fdc9617535ea343e",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_1",
-      "parent_id": "branch_65a467bf313ba18e",
+      "parent_id": "branch_8d2ceb84304ebe16",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 95,
@@ -1459,10 +1501,10 @@
       }
     },
     {
-      "id": "node_a01509be11b28606",
+      "id": "node_8639238b2ee81650",
       "type": "ASSIGNMENT",
       "name": "tempAmount",
-      "parent_id": "branch_0e70aad7ed83f34c",
+      "parent_id": "branch_99c2f7d46263fda3",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 98,
@@ -1499,15 +1541,15 @@
       }
     },
     {
-      "id": "node_fe18c1d3a9c4a3f2",
+      "id": "node_2dfb05ca6c19e1cc",
       "type": "IF_BLOCK",
       "name": "if_block_4",
-      "parent_id": "branch_0e70aad7ed83f34c",
+      "parent_id": "branch_99c2f7d46263fda3",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 99,
-        "end_line": 99,
-        "text": "                If (modeMask And ModeAggregate) = ModeAggregate Then"
+        "end_line": 101,
+        "text": "                If (modeMask And ModeAggregate) = ModeAggregate Then\n                    batch.TotalAmount = batch.TotalAmount + tempAmount\n                End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -1528,18 +1570,25 @@
             "ModeAggregate"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 101,
+            "end_line": 101
+          }
         }
       }
     },
     {
-      "id": "branch_4ff5f243151a51e2",
+      "id": "branch_86abdc08a1f890e6",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_fe18c1d3a9c4a3f2",
+      "parent_id": "node_2dfb05ca6c19e1cc",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 99,
-        "end_line": 99,
+        "end_line": 101,
         "text": ""
       },
       "metadata": {
@@ -1564,10 +1613,10 @@
       }
     },
     {
-      "id": "node_df5ea32f7b28861f",
+      "id": "node_b45856911d186a5e",
       "type": "ASSIGNMENT",
       "name": "batch.TotalAmount",
-      "parent_id": "branch_4ff5f243151a51e2",
+      "parent_id": "branch_86abdc08a1f890e6",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 100,
@@ -1597,10 +1646,10 @@
       }
     },
     {
-      "id": "node_9def85f229020f31",
+      "id": "node_f678b9588710a1ff",
       "type": "ASSIGNMENT",
       "name": "processedCount",
-      "parent_id": "branch_0e70aad7ed83f34c",
+      "parent_id": "branch_99c2f7d46263fda3",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 103,
@@ -1626,23 +1675,23 @@
       }
     },
     {
-      "id": "branch_9b0a5acad628af22",
+      "id": "branch_9237aa71a751d7a6",
       "type": "ELSE_BRANCH",
       "name": "ELSE",
-      "parent_id": "node_dc351022af90ea30",
+      "parent_id": "node_bf36ae17e0e0bfb1",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 91,
-        "end_line": 91,
+        "end_line": 106,
         "text": ""
       },
       "metadata": {}
     },
     {
-      "id": "node_0d7857cbb0ee6994",
+      "id": "node_3ea2d00167c2218e",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_1",
-      "parent_id": "branch_9b0a5acad628af22",
+      "parent_id": "branch_9237aa71a751d7a6",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 105,
@@ -1688,15 +1737,15 @@
       }
     },
     {
-      "id": "node_4095eaa1822f4a14",
+      "id": "node_67b70541c59f389b",
       "type": "IF_BLOCK",
       "name": "if_block_3",
-      "parent_id": "node_215a176359ab6cb4",
+      "parent_id": "node_8fe6a84c83bed0fb",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 109,
-        "end_line": 109,
-        "text": "        If (idx Mod 250) = 0 Then"
+        "end_line": 111,
+        "text": "        If (idx Mod 250) = 0 Then\n            DoEvents\n        End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -1715,18 +1764,25 @@
             "idx"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 111,
+            "end_line": 111
+          }
         }
       }
     },
     {
-      "id": "branch_462aabab393e06f2",
+      "id": "branch_ea2e0e78393a974e",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_4095eaa1822f4a14",
+      "parent_id": "node_67b70541c59f389b",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 109,
-        "end_line": 109,
+        "end_line": 111,
         "text": ""
       },
       "metadata": {
@@ -1749,10 +1805,10 @@
       }
     },
     {
-      "id": "node_b8fe2dd1ee3fae4d",
+      "id": "node_2aa3b925a66dbc69",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_1",
-      "parent_id": "branch_462aabab393e06f2",
+      "parent_id": "branch_ea2e0e78393a974e",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 110,
@@ -1774,42 +1830,15 @@
       }
     },
     {
-      "id": "node_5e72e3d4739c1df4",
-      "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_4",
-      "parent_id": "node_215a176359ab6cb4",
-      "source": {
-        "path": "vba_sample_6.bas",
-        "start_line": 112,
-        "end_line": 112,
-        "text": "    Next idx"
-      },
-      "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "Next idx",
-          "tokens": [
-            "Next",
-            "idx"
-          ],
-          "identifiers": [
-            "Next",
-            "idx"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
-      }
-    },
-    {
-      "id": "node_598cc540ec6e4742",
+      "id": "node_de69f2784230788f",
       "type": "IF_BLOCK",
-      "name": "if_block_5",
-      "parent_id": "node_215a176359ab6cb4",
+      "name": "if_block_17",
+      "parent_id": "procedure_3f3c2e33f7565363",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 114,
-        "end_line": 114,
-        "text": "    If batch.RecordCount > 0 Then"
+        "end_line": 118,
+        "text": "    If batch.RecordCount > 0 Then\n        ReDim Preserve batch.Entries(1 To batch.RecordCount)\n    Else\n        Erase batch.Entries\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -1827,18 +1856,25 @@
             "RecordCount"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 118,
+            "end_line": 118
+          }
         }
       }
     },
     {
-      "id": "branch_3c28e8b71dcf6d27",
+      "id": "branch_5fbcb9f8518c1d1b",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_598cc540ec6e4742",
+      "parent_id": "node_de69f2784230788f",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 114,
-        "end_line": 114,
+        "end_line": 118,
         "text": ""
       },
       "metadata": {
@@ -1860,10 +1896,10 @@
       }
     },
     {
-      "id": "node_4bb76b3020a99b43",
+      "id": "node_3f520a05c8acbe24",
       "type": "DECLARATION",
       "name": "declaration_1",
-      "parent_id": "branch_3c28e8b71dcf6d27",
+      "parent_id": "branch_5fbcb9f8518c1d1b",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 115,
@@ -1875,23 +1911,23 @@
       }
     },
     {
-      "id": "branch_4b690a48dc164504",
+      "id": "branch_a01757b0ebf79136",
       "type": "ELSE_BRANCH",
       "name": "ELSE",
-      "parent_id": "node_598cc540ec6e4742",
+      "parent_id": "node_de69f2784230788f",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 114,
-        "end_line": 114,
+        "end_line": 118,
         "text": ""
       },
       "metadata": {}
     },
     {
-      "id": "node_1daca8acaf467cf0",
+      "id": "node_3b0c3a75e4310fd6",
       "type": "DECLARATION",
       "name": "declaration_1",
-      "parent_id": "branch_4b690a48dc164504",
+      "parent_id": "branch_a01757b0ebf79136",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 117,
@@ -1903,15 +1939,15 @@
       }
     },
     {
-      "id": "node_0a4ba404c5acc79d",
+      "id": "node_f723f5e75a5eecbb",
       "type": "IF_BLOCK",
-      "name": "if_block_6",
-      "parent_id": "node_215a176359ab6cb4",
+      "name": "if_block_18",
+      "parent_id": "procedure_3f3c2e33f7565363",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 120,
-        "end_line": 120,
-        "text": "    If (modeMask And ModeDeduplicate) = ModeDeduplicate And batch.RecordCount > 1 Then"
+        "end_line": 122,
+        "text": "    If (modeMask And ModeDeduplicate) = ModeDeduplicate And batch.RecordCount > 1 Then\n        DeduplicateBatchEntries batch\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -1940,18 +1976,25 @@
             "RecordCount"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 122,
+            "end_line": 122
+          }
         }
       }
     },
     {
-      "id": "branch_b2d4d0651ea5e461",
+      "id": "branch_1797555380656c71",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_0a4ba404c5acc79d",
+      "parent_id": "node_f723f5e75a5eecbb",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 120,
-        "end_line": 120,
+        "end_line": 122,
         "text": ""
       },
       "metadata": {
@@ -1984,10 +2027,10 @@
       }
     },
     {
-      "id": "node_89e5dfb8242da3d0",
+      "id": "node_c6567d38d6e349ac",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_1",
-      "parent_id": "branch_b2d4d0651ea5e461",
+      "parent_id": "branch_1797555380656c71",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 121,
@@ -2011,15 +2054,15 @@
       }
     },
     {
-      "id": "node_fc00f20fb67b805f",
+      "id": "node_866d0ecb0d1d98a7",
       "type": "IF_BLOCK",
-      "name": "if_block_7",
-      "parent_id": "node_215a176359ab6cb4",
+      "name": "if_block_19",
+      "parent_id": "procedure_3f3c2e33f7565363",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 124,
-        "end_line": 124,
-        "text": "    If (modeMask And ModeAudit) = ModeAudit Then"
+        "end_line": 128,
+        "text": "    If (modeMask And ModeAudit) = ModeAudit Then\n        RunLegacyGoSubAudit batch, statusMsg\n    Else\n        statusMsg = \"AUDIT_SKIPPED\"\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -2040,18 +2083,25 @@
             "ModeAudit"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 128,
+            "end_line": 128
+          }
         }
       }
     },
     {
-      "id": "branch_f47987694b18f2cd",
+      "id": "branch_7e78f54c81a83cc9",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_fc00f20fb67b805f",
+      "parent_id": "node_866d0ecb0d1d98a7",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 124,
-        "end_line": 124,
+        "end_line": 128,
         "text": ""
       },
       "metadata": {
@@ -2076,10 +2126,10 @@
       }
     },
     {
-      "id": "node_fa867ce821f9046a",
+      "id": "node_43c87eac9f9460f5",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_1",
-      "parent_id": "branch_f47987694b18f2cd",
+      "parent_id": "branch_7e78f54c81a83cc9",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 125,
@@ -2106,23 +2156,23 @@
       }
     },
     {
-      "id": "branch_b9d5c5ab0fafedfd",
+      "id": "branch_415f2ccc049462a3",
       "type": "ELSE_BRANCH",
       "name": "ELSE",
-      "parent_id": "node_fc00f20fb67b805f",
+      "parent_id": "node_866d0ecb0d1d98a7",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 124,
-        "end_line": 124,
+        "end_line": 128,
         "text": ""
       },
       "metadata": {}
     },
     {
-      "id": "node_f4192e12d8f04e6a",
+      "id": "node_55fc428270e6cca1",
       "type": "ASSIGNMENT",
       "name": "statusMsg",
-      "parent_id": "branch_b9d5c5ab0fafedfd",
+      "parent_id": "branch_415f2ccc049462a3",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 127,
@@ -2144,10 +2194,10 @@
       }
     },
     {
-      "id": "node_411ed0f00149f58d",
+      "id": "node_909dfacd73eb8320",
       "type": "ASSIGNMENT",
       "name": "outReport",
-      "parent_id": "node_215a176359ab6cb4",
+      "parent_id": "procedure_3f3c2e33f7565363",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 130,
@@ -2181,10 +2231,10 @@
       }
     },
     {
-      "id": "node_794f8673dbd4afe7",
+      "id": "node_4d46898f32b7dd60",
       "type": "ASSIGNMENT",
       "name": "ExecuteStressPipeline",
-      "parent_id": "node_215a176359ab6cb4",
+      "parent_id": "procedure_3f3c2e33f7565363",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 131,
@@ -2206,10 +2256,10 @@
       }
     },
     {
-      "id": "node_f5fe3ced7f660b0b",
+      "id": "node_1167a0321fe9d836",
       "type": "EXIT",
       "name": "Function",
-      "parent_id": "node_215a176359ab6cb4",
+      "parent_id": "procedure_3f3c2e33f7565363",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 132,
@@ -2222,10 +2272,10 @@
       }
     },
     {
-      "id": "node_06fffd078acb134d",
-      "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_11",
-      "parent_id": "node_215a176359ab6cb4",
+      "id": "node_084f70a1e2737e21",
+      "type": "LABEL",
+      "name": "ErrHandler",
+      "parent_id": "procedure_3f3c2e33f7565363",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 134,
@@ -2233,24 +2283,15 @@
         "text": "ErrHandler:"
       },
       "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "ErrHandler",
-          "tokens": [
-            "ErrHandler"
-          ],
-          "identifiers": [
-            "ErrHandler"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
+        "type": "LABEL",
+        "name": "ErrHandler"
       }
     },
     {
-      "id": "node_0dc2ba7235fff9df",
+      "id": "node_01de2bc4142c223e",
       "type": "ASSIGNMENT",
       "name": "outReport",
-      "parent_id": "node_215a176359ab6cb4",
+      "parent_id": "procedure_3f3c2e33f7565363",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 135,
@@ -2293,10 +2334,10 @@
       }
     },
     {
-      "id": "node_8c587b845bda7a9f",
+      "id": "node_4d5816dbbf3f01fb",
       "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_13",
-      "parent_id": "node_215a176359ab6cb4",
+      "name": "call_or_command_25",
+      "parent_id": "procedure_3f3c2e33f7565363",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 136,
@@ -2320,10 +2361,10 @@
       }
     },
     {
-      "id": "node_c8ff3e1ca8c690f2",
+      "id": "node_02899bf13f51f5e3",
       "type": "ASSIGNMENT",
       "name": "ExecuteStressPipeline",
-      "parent_id": "node_215a176359ab6cb4",
+      "parent_id": "procedure_3f3c2e33f7565363",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 137,
@@ -2408,15 +2449,15 @@
       }
     },
     {
-      "id": "node_3f1ce866ba0d84ec",
+      "id": "node_78f182050ae3d66a",
       "type": "IF_BLOCK",
       "name": "if_block_3",
       "parent_id": "procedure_2954e225a14758ac",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 147,
-        "end_line": 147,
-        "text": "    If Err.Number <> 0 Or m_NodeRegistry Is Nothing Then"
+        "end_line": 150,
+        "text": "    If Err.Number <> 0 Or m_NodeRegistry Is Nothing Then\n        Err.Clear\n        Set m_NodeRegistry = New Collection\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -2439,18 +2480,25 @@
             "m_NodeRegistry"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 150,
+            "end_line": 150
+          }
         }
       }
     },
     {
-      "id": "branch_6619542906ea2d0e",
+      "id": "branch_7c46e16213fac170",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_3f1ce866ba0d84ec",
+      "parent_id": "node_78f182050ae3d66a",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 147,
-        "end_line": 147,
+        "end_line": 150,
         "text": ""
       },
       "metadata": {
@@ -2477,10 +2525,10 @@
       }
     },
     {
-      "id": "node_d831e5362b6e3f4d",
+      "id": "node_cfd569f11f81187d",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_1",
-      "parent_id": "branch_6619542906ea2d0e",
+      "parent_id": "branch_7c46e16213fac170",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 148,
@@ -2505,10 +2553,10 @@
       }
     },
     {
-      "id": "node_e2cea7c9ceb50e57",
+      "id": "node_52abbc2b3cfeeda5",
       "type": "ASSIGNMENT",
       "name": "m_NodeRegistry",
-      "parent_id": "branch_6619542906ea2d0e",
+      "parent_id": "branch_7c46e16213fac170",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 149,
@@ -2548,15 +2596,15 @@
       }
     },
     {
-      "id": "node_6a8f088e4a556f91",
+      "id": "node_24f1ed972f5f2486",
       "type": "IF_BLOCK",
       "name": "if_block_5",
       "parent_id": "procedure_2954e225a14758ac",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 153,
-        "end_line": 153,
-        "text": "    If m_AuditLog Is Nothing Then"
+        "end_line": 155,
+        "text": "    If m_AuditLog Is Nothing Then\n        Set m_AuditLog = New Collection\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -2571,18 +2619,25 @@
             "m_AuditLog"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 155,
+            "end_line": 155
+          }
         }
       }
     },
     {
-      "id": "branch_43ac3641a59c6ac3",
+      "id": "branch_485f1940b97116a3",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_6a8f088e4a556f91",
+      "parent_id": "node_24f1ed972f5f2486",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 153,
-        "end_line": 153,
+        "end_line": 155,
         "text": ""
       },
       "metadata": {
@@ -2601,10 +2656,10 @@
       }
     },
     {
-      "id": "node_12cc7c39c9ce24f5",
+      "id": "node_38dd48a5cbc79cc9",
       "type": "ASSIGNMENT",
       "name": "m_AuditLog",
-      "parent_id": "branch_43ac3641a59c6ac3",
+      "parent_id": "branch_485f1940b97116a3",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 154,
@@ -3196,15 +3251,15 @@
       }
     },
     {
-      "id": "node_7efc4ca17feb331a",
+      "id": "node_3ef226c43b8e3b48",
       "type": "IF_BLOCK",
       "name": "if_block_9",
       "parent_id": "procedure_5406ba068a801948",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 194,
-        "end_line": 194,
-        "text": "    If IsNumeric(Trim$(parts(LBound(parts)))) Then"
+        "end_line": 198,
+        "text": "    If IsNumeric(Trim$(parts(LBound(parts)))) Then\n        target.EntryId = CLng(Trim$(parts(LBound(parts))))\n    Else\n        target.EntryId = fallbackId\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -3234,18 +3289,25 @@
             "parts"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 198,
+            "end_line": 198
+          }
         }
       }
     },
     {
-      "id": "branch_d0bf1b1101023f14",
+      "id": "branch_6f724cf0213805c7",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_7efc4ca17feb331a",
+      "parent_id": "node_3ef226c43b8e3b48",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 194,
-        "end_line": 194,
+        "end_line": 198,
         "text": ""
       },
       "metadata": {
@@ -3279,10 +3341,10 @@
       }
     },
     {
-      "id": "node_039d543899f34c47",
+      "id": "node_a8e3fa57ed2e9bca",
       "type": "ASSIGNMENT",
       "name": "target.EntryId",
-      "parent_id": "branch_d0bf1b1101023f14",
+      "parent_id": "branch_6f724cf0213805c7",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 195,
@@ -3323,23 +3385,23 @@
       }
     },
     {
-      "id": "branch_5e67308ef435f001",
+      "id": "branch_f0629f764d628a5d",
       "type": "ELSE_BRANCH",
       "name": "ELSE",
-      "parent_id": "node_7efc4ca17feb331a",
+      "parent_id": "node_3ef226c43b8e3b48",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 194,
-        "end_line": 194,
+        "end_line": 198,
         "text": ""
       },
       "metadata": {}
     },
     {
-      "id": "node_20184205ade54941",
+      "id": "node_31c16c5fcc56e29e",
       "type": "ASSIGNMENT",
       "name": "target.EntryId",
-      "parent_id": "branch_5e67308ef435f001",
+      "parent_id": "branch_f0629f764d628a5d",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 197,
@@ -3537,15 +3599,15 @@
       }
     },
     {
-      "id": "node_ce14680a94492020",
+      "id": "node_22a3757cc99ce5c4",
       "type": "IF_BLOCK",
       "name": "if_block_14",
       "parent_id": "procedure_5406ba068a801948",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 206,
-        "end_line": 206,
-        "text": "    If IsDate(Trim$(CStr(parts(LBound(parts) + 3)))) Then"
+        "end_line": 210,
+        "text": "    If IsDate(Trim$(CStr(parts(LBound(parts) + 3)))) Then\n        target.PostedDate = CDate(Trim$(CStr(parts(LBound(parts) + 3))))\n    Else\n        target.PostedDate = Date\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -3581,18 +3643,25 @@
             "parts"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 210,
+            "end_line": 210
+          }
         }
       }
     },
     {
-      "id": "branch_6f1bc9f8ceddefe6",
+      "id": "branch_9d471a0dbbd7dcf8",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_ce14680a94492020",
+      "parent_id": "node_22a3757cc99ce5c4",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 206,
-        "end_line": 206,
+        "end_line": 210,
         "text": ""
       },
       "metadata": {
@@ -3632,10 +3701,10 @@
       }
     },
     {
-      "id": "node_3e73f7f90f8291ce",
+      "id": "node_36e9e826cbfcf5e3",
       "type": "ASSIGNMENT",
       "name": "target.PostedDate",
-      "parent_id": "branch_6f1bc9f8ceddefe6",
+      "parent_id": "branch_9d471a0dbbd7dcf8",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 207,
@@ -3682,23 +3751,23 @@
       }
     },
     {
-      "id": "branch_d899b550551a6e15",
+      "id": "branch_737c3120134d47a0",
       "type": "ELSE_BRANCH",
       "name": "ELSE",
-      "parent_id": "node_ce14680a94492020",
+      "parent_id": "node_22a3757cc99ce5c4",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 206,
-        "end_line": 206,
+        "end_line": 210,
         "text": ""
       },
       "metadata": {}
     },
     {
-      "id": "node_989d00868408b3fd",
+      "id": "node_c14c3b6a8276c534",
       "type": "ASSIGNMENT",
       "name": "target.PostedDate",
-      "parent_id": "branch_d899b550551a6e15",
+      "parent_id": "branch_737c3120134d47a0",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 209,
@@ -3747,15 +3816,15 @@
       }
     },
     {
-      "id": "node_89250deb55b34335",
+      "id": "node_52d2138d44ba8ab6",
       "type": "IF_BLOCK",
       "name": "if_block_16",
       "parent_id": "procedure_5406ba068a801948",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 214,
-        "end_line": 214,
-        "text": "    If UBound(parts) - LBound(parts) + 1 >= 5 And Len(Trim$(CStr(parts(LBound(parts) + 4)))) > 0 Then"
+        "end_line": 223,
+        "text": "    If UBound(parts) - LBound(parts) + 1 >= 5 And Len(Trim$(CStr(parts(LBound(parts) + 4)))) > 0 Then\n        tagTokens = Split(CStr(parts(LBound(parts) + 4)), \",\")\n        ReDim target.Tags(1 To UBound(tagTokens) - LBound(tagTokens) + 1)\n        For i = LBound(tagTokens) To UBound(tagTokens)\n            target.Tags(i - LBound(tagTokens) + 1) = LCase$(Trim$(CStr(tagTokens(i))))\n        Next i\n    Else\n        ReDim target.Tags(1 To 1)\n        target.Tags(1) = \"untagged\"\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -3811,18 +3880,25 @@
             "parts"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 223,
+            "end_line": 223
+          }
         }
       }
     },
     {
-      "id": "branch_433a002859477031",
+      "id": "branch_d2bbcbc050f82238",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_89250deb55b34335",
+      "parent_id": "node_52d2138d44ba8ab6",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 214,
-        "end_line": 214,
+        "end_line": 223,
         "text": ""
       },
       "metadata": {
@@ -3882,10 +3958,10 @@
       }
     },
     {
-      "id": "node_58c4cf31134c7b42",
+      "id": "node_0c2a9919a8f4babd",
       "type": "ASSIGNMENT",
       "name": "tagTokens",
-      "parent_id": "branch_433a002859477031",
+      "parent_id": "branch_d2bbcbc050f82238",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 215,
@@ -3929,10 +4005,10 @@
       }
     },
     {
-      "id": "node_d2d2cda947391025",
+      "id": "node_2d65287d4997a4b5",
       "type": "DECLARATION",
       "name": "declaration_2",
-      "parent_id": "branch_433a002859477031",
+      "parent_id": "branch_d2bbcbc050f82238",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 216,
@@ -3944,15 +4020,15 @@
       }
     },
     {
-      "id": "node_3f70c0e3711c1fd4",
+      "id": "node_e2b12ce2b4639f34",
       "type": "FOR_BLOCK",
       "name": "for_block_3",
-      "parent_id": "branch_433a002859477031",
+      "parent_id": "branch_d2bbcbc050f82238",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 217,
-        "end_line": 217,
-        "text": "        For i = LBound(tagTokens) To UBound(tagTokens)"
+        "end_line": 219,
+        "text": "        For i = LBound(tagTokens) To UBound(tagTokens)\n            target.Tags(i - LBound(tagTokens) + 1) = LCase$(Trim$(CStr(tagTokens(i))))\n        Next i"
       },
       "metadata": {
         "type": "FOR_BLOCK",
@@ -3985,14 +4061,21 @@
           ],
           "parse_status": "tokenized_not_fully_parsed"
         },
-        "step": null
+        "step": null,
+        "terminator": {
+          "source": "Next i",
+          "location": {
+            "start_line": 219,
+            "end_line": 219
+          }
+        }
       }
     },
     {
-      "id": "node_28112d3c87e5ccab",
+      "id": "node_2ffef688fb0b555e",
       "type": "ASSIGNMENT",
       "name": "target.Tags(i - LBound(tagTokens) + 1)",
-      "parent_id": "node_3f70c0e3711c1fd4",
+      "parent_id": "node_e2b12ce2b4639f34",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 218,
@@ -4034,62 +4117,23 @@
       }
     },
     {
-      "id": "node_3c4afcbad673f25c",
-      "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_2",
-      "parent_id": "node_3f70c0e3711c1fd4",
+      "id": "branch_53d3b4ed45f57b48",
+      "type": "ELSE_BRANCH",
+      "name": "ELSE",
+      "parent_id": "node_52d2138d44ba8ab6",
       "source": {
         "path": "vba_sample_6.bas",
-        "start_line": 219,
-        "end_line": 219,
-        "text": "        Next i"
+        "start_line": 214,
+        "end_line": 223,
+        "text": ""
       },
-      "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "Next i",
-          "tokens": [
-            "Next",
-            "i"
-          ],
-          "identifiers": [
-            "Next",
-            "i"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
-      }
+      "metadata": {}
     },
     {
-      "id": "node_a52b3a4b9cc9a545",
-      "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_3",
-      "parent_id": "node_3f70c0e3711c1fd4",
-      "source": {
-        "path": "vba_sample_6.bas",
-        "start_line": 220,
-        "end_line": 220,
-        "text": "    Else"
-      },
-      "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "Else",
-          "tokens": [
-            "Else"
-          ],
-          "identifiers": [
-            "Else"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
-      }
-    },
-    {
-      "id": "node_84cf2d5d08a8f38b",
+      "id": "node_1cc0234171518559",
       "type": "DECLARATION",
-      "name": "declaration_4",
-      "parent_id": "node_3f70c0e3711c1fd4",
+      "name": "declaration_1",
+      "parent_id": "branch_53d3b4ed45f57b48",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 221,
@@ -4101,10 +4145,10 @@
       }
     },
     {
-      "id": "node_053e853662f572f9",
+      "id": "node_3a1f5f092aaf418c",
       "type": "ASSIGNMENT",
       "name": "target.Tags(1)",
-      "parent_id": "node_3f70c0e3711c1fd4",
+      "parent_id": "branch_53d3b4ed45f57b48",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 222,
@@ -4167,9 +4211,9 @@
       }
     },
     {
-      "id": "node_0e6a310e50e0f681",
-      "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_19",
+      "id": "node_a733f78453709363",
+      "type": "LABEL",
+      "name": "ParseFail",
       "parent_id": "procedure_5406ba068a801948",
       "source": {
         "path": "vba_sample_6.bas",
@@ -4178,17 +4222,8 @@
         "text": "ParseFail:"
       },
       "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "ParseFail",
-          "tokens": [
-            "ParseFail"
-          ],
-          "identifiers": [
-            "ParseFail"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
+        "type": "LABEL",
+        "name": "ParseFail"
       }
     },
     {
@@ -4351,15 +4386,15 @@
       }
     },
     {
-      "id": "node_61e6af0d1b3f409f",
+      "id": "node_51e59ec53ef6b98f",
       "type": "IF_BLOCK",
       "name": "if_block_5",
       "parent_id": "procedure_828ca9a47cc9a739",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 242,
-        "end_line": 242,
-        "text": "    If entry.Amount < 0@ Then"
+        "end_line": 248,
+        "text": "    If entry.Amount < 0@ Then\n        entry.IsReconciled = False\n    ElseIf entry.Amount >= 10000@ Then\n        entry.IsReconciled = False\n    Else\n        entry.IsReconciled = True\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -4378,18 +4413,25 @@
             "Amount"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 248,
+            "end_line": 248
+          }
         }
       }
     },
     {
-      "id": "branch_e8d3e84f1850d4a9",
+      "id": "branch_5a2e572dfc4aec47",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_61e6af0d1b3f409f",
+      "parent_id": "node_51e59ec53ef6b98f",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 242,
-        "end_line": 242,
+        "end_line": 248,
         "text": ""
       },
       "metadata": {
@@ -4412,10 +4454,10 @@
       }
     },
     {
-      "id": "node_6ccaf08151161e0a",
+      "id": "node_cae4c1723af59675",
       "type": "ASSIGNMENT",
       "name": "entry.IsReconciled",
-      "parent_id": "branch_e8d3e84f1850d4a9",
+      "parent_id": "branch_5a2e572dfc4aec47",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 243,
@@ -4437,14 +4479,14 @@
       }
     },
     {
-      "id": "branch_33c36c1fda65d7a6",
+      "id": "branch_1265da0844772e55",
       "type": "ELSEIF_BRANCH",
       "name": "ELSEIF",
-      "parent_id": "node_61e6af0d1b3f409f",
+      "parent_id": "node_51e59ec53ef6b98f",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 242,
-        "end_line": 242,
+        "end_line": 248,
         "text": ""
       },
       "metadata": {
@@ -4467,10 +4509,10 @@
       }
     },
     {
-      "id": "node_43ac1487fda8608f",
+      "id": "node_8d69510eb01d9d41",
       "type": "ASSIGNMENT",
       "name": "entry.IsReconciled",
-      "parent_id": "branch_33c36c1fda65d7a6",
+      "parent_id": "branch_1265da0844772e55",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 245,
@@ -4492,23 +4534,23 @@
       }
     },
     {
-      "id": "branch_3b2be55690e17723",
+      "id": "branch_b2e1c605ee68637d",
       "type": "ELSE_BRANCH",
       "name": "ELSE",
-      "parent_id": "node_61e6af0d1b3f409f",
+      "parent_id": "node_51e59ec53ef6b98f",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 242,
-        "end_line": 242,
+        "end_line": 248,
         "text": ""
       },
       "metadata": {}
     },
     {
-      "id": "node_645cd40dde5390b6",
+      "id": "node_c711f8b79dd1f572",
       "type": "ASSIGNMENT",
       "name": "entry.IsReconciled",
-      "parent_id": "branch_3b2be55690e17723",
+      "parent_id": "branch_b2e1c605ee68637d",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 247,
@@ -4555,15 +4597,15 @@
       }
     },
     {
-      "id": "node_5653de368a0032f9",
+      "id": "node_91c0e7afa6263c54",
       "type": "IF_BLOCK",
       "name": "if_block_7",
       "parent_id": "procedure_828ca9a47cc9a739",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 251,
-        "end_line": 251,
-        "text": "    If (Not Not entry.Tags) <> 0 Then"
+        "end_line": 256,
+        "text": "    If (Not Not entry.Tags) <> 0 Then\n        For i = LBound(entry.Tags) To UBound(entry.Tags)\n            entry.Tags(i) = Trim$(entry.Tags(i))\n            If entry.Tags(i) = \"core\" Then hasCoreTag = True\n        Next i\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -4585,18 +4627,25 @@
             "Tags"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 256,
+            "end_line": 256
+          }
         }
       }
     },
     {
-      "id": "branch_b34736944a22b437",
+      "id": "branch_a64c8a80c0a91951",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_5653de368a0032f9",
+      "parent_id": "node_91c0e7afa6263c54",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 251,
-        "end_line": 251,
+        "end_line": 256,
         "text": ""
       },
       "metadata": {
@@ -4622,15 +4671,15 @@
       }
     },
     {
-      "id": "node_341246740e8902eb",
+      "id": "node_99579ee9a40d0e69",
       "type": "FOR_BLOCK",
       "name": "for_block_1",
-      "parent_id": "branch_b34736944a22b437",
+      "parent_id": "branch_a64c8a80c0a91951",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 252,
-        "end_line": 252,
-        "text": "        For i = LBound(entry.Tags) To UBound(entry.Tags)"
+        "end_line": 255,
+        "text": "        For i = LBound(entry.Tags) To UBound(entry.Tags)\n            entry.Tags(i) = Trim$(entry.Tags(i))\n            If entry.Tags(i) = \"core\" Then hasCoreTag = True\n        Next i"
       },
       "metadata": {
         "type": "FOR_BLOCK",
@@ -4669,14 +4718,21 @@
           ],
           "parse_status": "tokenized_not_fully_parsed"
         },
-        "step": null
+        "step": null,
+        "terminator": {
+          "source": "Next i",
+          "location": {
+            "start_line": 255,
+            "end_line": 255
+          }
+        }
       }
     },
     {
-      "id": "node_509c30eccc45e14a",
+      "id": "node_f5e5f7255f3178d9",
       "type": "ASSIGNMENT",
       "name": "entry.Tags(i)",
-      "parent_id": "node_341246740e8902eb",
+      "parent_id": "node_99579ee9a40d0e69",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 253,
@@ -4712,10 +4768,10 @@
       }
     },
     {
-      "id": "node_a2a50ec2e796e60b",
+      "id": "node_4f0c954e94e9b368",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_2",
-      "parent_id": "node_341246740e8902eb",
+      "parent_id": "node_99579ee9a40d0e69",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 254,
@@ -4754,42 +4810,15 @@
       }
     },
     {
-      "id": "node_060a546ba4cbd0f7",
-      "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_3",
-      "parent_id": "node_341246740e8902eb",
-      "source": {
-        "path": "vba_sample_6.bas",
-        "start_line": 255,
-        "end_line": 255,
-        "text": "        Next i"
-      },
-      "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "Next i",
-          "tokens": [
-            "Next",
-            "i"
-          ],
-          "identifiers": [
-            "Next",
-            "i"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
-      }
-    },
-    {
-      "id": "node_e38f9889a27fb0c3",
+      "id": "node_83442f28e378cdce",
       "type": "IF_BLOCK",
       "name": "if_block_8",
       "parent_id": "procedure_828ca9a47cc9a739",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 258,
-        "end_line": 258,
-        "text": "    If Not hasCoreTag Then"
+        "end_line": 266,
+        "text": "    If Not hasCoreTag Then\n        If (Not Not entry.Tags) = 0 Then\n            ReDim entry.Tags(1 To 1)\n            entry.Tags(1) = \"core\"\n        Else\n            ReDim Preserve entry.Tags(1 To UBound(entry.Tags) + 1)\n            entry.Tags(UBound(entry.Tags)) = \"core\"\n        End If\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -4803,18 +4832,25 @@
             "hasCoreTag"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 266,
+            "end_line": 266
+          }
         }
       }
     },
     {
-      "id": "branch_f52b6e1fc78467f1",
+      "id": "branch_332d39a5a80816ec",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_e38f9889a27fb0c3",
+      "parent_id": "node_83442f28e378cdce",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 258,
-        "end_line": 258,
+        "end_line": 266,
         "text": ""
       },
       "metadata": {
@@ -4832,15 +4868,15 @@
       }
     },
     {
-      "id": "node_e02b73d82c7afb11",
+      "id": "node_dace8a5ff43af25d",
       "type": "IF_BLOCK",
       "name": "if_block_1",
-      "parent_id": "branch_f52b6e1fc78467f1",
+      "parent_id": "branch_332d39a5a80816ec",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 259,
-        "end_line": 259,
-        "text": "        If (Not Not entry.Tags) = 0 Then"
+        "end_line": 265,
+        "text": "        If (Not Not entry.Tags) = 0 Then\n            ReDim entry.Tags(1 To 1)\n            entry.Tags(1) = \"core\"\n        Else\n            ReDim Preserve entry.Tags(1 To UBound(entry.Tags) + 1)\n            entry.Tags(UBound(entry.Tags)) = \"core\"\n        End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -4862,18 +4898,25 @@
             "Tags"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 265,
+            "end_line": 265
+          }
         }
       }
     },
     {
-      "id": "branch_8a7d2da311c67996",
+      "id": "branch_39d5ca8db6e8b05b",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_e02b73d82c7afb11",
+      "parent_id": "node_dace8a5ff43af25d",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 259,
-        "end_line": 259,
+        "end_line": 265,
         "text": ""
       },
       "metadata": {
@@ -4899,10 +4942,10 @@
       }
     },
     {
-      "id": "node_272c6228549f35b4",
+      "id": "node_a84cb7522bbbf75b",
       "type": "DECLARATION",
       "name": "declaration_1",
-      "parent_id": "branch_8a7d2da311c67996",
+      "parent_id": "branch_39d5ca8db6e8b05b",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 260,
@@ -4914,10 +4957,10 @@
       }
     },
     {
-      "id": "node_a25c41b6e120d103",
+      "id": "node_f24c43cd89b8a55c",
       "type": "ASSIGNMENT",
       "name": "entry.Tags(1)",
-      "parent_id": "branch_8a7d2da311c67996",
+      "parent_id": "branch_39d5ca8db6e8b05b",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 261,
@@ -4939,23 +4982,23 @@
       }
     },
     {
-      "id": "branch_718e25eabd02834d",
+      "id": "branch_b4229754a55ec412",
       "type": "ELSE_BRANCH",
       "name": "ELSE",
-      "parent_id": "node_e02b73d82c7afb11",
+      "parent_id": "node_dace8a5ff43af25d",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 259,
-        "end_line": 259,
+        "end_line": 265,
         "text": ""
       },
       "metadata": {}
     },
     {
-      "id": "node_15ec310cbc4f2833",
+      "id": "node_cccf21ba5e3b4a28",
       "type": "DECLARATION",
       "name": "declaration_1",
-      "parent_id": "branch_718e25eabd02834d",
+      "parent_id": "branch_b4229754a55ec412",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 263,
@@ -4967,10 +5010,10 @@
       }
     },
     {
-      "id": "node_d6540e9db9f4fbd1",
+      "id": "node_94ea09f773c8fbf6",
       "type": "ASSIGNMENT",
       "name": "entry.Tags(UBound(entry.Tags))",
-      "parent_id": "branch_718e25eabd02834d",
+      "parent_id": "branch_b4229754a55ec412",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 264,
@@ -5271,15 +5314,15 @@
       }
     },
     {
-      "id": "node_1fc5072e0af929d0",
+      "id": "node_e3675e89be830644",
       "type": "FOR_BLOCK",
       "name": "for_block_14",
       "parent_id": "procedure_3104c2440f9bdac3",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 290,
-        "end_line": 290,
-        "text": "    For i = LBound(batch.Entries) To UBound(batch.Entries)"
+        "end_line": 300,
+        "text": "    For i = LBound(batch.Entries) To UBound(batch.Entries)\n        key = CStr(batch.Entries(i).EntryId) & \"::\" & batch.Entries(i).AccountCode\n        If Not seenKeys.Exists(key) Then\n            seenKeys.Add key, i\n            keptCount = keptCount + 1\n            kept(keptCount) = batch.Entries(i)\n            newTotal = newTotal + batch.Entries(i).Amount\n        Else\n            LogAudit \"DEDUP: Dropped duplicate key \" & key\n        End If\n    Next i"
       },
       "metadata": {
         "type": "FOR_BLOCK",
@@ -5318,14 +5361,21 @@
           ],
           "parse_status": "tokenized_not_fully_parsed"
         },
-        "step": null
+        "step": null,
+        "terminator": {
+          "source": "Next i",
+          "location": {
+            "start_line": 300,
+            "end_line": 300
+          }
+        }
       }
     },
     {
-      "id": "node_6e7cd8bf45cbc255",
+      "id": "node_14b3de1510d59966",
       "type": "ASSIGNMENT",
       "name": "key",
-      "parent_id": "node_1fc5072e0af929d0",
+      "parent_id": "node_e3675e89be830644",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 291,
@@ -5378,15 +5428,15 @@
       }
     },
     {
-      "id": "node_b0bbed75e4faa856",
+      "id": "node_d133e2cc2016b6f1",
       "type": "IF_BLOCK",
       "name": "if_block_2",
-      "parent_id": "node_1fc5072e0af929d0",
+      "parent_id": "node_e3675e89be830644",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 292,
-        "end_line": 292,
-        "text": "        If Not seenKeys.Exists(key) Then"
+        "end_line": 299,
+        "text": "        If Not seenKeys.Exists(key) Then\n            seenKeys.Add key, i\n            keptCount = keptCount + 1\n            kept(keptCount) = batch.Entries(i)\n            newTotal = newTotal + batch.Entries(i).Amount\n        Else\n            LogAudit \"DEDUP: Dropped duplicate key \" & key\n        End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -5407,18 +5457,25 @@
             "key"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 299,
+            "end_line": 299
+          }
         }
       }
     },
     {
-      "id": "branch_d039294159e3bc9c",
+      "id": "branch_3d22e220afc64b7d",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_b0bbed75e4faa856",
+      "parent_id": "node_d133e2cc2016b6f1",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 292,
-        "end_line": 292,
+        "end_line": 299,
         "text": ""
       },
       "metadata": {
@@ -5443,10 +5500,10 @@
       }
     },
     {
-      "id": "node_6999e76df3e581cf",
+      "id": "node_d9a86142717ebddc",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_1",
-      "parent_id": "branch_d039294159e3bc9c",
+      "parent_id": "branch_3d22e220afc64b7d",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 293,
@@ -5476,10 +5533,10 @@
       }
     },
     {
-      "id": "node_ce3018f3884445d7",
+      "id": "node_34ea3f3c8307f1ed",
       "type": "ASSIGNMENT",
       "name": "keptCount",
-      "parent_id": "branch_d039294159e3bc9c",
+      "parent_id": "branch_3d22e220afc64b7d",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 294,
@@ -5505,10 +5562,10 @@
       }
     },
     {
-      "id": "node_f1de2eea59c25338",
+      "id": "node_ef88546d891cb6ea",
       "type": "ASSIGNMENT",
       "name": "kept(keptCount)",
-      "parent_id": "branch_d039294159e3bc9c",
+      "parent_id": "branch_3d22e220afc64b7d",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 295,
@@ -5539,10 +5596,10 @@
       }
     },
     {
-      "id": "node_79b0a720a6b7464d",
+      "id": "node_2ab0bd50d5afd2c2",
       "type": "ASSIGNMENT",
       "name": "newTotal",
-      "parent_id": "branch_d039294159e3bc9c",
+      "parent_id": "branch_3d22e220afc64b7d",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 296,
@@ -5579,23 +5636,23 @@
       }
     },
     {
-      "id": "branch_6f69e5315d0dfb5b",
+      "id": "branch_cee5dd3fafa12a93",
       "type": "ELSE_BRANCH",
       "name": "ELSE",
-      "parent_id": "node_b0bbed75e4faa856",
+      "parent_id": "node_d133e2cc2016b6f1",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 292,
-        "end_line": 292,
+        "end_line": 299,
         "text": ""
       },
       "metadata": {}
     },
     {
-      "id": "node_68380935d350d3ea",
+      "id": "node_9fa0b0f52140cb0e",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_1",
-      "parent_id": "branch_6f69e5315d0dfb5b",
+      "parent_id": "branch_cee5dd3fafa12a93",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 298,
@@ -5621,42 +5678,15 @@
       }
     },
     {
-      "id": "node_e4c4cec3bff2439d",
-      "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_3",
-      "parent_id": "node_1fc5072e0af929d0",
-      "source": {
-        "path": "vba_sample_6.bas",
-        "start_line": 300,
-        "end_line": 300,
-        "text": "    Next i"
-      },
-      "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "Next i",
-          "tokens": [
-            "Next",
-            "i"
-          ],
-          "identifiers": [
-            "Next",
-            "i"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
-      }
-    },
-    {
-      "id": "node_fe2499d3c3e9969e",
+      "id": "node_6596bbbc190148ce",
       "type": "IF_BLOCK",
-      "name": "if_block_4",
-      "parent_id": "node_1fc5072e0af929d0",
+      "name": "if_block_15",
+      "parent_id": "procedure_3104c2440f9bdac3",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 302,
-        "end_line": 302,
-        "text": "    If keptCount > 0 Then"
+        "end_line": 307,
+        "text": "    If keptCount > 0 Then\n        ReDim Preserve kept(1 To keptCount)\n        batch.Entries = kept\n    Else\n        Erase batch.Entries\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -5671,18 +5701,25 @@
             "keptCount"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 307,
+            "end_line": 307
+          }
         }
       }
     },
     {
-      "id": "branch_84097510a88d0ee5",
+      "id": "branch_db9ea720edfe1ef7",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_fe2499d3c3e9969e",
+      "parent_id": "node_6596bbbc190148ce",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 302,
-        "end_line": 302,
+        "end_line": 307,
         "text": ""
       },
       "metadata": {
@@ -5701,10 +5738,10 @@
       }
     },
     {
-      "id": "node_4f7a2f2c551883d5",
+      "id": "node_637da41c162a5d19",
       "type": "DECLARATION",
       "name": "declaration_1",
-      "parent_id": "branch_84097510a88d0ee5",
+      "parent_id": "branch_db9ea720edfe1ef7",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 303,
@@ -5716,10 +5753,10 @@
       }
     },
     {
-      "id": "node_1950ac8cebfd2c26",
+      "id": "node_405b9a7d2c5269df",
       "type": "ASSIGNMENT",
       "name": "batch.Entries",
-      "parent_id": "branch_84097510a88d0ee5",
+      "parent_id": "branch_db9ea720edfe1ef7",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 304,
@@ -5743,23 +5780,23 @@
       }
     },
     {
-      "id": "branch_26d772567def52dd",
+      "id": "branch_4c2606492b58d358",
       "type": "ELSE_BRANCH",
       "name": "ELSE",
-      "parent_id": "node_fe2499d3c3e9969e",
+      "parent_id": "node_6596bbbc190148ce",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 302,
-        "end_line": 302,
+        "end_line": 307,
         "text": ""
       },
       "metadata": {}
     },
     {
-      "id": "node_3bed871832c855ad",
+      "id": "node_4cb73453f67105fa",
       "type": "DECLARATION",
       "name": "declaration_1",
-      "parent_id": "branch_26d772567def52dd",
+      "parent_id": "branch_4c2606492b58d358",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 306,
@@ -5771,10 +5808,10 @@
       }
     },
     {
-      "id": "node_ea98d20000ebf7f9",
+      "id": "node_2da71d5a4a1c2284",
       "type": "ASSIGNMENT",
       "name": "batch.RecordCount",
-      "parent_id": "node_1fc5072e0af929d0",
+      "parent_id": "procedure_3104c2440f9bdac3",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 309,
@@ -5798,10 +5835,10 @@
       }
     },
     {
-      "id": "node_4eb4c29aa53364d6",
+      "id": "node_b9cb40156bce9734",
       "type": "ASSIGNMENT",
       "name": "batch.TotalAmount",
-      "parent_id": "node_1fc5072e0af929d0",
+      "parent_id": "procedure_3104c2440f9bdac3",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 310,
@@ -5947,15 +5984,15 @@
       }
     },
     {
-      "id": "node_0f5ffec81fa528c2",
+      "id": "node_cce7c46834e3d5cf",
       "type": "FOR_BLOCK",
       "name": "for_block_6",
       "parent_id": "procedure_389d8383c644215c",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 325,
-        "end_line": 325,
-        "text": "    For i = LBound(batch.Entries) To UBound(batch.Entries)"
+        "end_line": 332,
+        "text": "    For i = LBound(batch.Entries) To UBound(batch.Entries)\n        currentCheckId = batch.Entries(i).EntryId\n        GoSub ValidateSingleEntry\n        If checkResult <> \"OK\" Then\n            flaggedCount = flaggedCount + 1\n            LogAudit \"FLAG [\" & CStr(currentCheckId) & \"]: \" & checkResult\n        End If\n    Next i"
       },
       "metadata": {
         "type": "FOR_BLOCK",
@@ -5994,14 +6031,21 @@
           ],
           "parse_status": "tokenized_not_fully_parsed"
         },
-        "step": null
+        "step": null,
+        "terminator": {
+          "source": "Next i",
+          "location": {
+            "start_line": 332,
+            "end_line": 332
+          }
+        }
       }
     },
     {
-      "id": "node_2c858543a758c897",
+      "id": "node_5f6dd0f21a90d34d",
       "type": "ASSIGNMENT",
       "name": "currentCheckId",
-      "parent_id": "node_0f5ffec81fa528c2",
+      "parent_id": "node_cce7c46834e3d5cf",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 326,
@@ -6035,10 +6079,10 @@
       }
     },
     {
-      "id": "node_8869cb146f121934",
+      "id": "node_dd620dce91f7a989",
       "type": "JUMP",
       "name": "ValidateSingleEntry",
-      "parent_id": "node_0f5ffec81fa528c2",
+      "parent_id": "node_cce7c46834e3d5cf",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 327,
@@ -6052,15 +6096,15 @@
       }
     },
     {
-      "id": "node_a0344ff817d15da7",
+      "id": "node_e3c7999c6d2f15b6",
       "type": "IF_BLOCK",
       "name": "if_block_3",
-      "parent_id": "node_0f5ffec81fa528c2",
+      "parent_id": "node_cce7c46834e3d5cf",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 328,
-        "end_line": 328,
-        "text": "        If checkResult <> \"OK\" Then"
+        "end_line": 331,
+        "text": "        If checkResult <> \"OK\" Then\n            flaggedCount = flaggedCount + 1\n            LogAudit \"FLAG [\" & CStr(currentCheckId) & \"]: \" & checkResult\n        End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -6075,18 +6119,25 @@
             "checkResult"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 331,
+            "end_line": 331
+          }
         }
       }
     },
     {
-      "id": "branch_3b7eae926a78780a",
+      "id": "branch_8151820c1924193c",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_a0344ff817d15da7",
+      "parent_id": "node_e3c7999c6d2f15b6",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 328,
-        "end_line": 328,
+        "end_line": 331,
         "text": ""
       },
       "metadata": {
@@ -6105,10 +6156,10 @@
       }
     },
     {
-      "id": "node_cfbdf9a7e1a5d9d6",
+      "id": "node_10d4251c2bc7425e",
       "type": "ASSIGNMENT",
       "name": "flaggedCount",
-      "parent_id": "branch_3b7eae926a78780a",
+      "parent_id": "branch_8151820c1924193c",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 329,
@@ -6134,10 +6185,10 @@
       }
     },
     {
-      "id": "node_fa1917e41de276b9",
+      "id": "node_b8d82f36b8dc7ed5",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_2",
-      "parent_id": "branch_3b7eae926a78780a",
+      "parent_id": "branch_8151820c1924193c",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 330,
@@ -6172,37 +6223,10 @@
       }
     },
     {
-      "id": "node_3ae76171b33af152",
-      "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_4",
-      "parent_id": "node_0f5ffec81fa528c2",
-      "source": {
-        "path": "vba_sample_6.bas",
-        "start_line": 332,
-        "end_line": 332,
-        "text": "    Next i"
-      },
-      "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "Next i",
-          "tokens": [
-            "Next",
-            "i"
-          ],
-          "identifiers": [
-            "Next",
-            "i"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
-      }
-    },
-    {
-      "id": "node_2496540888ca71b2",
+      "id": "node_c1d88043be7a4acf",
       "type": "ASSIGNMENT",
       "name": "summaryStatus",
-      "parent_id": "node_0f5ffec81fa528c2",
+      "parent_id": "procedure_389d8383c644215c",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 334,
@@ -6244,10 +6268,10 @@
       }
     },
     {
-      "id": "node_47a9ba6648803a9e",
+      "id": "node_f4b34556b755a112",
       "type": "EXIT",
       "name": "Sub",
-      "parent_id": "node_0f5ffec81fa528c2",
+      "parent_id": "procedure_389d8383c644215c",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 335,
@@ -6260,10 +6284,10 @@
       }
     },
     {
-      "id": "node_27d5c8f0f1cfa31f",
-      "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_7",
-      "parent_id": "node_0f5ffec81fa528c2",
+      "id": "node_f0aebbbf0414ea63",
+      "type": "LABEL",
+      "name": "ValidateSingleEntry",
+      "parent_id": "procedure_389d8383c644215c",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 337,
@@ -6271,29 +6295,20 @@
         "text": "ValidateSingleEntry:"
       },
       "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "ValidateSingleEntry",
-          "tokens": [
-            "ValidateSingleEntry"
-          ],
-          "identifiers": [
-            "ValidateSingleEntry"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
+        "type": "LABEL",
+        "name": "ValidateSingleEntry"
       }
     },
     {
-      "id": "node_ec4bbfbf75561d18",
+      "id": "node_a69ff6d80906edd3",
       "type": "IF_BLOCK",
-      "name": "if_block_8",
-      "parent_id": "node_0f5ffec81fa528c2",
+      "name": "if_block_10",
+      "parent_id": "procedure_389d8383c644215c",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 338,
-        "end_line": 338,
-        "text": "    If batch.Entries(i).Amount = 0@ Then"
+        "end_line": 344,
+        "text": "    If batch.Entries(i).Amount = 0@ Then\n        checkResult = \"ZERO_AMOUNT\"\n    ElseIf Year(batch.Entries(i).PostedDate) < 1990 Or Year(batch.Entries(i).PostedDate) > 2099 Then\n        checkResult = \"OUT_OF_RANGE_DATE\"\n    Else\n        checkResult = \"OK\"\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -6319,18 +6334,25 @@
             "Amount"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 344,
+            "end_line": 344
+          }
         }
       }
     },
     {
-      "id": "branch_02d49bec5fb90314",
+      "id": "branch_c1a8b8a2235a8bdb",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_ec4bbfbf75561d18",
+      "parent_id": "node_a69ff6d80906edd3",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 338,
-        "end_line": 338,
+        "end_line": 344,
         "text": ""
       },
       "metadata": {
@@ -6360,10 +6382,10 @@
       }
     },
     {
-      "id": "node_2cf4f32af2af4386",
+      "id": "node_a6c21b14becec38a",
       "type": "ASSIGNMENT",
       "name": "checkResult",
-      "parent_id": "branch_02d49bec5fb90314",
+      "parent_id": "branch_c1a8b8a2235a8bdb",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 339,
@@ -6385,14 +6407,14 @@
       }
     },
     {
-      "id": "branch_516d064f9a95641c",
+      "id": "branch_1e9e1d5510c755e9",
       "type": "ELSEIF_BRANCH",
       "name": "ELSEIF",
-      "parent_id": "node_ec4bbfbf75561d18",
+      "parent_id": "node_a69ff6d80906edd3",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 338,
-        "end_line": 338,
+        "end_line": 344,
         "text": ""
       },
       "metadata": {
@@ -6444,10 +6466,10 @@
       }
     },
     {
-      "id": "node_ec4527cad638066d",
+      "id": "node_22636a60f3aeaa4a",
       "type": "ASSIGNMENT",
       "name": "checkResult",
-      "parent_id": "branch_516d064f9a95641c",
+      "parent_id": "branch_1e9e1d5510c755e9",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 341,
@@ -6469,23 +6491,23 @@
       }
     },
     {
-      "id": "branch_4b393c4a664abe34",
+      "id": "branch_f8fddef77b914622",
       "type": "ELSE_BRANCH",
       "name": "ELSE",
-      "parent_id": "node_ec4bbfbf75561d18",
+      "parent_id": "node_a69ff6d80906edd3",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 338,
-        "end_line": 338,
+        "end_line": 344,
         "text": ""
       },
       "metadata": {}
     },
     {
-      "id": "node_62c1dd85e41310dc",
+      "id": "node_18006073000ff587",
       "type": "ASSIGNMENT",
       "name": "checkResult",
-      "parent_id": "branch_4b393c4a664abe34",
+      "parent_id": "branch_f8fddef77b914622",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 343,
@@ -6507,10 +6529,10 @@
       }
     },
     {
-      "id": "node_bef80d30fea56438",
+      "id": "node_fc034b1f6d2560b2",
       "type": "RETURN_CONTROL",
-      "name": "return_control_9",
-      "parent_id": "node_0f5ffec81fa528c2",
+      "name": "return_control_11",
+      "parent_id": "procedure_389d8383c644215c",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 345,
@@ -6682,15 +6704,15 @@
       }
     },
     {
-      "id": "node_facd7eddb3cfb3a3",
+      "id": "node_f387427c953713ba",
       "type": "IF_BLOCK",
       "name": "if_block_8",
       "parent_id": "procedure_7a9d528b68fd7ddd",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 366,
-        "end_line": 366,
-        "text": "    If currentDepth >= maxDepth Then"
+        "end_line": 369,
+        "text": "    If currentDepth >= maxDepth Then\n        EvaluateDependencyDepth = currentDepth\n        Exit Function\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -6706,18 +6728,25 @@
             "maxDepth"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 369,
+            "end_line": 369
+          }
         }
       }
     },
     {
-      "id": "branch_d93f8e593bc4807b",
+      "id": "branch_8c74c5727030310d",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_facd7eddb3cfb3a3",
+      "parent_id": "node_f387427c953713ba",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 366,
-        "end_line": 366,
+        "end_line": 369,
         "text": ""
       },
       "metadata": {
@@ -6737,10 +6766,10 @@
       }
     },
     {
-      "id": "node_f1fb309d81e94d89",
+      "id": "node_f3c7ae5381ed9a89",
       "type": "ASSIGNMENT",
       "name": "EvaluateDependencyDepth",
-      "parent_id": "branch_d93f8e593bc4807b",
+      "parent_id": "branch_8c74c5727030310d",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 367,
@@ -6764,10 +6793,10 @@
       }
     },
     {
-      "id": "node_ec6e84c8aea95e97",
+      "id": "node_13c94b051041d6df",
       "type": "EXIT",
       "name": "Function",
-      "parent_id": "branch_d93f8e593bc4807b",
+      "parent_id": "branch_8c74c5727030310d",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 368,
@@ -6780,15 +6809,15 @@
       }
     },
     {
-      "id": "node_b2a4d7acd45ec6dd",
+      "id": "node_502bb902b978c55d",
       "type": "IF_BLOCK",
       "name": "if_block_9",
       "parent_id": "procedure_7a9d528b68fd7ddd",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 371,
-        "end_line": 371,
-        "text": "    If Len(Trim$(edgesSpec)) = 0 Or Len(Trim$(startNode)) = 0 Then"
+        "end_line": 374,
+        "text": "    If Len(Trim$(edgesSpec)) = 0 Or Len(Trim$(startNode)) = 0 Then\n        EvaluateDependencyDepth = currentDepth\n        Exit Function\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -6826,18 +6855,25 @@
             "startNode"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 374,
+            "end_line": 374
+          }
         }
       }
     },
     {
-      "id": "branch_afb49957110cb60d",
+      "id": "branch_e9a985e038609758",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_b2a4d7acd45ec6dd",
+      "parent_id": "node_502bb902b978c55d",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 371,
-        "end_line": 371,
+        "end_line": 374,
         "text": ""
       },
       "metadata": {
@@ -6879,10 +6915,10 @@
       }
     },
     {
-      "id": "node_93531d1316ffc01d",
+      "id": "node_7d08e8be8ac892f9",
       "type": "ASSIGNMENT",
       "name": "EvaluateDependencyDepth",
-      "parent_id": "branch_afb49957110cb60d",
+      "parent_id": "branch_e9a985e038609758",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 372,
@@ -6906,10 +6942,10 @@
       }
     },
     {
-      "id": "node_ce40574c5341f3cb",
+      "id": "node_e58ec67f1b6407fd",
       "type": "EXIT",
       "name": "Function",
-      "parent_id": "branch_afb49957110cb60d",
+      "parent_id": "branch_e9a985e038609758",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 373,
@@ -6982,15 +7018,15 @@
       }
     },
     {
-      "id": "node_37c750cc7bc47056",
+      "id": "node_52bbb4547a6ef4be",
       "type": "FOR_BLOCK",
       "name": "for_block_12",
       "parent_id": "procedure_7a9d528b68fd7ddd",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 379,
-        "end_line": 379,
-        "text": "    For i = LBound(pairs) To UBound(pairs)"
+        "end_line": 394,
+        "text": "    For i = LBound(pairs) To UBound(pairs)\n        edgeParts = Split(CStr(pairs(i)), \">\")\n        If UBound(edgeParts) - LBound(edgeParts) + 1 = 2 Then\n            srcNode = Trim$(CStr(edgeParts(LBound(edgeParts))))\n            dstNode = Trim$(CStr(edgeParts(LBound(edgeParts) + 1)))\n\n            If StrComp(srcNode, Trim$(startNode), vbTextCompare) = 0 And Len(dstNode) > 0 Then\n                If StrComp(dstNode, srcNode, vbTextCompare) <> 0 Then\n                    childDepth = EvaluateDependencyDepth(edgesSpec, dstNode, currentDepth + 1, maxDepth)\n                    If childDepth > maxChildDepth Then\n                        maxChildDepth = childDepth\n                    End If\n                End If\n            End If\n        End If\n    Next i"
       },
       "metadata": {
         "type": "FOR_BLOCK",
@@ -7023,14 +7059,21 @@
           ],
           "parse_status": "tokenized_not_fully_parsed"
         },
-        "step": null
+        "step": null,
+        "terminator": {
+          "source": "Next i",
+          "location": {
+            "start_line": 394,
+            "end_line": 394
+          }
+        }
       }
     },
     {
-      "id": "node_b039891d68bbddb7",
+      "id": "node_d6466628cf80d2d0",
       "type": "ASSIGNMENT",
       "name": "edgeParts",
-      "parent_id": "node_37c750cc7bc47056",
+      "parent_id": "node_52bbb4547a6ef4be",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 380,
@@ -7068,15 +7111,15 @@
       }
     },
     {
-      "id": "node_fe34c76a77abd702",
+      "id": "node_078d332431af9af4",
       "type": "IF_BLOCK",
       "name": "if_block_2",
-      "parent_id": "node_37c750cc7bc47056",
+      "parent_id": "node_52bbb4547a6ef4be",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 381,
-        "end_line": 381,
-        "text": "        If UBound(edgeParts) - LBound(edgeParts) + 1 = 2 Then"
+        "end_line": 393,
+        "text": "        If UBound(edgeParts) - LBound(edgeParts) + 1 = 2 Then\n            srcNode = Trim$(CStr(edgeParts(LBound(edgeParts))))\n            dstNode = Trim$(CStr(edgeParts(LBound(edgeParts) + 1)))\n\n            If StrComp(srcNode, Trim$(startNode), vbTextCompare) = 0 And Len(dstNode) > 0 Then\n                If StrComp(dstNode, srcNode, vbTextCompare) <> 0 Then\n                    childDepth = EvaluateDependencyDepth(edgesSpec, dstNode, currentDepth + 1, maxDepth)\n                    If childDepth > maxChildDepth Then\n                        maxChildDepth = childDepth\n                    End If\n                End If\n            End If\n        End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -7104,18 +7147,25 @@
             "edgeParts"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 393,
+            "end_line": 393
+          }
         }
       }
     },
     {
-      "id": "branch_02cbdd473a016b17",
+      "id": "branch_c8624fcee153cd44",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_fe34c76a77abd702",
+      "parent_id": "node_078d332431af9af4",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 381,
-        "end_line": 381,
+        "end_line": 393,
         "text": ""
       },
       "metadata": {
@@ -7147,10 +7197,10 @@
       }
     },
     {
-      "id": "node_315f3f17117ac43f",
+      "id": "node_75a749ef41da4612",
       "type": "ASSIGNMENT",
       "name": "srcNode",
-      "parent_id": "branch_02cbdd473a016b17",
+      "parent_id": "branch_c8624fcee153cd44",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 382,
@@ -7191,10 +7241,10 @@
       }
     },
     {
-      "id": "node_19dff37bab7277dc",
+      "id": "node_3fd91dcdb1fdc336",
       "type": "ASSIGNMENT",
       "name": "dstNode",
-      "parent_id": "branch_02cbdd473a016b17",
+      "parent_id": "branch_c8624fcee153cd44",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 383,
@@ -7237,15 +7287,15 @@
       }
     },
     {
-      "id": "node_016bd1e78cc5bcb8",
+      "id": "node_e3b1f5c28ccb33aa",
       "type": "IF_BLOCK",
       "name": "if_block_3",
-      "parent_id": "branch_02cbdd473a016b17",
+      "parent_id": "branch_c8624fcee153cd44",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 385,
-        "end_line": 385,
-        "text": "            If StrComp(srcNode, Trim$(startNode), vbTextCompare) = 0 And Len(dstNode) > 0 Then"
+        "end_line": 392,
+        "text": "            If StrComp(srcNode, Trim$(startNode), vbTextCompare) = 0 And Len(dstNode) > 0 Then\n                If StrComp(dstNode, srcNode, vbTextCompare) <> 0 Then\n                    childDepth = EvaluateDependencyDepth(edgesSpec, dstNode, currentDepth + 1, maxDepth)\n                    If childDepth > maxChildDepth Then\n                        maxChildDepth = childDepth\n                    End If\n                End If\n            End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -7284,18 +7334,25 @@
             "dstNode"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 392,
+            "end_line": 392
+          }
         }
       }
     },
     {
-      "id": "branch_48dc67c88e22a46f",
+      "id": "branch_0176ed4bad5f7b09",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_016bd1e78cc5bcb8",
+      "parent_id": "node_e3b1f5c28ccb33aa",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 385,
-        "end_line": 385,
+        "end_line": 392,
         "text": ""
       },
       "metadata": {
@@ -7338,15 +7395,15 @@
       }
     },
     {
-      "id": "node_9327a029a78512a9",
+      "id": "node_006eb50933962a1c",
       "type": "IF_BLOCK",
       "name": "if_block_1",
-      "parent_id": "branch_48dc67c88e22a46f",
+      "parent_id": "branch_0176ed4bad5f7b09",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 386,
-        "end_line": 386,
-        "text": "                If StrComp(dstNode, srcNode, vbTextCompare) <> 0 Then"
+        "end_line": 391,
+        "text": "                If StrComp(dstNode, srcNode, vbTextCompare) <> 0 Then\n                    childDepth = EvaluateDependencyDepth(edgesSpec, dstNode, currentDepth + 1, maxDepth)\n                    If childDepth > maxChildDepth Then\n                        maxChildDepth = childDepth\n                    End If\n                End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -7371,18 +7428,25 @@
             "vbTextCompare"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 391,
+            "end_line": 391
+          }
         }
       }
     },
     {
-      "id": "branch_f46900e36b173fbb",
+      "id": "branch_5b70fa321269e2c2",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_9327a029a78512a9",
+      "parent_id": "node_006eb50933962a1c",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 386,
-        "end_line": 386,
+        "end_line": 391,
         "text": ""
       },
       "metadata": {
@@ -7411,10 +7475,10 @@
       }
     },
     {
-      "id": "node_3dcade2365cd545f",
+      "id": "node_5d06f1153e3be63c",
       "type": "ASSIGNMENT",
       "name": "childDepth",
-      "parent_id": "branch_f46900e36b173fbb",
+      "parent_id": "branch_5b70fa321269e2c2",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 387,
@@ -7453,15 +7517,15 @@
       }
     },
     {
-      "id": "node_c2e3c9a9fbd33e81",
+      "id": "node_1d42771ad170e68d",
       "type": "IF_BLOCK",
       "name": "if_block_2",
-      "parent_id": "branch_f46900e36b173fbb",
+      "parent_id": "branch_5b70fa321269e2c2",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 388,
-        "end_line": 388,
-        "text": "                    If childDepth > maxChildDepth Then"
+        "end_line": 390,
+        "text": "                    If childDepth > maxChildDepth Then\n                        maxChildDepth = childDepth\n                    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -7477,18 +7541,25 @@
             "maxChildDepth"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 390,
+            "end_line": 390
+          }
         }
       }
     },
     {
-      "id": "branch_184b6fb2efa36ed8",
+      "id": "branch_53dd1f6942043674",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_c2e3c9a9fbd33e81",
+      "parent_id": "node_1d42771ad170e68d",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 388,
-        "end_line": 388,
+        "end_line": 390,
         "text": ""
       },
       "metadata": {
@@ -7508,10 +7579,10 @@
       }
     },
     {
-      "id": "node_b494edcd96ac0347",
+      "id": "node_2259db84dd325e42",
       "type": "ASSIGNMENT",
       "name": "maxChildDepth",
-      "parent_id": "branch_184b6fb2efa36ed8",
+      "parent_id": "branch_53dd1f6942043674",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 389,
@@ -7535,37 +7606,10 @@
       }
     },
     {
-      "id": "node_983366628e1ba824",
-      "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_3",
-      "parent_id": "node_37c750cc7bc47056",
-      "source": {
-        "path": "vba_sample_6.bas",
-        "start_line": 394,
-        "end_line": 394,
-        "text": "    Next i"
-      },
-      "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "Next i",
-          "tokens": [
-            "Next",
-            "i"
-          ],
-          "identifiers": [
-            "Next",
-            "i"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
-      }
-    },
-    {
-      "id": "node_cdcec246d516507a",
+      "id": "node_4c405fb017e062d9",
       "type": "ASSIGNMENT",
       "name": "EvaluateDependencyDepth",
-      "parent_id": "node_37c750cc7bc47056",
+      "parent_id": "procedure_7a9d528b68fd7ddd",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 396,
@@ -8071,15 +8115,15 @@
       }
     },
     {
-      "id": "node_1814f17bfddd4435",
+      "id": "node_5bfd4a2ae95c5a17",
       "type": "FOR_BLOCK",
       "name": "for_block_5",
       "parent_id": "procedure_96e279adeedf7e49",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 433,
-        "end_line": 433,
-        "text": "    For i = 1 To Len(ident)"
+        "end_line": 439,
+        "text": "    For i = 1 To Len(ident)\n        ch = Mid$(ident, i, 1)\n        If (ch >= \"A\" And ch <= \"Z\") Or (ch >= \"a\" And ch <= \"z\") Or _\n           (ch >= \"0\" And ch <= \"9\") Or ch = \"_\" Or ch = \".\" Then\n            outStr = outStr & ch\n        End If\n    Next i"
       },
       "metadata": {
         "type": "FOR_BLOCK",
@@ -8106,14 +8150,21 @@
           ],
           "parse_status": "tokenized_not_fully_parsed"
         },
-        "step": null
+        "step": null,
+        "terminator": {
+          "source": "Next i",
+          "location": {
+            "start_line": 439,
+            "end_line": 439
+          }
+        }
       }
     },
     {
-      "id": "node_0b21f7881b6d7bdd",
+      "id": "node_5e86aca737717970",
       "type": "ASSIGNMENT",
       "name": "ch",
-      "parent_id": "node_1814f17bfddd4435",
+      "parent_id": "node_5bfd4a2ae95c5a17",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 434,
@@ -8147,15 +8198,15 @@
       }
     },
     {
-      "id": "node_c3a6302e29ccc136",
+      "id": "node_f4a73101d9578ff3",
       "type": "IF_BLOCK",
       "name": "if_block_2",
-      "parent_id": "node_1814f17bfddd4435",
+      "parent_id": "node_5bfd4a2ae95c5a17",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 435,
-        "end_line": 436,
-        "text": "        If (ch >= \"A\" And ch <= \"Z\") Or (ch >= \"a\" And ch <= \"z\") Or _\n           (ch >= \"0\" And ch <= \"9\") Or ch = \"_\" Or ch = \".\" Then"
+        "end_line": 438,
+        "text": "        If (ch >= \"A\" And ch <= \"Z\") Or (ch >= \"a\" And ch <= \"z\") Or _\n           (ch >= \"0\" And ch <= \"9\") Or ch = \"_\" Or ch = \".\" Then\n            outStr = outStr & ch\n        End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -8211,18 +8262,25 @@
             "ch"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 438,
+            "end_line": 438
+          }
         }
       }
     },
     {
-      "id": "branch_9866f9cf9b71057e",
+      "id": "branch_79cf23104477a089",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_c3a6302e29ccc136",
+      "parent_id": "node_f4a73101d9578ff3",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 435,
-        "end_line": 436,
+        "end_line": 438,
         "text": ""
       },
       "metadata": {
@@ -8282,10 +8340,10 @@
       }
     },
     {
-      "id": "node_655e381e6a7b1841",
+      "id": "node_6b66aee87f9422d7",
       "type": "ASSIGNMENT",
       "name": "outStr",
-      "parent_id": "branch_9866f9cf9b71057e",
+      "parent_id": "branch_79cf23104477a089",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 437,
@@ -8312,37 +8370,10 @@
       }
     },
     {
-      "id": "node_316db758ded4fbf5",
+      "id": "node_b6caf0196700c3c5",
       "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_3",
-      "parent_id": "node_1814f17bfddd4435",
-      "source": {
-        "path": "vba_sample_6.bas",
-        "start_line": 439,
-        "end_line": 439,
-        "text": "    Next i"
-      },
-      "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "Next i",
-          "tokens": [
-            "Next",
-            "i"
-          ],
-          "identifiers": [
-            "Next",
-            "i"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
-      }
-    },
-    {
-      "id": "node_782537bbe7481a2e",
-      "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_4",
-      "parent_id": "node_1814f17bfddd4435",
+      "name": "call_or_command_6",
+      "parent_id": "procedure_96e279adeedf7e49",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 441,
@@ -8378,10 +8409,10 @@
       }
     },
     {
-      "id": "node_0d3d3f47361d3be3",
+      "id": "node_677438c930033b51",
       "type": "ASSIGNMENT",
       "name": "SanitizeSqlIdentifier",
-      "parent_id": "node_1814f17bfddd4435",
+      "parent_id": "procedure_96e279adeedf7e49",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 442,
@@ -8766,15 +8797,15 @@
       }
     },
     {
-      "id": "node_230e6824f049a683",
+      "id": "node_6c7286fc4911f8c2",
       "type": "IF_BLOCK",
       "name": "if_block_11",
       "parent_id": "procedure_94d926ec9cd086c7",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 465,
-        "end_line": 465,
-        "text": "    If Not m_AuditLog Is Nothing And m_AuditLog.Count > 0 Then"
+        "end_line": 472,
+        "text": "    If Not m_AuditLog Is Nothing And m_AuditLog.Count > 0 Then\n        sb = sb & \"--- RECENT AUDIT LOGS ---\" & vbCrLf\n        logLimit = m_AuditLog.Count\n        If logLimit > 15 Then logLimit = 15\n        For i = 1 To logLimit\n            sb = sb & CStr(m_AuditLog(i)) & vbCrLf\n        Next i\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -8798,18 +8829,25 @@
             "Count"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 472,
+            "end_line": 472
+          }
         }
       }
     },
     {
-      "id": "branch_770f907e2eaf383c",
+      "id": "branch_93acee075477b89d",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_230e6824f049a683",
+      "parent_id": "node_6c7286fc4911f8c2",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 465,
-        "end_line": 465,
+        "end_line": 472,
         "text": ""
       },
       "metadata": {
@@ -8837,10 +8875,10 @@
       }
     },
     {
-      "id": "node_54656175a954af5d",
+      "id": "node_4b33f95937a7b839",
       "type": "ASSIGNMENT",
       "name": "sb",
-      "parent_id": "branch_770f907e2eaf383c",
+      "parent_id": "branch_93acee075477b89d",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 466,
@@ -8869,10 +8907,10 @@
       }
     },
     {
-      "id": "node_2a9817808e061f4a",
+      "id": "node_dcf1b02c254546e1",
       "type": "ASSIGNMENT",
       "name": "logLimit",
-      "parent_id": "branch_770f907e2eaf383c",
+      "parent_id": "branch_93acee075477b89d",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 467,
@@ -8899,10 +8937,10 @@
       }
     },
     {
-      "id": "node_f61cf4428dddc3ce",
+      "id": "node_0c6ff2f49a4f609d",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_3",
-      "parent_id": "branch_770f907e2eaf383c",
+      "parent_id": "branch_93acee075477b89d",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 468,
@@ -8934,15 +8972,15 @@
       }
     },
     {
-      "id": "node_22fbce8ada1c01e4",
+      "id": "node_c50fc0de2e759f74",
       "type": "FOR_BLOCK",
       "name": "for_block_4",
-      "parent_id": "branch_770f907e2eaf383c",
+      "parent_id": "branch_93acee075477b89d",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 469,
-        "end_line": 469,
-        "text": "        For i = 1 To logLimit"
+        "end_line": 471,
+        "text": "        For i = 1 To logLimit\n            sb = sb & CStr(m_AuditLog(i)) & vbCrLf\n        Next i"
       },
       "metadata": {
         "type": "FOR_BLOCK",
@@ -8965,14 +9003,21 @@
           ],
           "parse_status": "tokenized_not_fully_parsed"
         },
-        "step": null
+        "step": null,
+        "terminator": {
+          "source": "Next i",
+          "location": {
+            "start_line": 471,
+            "end_line": 471
+          }
+        }
       }
     },
     {
-      "id": "node_f9ac3078a53f2ea1",
+      "id": "node_262b23c355dcdd9e",
       "type": "ASSIGNMENT",
       "name": "sb",
-      "parent_id": "node_22fbce8ada1c01e4",
+      "parent_id": "node_c50fc0de2e759f74",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 470,
@@ -9004,33 +9049,6 @@
             "m_AuditLog",
             "i",
             "vbCrLf"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
-      }
-    },
-    {
-      "id": "node_3ba95d646ed03646",
-      "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_2",
-      "parent_id": "node_22fbce8ada1c01e4",
-      "source": {
-        "path": "vba_sample_6.bas",
-        "start_line": 471,
-        "end_line": 471,
-        "text": "        Next i"
-      },
-      "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "Next i",
-          "tokens": [
-            "Next",
-            "i"
-          ],
-          "identifiers": [
-            "Next",
-            "i"
           ],
           "parse_status": "tokenized_not_fully_parsed"
         }
@@ -9082,15 +9100,15 @@
       }
     },
     {
-      "id": "node_30991a8c2b67146a",
+      "id": "node_5b5f666e8e3a4a38",
       "type": "IF_BLOCK",
       "name": "if_block_1",
       "parent_id": "procedure_f4c1072dc8425eb5",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 478,
-        "end_line": 478,
-        "text": "    If m_AuditLog Is Nothing Then"
+        "end_line": 482,
+        "text": "    If m_AuditLog Is Nothing Then\n        GetAuditEntryCount = 0\n    Else\n        GetAuditEntryCount = m_AuditLog.Count\n    End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -9105,18 +9123,25 @@
             "m_AuditLog"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 482,
+            "end_line": 482
+          }
         }
       }
     },
     {
-      "id": "branch_147da4bd955e455e",
+      "id": "branch_65d8308876548815",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_30991a8c2b67146a",
+      "parent_id": "node_5b5f666e8e3a4a38",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 478,
-        "end_line": 478,
+        "end_line": 482,
         "text": ""
       },
       "metadata": {
@@ -9135,10 +9160,10 @@
       }
     },
     {
-      "id": "node_ef2fc27235e97df9",
+      "id": "node_8ddf2b67e9489a50",
       "type": "ASSIGNMENT",
       "name": "GetAuditEntryCount",
-      "parent_id": "branch_147da4bd955e455e",
+      "parent_id": "branch_65d8308876548815",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 479,
@@ -9160,23 +9185,23 @@
       }
     },
     {
-      "id": "branch_eb4c1224ba350817",
+      "id": "branch_7622489b0a7dba61",
       "type": "ELSE_BRANCH",
       "name": "ELSE",
-      "parent_id": "node_30991a8c2b67146a",
+      "parent_id": "node_5b5f666e8e3a4a38",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 478,
-        "end_line": 478,
+        "end_line": 482,
         "text": ""
       },
       "metadata": {}
     },
     {
-      "id": "node_a9ae55225d08bd61",
+      "id": "node_ab2d79d6de2f583e",
       "type": "ASSIGNMENT",
       "name": "GetAuditEntryCount",
-      "parent_id": "branch_eb4c1224ba350817",
+      "parent_id": "branch_7622489b0a7dba61",
       "source": {
         "path": "vba_sample_6.bas",
         "start_line": 481,
@@ -9596,53 +9621,53 @@
     },
     {
       "source": "procedure_3f3c2e33f7565363",
-      "target": "node_aea662614d6f67b9",
+      "target": "node_97010a8356f861d4",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_ad4ffddec46c5153",
-      "target": "node_aea662614d6f67b9",
+      "target": "node_97010a8356f861d4",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_aea662614d6f67b9",
-      "target": "branch_de50f804879220b7",
+      "source": "node_97010a8356f861d4",
+      "target": "branch_bf9955b0784c8e26",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_de50f804879220b7",
-      "target": "node_ce6edafb8243df56",
+      "source": "branch_bf9955b0784c8e26",
+      "target": "node_ed3372f19b7eb158",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_de50f804879220b7",
-      "target": "node_1cbe4f4def5ff158",
+      "source": "branch_bf9955b0784c8e26",
+      "target": "node_97f3cb32523e4d3f",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_ce6edafb8243df56",
-      "target": "node_1cbe4f4def5ff158",
+      "source": "node_ed3372f19b7eb158",
+      "target": "node_97f3cb32523e4d3f",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "branch_de50f804879220b7",
-      "target": "node_9b8d0c1012c63b83",
+      "source": "branch_bf9955b0784c8e26",
+      "target": "node_51122a6ca7da9103",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_1cbe4f4def5ff158",
-      "target": "node_9b8d0c1012c63b83",
+      "source": "node_97f3cb32523e4d3f",
+      "target": "node_51122a6ca7da9103",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -9655,7 +9680,7 @@
       "evidence": {}
     },
     {
-      "source": "node_aea662614d6f67b9",
+      "source": "node_97010a8356f861d4",
       "target": "node_d6aa2caa943dceef",
       "relation": "NEXT",
       "evidence": {
@@ -9748,415 +9773,401 @@
     },
     {
       "source": "procedure_3f3c2e33f7565363",
-      "target": "node_215a176359ab6cb4",
+      "target": "node_8fe6a84c83bed0fb",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_a690005621e8e0f8",
-      "target": "node_215a176359ab6cb4",
+      "target": "node_8fe6a84c83bed0fb",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_215a176359ab6cb4",
-      "target": "node_2e00ffa06525df02",
+      "source": "node_8fe6a84c83bed0fb",
+      "target": "node_4c6adb46c3abd747",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_2e00ffa06525df02",
-      "target": "branch_6d3927b968e88acf",
+      "source": "node_4c6adb46c3abd747",
+      "target": "branch_847ec920e384408b",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_6d3927b968e88acf",
-      "target": "node_cf96d6f3e6e7b8a5",
+      "source": "branch_847ec920e384408b",
+      "target": "node_c6cf19a7e6ef123b",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_6d3927b968e88acf",
-      "target": "node_feb01514a3689373",
+      "source": "branch_847ec920e384408b",
+      "target": "node_fafc81206a2025e7",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_cf96d6f3e6e7b8a5",
-      "target": "node_feb01514a3689373",
+      "source": "node_c6cf19a7e6ef123b",
+      "target": "node_fafc81206a2025e7",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_215a176359ab6cb4",
-      "target": "node_4779d7d581374396",
+      "source": "node_8fe6a84c83bed0fb",
+      "target": "node_6f3fbda94b851118",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_2e00ffa06525df02",
-      "target": "node_4779d7d581374396",
+      "source": "node_4c6adb46c3abd747",
+      "target": "node_6f3fbda94b851118",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_4779d7d581374396",
-      "target": "branch_eb0ce0d6395bf847",
+      "source": "node_6f3fbda94b851118",
+      "target": "branch_09aab9acd35a6c86",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_eb0ce0d6395bf847",
-      "target": "node_dc351022af90ea30",
+      "source": "branch_09aab9acd35a6c86",
+      "target": "node_bf36ae17e0e0bfb1",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_dc351022af90ea30",
-      "target": "branch_0e70aad7ed83f34c",
+      "source": "node_bf36ae17e0e0bfb1",
+      "target": "branch_99c2f7d46263fda3",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_0e70aad7ed83f34c",
-      "target": "node_eec034a4f3d65d90",
+      "source": "branch_99c2f7d46263fda3",
+      "target": "node_1b40273dac6d0ce8",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_0e70aad7ed83f34c",
-      "target": "node_ba2d2254c2b6f626",
+      "source": "branch_99c2f7d46263fda3",
+      "target": "node_71d1bd1349f2ed7e",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_eec034a4f3d65d90",
-      "target": "node_ba2d2254c2b6f626",
+      "source": "node_1b40273dac6d0ce8",
+      "target": "node_71d1bd1349f2ed7e",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_ba2d2254c2b6f626",
-      "target": "branch_65a467bf313ba18e",
+      "source": "node_71d1bd1349f2ed7e",
+      "target": "branch_8d2ceb84304ebe16",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_65a467bf313ba18e",
-      "target": "node_26bc623aae263c15",
+      "source": "branch_8d2ceb84304ebe16",
+      "target": "node_fdc9617535ea343e",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_0e70aad7ed83f34c",
-      "target": "node_a01509be11b28606",
+      "source": "branch_99c2f7d46263fda3",
+      "target": "node_8639238b2ee81650",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_ba2d2254c2b6f626",
-      "target": "node_a01509be11b28606",
+      "source": "node_71d1bd1349f2ed7e",
+      "target": "node_8639238b2ee81650",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "branch_0e70aad7ed83f34c",
-      "target": "node_fe18c1d3a9c4a3f2",
+      "source": "branch_99c2f7d46263fda3",
+      "target": "node_2dfb05ca6c19e1cc",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_a01509be11b28606",
-      "target": "node_fe18c1d3a9c4a3f2",
+      "source": "node_8639238b2ee81650",
+      "target": "node_2dfb05ca6c19e1cc",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_fe18c1d3a9c4a3f2",
-      "target": "branch_4ff5f243151a51e2",
+      "source": "node_2dfb05ca6c19e1cc",
+      "target": "branch_86abdc08a1f890e6",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_4ff5f243151a51e2",
-      "target": "node_df5ea32f7b28861f",
+      "source": "branch_86abdc08a1f890e6",
+      "target": "node_b45856911d186a5e",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_0e70aad7ed83f34c",
-      "target": "node_9def85f229020f31",
+      "source": "branch_99c2f7d46263fda3",
+      "target": "node_f678b9588710a1ff",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_fe18c1d3a9c4a3f2",
-      "target": "node_9def85f229020f31",
+      "source": "node_2dfb05ca6c19e1cc",
+      "target": "node_f678b9588710a1ff",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_dc351022af90ea30",
-      "target": "branch_9b0a5acad628af22",
+      "source": "node_bf36ae17e0e0bfb1",
+      "target": "branch_9237aa71a751d7a6",
       "relation": "FALSE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_9b0a5acad628af22",
-      "target": "node_0d7857cbb0ee6994",
+      "source": "branch_9237aa71a751d7a6",
+      "target": "node_3ea2d00167c2218e",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_215a176359ab6cb4",
-      "target": "node_4095eaa1822f4a14",
+      "source": "node_8fe6a84c83bed0fb",
+      "target": "node_67b70541c59f389b",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_4779d7d581374396",
-      "target": "node_4095eaa1822f4a14",
+      "source": "node_6f3fbda94b851118",
+      "target": "node_67b70541c59f389b",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_4095eaa1822f4a14",
-      "target": "branch_462aabab393e06f2",
+      "source": "node_67b70541c59f389b",
+      "target": "branch_ea2e0e78393a974e",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_462aabab393e06f2",
-      "target": "node_b8fe2dd1ee3fae4d",
+      "source": "branch_ea2e0e78393a974e",
+      "target": "node_2aa3b925a66dbc69",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_215a176359ab6cb4",
-      "target": "node_5e72e3d4739c1df4",
+      "source": "procedure_3f3c2e33f7565363",
+      "target": "node_de69f2784230788f",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_4095eaa1822f4a14",
-      "target": "node_5e72e3d4739c1df4",
+      "source": "node_8fe6a84c83bed0fb",
+      "target": "node_de69f2784230788f",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_215a176359ab6cb4",
-      "target": "node_598cc540ec6e4742",
-      "relation": "CONTAINS",
-      "evidence": {}
-    },
-    {
-      "source": "node_5e72e3d4739c1df4",
-      "target": "node_598cc540ec6e4742",
-      "relation": "NEXT",
-      "evidence": {
-        "order": "source"
-      }
-    },
-    {
-      "source": "node_598cc540ec6e4742",
-      "target": "branch_3c28e8b71dcf6d27",
+      "source": "node_de69f2784230788f",
+      "target": "branch_5fbcb9f8518c1d1b",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_3c28e8b71dcf6d27",
-      "target": "node_4bb76b3020a99b43",
+      "source": "branch_5fbcb9f8518c1d1b",
+      "target": "node_3f520a05c8acbe24",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_598cc540ec6e4742",
-      "target": "branch_4b690a48dc164504",
+      "source": "node_de69f2784230788f",
+      "target": "branch_a01757b0ebf79136",
       "relation": "FALSE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_4b690a48dc164504",
-      "target": "node_1daca8acaf467cf0",
+      "source": "branch_a01757b0ebf79136",
+      "target": "node_3b0c3a75e4310fd6",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_215a176359ab6cb4",
-      "target": "node_0a4ba404c5acc79d",
+      "source": "procedure_3f3c2e33f7565363",
+      "target": "node_f723f5e75a5eecbb",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_598cc540ec6e4742",
-      "target": "node_0a4ba404c5acc79d",
+      "source": "node_de69f2784230788f",
+      "target": "node_f723f5e75a5eecbb",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_0a4ba404c5acc79d",
-      "target": "branch_b2d4d0651ea5e461",
+      "source": "node_f723f5e75a5eecbb",
+      "target": "branch_1797555380656c71",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_b2d4d0651ea5e461",
-      "target": "node_89e5dfb8242da3d0",
+      "source": "branch_1797555380656c71",
+      "target": "node_c6567d38d6e349ac",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_215a176359ab6cb4",
-      "target": "node_fc00f20fb67b805f",
+      "source": "procedure_3f3c2e33f7565363",
+      "target": "node_866d0ecb0d1d98a7",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_0a4ba404c5acc79d",
-      "target": "node_fc00f20fb67b805f",
+      "source": "node_f723f5e75a5eecbb",
+      "target": "node_866d0ecb0d1d98a7",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_fc00f20fb67b805f",
-      "target": "branch_f47987694b18f2cd",
+      "source": "node_866d0ecb0d1d98a7",
+      "target": "branch_7e78f54c81a83cc9",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_f47987694b18f2cd",
-      "target": "node_fa867ce821f9046a",
+      "source": "branch_7e78f54c81a83cc9",
+      "target": "node_43c87eac9f9460f5",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_fc00f20fb67b805f",
-      "target": "branch_b9d5c5ab0fafedfd",
+      "source": "node_866d0ecb0d1d98a7",
+      "target": "branch_415f2ccc049462a3",
       "relation": "FALSE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_b9d5c5ab0fafedfd",
-      "target": "node_f4192e12d8f04e6a",
+      "source": "branch_415f2ccc049462a3",
+      "target": "node_55fc428270e6cca1",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_215a176359ab6cb4",
-      "target": "node_411ed0f00149f58d",
+      "source": "procedure_3f3c2e33f7565363",
+      "target": "node_909dfacd73eb8320",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_fc00f20fb67b805f",
-      "target": "node_411ed0f00149f58d",
+      "source": "node_866d0ecb0d1d98a7",
+      "target": "node_909dfacd73eb8320",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_215a176359ab6cb4",
-      "target": "node_794f8673dbd4afe7",
+      "source": "procedure_3f3c2e33f7565363",
+      "target": "node_4d46898f32b7dd60",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_411ed0f00149f58d",
-      "target": "node_794f8673dbd4afe7",
+      "source": "node_909dfacd73eb8320",
+      "target": "node_4d46898f32b7dd60",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_215a176359ab6cb4",
-      "target": "node_f5fe3ced7f660b0b",
+      "source": "procedure_3f3c2e33f7565363",
+      "target": "node_1167a0321fe9d836",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_794f8673dbd4afe7",
-      "target": "node_f5fe3ced7f660b0b",
+      "source": "node_4d46898f32b7dd60",
+      "target": "node_1167a0321fe9d836",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_215a176359ab6cb4",
-      "target": "node_06fffd078acb134d",
+      "source": "procedure_3f3c2e33f7565363",
+      "target": "node_084f70a1e2737e21",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_f5fe3ced7f660b0b",
-      "target": "node_06fffd078acb134d",
+      "source": "node_1167a0321fe9d836",
+      "target": "node_084f70a1e2737e21",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_215a176359ab6cb4",
-      "target": "node_0dc2ba7235fff9df",
+      "source": "procedure_3f3c2e33f7565363",
+      "target": "node_01de2bc4142c223e",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_06fffd078acb134d",
-      "target": "node_0dc2ba7235fff9df",
+      "source": "node_084f70a1e2737e21",
+      "target": "node_01de2bc4142c223e",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_215a176359ab6cb4",
-      "target": "node_8c587b845bda7a9f",
+      "source": "procedure_3f3c2e33f7565363",
+      "target": "node_4d5816dbbf3f01fb",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_0dc2ba7235fff9df",
-      "target": "node_8c587b845bda7a9f",
+      "source": "node_01de2bc4142c223e",
+      "target": "node_4d5816dbbf3f01fb",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_215a176359ab6cb4",
-      "target": "node_c8ff3e1ca8c690f2",
+      "source": "procedure_3f3c2e33f7565363",
+      "target": "node_02899bf13f51f5e3",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_8c587b845bda7a9f",
-      "target": "node_c8ff3e1ca8c690f2",
+      "source": "node_4d5816dbbf3f01fb",
+      "target": "node_02899bf13f51f5e3",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -10190,39 +10201,39 @@
     },
     {
       "source": "procedure_2954e225a14758ac",
-      "target": "node_3f1ce866ba0d84ec",
+      "target": "node_78f182050ae3d66a",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_706bfcf464dd771f",
-      "target": "node_3f1ce866ba0d84ec",
+      "target": "node_78f182050ae3d66a",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_3f1ce866ba0d84ec",
-      "target": "branch_6619542906ea2d0e",
+      "source": "node_78f182050ae3d66a",
+      "target": "branch_7c46e16213fac170",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_6619542906ea2d0e",
-      "target": "node_d831e5362b6e3f4d",
+      "source": "branch_7c46e16213fac170",
+      "target": "node_cfd569f11f81187d",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_6619542906ea2d0e",
-      "target": "node_e2cea7c9ceb50e57",
+      "source": "branch_7c46e16213fac170",
+      "target": "node_52abbc2b3cfeeda5",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_d831e5362b6e3f4d",
-      "target": "node_e2cea7c9ceb50e57",
+      "source": "node_cfd569f11f81187d",
+      "target": "node_52abbc2b3cfeeda5",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -10235,7 +10246,7 @@
       "evidence": {}
     },
     {
-      "source": "node_3f1ce866ba0d84ec",
+      "source": "node_78f182050ae3d66a",
       "target": "node_e59593bd4578169c",
       "relation": "NEXT",
       "evidence": {
@@ -10244,27 +10255,27 @@
     },
     {
       "source": "procedure_2954e225a14758ac",
-      "target": "node_6a8f088e4a556f91",
+      "target": "node_24f1ed972f5f2486",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_e59593bd4578169c",
-      "target": "node_6a8f088e4a556f91",
+      "target": "node_24f1ed972f5f2486",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_6a8f088e4a556f91",
-      "target": "branch_43ac3641a59c6ac3",
+      "source": "node_24f1ed972f5f2486",
+      "target": "branch_485f1940b97116a3",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_43ac3641a59c6ac3",
-      "target": "node_12cc7c39c9ce24f5",
+      "source": "branch_485f1940b97116a3",
+      "target": "node_38dd48a5cbc79cc9",
       "relation": "CONTAINS",
       "evidence": {}
     },
@@ -10486,39 +10497,39 @@
     },
     {
       "source": "procedure_5406ba068a801948",
-      "target": "node_7efc4ca17feb331a",
+      "target": "node_3ef226c43b8e3b48",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_ca2ec197e837e9d9",
-      "target": "node_7efc4ca17feb331a",
+      "target": "node_3ef226c43b8e3b48",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_7efc4ca17feb331a",
-      "target": "branch_d0bf1b1101023f14",
+      "source": "node_3ef226c43b8e3b48",
+      "target": "branch_6f724cf0213805c7",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_d0bf1b1101023f14",
-      "target": "node_039d543899f34c47",
+      "source": "branch_6f724cf0213805c7",
+      "target": "node_a8e3fa57ed2e9bca",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_7efc4ca17feb331a",
-      "target": "branch_5e67308ef435f001",
+      "source": "node_3ef226c43b8e3b48",
+      "target": "branch_f0629f764d628a5d",
       "relation": "FALSE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_5e67308ef435f001",
-      "target": "node_20184205ade54941",
+      "source": "branch_f0629f764d628a5d",
+      "target": "node_31c16c5fcc56e29e",
       "relation": "CONTAINS",
       "evidence": {}
     },
@@ -10529,7 +10540,7 @@
       "evidence": {}
     },
     {
-      "source": "node_7efc4ca17feb331a",
+      "source": "node_3ef226c43b8e3b48",
       "target": "node_26340017528578d0",
       "relation": "NEXT",
       "evidence": {
@@ -10580,39 +10591,39 @@
     },
     {
       "source": "procedure_5406ba068a801948",
-      "target": "node_ce14680a94492020",
+      "target": "node_22a3757cc99ce5c4",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_7eeffd0c3852e583",
-      "target": "node_ce14680a94492020",
+      "target": "node_22a3757cc99ce5c4",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_ce14680a94492020",
-      "target": "branch_6f1bc9f8ceddefe6",
+      "source": "node_22a3757cc99ce5c4",
+      "target": "branch_9d471a0dbbd7dcf8",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_6f1bc9f8ceddefe6",
-      "target": "node_3e73f7f90f8291ce",
+      "source": "branch_9d471a0dbbd7dcf8",
+      "target": "node_36e9e826cbfcf5e3",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_ce14680a94492020",
-      "target": "branch_d899b550551a6e15",
+      "source": "node_22a3757cc99ce5c4",
+      "target": "branch_737c3120134d47a0",
       "relation": "FALSE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_d899b550551a6e15",
-      "target": "node_989d00868408b3fd",
+      "source": "branch_737c3120134d47a0",
+      "target": "node_c14c3b6a8276c534",
       "relation": "CONTAINS",
       "evidence": {}
     },
@@ -10623,7 +10634,7 @@
       "evidence": {}
     },
     {
-      "source": "node_ce14680a94492020",
+      "source": "node_22a3757cc99ce5c4",
       "target": "node_138833c29d8a0387",
       "relation": "NEXT",
       "evidence": {
@@ -10632,115 +10643,85 @@
     },
     {
       "source": "procedure_5406ba068a801948",
-      "target": "node_89250deb55b34335",
+      "target": "node_52d2138d44ba8ab6",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_138833c29d8a0387",
-      "target": "node_89250deb55b34335",
+      "target": "node_52d2138d44ba8ab6",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_89250deb55b34335",
-      "target": "branch_433a002859477031",
+      "source": "node_52d2138d44ba8ab6",
+      "target": "branch_d2bbcbc050f82238",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_433a002859477031",
-      "target": "node_58c4cf31134c7b42",
+      "source": "branch_d2bbcbc050f82238",
+      "target": "node_0c2a9919a8f4babd",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_433a002859477031",
-      "target": "node_d2d2cda947391025",
+      "source": "branch_d2bbcbc050f82238",
+      "target": "node_2d65287d4997a4b5",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_58c4cf31134c7b42",
-      "target": "node_d2d2cda947391025",
+      "source": "node_0c2a9919a8f4babd",
+      "target": "node_2d65287d4997a4b5",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "branch_433a002859477031",
-      "target": "node_3f70c0e3711c1fd4",
+      "source": "branch_d2bbcbc050f82238",
+      "target": "node_e2b12ce2b4639f34",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_d2d2cda947391025",
-      "target": "node_3f70c0e3711c1fd4",
+      "source": "node_2d65287d4997a4b5",
+      "target": "node_e2b12ce2b4639f34",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_3f70c0e3711c1fd4",
-      "target": "node_28112d3c87e5ccab",
+      "source": "node_e2b12ce2b4639f34",
+      "target": "node_2ffef688fb0b555e",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_3f70c0e3711c1fd4",
-      "target": "node_3c4afcbad673f25c",
+      "source": "node_52d2138d44ba8ab6",
+      "target": "branch_53d3b4ed45f57b48",
+      "relation": "FALSE_BRANCH",
+      "evidence": {}
+    },
+    {
+      "source": "branch_53d3b4ed45f57b48",
+      "target": "node_1cc0234171518559",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_28112d3c87e5ccab",
-      "target": "node_3c4afcbad673f25c",
-      "relation": "NEXT",
-      "evidence": {
-        "order": "source"
-      }
-    },
-    {
-      "source": "node_3f70c0e3711c1fd4",
-      "target": "node_a52b3a4b9cc9a545",
+      "source": "branch_53d3b4ed45f57b48",
+      "target": "node_3a1f5f092aaf418c",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_3c4afcbad673f25c",
-      "target": "node_a52b3a4b9cc9a545",
-      "relation": "NEXT",
-      "evidence": {
-        "order": "source"
-      }
-    },
-    {
-      "source": "node_3f70c0e3711c1fd4",
-      "target": "node_84cf2d5d08a8f38b",
-      "relation": "CONTAINS",
-      "evidence": {}
-    },
-    {
-      "source": "node_a52b3a4b9cc9a545",
-      "target": "node_84cf2d5d08a8f38b",
-      "relation": "NEXT",
-      "evidence": {
-        "order": "source"
-      }
-    },
-    {
-      "source": "node_3f70c0e3711c1fd4",
-      "target": "node_053e853662f572f9",
-      "relation": "CONTAINS",
-      "evidence": {}
-    },
-    {
-      "source": "node_84cf2d5d08a8f38b",
-      "target": "node_053e853662f572f9",
+      "source": "node_1cc0234171518559",
+      "target": "node_3a1f5f092aaf418c",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -10753,7 +10734,7 @@
       "evidence": {}
     },
     {
-      "source": "node_89250deb55b34335",
+      "source": "node_52d2138d44ba8ab6",
       "target": "node_81778262652cd670",
       "relation": "NEXT",
       "evidence": {
@@ -10776,13 +10757,13 @@
     },
     {
       "source": "procedure_5406ba068a801948",
-      "target": "node_0e6a310e50e0f681",
+      "target": "node_a733f78453709363",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_1da4099065754e9c",
-      "target": "node_0e6a310e50e0f681",
+      "target": "node_a733f78453709363",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -10795,7 +10776,7 @@
       "evidence": {}
     },
     {
-      "source": "node_0e6a310e50e0f681",
+      "source": "node_a733f78453709363",
       "target": "node_920f0e007ccbc06a",
       "relation": "NEXT",
       "evidence": {
@@ -10858,51 +10839,51 @@
     },
     {
       "source": "procedure_828ca9a47cc9a739",
-      "target": "node_61e6af0d1b3f409f",
+      "target": "node_51e59ec53ef6b98f",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_9648e12fcdea4ba7",
-      "target": "node_61e6af0d1b3f409f",
+      "target": "node_51e59ec53ef6b98f",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_61e6af0d1b3f409f",
-      "target": "branch_e8d3e84f1850d4a9",
+      "source": "node_51e59ec53ef6b98f",
+      "target": "branch_5a2e572dfc4aec47",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_e8d3e84f1850d4a9",
-      "target": "node_6ccaf08151161e0a",
+      "source": "branch_5a2e572dfc4aec47",
+      "target": "node_cae4c1723af59675",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_61e6af0d1b3f409f",
-      "target": "branch_33c36c1fda65d7a6",
+      "source": "node_51e59ec53ef6b98f",
+      "target": "branch_1265da0844772e55",
       "relation": "ELSEIF_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_33c36c1fda65d7a6",
-      "target": "node_43ac1487fda8608f",
+      "source": "branch_1265da0844772e55",
+      "target": "node_8d69510eb01d9d41",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_61e6af0d1b3f409f",
-      "target": "branch_3b2be55690e17723",
+      "source": "node_51e59ec53ef6b98f",
+      "target": "branch_b2e1c605ee68637d",
       "relation": "FALSE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_3b2be55690e17723",
-      "target": "node_645cd40dde5390b6",
+      "source": "branch_b2e1c605ee68637d",
+      "target": "node_c711f8b79dd1f572",
       "relation": "CONTAINS",
       "evidence": {}
     },
@@ -10913,7 +10894,7 @@
       "evidence": {}
     },
     {
-      "source": "node_61e6af0d1b3f409f",
+      "source": "node_51e59ec53ef6b98f",
       "target": "node_314aeb059a59f1c7",
       "relation": "NEXT",
       "evidence": {
@@ -10922,59 +10903,45 @@
     },
     {
       "source": "procedure_828ca9a47cc9a739",
-      "target": "node_5653de368a0032f9",
+      "target": "node_91c0e7afa6263c54",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_314aeb059a59f1c7",
-      "target": "node_5653de368a0032f9",
+      "target": "node_91c0e7afa6263c54",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_5653de368a0032f9",
-      "target": "branch_b34736944a22b437",
+      "source": "node_91c0e7afa6263c54",
+      "target": "branch_a64c8a80c0a91951",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_b34736944a22b437",
-      "target": "node_341246740e8902eb",
+      "source": "branch_a64c8a80c0a91951",
+      "target": "node_99579ee9a40d0e69",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_341246740e8902eb",
-      "target": "node_509c30eccc45e14a",
+      "source": "node_99579ee9a40d0e69",
+      "target": "node_f5e5f7255f3178d9",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_341246740e8902eb",
-      "target": "node_a2a50ec2e796e60b",
+      "source": "node_99579ee9a40d0e69",
+      "target": "node_4f0c954e94e9b368",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_509c30eccc45e14a",
-      "target": "node_a2a50ec2e796e60b",
-      "relation": "NEXT",
-      "evidence": {
-        "order": "source"
-      }
-    },
-    {
-      "source": "node_341246740e8902eb",
-      "target": "node_060a546ba4cbd0f7",
-      "relation": "CONTAINS",
-      "evidence": {}
-    },
-    {
-      "source": "node_a2a50ec2e796e60b",
-      "target": "node_060a546ba4cbd0f7",
+      "source": "node_f5e5f7255f3178d9",
+      "target": "node_4f0c954e94e9b368",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -10982,77 +10949,77 @@
     },
     {
       "source": "procedure_828ca9a47cc9a739",
-      "target": "node_e38f9889a27fb0c3",
+      "target": "node_83442f28e378cdce",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_5653de368a0032f9",
-      "target": "node_e38f9889a27fb0c3",
+      "source": "node_91c0e7afa6263c54",
+      "target": "node_83442f28e378cdce",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_e38f9889a27fb0c3",
-      "target": "branch_f52b6e1fc78467f1",
+      "source": "node_83442f28e378cdce",
+      "target": "branch_332d39a5a80816ec",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_f52b6e1fc78467f1",
-      "target": "node_e02b73d82c7afb11",
+      "source": "branch_332d39a5a80816ec",
+      "target": "node_dace8a5ff43af25d",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_e02b73d82c7afb11",
-      "target": "branch_8a7d2da311c67996",
+      "source": "node_dace8a5ff43af25d",
+      "target": "branch_39d5ca8db6e8b05b",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_8a7d2da311c67996",
-      "target": "node_272c6228549f35b4",
+      "source": "branch_39d5ca8db6e8b05b",
+      "target": "node_a84cb7522bbbf75b",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_8a7d2da311c67996",
-      "target": "node_a25c41b6e120d103",
+      "source": "branch_39d5ca8db6e8b05b",
+      "target": "node_f24c43cd89b8a55c",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_272c6228549f35b4",
-      "target": "node_a25c41b6e120d103",
+      "source": "node_a84cb7522bbbf75b",
+      "target": "node_f24c43cd89b8a55c",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_e02b73d82c7afb11",
-      "target": "branch_718e25eabd02834d",
+      "source": "node_dace8a5ff43af25d",
+      "target": "branch_b4229754a55ec412",
       "relation": "FALSE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_718e25eabd02834d",
-      "target": "node_15ec310cbc4f2833",
+      "source": "branch_b4229754a55ec412",
+      "target": "node_cccf21ba5e3b4a28",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_718e25eabd02834d",
-      "target": "node_d6540e9db9f4fbd1",
+      "source": "branch_b4229754a55ec412",
+      "target": "node_94ea09f773c8fbf6",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_15ec310cbc4f2833",
-      "target": "node_d6540e9db9f4fbd1",
+      "source": "node_cccf21ba5e3b4a28",
+      "target": "node_94ea09f773c8fbf6",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -11240,193 +11207,179 @@
     },
     {
       "source": "procedure_3104c2440f9bdac3",
-      "target": "node_1fc5072e0af929d0",
+      "target": "node_e3675e89be830644",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_5402d338b443bab5",
-      "target": "node_1fc5072e0af929d0",
+      "target": "node_e3675e89be830644",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_1fc5072e0af929d0",
-      "target": "node_6e7cd8bf45cbc255",
+      "source": "node_e3675e89be830644",
+      "target": "node_14b3de1510d59966",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_1fc5072e0af929d0",
-      "target": "node_b0bbed75e4faa856",
+      "source": "node_e3675e89be830644",
+      "target": "node_d133e2cc2016b6f1",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_6e7cd8bf45cbc255",
-      "target": "node_b0bbed75e4faa856",
+      "source": "node_14b3de1510d59966",
+      "target": "node_d133e2cc2016b6f1",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_b0bbed75e4faa856",
-      "target": "branch_d039294159e3bc9c",
+      "source": "node_d133e2cc2016b6f1",
+      "target": "branch_3d22e220afc64b7d",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_d039294159e3bc9c",
-      "target": "node_6999e76df3e581cf",
+      "source": "branch_3d22e220afc64b7d",
+      "target": "node_d9a86142717ebddc",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_d039294159e3bc9c",
-      "target": "node_ce3018f3884445d7",
+      "source": "branch_3d22e220afc64b7d",
+      "target": "node_34ea3f3c8307f1ed",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_6999e76df3e581cf",
-      "target": "node_ce3018f3884445d7",
+      "source": "node_d9a86142717ebddc",
+      "target": "node_34ea3f3c8307f1ed",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "branch_d039294159e3bc9c",
-      "target": "node_f1de2eea59c25338",
+      "source": "branch_3d22e220afc64b7d",
+      "target": "node_ef88546d891cb6ea",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_ce3018f3884445d7",
-      "target": "node_f1de2eea59c25338",
+      "source": "node_34ea3f3c8307f1ed",
+      "target": "node_ef88546d891cb6ea",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "branch_d039294159e3bc9c",
-      "target": "node_79b0a720a6b7464d",
+      "source": "branch_3d22e220afc64b7d",
+      "target": "node_2ab0bd50d5afd2c2",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_f1de2eea59c25338",
-      "target": "node_79b0a720a6b7464d",
+      "source": "node_ef88546d891cb6ea",
+      "target": "node_2ab0bd50d5afd2c2",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_b0bbed75e4faa856",
-      "target": "branch_6f69e5315d0dfb5b",
+      "source": "node_d133e2cc2016b6f1",
+      "target": "branch_cee5dd3fafa12a93",
       "relation": "FALSE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_6f69e5315d0dfb5b",
-      "target": "node_68380935d350d3ea",
+      "source": "branch_cee5dd3fafa12a93",
+      "target": "node_9fa0b0f52140cb0e",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_1fc5072e0af929d0",
-      "target": "node_e4c4cec3bff2439d",
+      "source": "procedure_3104c2440f9bdac3",
+      "target": "node_6596bbbc190148ce",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_b0bbed75e4faa856",
-      "target": "node_e4c4cec3bff2439d",
+      "source": "node_e3675e89be830644",
+      "target": "node_6596bbbc190148ce",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_1fc5072e0af929d0",
-      "target": "node_fe2499d3c3e9969e",
-      "relation": "CONTAINS",
-      "evidence": {}
-    },
-    {
-      "source": "node_e4c4cec3bff2439d",
-      "target": "node_fe2499d3c3e9969e",
-      "relation": "NEXT",
-      "evidence": {
-        "order": "source"
-      }
-    },
-    {
-      "source": "node_fe2499d3c3e9969e",
-      "target": "branch_84097510a88d0ee5",
+      "source": "node_6596bbbc190148ce",
+      "target": "branch_db9ea720edfe1ef7",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_84097510a88d0ee5",
-      "target": "node_4f7a2f2c551883d5",
+      "source": "branch_db9ea720edfe1ef7",
+      "target": "node_637da41c162a5d19",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_84097510a88d0ee5",
-      "target": "node_1950ac8cebfd2c26",
+      "source": "branch_db9ea720edfe1ef7",
+      "target": "node_405b9a7d2c5269df",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_4f7a2f2c551883d5",
-      "target": "node_1950ac8cebfd2c26",
+      "source": "node_637da41c162a5d19",
+      "target": "node_405b9a7d2c5269df",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_fe2499d3c3e9969e",
-      "target": "branch_26d772567def52dd",
+      "source": "node_6596bbbc190148ce",
+      "target": "branch_4c2606492b58d358",
       "relation": "FALSE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_26d772567def52dd",
-      "target": "node_3bed871832c855ad",
+      "source": "branch_4c2606492b58d358",
+      "target": "node_4cb73453f67105fa",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_1fc5072e0af929d0",
-      "target": "node_ea98d20000ebf7f9",
+      "source": "procedure_3104c2440f9bdac3",
+      "target": "node_2da71d5a4a1c2284",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_fe2499d3c3e9969e",
-      "target": "node_ea98d20000ebf7f9",
+      "source": "node_6596bbbc190148ce",
+      "target": "node_2da71d5a4a1c2284",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_1fc5072e0af929d0",
-      "target": "node_4eb4c29aa53364d6",
+      "source": "procedure_3104c2440f9bdac3",
+      "target": "node_b9cb40156bce9734",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_ea98d20000ebf7f9",
-      "target": "node_4eb4c29aa53364d6",
+      "source": "node_2da71d5a4a1c2284",
+      "target": "node_b9cb40156bce9734",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -11502,193 +11455,179 @@
     },
     {
       "source": "procedure_389d8383c644215c",
-      "target": "node_0f5ffec81fa528c2",
+      "target": "node_cce7c46834e3d5cf",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_69e62ca13050b807",
-      "target": "node_0f5ffec81fa528c2",
+      "target": "node_cce7c46834e3d5cf",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_0f5ffec81fa528c2",
-      "target": "node_2c858543a758c897",
+      "source": "node_cce7c46834e3d5cf",
+      "target": "node_5f6dd0f21a90d34d",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_0f5ffec81fa528c2",
-      "target": "node_8869cb146f121934",
+      "source": "node_cce7c46834e3d5cf",
+      "target": "node_dd620dce91f7a989",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_2c858543a758c897",
-      "target": "node_8869cb146f121934",
+      "source": "node_5f6dd0f21a90d34d",
+      "target": "node_dd620dce91f7a989",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_0f5ffec81fa528c2",
-      "target": "node_a0344ff817d15da7",
+      "source": "node_cce7c46834e3d5cf",
+      "target": "node_e3c7999c6d2f15b6",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_8869cb146f121934",
-      "target": "node_a0344ff817d15da7",
+      "source": "node_dd620dce91f7a989",
+      "target": "node_e3c7999c6d2f15b6",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_a0344ff817d15da7",
-      "target": "branch_3b7eae926a78780a",
+      "source": "node_e3c7999c6d2f15b6",
+      "target": "branch_8151820c1924193c",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_3b7eae926a78780a",
-      "target": "node_cfbdf9a7e1a5d9d6",
+      "source": "branch_8151820c1924193c",
+      "target": "node_10d4251c2bc7425e",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_3b7eae926a78780a",
-      "target": "node_fa1917e41de276b9",
+      "source": "branch_8151820c1924193c",
+      "target": "node_b8d82f36b8dc7ed5",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_cfbdf9a7e1a5d9d6",
-      "target": "node_fa1917e41de276b9",
+      "source": "node_10d4251c2bc7425e",
+      "target": "node_b8d82f36b8dc7ed5",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_0f5ffec81fa528c2",
-      "target": "node_3ae76171b33af152",
+      "source": "procedure_389d8383c644215c",
+      "target": "node_c1d88043be7a4acf",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_a0344ff817d15da7",
-      "target": "node_3ae76171b33af152",
+      "source": "node_cce7c46834e3d5cf",
+      "target": "node_c1d88043be7a4acf",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_0f5ffec81fa528c2",
-      "target": "node_2496540888ca71b2",
+      "source": "procedure_389d8383c644215c",
+      "target": "node_f4b34556b755a112",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_3ae76171b33af152",
-      "target": "node_2496540888ca71b2",
+      "source": "node_c1d88043be7a4acf",
+      "target": "node_f4b34556b755a112",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_0f5ffec81fa528c2",
-      "target": "node_47a9ba6648803a9e",
+      "source": "procedure_389d8383c644215c",
+      "target": "node_f0aebbbf0414ea63",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_2496540888ca71b2",
-      "target": "node_47a9ba6648803a9e",
+      "source": "node_f4b34556b755a112",
+      "target": "node_f0aebbbf0414ea63",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_0f5ffec81fa528c2",
-      "target": "node_27d5c8f0f1cfa31f",
+      "source": "procedure_389d8383c644215c",
+      "target": "node_a69ff6d80906edd3",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_47a9ba6648803a9e",
-      "target": "node_27d5c8f0f1cfa31f",
+      "source": "node_f0aebbbf0414ea63",
+      "target": "node_a69ff6d80906edd3",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_0f5ffec81fa528c2",
-      "target": "node_ec4bbfbf75561d18",
-      "relation": "CONTAINS",
-      "evidence": {}
-    },
-    {
-      "source": "node_27d5c8f0f1cfa31f",
-      "target": "node_ec4bbfbf75561d18",
-      "relation": "NEXT",
-      "evidence": {
-        "order": "source"
-      }
-    },
-    {
-      "source": "node_ec4bbfbf75561d18",
-      "target": "branch_02d49bec5fb90314",
+      "source": "node_a69ff6d80906edd3",
+      "target": "branch_c1a8b8a2235a8bdb",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_02d49bec5fb90314",
-      "target": "node_2cf4f32af2af4386",
+      "source": "branch_c1a8b8a2235a8bdb",
+      "target": "node_a6c21b14becec38a",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_ec4bbfbf75561d18",
-      "target": "branch_516d064f9a95641c",
+      "source": "node_a69ff6d80906edd3",
+      "target": "branch_1e9e1d5510c755e9",
       "relation": "ELSEIF_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_516d064f9a95641c",
-      "target": "node_ec4527cad638066d",
+      "source": "branch_1e9e1d5510c755e9",
+      "target": "node_22636a60f3aeaa4a",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_ec4bbfbf75561d18",
-      "target": "branch_4b393c4a664abe34",
+      "source": "node_a69ff6d80906edd3",
+      "target": "branch_f8fddef77b914622",
       "relation": "FALSE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_4b393c4a664abe34",
-      "target": "node_62c1dd85e41310dc",
+      "source": "branch_f8fddef77b914622",
+      "target": "node_18006073000ff587",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_0f5ffec81fa528c2",
-      "target": "node_bef80d30fea56438",
+      "source": "procedure_389d8383c644215c",
+      "target": "node_fc034b1f6d2560b2",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_ec4bbfbf75561d18",
-      "target": "node_bef80d30fea56438",
+      "source": "node_a69ff6d80906edd3",
+      "target": "node_fc034b1f6d2560b2",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -11792,39 +11731,39 @@
     },
     {
       "source": "procedure_7a9d528b68fd7ddd",
-      "target": "node_facd7eddb3cfb3a3",
+      "target": "node_f387427c953713ba",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_c5c08874232bfba7",
-      "target": "node_facd7eddb3cfb3a3",
+      "target": "node_f387427c953713ba",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_facd7eddb3cfb3a3",
-      "target": "branch_d93f8e593bc4807b",
+      "source": "node_f387427c953713ba",
+      "target": "branch_8c74c5727030310d",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_d93f8e593bc4807b",
-      "target": "node_f1fb309d81e94d89",
+      "source": "branch_8c74c5727030310d",
+      "target": "node_f3c7ae5381ed9a89",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_d93f8e593bc4807b",
-      "target": "node_ec6e84c8aea95e97",
+      "source": "branch_8c74c5727030310d",
+      "target": "node_13c94b051041d6df",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_f1fb309d81e94d89",
-      "target": "node_ec6e84c8aea95e97",
+      "source": "node_f3c7ae5381ed9a89",
+      "target": "node_13c94b051041d6df",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -11832,39 +11771,39 @@
     },
     {
       "source": "procedure_7a9d528b68fd7ddd",
-      "target": "node_b2a4d7acd45ec6dd",
+      "target": "node_502bb902b978c55d",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_facd7eddb3cfb3a3",
-      "target": "node_b2a4d7acd45ec6dd",
+      "source": "node_f387427c953713ba",
+      "target": "node_502bb902b978c55d",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_b2a4d7acd45ec6dd",
-      "target": "branch_afb49957110cb60d",
+      "source": "node_502bb902b978c55d",
+      "target": "branch_e9a985e038609758",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_afb49957110cb60d",
-      "target": "node_93531d1316ffc01d",
+      "source": "branch_e9a985e038609758",
+      "target": "node_7d08e8be8ac892f9",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_afb49957110cb60d",
-      "target": "node_ce40574c5341f3cb",
+      "source": "branch_e9a985e038609758",
+      "target": "node_e58ec67f1b6407fd",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_93531d1316ffc01d",
-      "target": "node_ce40574c5341f3cb",
+      "source": "node_7d08e8be8ac892f9",
+      "target": "node_e58ec67f1b6407fd",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -11877,7 +11816,7 @@
       "evidence": {}
     },
     {
-      "source": "node_b2a4d7acd45ec6dd",
+      "source": "node_502bb902b978c55d",
       "target": "node_4262226cc91ed81e",
       "relation": "NEXT",
       "evidence": {
@@ -11900,151 +11839,137 @@
     },
     {
       "source": "procedure_7a9d528b68fd7ddd",
-      "target": "node_37c750cc7bc47056",
+      "target": "node_52bbb4547a6ef4be",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_a6a23d5ffd7d9c6b",
-      "target": "node_37c750cc7bc47056",
+      "target": "node_52bbb4547a6ef4be",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_37c750cc7bc47056",
-      "target": "node_b039891d68bbddb7",
+      "source": "node_52bbb4547a6ef4be",
+      "target": "node_d6466628cf80d2d0",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_37c750cc7bc47056",
-      "target": "node_fe34c76a77abd702",
+      "source": "node_52bbb4547a6ef4be",
+      "target": "node_078d332431af9af4",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_b039891d68bbddb7",
-      "target": "node_fe34c76a77abd702",
+      "source": "node_d6466628cf80d2d0",
+      "target": "node_078d332431af9af4",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_fe34c76a77abd702",
-      "target": "branch_02cbdd473a016b17",
+      "source": "node_078d332431af9af4",
+      "target": "branch_c8624fcee153cd44",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_02cbdd473a016b17",
-      "target": "node_315f3f17117ac43f",
+      "source": "branch_c8624fcee153cd44",
+      "target": "node_75a749ef41da4612",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_02cbdd473a016b17",
-      "target": "node_19dff37bab7277dc",
+      "source": "branch_c8624fcee153cd44",
+      "target": "node_3fd91dcdb1fdc336",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_315f3f17117ac43f",
-      "target": "node_19dff37bab7277dc",
+      "source": "node_75a749ef41da4612",
+      "target": "node_3fd91dcdb1fdc336",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "branch_02cbdd473a016b17",
-      "target": "node_016bd1e78cc5bcb8",
+      "source": "branch_c8624fcee153cd44",
+      "target": "node_e3b1f5c28ccb33aa",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_19dff37bab7277dc",
-      "target": "node_016bd1e78cc5bcb8",
+      "source": "node_3fd91dcdb1fdc336",
+      "target": "node_e3b1f5c28ccb33aa",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_016bd1e78cc5bcb8",
-      "target": "branch_48dc67c88e22a46f",
+      "source": "node_e3b1f5c28ccb33aa",
+      "target": "branch_0176ed4bad5f7b09",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_48dc67c88e22a46f",
-      "target": "node_9327a029a78512a9",
+      "source": "branch_0176ed4bad5f7b09",
+      "target": "node_006eb50933962a1c",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_9327a029a78512a9",
-      "target": "branch_f46900e36b173fbb",
+      "source": "node_006eb50933962a1c",
+      "target": "branch_5b70fa321269e2c2",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_f46900e36b173fbb",
-      "target": "node_3dcade2365cd545f",
+      "source": "branch_5b70fa321269e2c2",
+      "target": "node_5d06f1153e3be63c",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_f46900e36b173fbb",
-      "target": "node_c2e3c9a9fbd33e81",
+      "source": "branch_5b70fa321269e2c2",
+      "target": "node_1d42771ad170e68d",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_3dcade2365cd545f",
-      "target": "node_c2e3c9a9fbd33e81",
+      "source": "node_5d06f1153e3be63c",
+      "target": "node_1d42771ad170e68d",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_c2e3c9a9fbd33e81",
-      "target": "branch_184b6fb2efa36ed8",
+      "source": "node_1d42771ad170e68d",
+      "target": "branch_53dd1f6942043674",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_184b6fb2efa36ed8",
-      "target": "node_b494edcd96ac0347",
+      "source": "branch_53dd1f6942043674",
+      "target": "node_2259db84dd325e42",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_37c750cc7bc47056",
-      "target": "node_983366628e1ba824",
+      "source": "procedure_7a9d528b68fd7ddd",
+      "target": "node_4c405fb017e062d9",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_fe34c76a77abd702",
-      "target": "node_983366628e1ba824",
-      "relation": "NEXT",
-      "evidence": {
-        "order": "source"
-      }
-    },
-    {
-      "source": "node_37c750cc7bc47056",
-      "target": "node_cdcec246d516507a",
-      "relation": "CONTAINS",
-      "evidence": {}
-    },
-    {
-      "source": "node_983366628e1ba824",
-      "target": "node_cdcec246d516507a",
+      "source": "node_52bbb4547a6ef4be",
+      "target": "node_4c405fb017e062d9",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -12230,87 +12155,73 @@
     },
     {
       "source": "procedure_96e279adeedf7e49",
-      "target": "node_1814f17bfddd4435",
+      "target": "node_5bfd4a2ae95c5a17",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_ad2072ec0a629b4c",
-      "target": "node_1814f17bfddd4435",
+      "target": "node_5bfd4a2ae95c5a17",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_1814f17bfddd4435",
-      "target": "node_0b21f7881b6d7bdd",
+      "source": "node_5bfd4a2ae95c5a17",
+      "target": "node_5e86aca737717970",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_1814f17bfddd4435",
-      "target": "node_c3a6302e29ccc136",
+      "source": "node_5bfd4a2ae95c5a17",
+      "target": "node_f4a73101d9578ff3",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_0b21f7881b6d7bdd",
-      "target": "node_c3a6302e29ccc136",
+      "source": "node_5e86aca737717970",
+      "target": "node_f4a73101d9578ff3",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_c3a6302e29ccc136",
-      "target": "branch_9866f9cf9b71057e",
+      "source": "node_f4a73101d9578ff3",
+      "target": "branch_79cf23104477a089",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_9866f9cf9b71057e",
-      "target": "node_655e381e6a7b1841",
+      "source": "branch_79cf23104477a089",
+      "target": "node_6b66aee87f9422d7",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_1814f17bfddd4435",
-      "target": "node_316db758ded4fbf5",
+      "source": "procedure_96e279adeedf7e49",
+      "target": "node_b6caf0196700c3c5",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_c3a6302e29ccc136",
-      "target": "node_316db758ded4fbf5",
+      "source": "node_5bfd4a2ae95c5a17",
+      "target": "node_b6caf0196700c3c5",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_1814f17bfddd4435",
-      "target": "node_782537bbe7481a2e",
+      "source": "procedure_96e279adeedf7e49",
+      "target": "node_677438c930033b51",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_316db758ded4fbf5",
-      "target": "node_782537bbe7481a2e",
-      "relation": "NEXT",
-      "evidence": {
-        "order": "source"
-      }
-    },
-    {
-      "source": "node_1814f17bfddd4435",
-      "target": "node_0d3d3f47361d3be3",
-      "relation": "CONTAINS",
-      "evidence": {}
-    },
-    {
-      "source": "node_782537bbe7481a2e",
-      "target": "node_0d3d3f47361d3be3",
+      "source": "node_b6caf0196700c3c5",
+      "target": "node_677438c930033b51",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
@@ -12456,91 +12367,77 @@
     },
     {
       "source": "procedure_94d926ec9cd086c7",
-      "target": "node_230e6824f049a683",
+      "target": "node_6c7286fc4911f8c2",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_5a53a3ff544c6c9d",
-      "target": "node_230e6824f049a683",
+      "target": "node_6c7286fc4911f8c2",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_230e6824f049a683",
-      "target": "branch_770f907e2eaf383c",
+      "source": "node_6c7286fc4911f8c2",
+      "target": "branch_93acee075477b89d",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_770f907e2eaf383c",
-      "target": "node_54656175a954af5d",
+      "source": "branch_93acee075477b89d",
+      "target": "node_4b33f95937a7b839",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_770f907e2eaf383c",
-      "target": "node_2a9817808e061f4a",
+      "source": "branch_93acee075477b89d",
+      "target": "node_dcf1b02c254546e1",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_54656175a954af5d",
-      "target": "node_2a9817808e061f4a",
+      "source": "node_4b33f95937a7b839",
+      "target": "node_dcf1b02c254546e1",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "branch_770f907e2eaf383c",
-      "target": "node_f61cf4428dddc3ce",
+      "source": "branch_93acee075477b89d",
+      "target": "node_0c6ff2f49a4f609d",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_2a9817808e061f4a",
-      "target": "node_f61cf4428dddc3ce",
+      "source": "node_dcf1b02c254546e1",
+      "target": "node_0c6ff2f49a4f609d",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "branch_770f907e2eaf383c",
-      "target": "node_22fbce8ada1c01e4",
+      "source": "branch_93acee075477b89d",
+      "target": "node_c50fc0de2e759f74",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_f61cf4428dddc3ce",
-      "target": "node_22fbce8ada1c01e4",
+      "source": "node_0c6ff2f49a4f609d",
+      "target": "node_c50fc0de2e759f74",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_22fbce8ada1c01e4",
-      "target": "node_f9ac3078a53f2ea1",
+      "source": "node_c50fc0de2e759f74",
+      "target": "node_262b23c355dcdd9e",
       "relation": "CONTAINS",
       "evidence": {}
-    },
-    {
-      "source": "node_22fbce8ada1c01e4",
-      "target": "node_3ba95d646ed03646",
-      "relation": "CONTAINS",
-      "evidence": {}
-    },
-    {
-      "source": "node_f9ac3078a53f2ea1",
-      "target": "node_3ba95d646ed03646",
-      "relation": "NEXT",
-      "evidence": {
-        "order": "source"
-      }
     },
     {
       "source": "procedure_94d926ec9cd086c7",
@@ -12549,7 +12446,7 @@
       "evidence": {}
     },
     {
-      "source": "node_230e6824f049a683",
+      "source": "node_6c7286fc4911f8c2",
       "target": "node_0f41f913f4c58c03",
       "relation": "NEXT",
       "evidence": {
@@ -12564,31 +12461,31 @@
     },
     {
       "source": "procedure_f4c1072dc8425eb5",
-      "target": "node_30991a8c2b67146a",
+      "target": "node_5b5f666e8e3a4a38",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_30991a8c2b67146a",
-      "target": "branch_147da4bd955e455e",
+      "source": "node_5b5f666e8e3a4a38",
+      "target": "branch_65d8308876548815",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_147da4bd955e455e",
-      "target": "node_ef2fc27235e97df9",
+      "source": "branch_65d8308876548815",
+      "target": "node_8ddf2b67e9489a50",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_30991a8c2b67146a",
-      "target": "branch_eb4c1224ba350817",
+      "source": "node_5b5f666e8e3a4a38",
+      "target": "branch_7622489b0a7dba61",
       "relation": "FALSE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_eb4c1224ba350817",
-      "target": "node_a9ae55225d08bd61",
+      "source": "branch_7622489b0a7dba61",
+      "target": "node_ab2d79d6de2f583e",
       "relation": "CONTAINS",
       "evidence": {}
     },
@@ -13404,29 +13301,7 @@
       "scope": "vba_sample_6.BuildSummaryReport"
     }
   ],
-  "diagnostics": [
-    {
-      "severity": "warning",
-      "code": "CROSS_NESTED_BLOCK_CLOSE",
-      "message": "End If closed a non-top IF frame; inspect nested syntax.",
-      "path": "vba_sample_6.bas",
-      "line": 223
-    },
-    {
-      "severity": "warning",
-      "code": "CROSS_NESTED_BLOCK_CLOSE",
-      "message": "End If closed a non-top IF frame; inspect nested syntax.",
-      "path": "vba_sample_6.bas",
-      "line": 256
-    },
-    {
-      "severity": "warning",
-      "code": "CROSS_NESTED_BLOCK_CLOSE",
-      "message": "End If closed a non-top IF frame; inspect nested syntax.",
-      "path": "vba_sample_6.bas",
-      "line": 472
-    }
-  ],
+  "diagnostics": [],
   "manifest": [
     {
       "path": "vba_sample_6.bas",

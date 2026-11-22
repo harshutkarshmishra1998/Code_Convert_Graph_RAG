@@ -100,6 +100,8 @@ def _infer_expr_type(node: dict[str, Any], proc_name: str, table: dict[str, Any]
         typ = node.get('literal_type')
         return {'kind':'primitive','name': {'string':'string','boolean':'boolean','integer':'int32','int16':'int16','int32':'int32','float32':'float32','float64':'float64','currency':'decimal','date':'datetime'}.get(typ, typ or 'unknown')}
     if k == 'identifier':
+        if node.get('semantics', {}).get('implicit_with_receiver'):
+            return None
         sym = _symbol_for(node.get('name',''), proc_name, table)
         if sym:
             return sym.get('runtime_value_type') or sym.get('type')
@@ -161,6 +163,10 @@ def _resolve_expr(node: dict[str, Any], proc_name: str, table: dict[str, Any], i
     k = node.get('kind')
     if k == 'identifier':
         name = node.get('name','')
+        if node.get('semantics', {}).get('implicit_with_receiver'):
+            node['binding'] = {'symbol_kind':'implicit_with_receiver',
+                               'resolution':'enclosing_with_statement'}
+            return node
         sym = _symbol_for(name, proc_name, table)
         if sym:
             node['binding'] = {'symbol_kind':sym.get('kind'), 'symbol_name':sym.get('name'), 'symbol_id':sym.get('id')}
@@ -180,7 +186,12 @@ def _resolve_expr(node: dict[str, Any], proc_name: str, table: dict[str, Any], i
         owner_t = _infer_expr_type(node['object'], proc_name, table)
         fields = _record_for_type(owner_t, table)
         member = fields.get(_norm(node.get('member',''))) if fields else None
-        if member:
+        if node['object'].get('binding', {}).get('symbol_kind') == 'implicit_with_receiver':
+            node['binding'] = {'symbol_kind':'implicit_with_member',
+                               'symbol_name':node.get('member'),
+                               'resolution':'enclosing_with_statement'}
+            node['semantics'] = {**node.get('semantics', {}), 'requires_with_context':True}
+        elif member:
             node['binding'] = {'symbol_kind':'record_field','symbol_name':member.get('name'),'symbol_id':member.get('id')}
             if member.get('type'): node['inferred_type'] = member['type']
         elif _type_name(owner_t) == 'collection' and _norm(node.get('member','')) == 'count':
@@ -218,16 +229,24 @@ def _resolve_expr(node: dict[str, Any], proc_name: str, table: dict[str, Any], i
                 node['target_procedure']={'name':target.get('name'),'id':target.get('id')}
                 if target.get('return_type'): node['inferred_type']=target['return_type']
                 bindings=[]
+                next_positional_index = 0
                 for ai,arg in enumerate(node.get('arguments',[])):
                     params=target.get('parameters',[])
-                    if ai < len(params):
-                        param=params[ai]
+                    named = arg.get('kind') == 'named_argument'
+                    arg_index = next_positional_index
+                    if not named:
+                        next_positional_index += 1
+                    param = next((p for p in params if named and _norm(p.get('name','')) == _norm(arg.get('name',''))), None) if named else (params[arg_index] if arg_index < len(params) else None)
+                    if param:
                         passing=param.get('passing','reference')
                         binding={'argument_index':ai,'parameter_name':param.get('name'),'passing':passing,
                                  'parameter_type':param.get('type')}
+                        if named:
+                            binding['argument_name'] = arg.get('name')
                         if passing == 'reference':
                             binding['requires_mutable_lvalue']=True
-                            binding['argument_is_lvalue']=arg.get('kind') in {'identifier','member_access','index_access','collection_item_access'}
+                            argument_value = arg.get('value', {}) if named else arg
+                            binding['argument_is_lvalue']=argument_value.get('kind') in {'identifier','member_access','index_access','collection_item_access'}
                         bindings.append(binding)
                 node['argument_bindings']=bindings
             elif key in BUILTINS:
@@ -258,6 +277,8 @@ def _resolve_expr(node: dict[str, Any], proc_name: str, table: dict[str, Any], i
             if _type_name(operand_type) == 'array': node['semantics']['possible_array_initialization_idiom']=True
     elif k == 'parenthesized_expression':
         node['expression'] = _resolve_expr(node['expression'], proc_name, table, issues, path+'.expression')
+    elif k == 'named_argument':
+        node['value'] = _resolve_expr(node.get('value', {}), proc_name, table, issues, path+'.value')
     elif k == 'index_access':
         node['object'] = _resolve_expr(node['object'], proc_name, table, issues, path+'.object')
         node['indices'] = [_resolve_expr(a, proc_name, table, issues, f'{path}.indices[{i}]') for i,a in enumerate(node.get('indices',[]))]
@@ -374,6 +395,22 @@ def _normalize_statement_inner(stmt: dict[str, Any], proc: str, path: str, table
                                    'normalization':{'method':'vba_language_default','rule':'For loop default Step is 1','inferred':True}}
                 else:
                     stmt[field] = _normalize_expr_slot(stmt[field],proc,path+'.'+field,table,issues)
+        stmt['body'] = [_normalize_statement(s,proc,f'{path}.body[{i}]',table,issues) for i,s in enumerate(stmt.get('body',[]))]
+    elif k in {'for_each', 'while', 'do_while', 'do_until'}:
+        for field in ('iterable', 'condition'):
+            if isinstance(stmt.get(field), dict) and stmt[field].get('kind') == 'unsupported':
+                stmt[field] = _normalize_expr_slot(stmt[field], proc, f'{path}.{field}', table, issues)
+        stmt['body'] = [_normalize_statement(s,proc,f'{path}.body[{i}]',table,issues) for i,s in enumerate(stmt.get('body',[]))]
+    elif k == 'switch':
+        if isinstance(stmt.get('expression'), dict) and stmt['expression'].get('kind') == 'unsupported':
+            stmt['expression'] = _normalize_expr_slot(stmt['expression'], proc, path+'.expression', table, issues)
+        for bi, branch in enumerate(stmt.get('branches', [])):
+            if isinstance(branch.get('condition'), dict) and branch['condition'].get('kind') == 'unsupported':
+                branch['condition'] = _normalize_expr_slot(branch['condition'], proc, f'{path}.branches[{bi}].condition', table, issues)
+            branch['body'] = [_normalize_statement(s,proc,f'{path}.branches[{bi}].body[{i}]',table,issues) for i,s in enumerate(branch.get('body',[]))]
+    elif k == 'with':
+        if isinstance(stmt.get('expression'), dict) and stmt['expression'].get('kind') == 'unsupported':
+            stmt['expression'] = _normalize_expr_slot(stmt['expression'], proc, path+'.expression', table, issues)
         stmt['body'] = [_normalize_statement(s,proc,f'{path}.body[{i}]',table,issues) for i,s in enumerate(stmt.get('body',[]))]
     elif k == 'call':
         raw = (stmt.get('semantics') or {}).get('raw_source') or (stmt.get('provenance') or {}).get('source_text')
@@ -630,6 +667,10 @@ def normalize_ir(ir: dict[str, Any], *, graph: dict[str, Any] | None=None, segme
         table=_make_symbol_table(module)
         for declaration in module.get('declarations',[]):
             if isinstance(declaration.get('type'),dict): declaration['type']=_resolve_type_tree(declaration['type'],table)
+            if isinstance(declaration.get('value'),dict):
+                declaration['value']=_normalize_expr_slot(
+                    declaration['value'], '<module-declaration>',
+                    f'modules[{mi}].declarations.{declaration.get("name")}.value', table, issues)
             for field in declaration.get('members',[]):
                 if isinstance(field.get('type'),dict): field['type']=_resolve_type_tree(field['type'],table)
             for member in declaration.get('members',[]):

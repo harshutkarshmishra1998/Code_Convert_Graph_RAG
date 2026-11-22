@@ -1,0 +1,1875 @@
+{
+  "ir_version": "1.0.0",
+  "source_language": "VBA",
+  "source_language_version": "unknown",
+  "name": "vba_sample_1",
+  "modules": [
+    {
+      "id": "module_3f9215ccc30933e2",
+      "name": "vba_sample_1",
+      "kind": "module",
+      "declarations": [],
+      "procedures": [
+        {
+          "id": "procedure_717ab93df6b2eebd",
+          "name": "RefreshMonthlySummary",
+          "kind": "procedure",
+          "visibility": "public",
+          "parameters": [],
+          "return_type": {
+            "kind": "void",
+            "name": "void"
+          },
+          "local_variables": [
+            {
+              "id": "node_c499c9e41fadeb99:local",
+              "kind": "variable",
+              "name": "sourceSheet",
+              "visibility": "default",
+              "type": {
+                "kind": "named",
+                "name": "Worksheet",
+                "source_type": "Worksheet",
+                "semantics": {
+                  "resolution": "unresolved_named_type"
+                }
+              },
+              "modifiers": [],
+              "semantics": {
+                "source_declaration": "Dim sourceSheet As Worksheet"
+              },
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 4,
+                  "end_line": 4,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_c499c9e41fadeb99"
+                ],
+                "segment_ids": [
+                  "segment_934ae7a726e35500"
+                ],
+                "segment_sources": [],
+                "inferred": false,
+                "source_text": "Dim sourceSheet As Worksheet"
+              },
+              "scope": "local"
+            },
+            {
+              "id": "node_06aa12b7fa5074f8:local",
+              "kind": "variable",
+              "name": "reportSheet",
+              "visibility": "default",
+              "type": {
+                "kind": "named",
+                "name": "Worksheet",
+                "source_type": "Worksheet",
+                "semantics": {
+                  "resolution": "unresolved_named_type"
+                }
+              },
+              "modifiers": [],
+              "semantics": {
+                "source_declaration": "Dim reportSheet As Worksheet"
+              },
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 5,
+                  "end_line": 5,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_06aa12b7fa5074f8"
+                ],
+                "segment_ids": [
+                  "segment_72e60fa6826afd9e"
+                ],
+                "segment_sources": [],
+                "inferred": false,
+                "source_text": "Dim reportSheet As Worksheet"
+              },
+              "scope": "local"
+            },
+            {
+              "id": "node_0eff6fa81be0de41:local",
+              "kind": "variable",
+              "name": "lastRow",
+              "visibility": "default",
+              "type": {
+                "kind": "primitive",
+                "name": "int32",
+                "source_type": "Long",
+                "semantics": {
+                  "vba_type": "Long"
+                }
+              },
+              "modifiers": [],
+              "semantics": {
+                "source_declaration": "Dim lastRow As Long"
+              },
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 6,
+                  "end_line": 6,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_0eff6fa81be0de41"
+                ],
+                "segment_ids": [
+                  "segment_6eeef13ce412572c"
+                ],
+                "segment_sources": [],
+                "inferred": false,
+                "source_text": "Dim lastRow As Long"
+              },
+              "scope": "local"
+            },
+            {
+              "id": "node_e93da05eca502add:local",
+              "kind": "variable",
+              "name": "rowNumber",
+              "visibility": "default",
+              "type": {
+                "kind": "primitive",
+                "name": "int32",
+                "source_type": "Long",
+                "semantics": {
+                  "vba_type": "Long"
+                }
+              },
+              "modifiers": [],
+              "semantics": {
+                "source_declaration": "Dim rowNumber As Long"
+              },
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 7,
+                  "end_line": 7,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_e93da05eca502add"
+                ],
+                "segment_ids": [
+                  "segment_52f6bcda2e26308f"
+                ],
+                "segment_sources": [],
+                "inferred": false,
+                "source_text": "Dim rowNumber As Long"
+              },
+              "scope": "local"
+            },
+            {
+              "id": "node_160a2a63b5235167:local",
+              "kind": "variable",
+              "name": "reportRow",
+              "visibility": "default",
+              "type": {
+                "kind": "primitive",
+                "name": "int32",
+                "source_type": "Long",
+                "semantics": {
+                  "vba_type": "Long"
+                }
+              },
+              "modifiers": [],
+              "semantics": {
+                "source_declaration": "Dim reportRow As Long"
+              },
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 8,
+                  "end_line": 8,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_160a2a63b5235167"
+                ],
+                "segment_ids": [
+                  "segment_cba6c3794ee786eb"
+                ],
+                "segment_sources": [],
+                "inferred": false,
+                "source_text": "Dim reportRow As Long"
+              },
+              "scope": "local"
+            }
+          ],
+          "body": [
+            {
+              "id": "node_c499c9e41fadeb99",
+              "kind": "variable_declaration",
+              "declarations": [
+                {
+                  "id": "node_c499c9e41fadeb99:decl",
+                  "kind": "variable",
+                  "name": "sourceSheet",
+                  "visibility": "default",
+                  "type": {
+                    "kind": "named",
+                    "name": "Worksheet",
+                    "source_type": "Worksheet",
+                    "semantics": {
+                      "resolution": "unresolved_named_type"
+                    }
+                  },
+                  "modifiers": [],
+                  "semantics": {
+                    "source_declaration": "Dim sourceSheet As Worksheet"
+                  },
+                  "provenance": {
+                    "source_language": "VBA",
+                    "source_location": {
+                      "line": 4,
+                      "end_line": 4,
+                      "file": "vba_sample_1.bas"
+                    },
+                    "graph_node_ids": [
+                      "node_c499c9e41fadeb99"
+                    ],
+                    "segment_ids": [
+                      "segment_934ae7a726e35500"
+                    ],
+                    "segment_sources": [],
+                    "inferred": false,
+                    "source_text": "Dim sourceSheet As Worksheet"
+                  }
+                }
+              ],
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 4,
+                  "end_line": 4,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_c499c9e41fadeb99"
+                ],
+                "segment_ids": [
+                  "segment_934ae7a726e35500"
+                ],
+                "segment_sources": [
+                  {
+                    "id": "segment_934ae7a726e35500",
+                    "kind": "DECLARATION",
+                    "source": "    Dim sourceSheet As Worksheet",
+                    "start_line": 4,
+                    "end_line": 4
+                  }
+                ],
+                "inferred": false,
+                "source_text": "Dim sourceSheet As Worksheet"
+              },
+              "semantics": {
+                "raw_source": "Dim sourceSheet As Worksheet"
+              }
+            },
+            {
+              "id": "node_06aa12b7fa5074f8",
+              "kind": "variable_declaration",
+              "declarations": [
+                {
+                  "id": "node_06aa12b7fa5074f8:decl",
+                  "kind": "variable",
+                  "name": "reportSheet",
+                  "visibility": "default",
+                  "type": {
+                    "kind": "named",
+                    "name": "Worksheet",
+                    "source_type": "Worksheet",
+                    "semantics": {
+                      "resolution": "unresolved_named_type"
+                    }
+                  },
+                  "modifiers": [],
+                  "semantics": {
+                    "source_declaration": "Dim reportSheet As Worksheet"
+                  },
+                  "provenance": {
+                    "source_language": "VBA",
+                    "source_location": {
+                      "line": 5,
+                      "end_line": 5,
+                      "file": "vba_sample_1.bas"
+                    },
+                    "graph_node_ids": [
+                      "node_06aa12b7fa5074f8"
+                    ],
+                    "segment_ids": [
+                      "segment_72e60fa6826afd9e"
+                    ],
+                    "segment_sources": [],
+                    "inferred": false,
+                    "source_text": "Dim reportSheet As Worksheet"
+                  }
+                }
+              ],
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 5,
+                  "end_line": 5,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_06aa12b7fa5074f8"
+                ],
+                "segment_ids": [
+                  "segment_72e60fa6826afd9e"
+                ],
+                "segment_sources": [
+                  {
+                    "id": "segment_72e60fa6826afd9e",
+                    "kind": "DECLARATION",
+                    "source": "    Dim reportSheet As Worksheet",
+                    "start_line": 5,
+                    "end_line": 5
+                  }
+                ],
+                "inferred": false,
+                "source_text": "Dim reportSheet As Worksheet"
+              },
+              "semantics": {
+                "raw_source": "Dim reportSheet As Worksheet"
+              }
+            },
+            {
+              "id": "node_0eff6fa81be0de41",
+              "kind": "variable_declaration",
+              "declarations": [
+                {
+                  "id": "node_0eff6fa81be0de41:decl",
+                  "kind": "variable",
+                  "name": "lastRow",
+                  "visibility": "default",
+                  "type": {
+                    "kind": "primitive",
+                    "name": "int32",
+                    "source_type": "Long",
+                    "semantics": {
+                      "vba_type": "Long"
+                    }
+                  },
+                  "modifiers": [],
+                  "semantics": {
+                    "source_declaration": "Dim lastRow As Long"
+                  },
+                  "provenance": {
+                    "source_language": "VBA",
+                    "source_location": {
+                      "line": 6,
+                      "end_line": 6,
+                      "file": "vba_sample_1.bas"
+                    },
+                    "graph_node_ids": [
+                      "node_0eff6fa81be0de41"
+                    ],
+                    "segment_ids": [
+                      "segment_6eeef13ce412572c"
+                    ],
+                    "segment_sources": [],
+                    "inferred": false,
+                    "source_text": "Dim lastRow As Long"
+                  }
+                }
+              ],
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 6,
+                  "end_line": 6,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_0eff6fa81be0de41"
+                ],
+                "segment_ids": [
+                  "segment_6eeef13ce412572c"
+                ],
+                "segment_sources": [
+                  {
+                    "id": "segment_6eeef13ce412572c",
+                    "kind": "DECLARATION",
+                    "source": "    Dim lastRow As Long",
+                    "start_line": 6,
+                    "end_line": 6
+                  }
+                ],
+                "inferred": false,
+                "source_text": "Dim lastRow As Long"
+              },
+              "semantics": {
+                "raw_source": "Dim lastRow As Long"
+              }
+            },
+            {
+              "id": "node_e93da05eca502add",
+              "kind": "variable_declaration",
+              "declarations": [
+                {
+                  "id": "node_e93da05eca502add:decl",
+                  "kind": "variable",
+                  "name": "rowNumber",
+                  "visibility": "default",
+                  "type": {
+                    "kind": "primitive",
+                    "name": "int32",
+                    "source_type": "Long",
+                    "semantics": {
+                      "vba_type": "Long"
+                    }
+                  },
+                  "modifiers": [],
+                  "semantics": {
+                    "source_declaration": "Dim rowNumber As Long"
+                  },
+                  "provenance": {
+                    "source_language": "VBA",
+                    "source_location": {
+                      "line": 7,
+                      "end_line": 7,
+                      "file": "vba_sample_1.bas"
+                    },
+                    "graph_node_ids": [
+                      "node_e93da05eca502add"
+                    ],
+                    "segment_ids": [
+                      "segment_52f6bcda2e26308f"
+                    ],
+                    "segment_sources": [],
+                    "inferred": false,
+                    "source_text": "Dim rowNumber As Long"
+                  }
+                }
+              ],
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 7,
+                  "end_line": 7,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_e93da05eca502add"
+                ],
+                "segment_ids": [
+                  "segment_52f6bcda2e26308f"
+                ],
+                "segment_sources": [
+                  {
+                    "id": "segment_52f6bcda2e26308f",
+                    "kind": "DECLARATION",
+                    "source": "    Dim rowNumber As Long",
+                    "start_line": 7,
+                    "end_line": 7
+                  }
+                ],
+                "inferred": false,
+                "source_text": "Dim rowNumber As Long"
+              },
+              "semantics": {
+                "raw_source": "Dim rowNumber As Long"
+              }
+            },
+            {
+              "id": "node_160a2a63b5235167",
+              "kind": "variable_declaration",
+              "declarations": [
+                {
+                  "id": "node_160a2a63b5235167:decl",
+                  "kind": "variable",
+                  "name": "reportRow",
+                  "visibility": "default",
+                  "type": {
+                    "kind": "primitive",
+                    "name": "int32",
+                    "source_type": "Long",
+                    "semantics": {
+                      "vba_type": "Long"
+                    }
+                  },
+                  "modifiers": [],
+                  "semantics": {
+                    "source_declaration": "Dim reportRow As Long"
+                  },
+                  "provenance": {
+                    "source_language": "VBA",
+                    "source_location": {
+                      "line": 8,
+                      "end_line": 8,
+                      "file": "vba_sample_1.bas"
+                    },
+                    "graph_node_ids": [
+                      "node_160a2a63b5235167"
+                    ],
+                    "segment_ids": [
+                      "segment_cba6c3794ee786eb"
+                    ],
+                    "segment_sources": [],
+                    "inferred": false,
+                    "source_text": "Dim reportRow As Long"
+                  }
+                }
+              ],
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 8,
+                  "end_line": 8,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_160a2a63b5235167"
+                ],
+                "segment_ids": [
+                  "segment_cba6c3794ee786eb"
+                ],
+                "segment_sources": [
+                  {
+                    "id": "segment_cba6c3794ee786eb",
+                    "kind": "DECLARATION",
+                    "source": "    Dim reportRow As Long",
+                    "start_line": 8,
+                    "end_line": 8
+                  }
+                ],
+                "inferred": false,
+                "source_text": "Dim reportRow As Long"
+              },
+              "semantics": {
+                "raw_source": "Dim reportRow As Long"
+              }
+            },
+            {
+              "id": "node_9cb085770ed5645f",
+              "kind": "on_error",
+              "mode": "goto_handler",
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 10,
+                  "end_line": 10,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_9cb085770ed5645f"
+                ],
+                "segment_ids": [
+                  "segment_64fe880fb8788ce6"
+                ],
+                "segment_sources": [
+                  {
+                    "id": "segment_64fe880fb8788ce6",
+                    "kind": "ERROR_CONTROL",
+                    "source": "    On Error GoTo HandleError",
+                    "start_line": 10,
+                    "end_line": 10
+                  }
+                ],
+                "inferred": false,
+                "source_text": "On Error GoTo HandleError"
+              },
+              "semantics": {
+                "raw_source": "On Error GoTo HandleError",
+                "requires_resolution": false,
+                "vba_error_model": true
+              },
+              "handler": "HandleError"
+            },
+            {
+              "id": "node_af3e7fa52166dbc8",
+              "kind": "assignment",
+              "target": {
+                "kind": "identifier",
+                "name": "sourceSheet"
+              },
+              "value": {
+                "kind": "unsupported",
+                "semantics": {
+                  "reason": "Frontend supplied source text but no expression AST",
+                  "source_expression": "ThisWorkbook.Worksheets(\"Transactions\")",
+                  "parse_status": "not_parsed",
+                  "requires_semantic_resolution": true
+                }
+              },
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 12,
+                  "end_line": 12,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_af3e7fa52166dbc8"
+                ],
+                "segment_ids": [
+                  "segment_ec4f89ecab2ab61d"
+                ],
+                "segment_sources": [
+                  {
+                    "id": "segment_ec4f89ecab2ab61d",
+                    "kind": "ASSIGNMENT",
+                    "source": "    Set sourceSheet = ThisWorkbook.Worksheets(\"Transactions\")",
+                    "start_line": 12,
+                    "end_line": 12
+                  }
+                ],
+                "inferred": false,
+                "source_text": "Set sourceSheet = ThisWorkbook.Worksheets(\"Transactions\")"
+              },
+              "semantics": {
+                "assignment_kind": "SET",
+                "raw_source": "Set sourceSheet = ThisWorkbook.Worksheets(\"Transactions\")"
+              }
+            },
+            {
+              "id": "node_330bb2d9889fc03c",
+              "kind": "assignment",
+              "target": {
+                "kind": "identifier",
+                "name": "reportSheet"
+              },
+              "value": {
+                "kind": "unsupported",
+                "semantics": {
+                  "reason": "Frontend supplied source text but no expression AST",
+                  "source_expression": "ThisWorkbook.Worksheets(\"Monthly Summary\")",
+                  "parse_status": "not_parsed",
+                  "requires_semantic_resolution": true
+                }
+              },
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 13,
+                  "end_line": 13,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_330bb2d9889fc03c"
+                ],
+                "segment_ids": [
+                  "segment_72177d3965ed3eef"
+                ],
+                "segment_sources": [
+                  {
+                    "id": "segment_72177d3965ed3eef",
+                    "kind": "ASSIGNMENT",
+                    "source": "    Set reportSheet = ThisWorkbook.Worksheets(\"Monthly Summary\")",
+                    "start_line": 13,
+                    "end_line": 13
+                  }
+                ],
+                "inferred": false,
+                "source_text": "Set reportSheet = ThisWorkbook.Worksheets(\"Monthly Summary\")"
+              },
+              "semantics": {
+                "assignment_kind": "SET",
+                "raw_source": "Set reportSheet = ThisWorkbook.Worksheets(\"Monthly Summary\")"
+              }
+            },
+            {
+              "id": "node_00bd21c9c2d31ca4",
+              "kind": "assignment",
+              "target": {
+                "kind": "identifier",
+                "name": "lastRow"
+              },
+              "value": {
+                "kind": "unsupported",
+                "semantics": {
+                  "reason": "Frontend supplied source text but no expression AST",
+                  "source_expression": "sourceSheet.Cells(sourceSheet.Rows.Count, \"A\").End(xlUp).Row",
+                  "parse_status": "not_parsed",
+                  "requires_semantic_resolution": true
+                }
+              },
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 14,
+                  "end_line": 14,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_00bd21c9c2d31ca4"
+                ],
+                "segment_ids": [
+                  "segment_ea6cdcec3ed93b82"
+                ],
+                "segment_sources": [
+                  {
+                    "id": "segment_ea6cdcec3ed93b82",
+                    "kind": "ASSIGNMENT",
+                    "source": "    lastRow = sourceSheet.Cells(sourceSheet.Rows.Count, \"A\").End(xlUp).Row",
+                    "start_line": 14,
+                    "end_line": 14
+                  }
+                ],
+                "inferred": false,
+                "source_text": "lastRow = sourceSheet.Cells(sourceSheet.Rows.Count, \"A\").End(xlUp).Row"
+              },
+              "semantics": {
+                "assignment_kind": "IMPLICIT",
+                "raw_source": "lastRow = sourceSheet.Cells(sourceSheet.Rows.Count, \"A\").End(xlUp).Row"
+              }
+            },
+            {
+              "id": "node_50eeab2dade8c6e8",
+              "kind": "assignment",
+              "target": {
+                "kind": "identifier",
+                "name": "reportRow"
+              },
+              "value": {
+                "kind": "unsupported",
+                "semantics": {
+                  "reason": "Frontend supplied source text but no expression AST",
+                  "source_expression": "2",
+                  "parse_status": "not_parsed",
+                  "requires_semantic_resolution": true
+                }
+              },
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 15,
+                  "end_line": 15,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_50eeab2dade8c6e8"
+                ],
+                "segment_ids": [
+                  "segment_7fc5ef671f044fb9"
+                ],
+                "segment_sources": [
+                  {
+                    "id": "segment_7fc5ef671f044fb9",
+                    "kind": "ASSIGNMENT",
+                    "source": "    reportRow = 2",
+                    "start_line": 15,
+                    "end_line": 15
+                  }
+                ],
+                "inferred": false,
+                "source_text": "reportRow = 2"
+              },
+              "semantics": {
+                "assignment_kind": "IMPLICIT",
+                "raw_source": "reportRow = 2"
+              }
+            },
+            {
+              "id": "node_48c442f15d72c8f7",
+              "kind": "for",
+              "variable": "rowNumber",
+              "start": {
+                "kind": "unsupported",
+                "semantics": {
+                  "reason": "Frontend supplied source text but no expression AST",
+                  "source_expression": "2",
+                  "parse_status": "not_parsed",
+                  "requires_semantic_resolution": true
+                }
+              },
+              "end": {
+                "kind": "unsupported",
+                "semantics": {
+                  "reason": "Frontend supplied source text but no expression AST",
+                  "source_expression": "lastRow",
+                  "parse_status": "not_parsed",
+                  "requires_semantic_resolution": true
+                }
+              },
+              "step": {
+                "kind": "unsupported",
+                "semantics": {
+                  "reason": "Expression source is missing",
+                  "source_expression": null
+                }
+              },
+              "body": [
+                {
+                  "id": "node_1e403110d1e0515e",
+                  "kind": "if",
+                  "branches": [
+                    {
+                      "body": [
+                        {
+                          "id": "node_15b81dfa97d2fa0f",
+                          "kind": "if",
+                          "branches": [
+                            {
+                              "body": [
+                                {
+                                  "id": "node_0bb6358eff2d2011",
+                                  "kind": "assignment",
+                                  "target": {
+                                    "kind": "identifier",
+                                    "name": "reportSheet.Cells(reportRow, \"A\").Value"
+                                  },
+                                  "value": {
+                                    "kind": "unsupported",
+                                    "semantics": {
+                                      "reason": "Frontend supplied source text but no expression AST",
+                                      "source_expression": "sourceSheet.Cells(rowNumber, \"A\").Value",
+                                      "parse_status": "not_parsed",
+                                      "requires_semantic_resolution": true
+                                    }
+                                  },
+                                  "provenance": {
+                                    "source_language": "VBA",
+                                    "source_location": {
+                                      "line": 20,
+                                      "end_line": 20,
+                                      "file": "vba_sample_1.bas"
+                                    },
+                                    "graph_node_ids": [
+                                      "node_0bb6358eff2d2011"
+                                    ],
+                                    "segment_ids": [
+                                      "segment_bbc8da21079d40dd"
+                                    ],
+                                    "segment_sources": [
+                                      {
+                                        "id": "segment_bbc8da21079d40dd",
+                                        "kind": "ASSIGNMENT",
+                                        "source": "                reportSheet.Cells(reportRow, \"A\").Value = sourceSheet.Cells(rowNumber, \"A\").Value",
+                                        "start_line": 20,
+                                        "end_line": 20
+                                      }
+                                    ],
+                                    "inferred": false,
+                                    "source_text": "reportSheet.Cells(reportRow, \"A\").Value = sourceSheet.Cells(rowNumber, \"A\").Value"
+                                  },
+                                  "semantics": {
+                                    "assignment_kind": "IMPLICIT",
+                                    "raw_source": "reportSheet.Cells(reportRow, \"A\").Value = sourceSheet.Cells(rowNumber, \"A\").Value"
+                                  }
+                                },
+                                {
+                                  "id": "node_b987061180bc60e8",
+                                  "kind": "assignment",
+                                  "target": {
+                                    "kind": "identifier",
+                                    "name": "reportSheet.Cells(reportRow, \"B\").Value"
+                                  },
+                                  "value": {
+                                    "kind": "unsupported",
+                                    "semantics": {
+                                      "reason": "Frontend supplied source text but no expression AST",
+                                      "source_expression": "CDate(sourceSheet.Cells(rowNumber, \"B\").Value)",
+                                      "parse_status": "not_parsed",
+                                      "requires_semantic_resolution": true
+                                    }
+                                  },
+                                  "provenance": {
+                                    "source_language": "VBA",
+                                    "source_location": {
+                                      "line": 21,
+                                      "end_line": 21,
+                                      "file": "vba_sample_1.bas"
+                                    },
+                                    "graph_node_ids": [
+                                      "node_b987061180bc60e8"
+                                    ],
+                                    "segment_ids": [
+                                      "segment_268bbd6cba6499c2"
+                                    ],
+                                    "segment_sources": [
+                                      {
+                                        "id": "segment_268bbd6cba6499c2",
+                                        "kind": "ASSIGNMENT",
+                                        "source": "                reportSheet.Cells(reportRow, \"B\").Value = CDate(sourceSheet.Cells(rowNumber, \"B\").Value)",
+                                        "start_line": 21,
+                                        "end_line": 21
+                                      }
+                                    ],
+                                    "inferred": false,
+                                    "source_text": "reportSheet.Cells(reportRow, \"B\").Value = CDate(sourceSheet.Cells(rowNumber, \"B\").Value)"
+                                  },
+                                  "semantics": {
+                                    "assignment_kind": "IMPLICIT",
+                                    "raw_source": "reportSheet.Cells(reportRow, \"B\").Value = CDate(sourceSheet.Cells(rowNumber, \"B\").Value)"
+                                  }
+                                },
+                                {
+                                  "id": "node_e8dda9f9346f34ab",
+                                  "kind": "assignment",
+                                  "target": {
+                                    "kind": "identifier",
+                                    "name": "reportSheet.Cells(reportRow, \"C\").Value"
+                                  },
+                                  "value": {
+                                    "kind": "unsupported",
+                                    "semantics": {
+                                      "reason": "Frontend supplied source text but no expression AST",
+                                      "source_expression": "sourceSheet.Cells(rowNumber, \"C\").Value",
+                                      "parse_status": "not_parsed",
+                                      "requires_semantic_resolution": true
+                                    }
+                                  },
+                                  "provenance": {
+                                    "source_language": "VBA",
+                                    "source_location": {
+                                      "line": 22,
+                                      "end_line": 22,
+                                      "file": "vba_sample_1.bas"
+                                    },
+                                    "graph_node_ids": [
+                                      "node_e8dda9f9346f34ab"
+                                    ],
+                                    "segment_ids": [
+                                      "segment_9207e255585a8dbe"
+                                    ],
+                                    "segment_sources": [
+                                      {
+                                        "id": "segment_9207e255585a8dbe",
+                                        "kind": "ASSIGNMENT",
+                                        "source": "                reportSheet.Cells(reportRow, \"C\").Value = sourceSheet.Cells(rowNumber, \"C\").Value",
+                                        "start_line": 22,
+                                        "end_line": 22
+                                      }
+                                    ],
+                                    "inferred": false,
+                                    "source_text": "reportSheet.Cells(reportRow, \"C\").Value = sourceSheet.Cells(rowNumber, \"C\").Value"
+                                  },
+                                  "semantics": {
+                                    "assignment_kind": "IMPLICIT",
+                                    "raw_source": "reportSheet.Cells(reportRow, \"C\").Value = sourceSheet.Cells(rowNumber, \"C\").Value"
+                                  }
+                                },
+                                {
+                                  "id": "node_0a1a80ee952210be",
+                                  "kind": "assignment",
+                                  "target": {
+                                    "kind": "identifier",
+                                    "name": "reportRow"
+                                  },
+                                  "value": {
+                                    "kind": "unsupported",
+                                    "semantics": {
+                                      "reason": "Frontend supplied source text but no expression AST",
+                                      "source_expression": "reportRow + 1",
+                                      "parse_status": "not_parsed",
+                                      "requires_semantic_resolution": true
+                                    }
+                                  },
+                                  "provenance": {
+                                    "source_language": "VBA",
+                                    "source_location": {
+                                      "line": 23,
+                                      "end_line": 23,
+                                      "file": "vba_sample_1.bas"
+                                    },
+                                    "graph_node_ids": [
+                                      "node_0a1a80ee952210be"
+                                    ],
+                                    "segment_ids": [
+                                      "segment_9f1116209e0eda10"
+                                    ],
+                                    "segment_sources": [
+                                      {
+                                        "id": "segment_9f1116209e0eda10",
+                                        "kind": "ASSIGNMENT",
+                                        "source": "                reportRow = reportRow + 1",
+                                        "start_line": 23,
+                                        "end_line": 23
+                                      }
+                                    ],
+                                    "inferred": false,
+                                    "source_text": "reportRow = reportRow + 1"
+                                  },
+                                  "semantics": {
+                                    "assignment_kind": "IMPLICIT",
+                                    "raw_source": "reportRow = reportRow + 1"
+                                  }
+                                }
+                              ],
+                              "branch_kind": "if_branch",
+                              "provenance": {
+                                "source_language": "VBA",
+                                "source_location": {
+                                  "line": 19,
+                                  "end_line": 26,
+                                  "file": "vba_sample_1.bas"
+                                },
+                                "graph_node_ids": [
+                                  "branch_e8c0d95ec606bc0b"
+                                ],
+                                "segment_ids": [],
+                                "segment_sources": [],
+                                "inferred": false,
+                                "source_text": ""
+                              },
+                              "condition": {
+                                "kind": "unsupported",
+                                "semantics": {
+                                  "reason": "Frontend supplied source text but no expression AST",
+                                  "source_expression": "IsDate(sourceSheet.Cells(rowNumber, \"B\").Value)",
+                                  "parse_status": "not_parsed",
+                                  "requires_semantic_resolution": true
+                                }
+                              }
+                            },
+                            {
+                              "body": [
+                                {
+                                  "id": "node_343520607d77bd8d",
+                                  "kind": "assignment",
+                                  "target": {
+                                    "kind": "identifier",
+                                    "name": "sourceSheet.Cells(rowNumber, \"B\").Interior.Color"
+                                  },
+                                  "value": {
+                                    "kind": "unsupported",
+                                    "semantics": {
+                                      "reason": "Frontend supplied source text but no expression AST",
+                                      "source_expression": "vbYellow",
+                                      "parse_status": "not_parsed",
+                                      "requires_semantic_resolution": true
+                                    }
+                                  },
+                                  "provenance": {
+                                    "source_language": "VBA",
+                                    "source_location": {
+                                      "line": 25,
+                                      "end_line": 25,
+                                      "file": "vba_sample_1.bas"
+                                    },
+                                    "graph_node_ids": [
+                                      "node_343520607d77bd8d"
+                                    ],
+                                    "segment_ids": [
+                                      "segment_0ef6c637223bd89d"
+                                    ],
+                                    "segment_sources": [
+                                      {
+                                        "id": "segment_0ef6c637223bd89d",
+                                        "kind": "ASSIGNMENT",
+                                        "source": "                sourceSheet.Cells(rowNumber, \"B\").Interior.Color = vbYellow",
+                                        "start_line": 25,
+                                        "end_line": 25
+                                      }
+                                    ],
+                                    "inferred": false,
+                                    "source_text": "sourceSheet.Cells(rowNumber, \"B\").Interior.Color = vbYellow"
+                                  },
+                                  "semantics": {
+                                    "assignment_kind": "IMPLICIT",
+                                    "raw_source": "sourceSheet.Cells(rowNumber, \"B\").Interior.Color = vbYellow"
+                                  }
+                                }
+                              ],
+                              "branch_kind": "else_branch",
+                              "provenance": {
+                                "source_language": "VBA",
+                                "source_location": {
+                                  "line": 19,
+                                  "end_line": 26,
+                                  "file": "vba_sample_1.bas"
+                                },
+                                "graph_node_ids": [
+                                  "branch_229816af22e7edae"
+                                ],
+                                "segment_ids": [],
+                                "segment_sources": [],
+                                "inferred": false,
+                                "source_text": ""
+                              }
+                            }
+                          ],
+                          "condition": {
+                            "kind": "unsupported",
+                            "semantics": {
+                              "reason": "Frontend supplied source text but no expression AST",
+                              "source_expression": "IsDate(sourceSheet.Cells(rowNumber, \"B\").Value)",
+                              "parse_status": "not_parsed",
+                              "requires_semantic_resolution": true
+                            }
+                          },
+                          "provenance": {
+                            "source_language": "VBA",
+                            "source_location": {
+                              "line": 19,
+                              "end_line": 26,
+                              "file": "vba_sample_1.bas"
+                            },
+                            "graph_node_ids": [
+                              "node_15b81dfa97d2fa0f"
+                            ],
+                            "segment_ids": [
+                              "segment_6d6e5b8417471b6a"
+                            ],
+                            "segment_sources": [
+                              {
+                                "id": "segment_6d6e5b8417471b6a",
+                                "kind": "IF_BLOCK",
+                                "source": "            If IsDate(sourceSheet.Cells(rowNumber, \"B\").Value) Then\n                reportSheet.Cells(reportRow, \"A\").Value = sourceSheet.Cells(rowNumber, \"A\").Value\n                reportSheet.Cells(reportRow, \"B\").Value = CDate(sourceSheet.Cells(rowNumber, \"B\").Value)\n                reportSheet.Cells(reportRow, \"C\").Value = sourceSheet.Cells(rowNumber, \"C\").Value\n                reportRow = reportRow + 1\n            Else\n                sourceSheet.Cells(rowNumber, \"B\").Interior.Color = vbYellow\n            End If",
+                                "start_line": 19,
+                                "end_line": 26
+                              }
+                            ],
+                            "inferred": false,
+                            "source_text": "If IsDate(sourceSheet.Cells(rowNumber, \"B\").Value) Then\n                reportSheet.Cells(reportRow, \"A\").Value = sourceSheet.Cells(rowNumber, \"A\").Value\n                reportSheet.Cells(reportRow, \"B\").Value = CDate(sourceSheet.Cells(rowNumber, \"B\").Value)\n                reportSheet.Cells(reportRow, \"C\").Value = sourceSheet.Cells(rowNumber, \"C\").Value\n                reportRow = reportRow + 1\n            Else\n                sourceSheet.Cells(rowNumber, \"B\").Interior.Color = vbYellow\n            End If"
+                          },
+                          "semantics": {
+                            "source_control_type": "IF_BLOCK",
+                            "branch_count": 2
+                          }
+                        }
+                      ],
+                      "branch_kind": "if_branch",
+                      "provenance": {
+                        "source_language": "VBA",
+                        "source_location": {
+                          "line": 18,
+                          "end_line": 27,
+                          "file": "vba_sample_1.bas"
+                        },
+                        "graph_node_ids": [
+                          "branch_62a3500299428dba"
+                        ],
+                        "segment_ids": [],
+                        "segment_sources": [],
+                        "inferred": false,
+                        "source_text": ""
+                      },
+                      "condition": {
+                        "kind": "unsupported",
+                        "semantics": {
+                          "reason": "Frontend supplied source text but no expression AST",
+                          "source_expression": "Len(Trim$(CStr(sourceSheet.Cells(rowNumber, \"A\").Value))) > 0",
+                          "parse_status": "not_parsed",
+                          "requires_semantic_resolution": true
+                        }
+                      }
+                    }
+                  ],
+                  "condition": {
+                    "kind": "unsupported",
+                    "semantics": {
+                      "reason": "Frontend supplied source text but no expression AST",
+                      "source_expression": "Len(Trim$(CStr(sourceSheet.Cells(rowNumber, \"A\").Value))) > 0",
+                      "parse_status": "not_parsed",
+                      "requires_semantic_resolution": true
+                    }
+                  },
+                  "provenance": {
+                    "source_language": "VBA",
+                    "source_location": {
+                      "line": 18,
+                      "end_line": 27,
+                      "file": "vba_sample_1.bas"
+                    },
+                    "graph_node_ids": [
+                      "node_1e403110d1e0515e"
+                    ],
+                    "segment_ids": [
+                      "segment_e63760698cdac4e7"
+                    ],
+                    "segment_sources": [
+                      {
+                        "id": "segment_e63760698cdac4e7",
+                        "kind": "IF_BLOCK",
+                        "source": "        If Len(Trim$(CStr(sourceSheet.Cells(rowNumber, \"A\").Value))) > 0 Then\n            If IsDate(sourceSheet.Cells(rowNumber, \"B\").Value) Then\n                reportSheet.Cells(reportRow, \"A\").Value = sourceSheet.Cells(rowNumber, \"A\").Value\n                reportSheet.Cells(reportRow, \"B\").Value = CDate(sourceSheet.Cells(rowNumber, \"B\").Value)\n                reportSheet.Cells(reportRow, \"C\").Value = sourceSheet.Cells(rowNumber, \"C\").Value\n                reportRow = reportRow + 1\n            Else\n                sourceSheet.Cells(rowNumber, \"B\").Interior.Color = vbYellow\n            End If\n        End If",
+                        "start_line": 18,
+                        "end_line": 27
+                      }
+                    ],
+                    "inferred": false,
+                    "source_text": "If Len(Trim$(CStr(sourceSheet.Cells(rowNumber, \"A\").Value))) > 0 Then\n            If IsDate(sourceSheet.Cells(rowNumber, \"B\").Value) Then\n                reportSheet.Cells(reportRow, \"A\").Value = sourceSheet.Cells(rowNumber, \"A\").Value\n                reportSheet.Cells(reportRow, \"B\").Value = CDate(sourceSheet.Cells(rowNumber, \"B\").Value)\n                reportSheet.Cells(reportRow, \"C\").Value = sourceSheet.Cells(rowNumber, \"C\").Value\n                reportRow = reportRow + 1\n            Else\n                sourceSheet.Cells(rowNumber, \"B\").Interior.Color = vbYellow\n            End If\n        End If"
+                  },
+                  "semantics": {
+                    "source_control_type": "IF_BLOCK",
+                    "branch_count": 1
+                  }
+                }
+              ],
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 17,
+                  "end_line": 28,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_48c442f15d72c8f7"
+                ],
+                "segment_ids": [
+                  "segment_dc55d45a48ee1dfd"
+                ],
+                "segment_sources": [
+                  {
+                    "id": "segment_dc55d45a48ee1dfd",
+                    "kind": "FOR_BLOCK",
+                    "source": "    For rowNumber = 2 To lastRow\n        If Len(Trim$(CStr(sourceSheet.Cells(rowNumber, \"A\").Value))) > 0 Then\n            If IsDate(sourceSheet.Cells(rowNumber, \"B\").Value) Then\n                reportSheet.Cells(reportRow, \"A\").Value = sourceSheet.Cells(rowNumber, \"A\").Value\n                reportSheet.Cells(reportRow, \"B\").Value = CDate(sourceSheet.Cells(rowNumber, \"B\").Value)\n                reportSheet.Cells(reportRow, \"C\").Value = sourceSheet.Cells(rowNumber, \"C\").Value\n                reportRow = reportRow + 1\n            Else\n                sourceSheet.Cells(rowNumber, \"B\").Interior.Color = vbYellow\n            End If\n        End If\n    Next rowNumber",
+                    "start_line": 17,
+                    "end_line": 28
+                  }
+                ],
+                "inferred": false,
+                "source_text": "For rowNumber = 2 To lastRow\n        If Len(Trim$(CStr(sourceSheet.Cells(rowNumber, \"A\").Value))) > 0 Then\n            If IsDate(sourceSheet.Cells(rowNumber, \"B\").Value) Then\n                reportSheet.Cells(reportRow, \"A\").Value = sourceSheet.Cells(rowNumber, \"A\").Value\n                reportSheet.Cells(reportRow, \"B\").Value = CDate(sourceSheet.Cells(rowNumber, \"B\").Value)\n                reportSheet.Cells(reportRow, \"C\").Value = sourceSheet.Cells(rowNumber, \"C\").Value\n                reportRow = reportRow + 1\n            Else\n                sourceSheet.Cells(rowNumber, \"B\").Interior.Color = vbYellow\n            End If\n        End If\n    Next rowNumber"
+              },
+              "semantics": {
+                "source_control_type": "FOR_BLOCK",
+                "raw_header": "For rowNumber = 2 To lastRow\n        If Len(Trim$(CStr(sourceSheet.Cells(rowNumber, \"A\").Value))) > 0 Then\n            If IsDate(sourceSheet.Cells(rowNumber, \"B\").Value) Then\n                reportSheet.Cells(reportRow, \"A\").Value = sourceSheet.Cells(rowNumber, \"A\").Value\n                reportSheet.Cells(reportRow, \"B\").Value = CDate(sourceSheet.Cells(rowNumber, \"B\").Value)\n                reportSheet.Cells(reportRow, \"C\").Value = sourceSheet.Cells(rowNumber, \"C\").Value\n                reportRow = reportRow + 1\n            Else\n                sourceSheet.Cells(rowNumber, \"B\").Interior.Color = vbYellow\n            End If\n        End If\n    Next rowNumber",
+                "terminator": {
+                  "source_text": "Next rowNumber",
+                  "source_location": {
+                    "file": "vba_sample_1.bas",
+                    "line": 28,
+                    "end_line": 28
+                  }
+                }
+              }
+            },
+            {
+              "id": "node_892cf7b143d60427",
+              "kind": "call",
+              "expression": {
+                "kind": "unsupported",
+                "semantics": {
+                  "reason": "Frontend supplied source text but no expression AST",
+                  "source_expression": "reportSheet.Columns(\"A:C\").AutoFit",
+                  "parse_status": "not_parsed",
+                  "requires_semantic_resolution": true
+                }
+              },
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 30,
+                  "end_line": 30,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_892cf7b143d60427"
+                ],
+                "segment_ids": [
+                  "segment_b5dd19cf6a339504"
+                ],
+                "segment_sources": [
+                  {
+                    "id": "segment_b5dd19cf6a339504",
+                    "kind": "CALL_OR_COMMAND",
+                    "source": "    reportSheet.Columns(\"A:C\").AutoFit",
+                    "start_line": 30,
+                    "end_line": 30
+                  }
+                ],
+                "inferred": false,
+                "source_text": "reportSheet.Columns(\"A:C\").AutoFit"
+              },
+              "semantics": {
+                "raw_source": "reportSheet.Columns(\"A:C\").AutoFit",
+                "call_resolution": "unresolved"
+              }
+            },
+            {
+              "id": "node_7e1e74d894a4441e",
+              "kind": "call",
+              "expression": {
+                "kind": "unsupported",
+                "semantics": {
+                  "reason": "Frontend supplied source text but no expression AST",
+                  "source_expression": "MsgBox \"Summary refreshed with \" & (reportRow - 2) & \" records.\", vbInformation",
+                  "parse_status": "not_parsed",
+                  "requires_semantic_resolution": true
+                }
+              },
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 31,
+                  "end_line": 31,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_7e1e74d894a4441e"
+                ],
+                "segment_ids": [
+                  "segment_5988c8060b2567e5"
+                ],
+                "segment_sources": [
+                  {
+                    "id": "segment_5988c8060b2567e5",
+                    "kind": "CALL_OR_COMMAND",
+                    "source": "    MsgBox \"Summary refreshed with \" & (reportRow - 2) & \" records.\", vbInformation",
+                    "start_line": 31,
+                    "end_line": 31
+                  }
+                ],
+                "inferred": false,
+                "source_text": "MsgBox \"Summary refreshed with \" & (reportRow - 2) & \" records.\", vbInformation"
+              },
+              "semantics": {
+                "raw_source": "MsgBox \"Summary refreshed with \" & (reportRow - 2) & \" records.\", vbInformation",
+                "call_resolution": "unresolved"
+              }
+            },
+            {
+              "id": "node_ae0ba7e2a1139fca",
+              "kind": "exit",
+              "exit_target": "sub",
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 32,
+                  "end_line": 32,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_ae0ba7e2a1139fca"
+                ],
+                "segment_ids": [
+                  "segment_9782b34c327c42ab"
+                ],
+                "segment_sources": [
+                  {
+                    "id": "segment_9782b34c327c42ab",
+                    "kind": "EXIT",
+                    "source": "    Exit Sub",
+                    "start_line": 32,
+                    "end_line": 32
+                  }
+                ],
+                "inferred": false,
+                "source_text": "Exit Sub"
+              }
+            },
+            {
+              "id": "node_47215e7623a9ad5f",
+              "kind": "label",
+              "label": "HandleError",
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 34,
+                  "end_line": 34,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_47215e7623a9ad5f"
+                ],
+                "segment_ids": [
+                  "segment_f9686961c3967d3c"
+                ],
+                "segment_sources": [
+                  {
+                    "id": "segment_f9686961c3967d3c",
+                    "kind": "LABEL",
+                    "source": "HandleError:",
+                    "start_line": 34,
+                    "end_line": 34
+                  }
+                ],
+                "inferred": false,
+                "source_text": "HandleError:"
+              },
+              "semantics": {
+                "source_label": true,
+                "raw_source": "HandleError:"
+              }
+            },
+            {
+              "id": "node_a4bfa5aa67027dec",
+              "kind": "call",
+              "expression": {
+                "kind": "unsupported",
+                "semantics": {
+                  "reason": "Frontend supplied source text but no expression AST",
+                  "source_expression": "MsgBox \"Unable to refresh the monthly summary: \" & Err.Description, vbExclamation",
+                  "parse_status": "not_parsed",
+                  "requires_semantic_resolution": true
+                }
+              },
+              "provenance": {
+                "source_language": "VBA",
+                "source_location": {
+                  "line": 35,
+                  "end_line": 35,
+                  "file": "vba_sample_1.bas"
+                },
+                "graph_node_ids": [
+                  "node_a4bfa5aa67027dec"
+                ],
+                "segment_ids": [
+                  "segment_d4ab425b9dcabc5b"
+                ],
+                "segment_sources": [
+                  {
+                    "id": "segment_d4ab425b9dcabc5b",
+                    "kind": "CALL_OR_COMMAND",
+                    "source": "    MsgBox \"Unable to refresh the monthly summary: \" & Err.Description, vbExclamation",
+                    "start_line": 35,
+                    "end_line": 35
+                  }
+                ],
+                "inferred": false,
+                "source_text": "MsgBox \"Unable to refresh the monthly summary: \" & Err.Description, vbExclamation"
+              },
+              "semantics": {
+                "raw_source": "MsgBox \"Unable to refresh the monthly summary: \" & Err.Description, vbExclamation",
+                "call_resolution": "unresolved"
+              }
+            }
+          ],
+          "annotations": {
+            "source_kind": "SUB",
+            "graph_metadata": {
+              "kind": "SUB",
+              "visibility": "PUBLIC",
+              "return_type": null
+            },
+            "pseudocode_context": {
+              "status": "missing",
+              "source_path": null,
+              "authority": "generated_semantic_assistance_not_ground_truth",
+              "review_required": true
+            }
+          },
+          "provenance": {
+            "source_language": "VBA",
+            "source_location": {
+              "line": 3,
+              "end_line": 36,
+              "file": "vba_sample_1.bas"
+            },
+            "graph_node_ids": [
+              "procedure_717ab93df6b2eebd"
+            ],
+            "segment_ids": [],
+            "segment_sources": [],
+            "inferred": false
+          },
+          "semantics": {
+            "body_completeness": "graph_represented",
+            "expression_completeness": "opaque_source_backed",
+            "control_flow_integrity": "no_frontend_block_diagnostic_reported",
+            "full_source_snapshot_used": false
+          }
+        }
+      ],
+      "imports": [],
+      "dependencies": [],
+      "annotations": {
+        "vba_options": [
+          {
+            "source": "Option Explicit",
+            "location": {
+              "start_line": 1,
+              "end_line": 1
+            }
+          }
+        ],
+        "vba_attributes": []
+      },
+      "provenance": {
+        "source_language": "VBA",
+        "source_location": {
+          "line": 1,
+          "end_line": 36,
+          "file": "vba_sample_1.bas"
+        },
+        "graph_node_ids": [
+          "module_3f9215ccc30933e2"
+        ],
+        "inferred": false
+      },
+      "semantics": {
+        "vba_module_kind": "STANDARD_MODULE",
+        "frontend_module_name": "vba_sample_1",
+        "default_array_lower_bound": 0,
+        "string_comparison": "binary",
+        "full_module_snapshot_used": false
+      }
+    }
+  ],
+  "dependencies": [],
+  "diagnostics": [
+    {
+      "code": "IR_EXPRESSIONS_OPAQUE",
+      "severity": "warning",
+      "message": "17 expression/control operands are preserved as source-backed opaque expressions, not parsed AST nodes.",
+      "suggestion": "Add a real expression parser or validated LLM-assisted expression normalization before code generation."
+    }
+  ],
+  "metadata": {
+    "frontend_schema_version": "1.0.0",
+    "source_path": "vba_sample_1.bas",
+    "source_manifest": [
+      {
+        "path": "vba_sample_1.bas",
+        "kind": "source",
+        "encoding": "utf-8",
+        "sha256": "364729d63817d3d67f1e5b799ab41a6e6fbbf32fee80266dc613f744b88feaff",
+        "size_bytes": 1360
+      }
+    ],
+    "pseudocode_provided": false,
+    "pseudocode_embedded": false,
+    "pseudocode_artifact": null,
+    "frontend_symbols": [
+      {
+        "id": "vba_sample_1.RefreshMonthlySummary.var.lastrow",
+        "name": "lastrow",
+        "kind": "LOCAL_OR_PARAMETER",
+        "scope": "vba_sample_1.RefreshMonthlySummary"
+      },
+      {
+        "id": "vba_sample_1.RefreshMonthlySummary.var.reportrow",
+        "name": "reportrow",
+        "kind": "LOCAL_OR_PARAMETER",
+        "scope": "vba_sample_1.RefreshMonthlySummary"
+      },
+      {
+        "id": "vba_sample_1.RefreshMonthlySummary.var.reportsheet",
+        "name": "reportsheet",
+        "kind": "LOCAL_OR_PARAMETER",
+        "scope": "vba_sample_1.RefreshMonthlySummary"
+      },
+      {
+        "id": "vba_sample_1.RefreshMonthlySummary.var.rownumber",
+        "name": "rownumber",
+        "kind": "LOCAL_OR_PARAMETER",
+        "scope": "vba_sample_1.RefreshMonthlySummary"
+      },
+      {
+        "id": "vba_sample_1.RefreshMonthlySummary.var.sourcesheet",
+        "name": "sourcesheet",
+        "kind": "LOCAL_OR_PARAMETER",
+        "scope": "vba_sample_1.RefreshMonthlySummary"
+      }
+    ],
+    "frontend_edges": [
+      {
+        "source": "project_828cbeb2abcbddfc",
+        "target": "module_3f9215ccc30933e2",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "module_3f9215ccc30933e2",
+        "target": "procedure_717ab93df6b2eebd",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "procedure_717ab93df6b2eebd",
+        "target": "node_c499c9e41fadeb99",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "procedure_717ab93df6b2eebd",
+        "target": "node_06aa12b7fa5074f8",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_c499c9e41fadeb99",
+        "target": "node_06aa12b7fa5074f8",
+        "relation": "NEXT",
+        "evidence": {
+          "order": "source"
+        }
+      },
+      {
+        "source": "procedure_717ab93df6b2eebd",
+        "target": "node_0eff6fa81be0de41",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_06aa12b7fa5074f8",
+        "target": "node_0eff6fa81be0de41",
+        "relation": "NEXT",
+        "evidence": {
+          "order": "source"
+        }
+      },
+      {
+        "source": "procedure_717ab93df6b2eebd",
+        "target": "node_e93da05eca502add",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_0eff6fa81be0de41",
+        "target": "node_e93da05eca502add",
+        "relation": "NEXT",
+        "evidence": {
+          "order": "source"
+        }
+      },
+      {
+        "source": "procedure_717ab93df6b2eebd",
+        "target": "node_160a2a63b5235167",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_e93da05eca502add",
+        "target": "node_160a2a63b5235167",
+        "relation": "NEXT",
+        "evidence": {
+          "order": "source"
+        }
+      },
+      {
+        "source": "procedure_717ab93df6b2eebd",
+        "target": "node_9cb085770ed5645f",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_160a2a63b5235167",
+        "target": "node_9cb085770ed5645f",
+        "relation": "NEXT",
+        "evidence": {
+          "order": "source"
+        }
+      },
+      {
+        "source": "procedure_717ab93df6b2eebd",
+        "target": "node_af3e7fa52166dbc8",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_9cb085770ed5645f",
+        "target": "node_af3e7fa52166dbc8",
+        "relation": "NEXT",
+        "evidence": {
+          "order": "source"
+        }
+      },
+      {
+        "source": "procedure_717ab93df6b2eebd",
+        "target": "node_330bb2d9889fc03c",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_af3e7fa52166dbc8",
+        "target": "node_330bb2d9889fc03c",
+        "relation": "NEXT",
+        "evidence": {
+          "order": "source"
+        }
+      },
+      {
+        "source": "procedure_717ab93df6b2eebd",
+        "target": "node_00bd21c9c2d31ca4",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_330bb2d9889fc03c",
+        "target": "node_00bd21c9c2d31ca4",
+        "relation": "NEXT",
+        "evidence": {
+          "order": "source"
+        }
+      },
+      {
+        "source": "procedure_717ab93df6b2eebd",
+        "target": "node_50eeab2dade8c6e8",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_00bd21c9c2d31ca4",
+        "target": "node_50eeab2dade8c6e8",
+        "relation": "NEXT",
+        "evidence": {
+          "order": "source"
+        }
+      },
+      {
+        "source": "procedure_717ab93df6b2eebd",
+        "target": "node_48c442f15d72c8f7",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_50eeab2dade8c6e8",
+        "target": "node_48c442f15d72c8f7",
+        "relation": "NEXT",
+        "evidence": {
+          "order": "source"
+        }
+      },
+      {
+        "source": "node_48c442f15d72c8f7",
+        "target": "node_1e403110d1e0515e",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_1e403110d1e0515e",
+        "target": "branch_62a3500299428dba",
+        "relation": "TRUE_BRANCH",
+        "evidence": {}
+      },
+      {
+        "source": "branch_62a3500299428dba",
+        "target": "node_15b81dfa97d2fa0f",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_15b81dfa97d2fa0f",
+        "target": "branch_e8c0d95ec606bc0b",
+        "relation": "TRUE_BRANCH",
+        "evidence": {}
+      },
+      {
+        "source": "branch_e8c0d95ec606bc0b",
+        "target": "node_0bb6358eff2d2011",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "branch_e8c0d95ec606bc0b",
+        "target": "node_b987061180bc60e8",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_0bb6358eff2d2011",
+        "target": "node_b987061180bc60e8",
+        "relation": "NEXT",
+        "evidence": {
+          "order": "source"
+        }
+      },
+      {
+        "source": "branch_e8c0d95ec606bc0b",
+        "target": "node_e8dda9f9346f34ab",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_b987061180bc60e8",
+        "target": "node_e8dda9f9346f34ab",
+        "relation": "NEXT",
+        "evidence": {
+          "order": "source"
+        }
+      },
+      {
+        "source": "branch_e8c0d95ec606bc0b",
+        "target": "node_0a1a80ee952210be",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_e8dda9f9346f34ab",
+        "target": "node_0a1a80ee952210be",
+        "relation": "NEXT",
+        "evidence": {
+          "order": "source"
+        }
+      },
+      {
+        "source": "node_15b81dfa97d2fa0f",
+        "target": "branch_229816af22e7edae",
+        "relation": "FALSE_BRANCH",
+        "evidence": {}
+      },
+      {
+        "source": "branch_229816af22e7edae",
+        "target": "node_343520607d77bd8d",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "procedure_717ab93df6b2eebd",
+        "target": "node_892cf7b143d60427",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_48c442f15d72c8f7",
+        "target": "node_892cf7b143d60427",
+        "relation": "NEXT",
+        "evidence": {
+          "order": "source"
+        }
+      },
+      {
+        "source": "procedure_717ab93df6b2eebd",
+        "target": "node_7e1e74d894a4441e",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_892cf7b143d60427",
+        "target": "node_7e1e74d894a4441e",
+        "relation": "NEXT",
+        "evidence": {
+          "order": "source"
+        }
+      },
+      {
+        "source": "procedure_717ab93df6b2eebd",
+        "target": "node_ae0ba7e2a1139fca",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_7e1e74d894a4441e",
+        "target": "node_ae0ba7e2a1139fca",
+        "relation": "NEXT",
+        "evidence": {
+          "order": "source"
+        }
+      },
+      {
+        "source": "procedure_717ab93df6b2eebd",
+        "target": "node_47215e7623a9ad5f",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_ae0ba7e2a1139fca",
+        "target": "node_47215e7623a9ad5f",
+        "relation": "NEXT",
+        "evidence": {
+          "order": "source"
+        }
+      },
+      {
+        "source": "procedure_717ab93df6b2eebd",
+        "target": "node_a4bfa5aa67027dec",
+        "relation": "CONTAINS",
+        "evidence": {}
+      },
+      {
+        "source": "node_47215e7623a9ad5f",
+        "target": "node_a4bfa5aa67027dec",
+        "relation": "NEXT",
+        "evidence": {
+          "order": "source"
+        }
+      }
+    ],
+    "frontend_repairs": [],
+    "construction_policy": "graph metadata + node-level fragments + non-PROCEDURE granular segments; full MODULE/PROCEDURE snapshots excluded"
+  },
+  "semantics": {
+    "migration_readiness": "blocked_pending_semantic_and_control_flow_review",
+    "target_language_independent": true
+  }
+}

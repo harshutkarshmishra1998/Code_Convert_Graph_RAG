@@ -1,0 +1,1006 @@
+{
+  "schema_version": "1.0",
+  "issues": [
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "severity": "blocking",
+      "message": "VBA On Error runtime semantics",
+      "details": {
+        "code": "VBA_ERROR_HANDLING",
+        "title": "VBA On Error runtime semantics",
+        "severity": "blocking",
+        "target_guidance": "Implement a compatibility runtime for Resume Next, GoTo handler, GoTo 0, Err state and handler activation; this pass preserves directives but does not emulate execution.",
+        "evidence": [
+          {
+            "procedure": "ImportDailySales",
+            "mode": "goto_handler",
+            "handler": "HandleError"
+          }
+        ]
+      },
+      "path": "semantic_analysis.json",
+      "artifact": "semantic_analysis",
+      "reported_by": [
+        "semantic_analysis",
+        "validator"
+      ],
+      "subsystem": "runtime_semantics",
+      "priority": "blocking",
+      "auto_fix_policy": "source_evidence_and_independent_validation_required",
+      "id": "5587823c9eaf352d",
+      "context": {
+        "source": {
+          "available": true,
+          "path": "vba_sample_3.bas",
+          "line_range": [
+            3,
+            73
+          ],
+          "text": "3: Public Sub ImportDailySales(ByVal tsvPath As String, ByVal reportDate As Date)\n4:     Dim stream As Object\n5:     Dim salesByRegion As Object\n6:     Dim fields As Variant\n7:     Dim lineText As String\n8:     Dim regionCode As String\n9:     Dim saleAmount As Currency\n10:     Dim lastRow As Long\n11:     Dim rowNumber As Long\n12: \n13:     On Error GoTo HandleError\n14: \n15:     If Len(Dir$(tsvPath)) = 0 Then\n16:         Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\"\n17:     End If\n18: \n19:     Set salesByRegion = CreateObject(\"Scripting.Dictionary\")\n20:     Set stream = CreateObject(\"ADODB.Stream\")\n21:     stream.Type = 2\n22:     stream.Charset = \"utf-8\"\n23:     stream.Open\n24:     stream.LoadFromFile tsvPath\n25: \n26:     If Not stream.EOS Then\n27:         lineText = stream.ReadText(-2)\n28:     End If\n29: \n30:     Do While Not stream.EOS\n31:         lineText = stream.ReadText(-2)\n32:         fields = Split(lineText, vbTab)\n33: \n34:         If UBound(fields) >= 2 Then\n35:             regionCode = UCase$(Trim$(CStr(fields(1))))\n36:             If IsNumeric(fields(2)) And Len(regionCode) > 0 Then\n37:                 saleAmount = CCur(fields(2))\n38:                 If salesByRegion.Exists(regionCode) Then\n39:                     salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount\n40:                 Else\n41:                     salesByRegion.Add regionCode, saleAmount\n42:                 End If\n43:             End If\n44:         End If\n45:     Loop\n46: \n47:     stream.Close\n48:     Set stream = Nothing\n49: \n50:     With ThisWorkbook.Worksheets(\"Daily Sales\")\n51:         lastRow = .Cells(.Rows.Count, \"A\").End(xlUp).Row\n52:         For rowNumber = 2 To lastRow\n53:             If IsDate(.Cells(rowNumber, \"A\").Value) Then\n54:                 If DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate) Then\n55:                     regionCode = UCase$(Trim$(CStr(.Cells(rowNumber, \"B\").Value)))\n56:                     If salesByRegion.Exists(regionCode) Then\n57:                         .Cells(rowNumber, \"C\").Value = salesByRegion(regionCode)\n58:                     Else\n59:                         .Cells(rowNumber, \"C\").Value = 0\n60:                     End If\n61:                 End If\n62:             End If\n63:         Next rowNumber\n64:     End With\n65: \n66:     Exit Sub\n67: \n68: HandleError:\n69:     If Not stream Is Nothing Then\n70:         If stream.State = 1 Then stream.Close\n71:     End If\n72:     Err.Raise Err.Number, \"ImportDailySales\", Err.Description\n73: End Sub",
+          "sha256": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+          "procedure": "ImportDailySales"
+        },
+        "procedure": {
+          "procedure_names": [],
+          "graph_procedures": [
+            {
+              "id": "procedure_4cddda8433374681",
+              "name": "ImportDailySales",
+              "source": {
+                "path": "vba_sample_3.bas",
+                "start_line": 3,
+                "end_line": 73,
+                "text": "Public Sub ImportDailySales(ByVal tsvPath As String, ByVal reportDate As Date)\n    Dim stream As Object\n    Dim salesByRegion As Object\n    Dim fields As Variant\n    Dim lineText As String\n    Dim regionCode As String\n    Dim saleAmount As Currency\n    Dim lastRow As Long\n    Dim rowNumber As Long\n\n    On Error GoTo HandleError\n\n    If Len(Dir$(tsvPath)) = 0 Then\n        Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\"\n    End If\n\n    Set salesByRegion = CreateObject(\"Scripting.Dictionary\")\n    Set stream = CreateObject(\"ADODB.Stream\")\n    stream.Type = 2\n    stream.Charset = \"utf-8\"\n    stream.Open\n    stream.LoadFromFile tsvPath\n\n    If Not stream.EOS Then\n        lineText = stream.ReadText(-2)\n    End If\n\n    Do While Not stream.EOS\n        lineText = stream.ReadText(-2)\n        fields = Split(lineText, vbTab)\n\n        If UBound(fields) >= 2 Then\n            regionCode = UCase$(Trim$(CStr(fields(1))))\n            If IsNumeric(fields(2)) And Len(regionCode) > 0 Then\n                saleAmount = CCur(fields(2))\n                If salesByRegion.Exists(regionCode) Then\n                    salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount\n                Else\n                    salesByRegion.Add regionCode, saleAmount\n                End If\n            End If\n        End If\n    Loop\n\n    stream.Close\n    Set stream = Nothing\n\n    With ThisWorkbook.Worksheets(\"Daily Sales\")\n        lastRow = .Cells(.Rows.Count, \"A\").End(xlUp).Row\n        For rowNumber = 2 To lastRow\n            If IsDate(.Cells(rowNumber, \"A\").Value) Then\n                If DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate) Then\n                    regionCode = UCase$(Trim$(CStr(.Cells(rowNumber, \"B\").Value)))\n                    If salesByRegion.Exists(regionCode) Then\n                        .Cells(rowNumber, \"C\").Value = salesByRegion(regionCode)\n                    Else\n                        .Cells(rowNumber, \"C\").Value = 0\n                    End If\n                End If\n            End If\n        Next rowNumber\n    End With\n\n    Exit Sub\n\nHandleError:\n    If Not stream Is Nothing Then\n        If stream.State = 1 Then stream.Close\n    End If\n    Err.Raise Err.Number, \"ImportDailySales\", Err.Description\nEnd Sub"
+              }
+            }
+          ]
+        },
+        "producer_code": [],
+        "dependencies": {
+          "artifact_hashes": {
+            "graph": "62e923ed69d8bb859461abdf281b288cabed8a762aece16a2a8c295a68815783",
+            "segments": "ad7b391344c9cce56269f0a16e791b9c7deb175b0dd3de680f8a512e1b08aa71",
+            "ir": "9a23c2550a419054f533ebbede459bb6f15b328af1b4051e07c326f35e16f23c",
+            "normalized_ir": "220d6299e45888c52663a131559054b8fe42a80b69ae2b4bff0abff3bfa5a1ad",
+            "semantic_analysis": "62b5c3996de86f734eedeba29645f90a8b502c740c41723c24e614ae14006e28",
+            "manifest": "095e833472ee087205669202a88f76a0a413cc5ef7ecf27443049934164f15c5",
+            "report": "bdb7a4cea9c7f7020388bdef9d49797a252485f2d5090b44b16d7b436e64f8d8",
+            "source": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025"
+          },
+          "related_artifacts": [
+            "source",
+            "ir",
+            "normalized_ir",
+            "semantic_analysis"
+          ],
+          "symbols": []
+        },
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_3.bas",
+              "actual": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+              "expected": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "root_cause": {
+        "hypotheses": [
+          "Target backend lacks an explicit lowering/runtime implementation"
+        ],
+        "source_available": true,
+        "source_lines": [
+          3,
+          73
+        ],
+        "confidence": "medium",
+        "recommended_action": "inspect_producer_and_rebuild_downstream",
+        "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
+      },
+      "investigation": {
+        "summary": "No LLM configured; deterministic evidence package only.",
+        "evidence_sufficient": true,
+        "root_cause": {
+          "hypotheses": [
+            "Target backend lacks an explicit lowering/runtime implementation"
+          ],
+          "source_available": true,
+          "source_lines": [
+            3,
+            73
+          ],
+          "confidence": "medium",
+          "recommended_action": "inspect_producer_and_rebuild_downstream",
+          "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
+        },
+        "recommended_next_step": "inspect producer code and regenerate"
+      },
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "LATE_BOUND_OBJECT_MEMBERS",
+      "severity": "blocking",
+      "message": "Late-bound COM/Object members",
+      "details": {
+        "code": "LATE_BOUND_OBJECT_MEMBERS",
+        "title": "Late-bound COM/Object members",
+        "severity": "blocking",
+        "target_guidance": "Define explicit Java interfaces/adapters for the actual COM object behavior. Object-typed references alone do not identify the target API.",
+        "evidence": [
+          {
+            "procedure": "ImportDailySales",
+            "member": "Raise",
+            "owner_type": null
+          },
+          {
+            "procedure": "ImportDailySales",
+            "member": "Type",
+            "owner_type": "Object"
+          },
+          {
+            "procedure": "ImportDailySales",
+            "member": "Charset",
+            "owner_type": "Object"
+          },
+          {
+            "procedure": "ImportDailySales",
+            "member": "Open",
+            "owner_type": "Object"
+          },
+          {
+            "procedure": "ImportDailySales",
+            "member": "LoadFromFile",
+            "owner_type": "Object"
+          },
+          {
+            "procedure": "ImportDailySales",
+            "member": "ReadText",
+            "owner_type": "Object"
+          },
+          {
+            "procedure": "ImportDailySales",
+            "member": "EOS",
+            "owner_type": "Object"
+          },
+          {
+            "procedure": "ImportDailySales",
+            "member": "Exists",
+            "owner_type": "Object"
+          },
+          {
+            "procedure": "ImportDailySales",
+            "member": "Add",
+            "owner_type": "Object"
+          },
+          {
+            "procedure": "ImportDailySales",
+            "member": "Close",
+            "owner_type": "Object"
+          },
+          {
+            "procedure": "ImportDailySales",
+            "member": "Worksheets",
+            "owner_type": null
+          },
+          {
+            "procedure": "ImportDailySales",
+            "member": "Row",
+            "owner_type": null
+          },
+          {
+            "procedure": "ImportDailySales",
+            "member": "End",
+            "owner_type": null
+          },
+          {
+            "procedure": "ImportDailySales",
+            "member": "Count",
+            "owner_type": null
+          },
+          {
+            "procedure": "ImportDailySales",
+            "member": "Value",
+            "owner_type": null
+          },
+          {
+            "procedure": "ImportDailySales",
+            "member": "State",
+            "owner_type": "Object"
+          }
+        ]
+      },
+      "path": "semantic_analysis.json",
+      "artifact": "semantic_analysis",
+      "reported_by": [
+        "semantic_analysis",
+        "validator"
+      ],
+      "subsystem": "type_resolution",
+      "priority": "blocking",
+      "auto_fix_policy": "source_evidence_and_independent_validation_required",
+      "id": "1bf0876e4f475d64",
+      "context": {
+        "source": {
+          "available": true,
+          "path": "vba_sample_3.bas",
+          "line_range": [
+            3,
+            73
+          ],
+          "text": "3: Public Sub ImportDailySales(ByVal tsvPath As String, ByVal reportDate As Date)\n4:     Dim stream As Object\n5:     Dim salesByRegion As Object\n6:     Dim fields As Variant\n7:     Dim lineText As String\n8:     Dim regionCode As String\n9:     Dim saleAmount As Currency\n10:     Dim lastRow As Long\n11:     Dim rowNumber As Long\n12: \n13:     On Error GoTo HandleError\n14: \n15:     If Len(Dir$(tsvPath)) = 0 Then\n16:         Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\"\n17:     End If\n18: \n19:     Set salesByRegion = CreateObject(\"Scripting.Dictionary\")\n20:     Set stream = CreateObject(\"ADODB.Stream\")\n21:     stream.Type = 2\n22:     stream.Charset = \"utf-8\"\n23:     stream.Open\n24:     stream.LoadFromFile tsvPath\n25: \n26:     If Not stream.EOS Then\n27:         lineText = stream.ReadText(-2)\n28:     End If\n29: \n30:     Do While Not stream.EOS\n31:         lineText = stream.ReadText(-2)\n32:         fields = Split(lineText, vbTab)\n33: \n34:         If UBound(fields) >= 2 Then\n35:             regionCode = UCase$(Trim$(CStr(fields(1))))\n36:             If IsNumeric(fields(2)) And Len(regionCode) > 0 Then\n37:                 saleAmount = CCur(fields(2))\n38:                 If salesByRegion.Exists(regionCode) Then\n39:                     salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount\n40:                 Else\n41:                     salesByRegion.Add regionCode, saleAmount\n42:                 End If\n43:             End If\n44:         End If\n45:     Loop\n46: \n47:     stream.Close\n48:     Set stream = Nothing\n49: \n50:     With ThisWorkbook.Worksheets(\"Daily Sales\")\n51:         lastRow = .Cells(.Rows.Count, \"A\").End(xlUp).Row\n52:         For rowNumber = 2 To lastRow\n53:             If IsDate(.Cells(rowNumber, \"A\").Value) Then\n54:                 If DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate) Then\n55:                     regionCode = UCase$(Trim$(CStr(.Cells(rowNumber, \"B\").Value)))\n56:                     If salesByRegion.Exists(regionCode) Then\n57:                         .Cells(rowNumber, \"C\").Value = salesByRegion(regionCode)\n58:                     Else\n59:                         .Cells(rowNumber, \"C\").Value = 0\n60:                     End If\n61:                 End If\n62:             End If\n63:         Next rowNumber\n64:     End With\n65: \n66:     Exit Sub\n67: \n68: HandleError:\n69:     If Not stream Is Nothing Then\n70:         If stream.State = 1 Then stream.Close\n71:     End If\n72:     Err.Raise Err.Number, \"ImportDailySales\", Err.Description\n73: End Sub",
+          "sha256": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+          "procedure": "ImportDailySales"
+        },
+        "procedure": {
+          "procedure_names": [],
+          "graph_procedures": [
+            {
+              "id": "procedure_4cddda8433374681",
+              "name": "ImportDailySales",
+              "source": {
+                "path": "vba_sample_3.bas",
+                "start_line": 3,
+                "end_line": 73,
+                "text": "Public Sub ImportDailySales(ByVal tsvPath As String, ByVal reportDate As Date)\n    Dim stream As Object\n    Dim salesByRegion As Object\n    Dim fields As Variant\n    Dim lineText As String\n    Dim regionCode As String\n    Dim saleAmount As Currency\n    Dim lastRow As Long\n    Dim rowNumber As Long\n\n    On Error GoTo HandleError\n\n    If Len(Dir$(tsvPath)) = 0 Then\n        Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\"\n    End If\n\n    Set salesByRegion = CreateObject(\"Scripting.Dictionary\")\n    Set stream = CreateObject(\"ADODB.Stream\")\n    stream.Type = 2\n    stream.Charset = \"utf-8\"\n    stream.Open\n    stream.LoadFromFile tsvPath\n\n    If Not stream.EOS Then\n        lineText = stream.ReadText(-2)\n    End If\n\n    Do While Not stream.EOS\n        lineText = stream.ReadText(-2)\n        fields = Split(lineText, vbTab)\n\n        If UBound(fields) >= 2 Then\n            regionCode = UCase$(Trim$(CStr(fields(1))))\n            If IsNumeric(fields(2)) And Len(regionCode) > 0 Then\n                saleAmount = CCur(fields(2))\n                If salesByRegion.Exists(regionCode) Then\n                    salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount\n                Else\n                    salesByRegion.Add regionCode, saleAmount\n                End If\n            End If\n        End If\n    Loop\n\n    stream.Close\n    Set stream = Nothing\n\n    With ThisWorkbook.Worksheets(\"Daily Sales\")\n        lastRow = .Cells(.Rows.Count, \"A\").End(xlUp).Row\n        For rowNumber = 2 To lastRow\n            If IsDate(.Cells(rowNumber, \"A\").Value) Then\n                If DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate) Then\n                    regionCode = UCase$(Trim$(CStr(.Cells(rowNumber, \"B\").Value)))\n                    If salesByRegion.Exists(regionCode) Then\n                        .Cells(rowNumber, \"C\").Value = salesByRegion(regionCode)\n                    Else\n                        .Cells(rowNumber, \"C\").Value = 0\n                    End If\n                End If\n            End If\n        Next rowNumber\n    End With\n\n    Exit Sub\n\nHandleError:\n    If Not stream Is Nothing Then\n        If stream.State = 1 Then stream.Close\n    End If\n    Err.Raise Err.Number, \"ImportDailySales\", Err.Description\nEnd Sub"
+              }
+            }
+          ]
+        },
+        "producer_code": [],
+        "dependencies": {
+          "artifact_hashes": {
+            "graph": "62e923ed69d8bb859461abdf281b288cabed8a762aece16a2a8c295a68815783",
+            "segments": "ad7b391344c9cce56269f0a16e791b9c7deb175b0dd3de680f8a512e1b08aa71",
+            "ir": "9a23c2550a419054f533ebbede459bb6f15b328af1b4051e07c326f35e16f23c",
+            "normalized_ir": "220d6299e45888c52663a131559054b8fe42a80b69ae2b4bff0abff3bfa5a1ad",
+            "semantic_analysis": "62b5c3996de86f734eedeba29645f90a8b502c740c41723c24e614ae14006e28",
+            "manifest": "095e833472ee087205669202a88f76a0a413cc5ef7ecf27443049934164f15c5",
+            "report": "bdb7a4cea9c7f7020388bdef9d49797a252485f2d5090b44b16d7b436e64f8d8",
+            "source": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025"
+          },
+          "related_artifacts": [
+            "source",
+            "ir",
+            "normalized_ir",
+            "semantic_analysis"
+          ],
+          "symbols": []
+        },
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_3.bas",
+              "actual": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+              "expected": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "root_cause": {
+        "hypotheses": [
+          "Insufficient diagnostic-specific evidence; inspect source and producing stage"
+        ],
+        "source_available": true,
+        "source_lines": [
+          3,
+          73
+        ],
+        "confidence": "medium",
+        "recommended_action": "inspect_producer_and_rebuild_downstream",
+        "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
+      },
+      "investigation": {
+        "summary": "No LLM configured; deterministic evidence package only.",
+        "evidence_sufficient": true,
+        "root_cause": {
+          "hypotheses": [
+            "Insufficient diagnostic-specific evidence; inspect source and producing stage"
+          ],
+          "source_available": true,
+          "source_lines": [
+            3,
+            73
+          ],
+          "confidence": "medium",
+          "recommended_action": "inspect_producer_and_rebuild_downstream",
+          "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
+        },
+        "recommended_next_step": "inspect producer code and regenerate"
+      },
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "COM_CREATEOBJECT",
+      "severity": "blocking",
+      "message": "COM object activation",
+      "details": {
+        "code": "COM_CREATEOBJECT",
+        "title": "COM object activation",
+        "severity": "blocking",
+        "target_guidance": "Replace ProgID-based activation with an explicit Java implementation or integration adapter; preserve fallback behavior.",
+        "evidence": [
+          {
+            "procedure": "ImportDailySales",
+            "expression": "CreateObject(\"Scripting.Dictionary\")"
+          },
+          {
+            "procedure": "ImportDailySales",
+            "expression": "CreateObject(\"ADODB.Stream\")"
+          }
+        ]
+      },
+      "path": "semantic_analysis.json",
+      "artifact": "semantic_analysis",
+      "reported_by": [
+        "semantic_analysis",
+        "validator"
+      ],
+      "subsystem": "runtime_interop",
+      "priority": "blocking",
+      "auto_fix_policy": "source_evidence_and_independent_validation_required",
+      "id": "e6de893d2fd87b83",
+      "context": {
+        "source": {
+          "available": true,
+          "path": "vba_sample_3.bas",
+          "line_range": [
+            3,
+            73
+          ],
+          "text": "3: Public Sub ImportDailySales(ByVal tsvPath As String, ByVal reportDate As Date)\n4:     Dim stream As Object\n5:     Dim salesByRegion As Object\n6:     Dim fields As Variant\n7:     Dim lineText As String\n8:     Dim regionCode As String\n9:     Dim saleAmount As Currency\n10:     Dim lastRow As Long\n11:     Dim rowNumber As Long\n12: \n13:     On Error GoTo HandleError\n14: \n15:     If Len(Dir$(tsvPath)) = 0 Then\n16:         Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\"\n17:     End If\n18: \n19:     Set salesByRegion = CreateObject(\"Scripting.Dictionary\")\n20:     Set stream = CreateObject(\"ADODB.Stream\")\n21:     stream.Type = 2\n22:     stream.Charset = \"utf-8\"\n23:     stream.Open\n24:     stream.LoadFromFile tsvPath\n25: \n26:     If Not stream.EOS Then\n27:         lineText = stream.ReadText(-2)\n28:     End If\n29: \n30:     Do While Not stream.EOS\n31:         lineText = stream.ReadText(-2)\n32:         fields = Split(lineText, vbTab)\n33: \n34:         If UBound(fields) >= 2 Then\n35:             regionCode = UCase$(Trim$(CStr(fields(1))))\n36:             If IsNumeric(fields(2)) And Len(regionCode) > 0 Then\n37:                 saleAmount = CCur(fields(2))\n38:                 If salesByRegion.Exists(regionCode) Then\n39:                     salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount\n40:                 Else\n41:                     salesByRegion.Add regionCode, saleAmount\n42:                 End If\n43:             End If\n44:         End If\n45:     Loop\n46: \n47:     stream.Close\n48:     Set stream = Nothing\n49: \n50:     With ThisWorkbook.Worksheets(\"Daily Sales\")\n51:         lastRow = .Cells(.Rows.Count, \"A\").End(xlUp).Row\n52:         For rowNumber = 2 To lastRow\n53:             If IsDate(.Cells(rowNumber, \"A\").Value) Then\n54:                 If DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate) Then\n55:                     regionCode = UCase$(Trim$(CStr(.Cells(rowNumber, \"B\").Value)))\n56:                     If salesByRegion.Exists(regionCode) Then\n57:                         .Cells(rowNumber, \"C\").Value = salesByRegion(regionCode)\n58:                     Else\n59:                         .Cells(rowNumber, \"C\").Value = 0\n60:                     End If\n61:                 End If\n62:             End If\n63:         Next rowNumber\n64:     End With\n65: \n66:     Exit Sub\n67: \n68: HandleError:\n69:     If Not stream Is Nothing Then\n70:         If stream.State = 1 Then stream.Close\n71:     End If\n72:     Err.Raise Err.Number, \"ImportDailySales\", Err.Description\n73: End Sub",
+          "sha256": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+          "procedure": "ImportDailySales"
+        },
+        "procedure": {
+          "procedure_names": [],
+          "graph_procedures": [
+            {
+              "id": "procedure_4cddda8433374681",
+              "name": "ImportDailySales",
+              "source": {
+                "path": "vba_sample_3.bas",
+                "start_line": 3,
+                "end_line": 73,
+                "text": "Public Sub ImportDailySales(ByVal tsvPath As String, ByVal reportDate As Date)\n    Dim stream As Object\n    Dim salesByRegion As Object\n    Dim fields As Variant\n    Dim lineText As String\n    Dim regionCode As String\n    Dim saleAmount As Currency\n    Dim lastRow As Long\n    Dim rowNumber As Long\n\n    On Error GoTo HandleError\n\n    If Len(Dir$(tsvPath)) = 0 Then\n        Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\"\n    End If\n\n    Set salesByRegion = CreateObject(\"Scripting.Dictionary\")\n    Set stream = CreateObject(\"ADODB.Stream\")\n    stream.Type = 2\n    stream.Charset = \"utf-8\"\n    stream.Open\n    stream.LoadFromFile tsvPath\n\n    If Not stream.EOS Then\n        lineText = stream.ReadText(-2)\n    End If\n\n    Do While Not stream.EOS\n        lineText = stream.ReadText(-2)\n        fields = Split(lineText, vbTab)\n\n        If UBound(fields) >= 2 Then\n            regionCode = UCase$(Trim$(CStr(fields(1))))\n            If IsNumeric(fields(2)) And Len(regionCode) > 0 Then\n                saleAmount = CCur(fields(2))\n                If salesByRegion.Exists(regionCode) Then\n                    salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount\n                Else\n                    salesByRegion.Add regionCode, saleAmount\n                End If\n            End If\n        End If\n    Loop\n\n    stream.Close\n    Set stream = Nothing\n\n    With ThisWorkbook.Worksheets(\"Daily Sales\")\n        lastRow = .Cells(.Rows.Count, \"A\").End(xlUp).Row\n        For rowNumber = 2 To lastRow\n            If IsDate(.Cells(rowNumber, \"A\").Value) Then\n                If DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate) Then\n                    regionCode = UCase$(Trim$(CStr(.Cells(rowNumber, \"B\").Value)))\n                    If salesByRegion.Exists(regionCode) Then\n                        .Cells(rowNumber, \"C\").Value = salesByRegion(regionCode)\n                    Else\n                        .Cells(rowNumber, \"C\").Value = 0\n                    End If\n                End If\n            End If\n        Next rowNumber\n    End With\n\n    Exit Sub\n\nHandleError:\n    If Not stream Is Nothing Then\n        If stream.State = 1 Then stream.Close\n    End If\n    Err.Raise Err.Number, \"ImportDailySales\", Err.Description\nEnd Sub"
+              }
+            }
+          ]
+        },
+        "producer_code": [],
+        "dependencies": {
+          "artifact_hashes": {
+            "graph": "62e923ed69d8bb859461abdf281b288cabed8a762aece16a2a8c295a68815783",
+            "segments": "ad7b391344c9cce56269f0a16e791b9c7deb175b0dd3de680f8a512e1b08aa71",
+            "ir": "9a23c2550a419054f533ebbede459bb6f15b328af1b4051e07c326f35e16f23c",
+            "normalized_ir": "220d6299e45888c52663a131559054b8fe42a80b69ae2b4bff0abff3bfa5a1ad",
+            "semantic_analysis": "62b5c3996de86f734eedeba29645f90a8b502c740c41723c24e614ae14006e28",
+            "manifest": "095e833472ee087205669202a88f76a0a413cc5ef7ecf27443049934164f15c5",
+            "report": "bdb7a4cea9c7f7020388bdef9d49797a252485f2d5090b44b16d7b436e64f8d8",
+            "source": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025"
+          },
+          "related_artifacts": [
+            "graph",
+            "segments",
+            "ir",
+            "normalized_ir",
+            "semantic_analysis",
+            "manifest",
+            "report",
+            "sources",
+            "source"
+          ],
+          "symbols": []
+        },
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_3.bas",
+              "actual": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+              "expected": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "root_cause": {
+        "hypotheses": [
+          "Insufficient diagnostic-specific evidence; inspect source and producing stage"
+        ],
+        "source_available": true,
+        "source_lines": [
+          3,
+          73
+        ],
+        "confidence": "medium",
+        "recommended_action": "inspect_producer_and_rebuild_downstream",
+        "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
+      },
+      "investigation": {
+        "summary": "No LLM configured; deterministic evidence package only.",
+        "evidence_sufficient": true,
+        "root_cause": {
+          "hypotheses": [
+            "Insufficient diagnostic-specific evidence; inspect source and producing stage"
+          ],
+          "source_available": true,
+          "source_lines": [
+            3,
+            73
+          ],
+          "confidence": "medium",
+          "recommended_action": "inspect_producer_and_rebuild_downstream",
+          "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
+        },
+        "recommended_next_step": "inspect producer code and regenerate"
+      },
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "VBA_CURRENCY",
+      "severity": "warning",
+      "message": "VBA Currency fixed-point arithmetic",
+      "details": {
+        "code": "VBA_CURRENCY",
+        "title": "VBA Currency fixed-point arithmetic",
+        "severity": "review",
+        "target_guidance": "Use fixed-point decimal arithmetic with four decimal places and verify rounding/overflow rules.",
+        "evidence": {
+          "type_occurrences": 1
+        }
+      },
+      "path": "semantic_analysis.json",
+      "artifact": "semantic_analysis",
+      "reported_by": [
+        "semantic_analysis"
+      ],
+      "subsystem": "unknown",
+      "priority": "normal",
+      "auto_fix_policy": "source_evidence_and_independent_validation_required",
+      "id": "8e38f66c50e020c6",
+      "context": {
+        "source": {
+          "available": true,
+          "path": "vba_sample_3.bas",
+          "line_range": null,
+          "text": "Option Explicit\n\nPublic Sub ImportDailySales(ByVal tsvPath As String, ByVal reportDate As Date)\n    Dim stream As Object\n    Dim salesByRegion As Object\n    Dim fields As Variant\n    Dim lineText As String\n    Dim regionCode As String\n    Dim saleAmount As Currency\n    Dim lastRow As Long\n    Dim rowNumber As Long\n\n    On Error GoTo HandleError\n\n    If Len(Dir$(tsvPath)) = 0 Then\n        Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\"\n    End If\n\n    Set salesByRegion = CreateObject(\"Scripting.Dictionary\")\n    Set stream = CreateObject(\"ADODB.Stream\")\n    stream.Type = 2\n    stream.Charset = \"utf-8\"\n    stream.Open\n    stream.LoadFromFile tsvPath\n\n    If Not stream.EOS Then\n        lineText = stream.ReadText(-2)\n    End If\n\n    Do While Not stream.EOS\n        lineText = stream.ReadText(-2)\n        fields = Split(lineText, vbTab)\n\n        If UBound(fields) >= 2 Then\n            regionCode = UCase$(Trim$(CStr(fields(1))))\n            If IsNumeric(fields(2)) And Len(regionCode) > 0 Then\n                saleAmount = CCur(fields(2))\n                If salesByRegion.Exists(regionCode) Then\n                    salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount\n                Else\n                    salesByRegion.Add regionCode, saleAmount\n                End If\n            End If\n        End If\n    Loop\n\n    stream.Close\n    Set stream = Nothing\n\n    With ThisWorkbook.Worksheets(\"Daily Sales\")\n        lastRow = .Cells(.Rows.Count, \"A\").End(xlUp).Row\n        For rowNumber = 2 To lastRow\n            If IsDate(.Cells(rowNumber, \"A\").Value) Then\n                If DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate) Then\n                    regionCode = UCase$(Trim$(CStr(.Cells(rowNumber, \"B\").Value)))\n                    If salesByRegion.Exists(regionCode) Then\n                        .Cells(rowNumber, \"C\").Value = salesByRegion(regionCode)\n                    Else\n                        .Cells(rowNumber, \"C\").Value = 0\n                    End If\n                End If\n            End If\n        Next rowNumber\n    End With\n\n    Exit Sub\n\nHandleError:\n    If Not stream Is Nothing Then\n        If stream.State = 1 Then stream.Close\n    End If\n    Err.Raise Err.Number, \"ImportDailySales\", Err.Description\nEnd Sub\n",
+          "sha256": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+          "note": "No precise line supplied; bounded source prefix returned."
+        },
+        "procedure": {
+          "procedure_names": [
+            "ImportDailySales"
+          ],
+          "graph_procedures": [
+            {
+              "id": "procedure_4cddda8433374681",
+              "name": "ImportDailySales",
+              "source": {
+                "path": "vba_sample_3.bas",
+                "start_line": 3,
+                "end_line": 73,
+                "text": "Public Sub ImportDailySales(ByVal tsvPath As String, ByVal reportDate As Date)\n    Dim stream As Object\n    Dim salesByRegion As Object\n    Dim fields As Variant\n    Dim lineText As String\n    Dim regionCode As String\n    Dim saleAmount As Currency\n    Dim lastRow As Long\n    Dim rowNumber As Long\n\n    On Error GoTo HandleError\n\n    If Len(Dir$(tsvPath)) = 0 Then\n        Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\"\n    End If\n\n    Set salesByRegion = CreateObject(\"Scripting.Dictionary\")\n    Set stream = CreateObject(\"ADODB.Stream\")\n    stream.Type = 2\n    stream.Charset = \"utf-8\"\n    stream.Open\n    stream.LoadFromFile tsvPath\n\n    If Not stream.EOS Then\n        lineText = stream.ReadText(-2)\n    End If\n\n    Do While Not stream.EOS\n        lineText = stream.ReadText(-2)\n        fields = Split(lineText, vbTab)\n\n        If UBound(fields) >= 2 Then\n            regionCode = UCase$(Trim$(CStr(fields(1))))\n            If IsNumeric(fields(2)) And Len(regionCode) > 0 Then\n                saleAmount = CCur(fields(2))\n                If salesByRegion.Exists(regionCode) Then\n                    salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount\n                Else\n                    salesByRegion.Add regionCode, saleAmount\n                End If\n            End If\n        End If\n    Loop\n\n    stream.Close\n    Set stream = Nothing\n\n    With ThisWorkbook.Worksheets(\"Daily Sales\")\n        lastRow = .Cells(.Rows.Count, \"A\").End(xlUp).Row\n        For rowNumber = 2 To lastRow\n            If IsDate(.Cells(rowNumber, \"A\").Value) Then\n                If DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate) Then\n                    regionCode = UCase$(Trim$(CStr(.Cells(rowNumber, \"B\").Value)))\n                    If salesByRegion.Exists(regionCode) Then\n                        .Cells(rowNumber, \"C\").Value = salesByRegion(regionCode)\n                    Else\n                        .Cells(rowNumber, \"C\").Value = 0\n                    End If\n                End If\n            End If\n        Next rowNumber\n    End With\n\n    Exit Sub\n\nHandleError:\n    If Not stream Is Nothing Then\n        If stream.State = 1 Then stream.Close\n    End If\n    Err.Raise Err.Number, \"ImportDailySales\", Err.Description\nEnd Sub"
+              }
+            }
+          ]
+        },
+        "producer_code": [],
+        "dependencies": {
+          "artifact_hashes": {
+            "graph": "62e923ed69d8bb859461abdf281b288cabed8a762aece16a2a8c295a68815783",
+            "segments": "ad7b391344c9cce56269f0a16e791b9c7deb175b0dd3de680f8a512e1b08aa71",
+            "ir": "9a23c2550a419054f533ebbede459bb6f15b328af1b4051e07c326f35e16f23c",
+            "normalized_ir": "220d6299e45888c52663a131559054b8fe42a80b69ae2b4bff0abff3bfa5a1ad",
+            "semantic_analysis": "62b5c3996de86f734eedeba29645f90a8b502c740c41723c24e614ae14006e28",
+            "manifest": "095e833472ee087205669202a88f76a0a413cc5ef7ecf27443049934164f15c5",
+            "report": "bdb7a4cea9c7f7020388bdef9d49797a252485f2d5090b44b16d7b436e64f8d8",
+            "source": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025"
+          },
+          "related_artifacts": [
+            "graph",
+            "segments",
+            "ir",
+            "normalized_ir",
+            "semantic_analysis",
+            "manifest",
+            "report",
+            "sources",
+            "source"
+          ],
+          "symbols": []
+        },
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_3.bas",
+              "actual": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+              "expected": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "root_cause": {
+        "hypotheses": [
+          "Insufficient diagnostic-specific evidence; inspect source and producing stage"
+        ],
+        "source_available": true,
+        "source_lines": null,
+        "confidence": "medium",
+        "recommended_action": "inspect_producer_and_rebuild_downstream",
+        "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
+      },
+      "investigation": {
+        "summary": "No LLM configured; deterministic evidence package only.",
+        "evidence_sufficient": true,
+        "root_cause": {
+          "hypotheses": [
+            "Insufficient diagnostic-specific evidence; inspect source and producing stage"
+          ],
+          "source_available": true,
+          "source_lines": null,
+          "confidence": "medium",
+          "recommended_action": "inspect_producer_and_rebuild_downstream",
+          "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
+        },
+        "recommended_next_step": "inspect producer code and regenerate"
+      },
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "VBA_DATE",
+      "severity": "warning",
+      "message": "VBA Date representation",
+      "details": {
+        "code": "VBA_DATE",
+        "title": "VBA Date representation",
+        "severity": "review",
+        "target_guidance": "Map VBA/OLE Automation dates carefully; verify serial-date conversions, timezone assumptions and date parsing/formatting.",
+        "evidence": {
+          "type_occurrences": 1
+        }
+      },
+      "path": "semantic_analysis.json",
+      "artifact": "semantic_analysis",
+      "reported_by": [
+        "semantic_analysis"
+      ],
+      "subsystem": "unknown",
+      "priority": "normal",
+      "auto_fix_policy": "source_evidence_and_independent_validation_required",
+      "id": "ca80ce08c602ddaa",
+      "context": {
+        "source": {
+          "available": true,
+          "path": "vba_sample_3.bas",
+          "line_range": null,
+          "text": "Option Explicit\n\nPublic Sub ImportDailySales(ByVal tsvPath As String, ByVal reportDate As Date)\n    Dim stream As Object\n    Dim salesByRegion As Object\n    Dim fields As Variant\n    Dim lineText As String\n    Dim regionCode As String\n    Dim saleAmount As Currency\n    Dim lastRow As Long\n    Dim rowNumber As Long\n\n    On Error GoTo HandleError\n\n    If Len(Dir$(tsvPath)) = 0 Then\n        Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\"\n    End If\n\n    Set salesByRegion = CreateObject(\"Scripting.Dictionary\")\n    Set stream = CreateObject(\"ADODB.Stream\")\n    stream.Type = 2\n    stream.Charset = \"utf-8\"\n    stream.Open\n    stream.LoadFromFile tsvPath\n\n    If Not stream.EOS Then\n        lineText = stream.ReadText(-2)\n    End If\n\n    Do While Not stream.EOS\n        lineText = stream.ReadText(-2)\n        fields = Split(lineText, vbTab)\n\n        If UBound(fields) >= 2 Then\n            regionCode = UCase$(Trim$(CStr(fields(1))))\n            If IsNumeric(fields(2)) And Len(regionCode) > 0 Then\n                saleAmount = CCur(fields(2))\n                If salesByRegion.Exists(regionCode) Then\n                    salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount\n                Else\n                    salesByRegion.Add regionCode, saleAmount\n                End If\n            End If\n        End If\n    Loop\n\n    stream.Close\n    Set stream = Nothing\n\n    With ThisWorkbook.Worksheets(\"Daily Sales\")\n        lastRow = .Cells(.Rows.Count, \"A\").End(xlUp).Row\n        For rowNumber = 2 To lastRow\n            If IsDate(.Cells(rowNumber, \"A\").Value) Then\n                If DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate) Then\n                    regionCode = UCase$(Trim$(CStr(.Cells(rowNumber, \"B\").Value)))\n                    If salesByRegion.Exists(regionCode) Then\n                        .Cells(rowNumber, \"C\").Value = salesByRegion(regionCode)\n                    Else\n                        .Cells(rowNumber, \"C\").Value = 0\n                    End If\n                End If\n            End If\n        Next rowNumber\n    End With\n\n    Exit Sub\n\nHandleError:\n    If Not stream Is Nothing Then\n        If stream.State = 1 Then stream.Close\n    End If\n    Err.Raise Err.Number, \"ImportDailySales\", Err.Description\nEnd Sub\n",
+          "sha256": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+          "note": "No precise line supplied; bounded source prefix returned."
+        },
+        "procedure": {
+          "procedure_names": [
+            "ImportDailySales"
+          ],
+          "graph_procedures": [
+            {
+              "id": "procedure_4cddda8433374681",
+              "name": "ImportDailySales",
+              "source": {
+                "path": "vba_sample_3.bas",
+                "start_line": 3,
+                "end_line": 73,
+                "text": "Public Sub ImportDailySales(ByVal tsvPath As String, ByVal reportDate As Date)\n    Dim stream As Object\n    Dim salesByRegion As Object\n    Dim fields As Variant\n    Dim lineText As String\n    Dim regionCode As String\n    Dim saleAmount As Currency\n    Dim lastRow As Long\n    Dim rowNumber As Long\n\n    On Error GoTo HandleError\n\n    If Len(Dir$(tsvPath)) = 0 Then\n        Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\"\n    End If\n\n    Set salesByRegion = CreateObject(\"Scripting.Dictionary\")\n    Set stream = CreateObject(\"ADODB.Stream\")\n    stream.Type = 2\n    stream.Charset = \"utf-8\"\n    stream.Open\n    stream.LoadFromFile tsvPath\n\n    If Not stream.EOS Then\n        lineText = stream.ReadText(-2)\n    End If\n\n    Do While Not stream.EOS\n        lineText = stream.ReadText(-2)\n        fields = Split(lineText, vbTab)\n\n        If UBound(fields) >= 2 Then\n            regionCode = UCase$(Trim$(CStr(fields(1))))\n            If IsNumeric(fields(2)) And Len(regionCode) > 0 Then\n                saleAmount = CCur(fields(2))\n                If salesByRegion.Exists(regionCode) Then\n                    salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount\n                Else\n                    salesByRegion.Add regionCode, saleAmount\n                End If\n            End If\n        End If\n    Loop\n\n    stream.Close\n    Set stream = Nothing\n\n    With ThisWorkbook.Worksheets(\"Daily Sales\")\n        lastRow = .Cells(.Rows.Count, \"A\").End(xlUp).Row\n        For rowNumber = 2 To lastRow\n            If IsDate(.Cells(rowNumber, \"A\").Value) Then\n                If DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate) Then\n                    regionCode = UCase$(Trim$(CStr(.Cells(rowNumber, \"B\").Value)))\n                    If salesByRegion.Exists(regionCode) Then\n                        .Cells(rowNumber, \"C\").Value = salesByRegion(regionCode)\n                    Else\n                        .Cells(rowNumber, \"C\").Value = 0\n                    End If\n                End If\n            End If\n        Next rowNumber\n    End With\n\n    Exit Sub\n\nHandleError:\n    If Not stream Is Nothing Then\n        If stream.State = 1 Then stream.Close\n    End If\n    Err.Raise Err.Number, \"ImportDailySales\", Err.Description\nEnd Sub"
+              }
+            }
+          ]
+        },
+        "producer_code": [],
+        "dependencies": {
+          "artifact_hashes": {
+            "graph": "62e923ed69d8bb859461abdf281b288cabed8a762aece16a2a8c295a68815783",
+            "segments": "ad7b391344c9cce56269f0a16e791b9c7deb175b0dd3de680f8a512e1b08aa71",
+            "ir": "9a23c2550a419054f533ebbede459bb6f15b328af1b4051e07c326f35e16f23c",
+            "normalized_ir": "220d6299e45888c52663a131559054b8fe42a80b69ae2b4bff0abff3bfa5a1ad",
+            "semantic_analysis": "62b5c3996de86f734eedeba29645f90a8b502c740c41723c24e614ae14006e28",
+            "manifest": "095e833472ee087205669202a88f76a0a413cc5ef7ecf27443049934164f15c5",
+            "report": "bdb7a4cea9c7f7020388bdef9d49797a252485f2d5090b44b16d7b436e64f8d8",
+            "source": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025"
+          },
+          "related_artifacts": [
+            "graph",
+            "segments",
+            "ir",
+            "normalized_ir",
+            "semantic_analysis",
+            "manifest",
+            "report",
+            "sources",
+            "source"
+          ],
+          "symbols": []
+        },
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_3.bas",
+              "actual": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+              "expected": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "root_cause": {
+        "hypotheses": [
+          "Insufficient diagnostic-specific evidence; inspect source and producing stage"
+        ],
+        "source_available": true,
+        "source_lines": null,
+        "confidence": "medium",
+        "recommended_action": "inspect_producer_and_rebuild_downstream",
+        "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
+      },
+      "investigation": {
+        "summary": "No LLM configured; deterministic evidence package only.",
+        "evidence_sufficient": true,
+        "root_cause": {
+          "hypotheses": [
+            "Insufficient diagnostic-specific evidence; inspect source and producing stage"
+          ],
+          "source_available": true,
+          "source_lines": null,
+          "confidence": "medium",
+          "recommended_action": "inspect_producer_and_rebuild_downstream",
+          "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
+        },
+        "recommended_next_step": "inspect producer code and regenerate"
+      },
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "VBA_VARIANT",
+      "severity": "warning",
+      "message": "Variant dynamic values",
+      "details": {
+        "code": "VBA_VARIANT",
+        "title": "Variant dynamic values",
+        "severity": "review",
+        "target_guidance": "Preserve runtime type changes, Empty/Null distinctions, arrays stored in Variant, and VBA conversion rules.",
+        "evidence": [
+          {
+            "procedure": "ImportDailySales",
+            "variable": "fields"
+          }
+        ]
+      },
+      "path": "semantic_analysis.json",
+      "artifact": "semantic_analysis",
+      "reported_by": [
+        "semantic_analysis"
+      ],
+      "subsystem": "unknown",
+      "priority": "normal",
+      "auto_fix_policy": "source_evidence_and_independent_validation_required",
+      "id": "f3111e18a06811ac",
+      "context": {
+        "source": {
+          "available": true,
+          "path": "vba_sample_3.bas",
+          "line_range": [
+            3,
+            73
+          ],
+          "text": "3: Public Sub ImportDailySales(ByVal tsvPath As String, ByVal reportDate As Date)\n4:     Dim stream As Object\n5:     Dim salesByRegion As Object\n6:     Dim fields As Variant\n7:     Dim lineText As String\n8:     Dim regionCode As String\n9:     Dim saleAmount As Currency\n10:     Dim lastRow As Long\n11:     Dim rowNumber As Long\n12: \n13:     On Error GoTo HandleError\n14: \n15:     If Len(Dir$(tsvPath)) = 0 Then\n16:         Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\"\n17:     End If\n18: \n19:     Set salesByRegion = CreateObject(\"Scripting.Dictionary\")\n20:     Set stream = CreateObject(\"ADODB.Stream\")\n21:     stream.Type = 2\n22:     stream.Charset = \"utf-8\"\n23:     stream.Open\n24:     stream.LoadFromFile tsvPath\n25: \n26:     If Not stream.EOS Then\n27:         lineText = stream.ReadText(-2)\n28:     End If\n29: \n30:     Do While Not stream.EOS\n31:         lineText = stream.ReadText(-2)\n32:         fields = Split(lineText, vbTab)\n33: \n34:         If UBound(fields) >= 2 Then\n35:             regionCode = UCase$(Trim$(CStr(fields(1))))\n36:             If IsNumeric(fields(2)) And Len(regionCode) > 0 Then\n37:                 saleAmount = CCur(fields(2))\n38:                 If salesByRegion.Exists(regionCode) Then\n39:                     salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount\n40:                 Else\n41:                     salesByRegion.Add regionCode, saleAmount\n42:                 End If\n43:             End If\n44:         End If\n45:     Loop\n46: \n47:     stream.Close\n48:     Set stream = Nothing\n49: \n50:     With ThisWorkbook.Worksheets(\"Daily Sales\")\n51:         lastRow = .Cells(.Rows.Count, \"A\").End(xlUp).Row\n52:         For rowNumber = 2 To lastRow\n53:             If IsDate(.Cells(rowNumber, \"A\").Value) Then\n54:                 If DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate) Then\n55:                     regionCode = UCase$(Trim$(CStr(.Cells(rowNumber, \"B\").Value)))\n56:                     If salesByRegion.Exists(regionCode) Then\n57:                         .Cells(rowNumber, \"C\").Value = salesByRegion(regionCode)\n58:                     Else\n59:                         .Cells(rowNumber, \"C\").Value = 0\n60:                     End If\n61:                 End If\n62:             End If\n63:         Next rowNumber\n64:     End With\n65: \n66:     Exit Sub\n67: \n68: HandleError:\n69:     If Not stream Is Nothing Then\n70:         If stream.State = 1 Then stream.Close\n71:     End If\n72:     Err.Raise Err.Number, \"ImportDailySales\", Err.Description\n73: End Sub",
+          "sha256": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+          "procedure": "ImportDailySales"
+        },
+        "procedure": {
+          "procedure_names": [],
+          "graph_procedures": [
+            {
+              "id": "procedure_4cddda8433374681",
+              "name": "ImportDailySales",
+              "source": {
+                "path": "vba_sample_3.bas",
+                "start_line": 3,
+                "end_line": 73,
+                "text": "Public Sub ImportDailySales(ByVal tsvPath As String, ByVal reportDate As Date)\n    Dim stream As Object\n    Dim salesByRegion As Object\n    Dim fields As Variant\n    Dim lineText As String\n    Dim regionCode As String\n    Dim saleAmount As Currency\n    Dim lastRow As Long\n    Dim rowNumber As Long\n\n    On Error GoTo HandleError\n\n    If Len(Dir$(tsvPath)) = 0 Then\n        Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\"\n    End If\n\n    Set salesByRegion = CreateObject(\"Scripting.Dictionary\")\n    Set stream = CreateObject(\"ADODB.Stream\")\n    stream.Type = 2\n    stream.Charset = \"utf-8\"\n    stream.Open\n    stream.LoadFromFile tsvPath\n\n    If Not stream.EOS Then\n        lineText = stream.ReadText(-2)\n    End If\n\n    Do While Not stream.EOS\n        lineText = stream.ReadText(-2)\n        fields = Split(lineText, vbTab)\n\n        If UBound(fields) >= 2 Then\n            regionCode = UCase$(Trim$(CStr(fields(1))))\n            If IsNumeric(fields(2)) And Len(regionCode) > 0 Then\n                saleAmount = CCur(fields(2))\n                If salesByRegion.Exists(regionCode) Then\n                    salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount\n                Else\n                    salesByRegion.Add regionCode, saleAmount\n                End If\n            End If\n        End If\n    Loop\n\n    stream.Close\n    Set stream = Nothing\n\n    With ThisWorkbook.Worksheets(\"Daily Sales\")\n        lastRow = .Cells(.Rows.Count, \"A\").End(xlUp).Row\n        For rowNumber = 2 To lastRow\n            If IsDate(.Cells(rowNumber, \"A\").Value) Then\n                If DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate) Then\n                    regionCode = UCase$(Trim$(CStr(.Cells(rowNumber, \"B\").Value)))\n                    If salesByRegion.Exists(regionCode) Then\n                        .Cells(rowNumber, \"C\").Value = salesByRegion(regionCode)\n                    Else\n                        .Cells(rowNumber, \"C\").Value = 0\n                    End If\n                End If\n            End If\n        Next rowNumber\n    End With\n\n    Exit Sub\n\nHandleError:\n    If Not stream Is Nothing Then\n        If stream.State = 1 Then stream.Close\n    End If\n    Err.Raise Err.Number, \"ImportDailySales\", Err.Description\nEnd Sub"
+              }
+            }
+          ]
+        },
+        "producer_code": [],
+        "dependencies": {
+          "artifact_hashes": {
+            "graph": "62e923ed69d8bb859461abdf281b288cabed8a762aece16a2a8c295a68815783",
+            "segments": "ad7b391344c9cce56269f0a16e791b9c7deb175b0dd3de680f8a512e1b08aa71",
+            "ir": "9a23c2550a419054f533ebbede459bb6f15b328af1b4051e07c326f35e16f23c",
+            "normalized_ir": "220d6299e45888c52663a131559054b8fe42a80b69ae2b4bff0abff3bfa5a1ad",
+            "semantic_analysis": "62b5c3996de86f734eedeba29645f90a8b502c740c41723c24e614ae14006e28",
+            "manifest": "095e833472ee087205669202a88f76a0a413cc5ef7ecf27443049934164f15c5",
+            "report": "bdb7a4cea9c7f7020388bdef9d49797a252485f2d5090b44b16d7b436e64f8d8",
+            "source": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025"
+          },
+          "related_artifacts": [
+            "graph",
+            "segments",
+            "ir",
+            "normalized_ir",
+            "semantic_analysis",
+            "manifest",
+            "report",
+            "sources",
+            "source"
+          ],
+          "symbols": []
+        },
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_3.bas",
+              "actual": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+              "expected": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "root_cause": {
+        "hypotheses": [
+          "Insufficient diagnostic-specific evidence; inspect source and producing stage"
+        ],
+        "source_available": true,
+        "source_lines": [
+          3,
+          73
+        ],
+        "confidence": "medium",
+        "recommended_action": "inspect_producer_and_rebuild_downstream",
+        "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
+      },
+      "investigation": {
+        "summary": "No LLM configured; deterministic evidence package only.",
+        "evidence_sufficient": true,
+        "root_cause": {
+          "hypotheses": [
+            "Insufficient diagnostic-specific evidence; inspect source and producing stage"
+          ],
+          "source_available": true,
+          "source_lines": [
+            3,
+            73
+          ],
+          "confidence": "medium",
+          "recommended_action": "inspect_producer_and_rebuild_downstream",
+          "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
+        },
+        "recommended_next_step": "inspect producer code and regenerate"
+      },
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "VBA_OBJECT_IDENTITY",
+      "severity": "warning",
+      "message": "VBA Is object-reference comparison",
+      "details": {
+        "code": "VBA_OBJECT_IDENTITY",
+        "title": "VBA Is object-reference comparison",
+        "severity": "review",
+        "target_guidance": "Preserve object identity/null comparison semantics; distinguish Is from value equality.",
+        "evidence": [
+          {
+            "procedure": "ImportDailySales",
+            "operator": "is",
+            "source": "Not stream Is Nothing"
+          }
+        ]
+      },
+      "path": "semantic_analysis.json",
+      "artifact": "semantic_analysis",
+      "reported_by": [
+        "semantic_analysis"
+      ],
+      "subsystem": "unknown",
+      "priority": "normal",
+      "auto_fix_policy": "source_evidence_and_independent_validation_required",
+      "id": "589f8fc907666ed0",
+      "context": {
+        "source": {
+          "available": true,
+          "path": "vba_sample_3.bas",
+          "line_range": [
+            3,
+            73
+          ],
+          "text": "3: Public Sub ImportDailySales(ByVal tsvPath As String, ByVal reportDate As Date)\n4:     Dim stream As Object\n5:     Dim salesByRegion As Object\n6:     Dim fields As Variant\n7:     Dim lineText As String\n8:     Dim regionCode As String\n9:     Dim saleAmount As Currency\n10:     Dim lastRow As Long\n11:     Dim rowNumber As Long\n12: \n13:     On Error GoTo HandleError\n14: \n15:     If Len(Dir$(tsvPath)) = 0 Then\n16:         Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\"\n17:     End If\n18: \n19:     Set salesByRegion = CreateObject(\"Scripting.Dictionary\")\n20:     Set stream = CreateObject(\"ADODB.Stream\")\n21:     stream.Type = 2\n22:     stream.Charset = \"utf-8\"\n23:     stream.Open\n24:     stream.LoadFromFile tsvPath\n25: \n26:     If Not stream.EOS Then\n27:         lineText = stream.ReadText(-2)\n28:     End If\n29: \n30:     Do While Not stream.EOS\n31:         lineText = stream.ReadText(-2)\n32:         fields = Split(lineText, vbTab)\n33: \n34:         If UBound(fields) >= 2 Then\n35:             regionCode = UCase$(Trim$(CStr(fields(1))))\n36:             If IsNumeric(fields(2)) And Len(regionCode) > 0 Then\n37:                 saleAmount = CCur(fields(2))\n38:                 If salesByRegion.Exists(regionCode) Then\n39:                     salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount\n40:                 Else\n41:                     salesByRegion.Add regionCode, saleAmount\n42:                 End If\n43:             End If\n44:         End If\n45:     Loop\n46: \n47:     stream.Close\n48:     Set stream = Nothing\n49: \n50:     With ThisWorkbook.Worksheets(\"Daily Sales\")\n51:         lastRow = .Cells(.Rows.Count, \"A\").End(xlUp).Row\n52:         For rowNumber = 2 To lastRow\n53:             If IsDate(.Cells(rowNumber, \"A\").Value) Then\n54:                 If DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate) Then\n55:                     regionCode = UCase$(Trim$(CStr(.Cells(rowNumber, \"B\").Value)))\n56:                     If salesByRegion.Exists(regionCode) Then\n57:                         .Cells(rowNumber, \"C\").Value = salesByRegion(regionCode)\n58:                     Else\n59:                         .Cells(rowNumber, \"C\").Value = 0\n60:                     End If\n61:                 End If\n62:             End If\n63:         Next rowNumber\n64:     End With\n65: \n66:     Exit Sub\n67: \n68: HandleError:\n69:     If Not stream Is Nothing Then\n70:         If stream.State = 1 Then stream.Close\n71:     End If\n72:     Err.Raise Err.Number, \"ImportDailySales\", Err.Description\n73: End Sub",
+          "sha256": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+          "procedure": "ImportDailySales"
+        },
+        "procedure": {
+          "procedure_names": [],
+          "graph_procedures": [
+            {
+              "id": "procedure_4cddda8433374681",
+              "name": "ImportDailySales",
+              "source": {
+                "path": "vba_sample_3.bas",
+                "start_line": 3,
+                "end_line": 73,
+                "text": "Public Sub ImportDailySales(ByVal tsvPath As String, ByVal reportDate As Date)\n    Dim stream As Object\n    Dim salesByRegion As Object\n    Dim fields As Variant\n    Dim lineText As String\n    Dim regionCode As String\n    Dim saleAmount As Currency\n    Dim lastRow As Long\n    Dim rowNumber As Long\n\n    On Error GoTo HandleError\n\n    If Len(Dir$(tsvPath)) = 0 Then\n        Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\"\n    End If\n\n    Set salesByRegion = CreateObject(\"Scripting.Dictionary\")\n    Set stream = CreateObject(\"ADODB.Stream\")\n    stream.Type = 2\n    stream.Charset = \"utf-8\"\n    stream.Open\n    stream.LoadFromFile tsvPath\n\n    If Not stream.EOS Then\n        lineText = stream.ReadText(-2)\n    End If\n\n    Do While Not stream.EOS\n        lineText = stream.ReadText(-2)\n        fields = Split(lineText, vbTab)\n\n        If UBound(fields) >= 2 Then\n            regionCode = UCase$(Trim$(CStr(fields(1))))\n            If IsNumeric(fields(2)) And Len(regionCode) > 0 Then\n                saleAmount = CCur(fields(2))\n                If salesByRegion.Exists(regionCode) Then\n                    salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount\n                Else\n                    salesByRegion.Add regionCode, saleAmount\n                End If\n            End If\n        End If\n    Loop\n\n    stream.Close\n    Set stream = Nothing\n\n    With ThisWorkbook.Worksheets(\"Daily Sales\")\n        lastRow = .Cells(.Rows.Count, \"A\").End(xlUp).Row\n        For rowNumber = 2 To lastRow\n            If IsDate(.Cells(rowNumber, \"A\").Value) Then\n                If DateValue(.Cells(rowNumber, \"A\").Value) = DateValue(reportDate) Then\n                    regionCode = UCase$(Trim$(CStr(.Cells(rowNumber, \"B\").Value)))\n                    If salesByRegion.Exists(regionCode) Then\n                        .Cells(rowNumber, \"C\").Value = salesByRegion(regionCode)\n                    Else\n                        .Cells(rowNumber, \"C\").Value = 0\n                    End If\n                End If\n            End If\n        Next rowNumber\n    End With\n\n    Exit Sub\n\nHandleError:\n    If Not stream Is Nothing Then\n        If stream.State = 1 Then stream.Close\n    End If\n    Err.Raise Err.Number, \"ImportDailySales\", Err.Description\nEnd Sub"
+              }
+            }
+          ]
+        },
+        "producer_code": [],
+        "dependencies": {
+          "artifact_hashes": {
+            "graph": "62e923ed69d8bb859461abdf281b288cabed8a762aece16a2a8c295a68815783",
+            "segments": "ad7b391344c9cce56269f0a16e791b9c7deb175b0dd3de680f8a512e1b08aa71",
+            "ir": "9a23c2550a419054f533ebbede459bb6f15b328af1b4051e07c326f35e16f23c",
+            "normalized_ir": "220d6299e45888c52663a131559054b8fe42a80b69ae2b4bff0abff3bfa5a1ad",
+            "semantic_analysis": "62b5c3996de86f734eedeba29645f90a8b502c740c41723c24e614ae14006e28",
+            "manifest": "095e833472ee087205669202a88f76a0a413cc5ef7ecf27443049934164f15c5",
+            "report": "bdb7a4cea9c7f7020388bdef9d49797a252485f2d5090b44b16d7b436e64f8d8",
+            "source": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025"
+          },
+          "related_artifacts": [
+            "graph",
+            "segments",
+            "ir",
+            "normalized_ir",
+            "semantic_analysis",
+            "manifest",
+            "report",
+            "sources",
+            "source"
+          ],
+          "symbols": []
+        },
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_3.bas",
+              "actual": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+              "expected": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "root_cause": {
+        "hypotheses": [
+          "Insufficient diagnostic-specific evidence; inspect source and producing stage"
+        ],
+        "source_available": true,
+        "source_lines": [
+          3,
+          73
+        ],
+        "confidence": "medium",
+        "recommended_action": "inspect_producer_and_rebuild_downstream",
+        "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
+      },
+      "investigation": {
+        "summary": "No LLM configured; deterministic evidence package only.",
+        "evidence_sufficient": true,
+        "root_cause": {
+          "hypotheses": [
+            "Insufficient diagnostic-specific evidence; inspect source and producing stage"
+          ],
+          "source_available": true,
+          "source_lines": [
+            3,
+            73
+          ],
+          "confidence": "medium",
+          "recommended_action": "inspect_producer_and_rebuild_downstream",
+          "warning": "A root-cause hypothesis is not proof. Confirm against producer code and regenerated artifacts."
+        },
+        "recommended_next_step": "inspect producer code and regenerate"
+      },
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "SEMANTIC_ISSUE_COUNT",
+      "severity": "blocking",
+      "message": "issue_count=30",
+      "context": {
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_3.bas",
+              "actual": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+              "expected": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "id": "1367dcbc44d9b676",
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "PSEUDOCODE_COVERAGE_GAP",
+      "severity": "warning",
+      "procedure": "ImportDailySales",
+      "message": "Detailed pseudocode section missing: ImportDailySales",
+      "context": {
+        "traceability": {
+          "source_present": true,
+          "sources": [
+            {
+              "path": "vba_sample_3.bas",
+              "actual": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+              "expected": "263194dd28089cf57147c4e3abadb7c8e06ab3801e03db9dcb155f02021f8025",
+              "matches": true
+            }
+          ],
+          "hash_matches": true,
+          "safe_for_source_grounded_repair": true,
+          "warning": "Source location is supporting evidence; generated artifact offsets must be mapped, not assumed."
+        }
+      },
+      "id": "1057b2b674f25940",
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "severity": "blocking",
+      "message": "VBA On Error runtime semantics",
+      "target_guidance": "Implement a compatibility runtime for Resume Next, GoTo handler, GoTo 0, Err state and handler activation; this pass preserves directives but does not emulate execution.",
+      "id": "d8cdc528ce2be432",
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "LATE_BOUND_OBJECT_MEMBERS",
+      "severity": "blocking",
+      "message": "Late-bound COM/Object members",
+      "target_guidance": "Define explicit Java interfaces/adapters for the actual COM object behavior. Object-typed references alone do not identify the target API.",
+      "id": "b6277ffa76e2ac9c",
+      "status": "unresolved_or_unverified"
+    },
+    {
+      "code": "COM_CREATEOBJECT",
+      "severity": "blocking",
+      "message": "COM object activation",
+      "target_guidance": "Replace ProgID-based activation with an explicit Java implementation or integration adapter; preserve fallback behavior.",
+      "id": "8ac983f4e7056e25",
+      "status": "unresolved_or_unverified"
+    }
+  ]
+}

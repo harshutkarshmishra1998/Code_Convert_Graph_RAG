@@ -901,6 +901,2603 @@
       "unresolved_issue_count": 32,
       "conversion_readiness": "NOT_CERTIFIED",
       "timestamp": "2026-11-22T20:34:22.652180+00:00"
+    },
+    {
+      "status": "run_started",
+      "project_root": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6",
+      "timestamp": "2026-11-22T20:54:25.586080+00:00"
+    },
+    {
+      "issue_id": "3b8e8663486ae9d1",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "IR_EXPRESSIONS_OPAQUE",
+        "severity": "warning",
+        "priority": "high",
+        "subsystem": "expression_frontend",
+        "message": "180 expression/control operands are preserved as source-backed opaque expressions, not parsed AST nodes.",
+        "path": "universal_ir.json",
+        "artifact": "ir",
+        "reported_by": [
+          "ir",
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "819cb004f8175b41",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_OPTION_COMPARE_TEXT",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "Case-insensitive string comparison",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "0122a74b6408229e",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_OPTION_BASE_1",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "One-based default array bounds",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "5587823c9eaf352d",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_ERROR_HANDLING",
+        "severity": "blocking",
+        "priority": "blocking",
+        "subsystem": "runtime_semantics",
+        "message": "VBA On Error runtime semantics",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis",
+          "validator"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "23237f686b357dad",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_GOSUB_RETURN",
+        "severity": "blocking",
+        "priority": "blocking",
+        "subsystem": "control_flow_lowering",
+        "message": "Legacy GoSub/Return control flow",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis",
+          "validator"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "1bf0876e4f475d64",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "LATE_BOUND_OBJECT_MEMBERS",
+        "severity": "blocking",
+        "priority": "blocking",
+        "subsystem": "type_resolution",
+        "message": "Late-bound COM/Object members",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis",
+          "validator"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "e6de893d2fd87b83",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "COM_CREATEOBJECT",
+        "severity": "blocking",
+        "priority": "blocking",
+        "subsystem": "runtime_interop",
+        "message": "COM object activation",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis",
+          "validator"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "ee88c76051b51797",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_BYREF",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "ByRef parameter mutation",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "c1bc89f9cd8a864d",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_IIF_EAGER_EVALUATION",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "IIf evaluates both result expressions",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "a62749e49ad875d5",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_DOEVENTS",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "DoEvents cooperative yield",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "c843adf9733165d5",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_DYNAMIC_ARRAYS",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "Dynamic arrays, ReDim, Preserve and Erase",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "8e38f66c50e020c6",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_CURRENCY",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "VBA Currency fixed-point arithmetic",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "ca80ce08c602ddaa",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_DATE",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "VBA Date representation",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "f3111e18a06811ac",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_VARIANT",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "Variant dynamic values",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "e069497c27e85eb4",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_COLLECTION",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "VBA Collection semantics",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "09ef64a26bcf64ab",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_ARRAY_INITIALIZATION_IDIOM",
+        "severity": "blocking",
+        "priority": "blocking",
+        "subsystem": "array_semantics",
+        "message": "Double-Not dynamic-array initialization check",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis",
+          "validator"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "589f8fc907666ed0",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_OBJECT_IDENTITY",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "VBA Is object-reference comparison",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "cac9c81a1f8996b7",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_BITWISE_LOGICAL_OPERATORS",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "Bitwise logical operators on numeric values",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "08e44f2b12f78bf2",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "CROSS_NESTED_BLOCK_CLOSE",
+        "severity": "warning",
+        "priority": "high",
+        "subsystem": "frontend_control_flow",
+        "message": "End If closed a non-top IF frame; inspect nested syntax.",
+        "path": "vba_sample_6.bas",
+        "line": 223,
+        "artifact": "pseudocode_run",
+        "reported_by": [
+          "pseudocode_run"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "775d96c69b611473",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "CROSS_NESTED_BLOCK_CLOSE",
+        "severity": "warning",
+        "priority": "high",
+        "subsystem": "frontend_control_flow",
+        "message": "End If closed a non-top IF frame; inspect nested syntax.",
+        "path": "vba_sample_6.bas",
+        "line": 256,
+        "artifact": "pseudocode_run",
+        "reported_by": [
+          "pseudocode_run"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "852578f6dd5c48dc",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "CROSS_NESTED_BLOCK_CLOSE",
+        "severity": "warning",
+        "priority": "high",
+        "subsystem": "frontend_control_flow",
+        "message": "End If closed a non-top IF frame; inspect nested syntax.",
+        "path": "vba_sample_6.bas",
+        "line": 472,
+        "artifact": "pseudocode_run",
+        "reported_by": [
+          "pseudocode_run"
+        ]
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "ed9313967888c4a2",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "PSEUDOCODE_COVERAGE_GAP",
+        "severity": "warning",
+        "message": "Detailed pseudocode section missing: ExecuteStressPipeline",
+        "procedure": "ExecuteStressPipeline"
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "ff18da0af55874c3",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "PSEUDOCODE_COVERAGE_GAP",
+        "severity": "warning",
+        "message": "Detailed pseudocode section missing: LogAudit",
+        "procedure": "LogAudit"
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "b754410abfb99d3a",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "PSEUDOCODE_COVERAGE_GAP",
+        "severity": "warning",
+        "message": "Detailed pseudocode section missing: TryParseEntry",
+        "procedure": "TryParseEntry"
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "f3d2f7fda0291948",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "PSEUDOCODE_COVERAGE_GAP",
+        "severity": "warning",
+        "message": "Detailed pseudocode section missing: NormalizeEntryInPlace",
+        "procedure": "NormalizeEntryInPlace"
+      },
+      "timestamp": "2026-11-22T20:54:25.673053+00:00"
+    },
+    {
+      "issue_id": "d8cdc528ce2be432",
+      "status": "detected",
+      "pass": "final_validation",
+      "issue": {
+        "code": "VBA_ERROR_HANDLING",
+        "severity": "blocking",
+        "message": "VBA On Error runtime semantics"
+      },
+      "timestamp": "2026-11-22T20:54:25.757978+00:00"
+    },
+    {
+      "issue_id": "ae6b415040e7630f",
+      "status": "detected",
+      "pass": "final_validation",
+      "issue": {
+        "code": "VBA_GOSUB_RETURN",
+        "severity": "blocking",
+        "message": "Legacy GoSub/Return control flow"
+      },
+      "timestamp": "2026-11-22T20:54:25.757978+00:00"
+    },
+    {
+      "issue_id": "b6277ffa76e2ac9c",
+      "status": "detected",
+      "pass": "final_validation",
+      "issue": {
+        "code": "LATE_BOUND_OBJECT_MEMBERS",
+        "severity": "blocking",
+        "message": "Late-bound COM/Object members"
+      },
+      "timestamp": "2026-11-22T20:54:25.757978+00:00"
+    },
+    {
+      "issue_id": "8ac983f4e7056e25",
+      "status": "detected",
+      "pass": "final_validation",
+      "issue": {
+        "code": "COM_CREATEOBJECT",
+        "severity": "blocking",
+        "message": "COM object activation"
+      },
+      "timestamp": "2026-11-22T20:54:25.757978+00:00"
+    },
+    {
+      "issue_id": "ed7a0e860828d305",
+      "status": "detected",
+      "pass": "final_validation",
+      "issue": {
+        "code": "VBA_ARRAY_INITIALIZATION_IDIOM",
+        "severity": "blocking",
+        "message": "Double-Not dynamic-array initialization check"
+      },
+      "timestamp": "2026-11-22T20:54:25.757978+00:00"
+    },
+    {
+      "issue_id": "3b8e8663486ae9d1",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.761136+00:00"
+    },
+    {
+      "issue_id": "819cb004f8175b41",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.761790+00:00"
+    },
+    {
+      "issue_id": "0122a74b6408229e",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.762389+00:00"
+    },
+    {
+      "issue_id": "5587823c9eaf352d",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.762951+00:00"
+    },
+    {
+      "issue_id": "23237f686b357dad",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.763511+00:00"
+    },
+    {
+      "issue_id": "1bf0876e4f475d64",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.764090+00:00"
+    },
+    {
+      "issue_id": "e6de893d2fd87b83",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.764664+00:00"
+    },
+    {
+      "issue_id": "ee88c76051b51797",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.765261+00:00"
+    },
+    {
+      "issue_id": "c1bc89f9cd8a864d",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.765829+00:00"
+    },
+    {
+      "issue_id": "a62749e49ad875d5",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.766428+00:00"
+    },
+    {
+      "issue_id": "c843adf9733165d5",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.767060+00:00"
+    },
+    {
+      "issue_id": "8e38f66c50e020c6",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.767889+00:00"
+    },
+    {
+      "issue_id": "ca80ce08c602ddaa",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.768511+00:00"
+    },
+    {
+      "issue_id": "f3111e18a06811ac",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.769140+00:00"
+    },
+    {
+      "issue_id": "e069497c27e85eb4",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.769730+00:00"
+    },
+    {
+      "issue_id": "09ef64a26bcf64ab",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.770363+00:00"
+    },
+    {
+      "issue_id": "589f8fc907666ed0",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.770951+00:00"
+    },
+    {
+      "issue_id": "cac9c81a1f8996b7",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.771531+00:00"
+    },
+    {
+      "issue_id": "08e44f2b12f78bf2",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.772132+00:00"
+    },
+    {
+      "issue_id": "775d96c69b611473",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.772723+00:00"
+    },
+    {
+      "issue_id": "852578f6dd5c48dc",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.773309+00:00"
+    },
+    {
+      "issue_id": "ed9313967888c4a2",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.773899+00:00"
+    },
+    {
+      "issue_id": "ff18da0af55874c3",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.774515+00:00"
+    },
+    {
+      "issue_id": "b754410abfb99d3a",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.775098+00:00"
+    },
+    {
+      "issue_id": "f3d2f7fda0291948",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.775744+00:00"
+    },
+    {
+      "issue_id": "d8cdc528ce2be432",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.776335+00:00"
+    },
+    {
+      "issue_id": "ae6b415040e7630f",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.777008+00:00"
+    },
+    {
+      "issue_id": "b6277ffa76e2ac9c",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.777647+00:00"
+    },
+    {
+      "issue_id": "8ac983f4e7056e25",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.778274+00:00"
+    },
+    {
+      "issue_id": "ed7a0e860828d305",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false
+      },
+      "timestamp": "2026-11-22T20:54:25.778888+00:00"
+    },
+    {
+      "status": "run_completed",
+      "issue_count": 30,
+      "addressed_issue_count": 0,
+      "unresolved_issue_count": 30,
+      "conversion_readiness": "NOT_CERTIFIED",
+      "timestamp": "2026-11-22T20:54:25.784223+00:00"
+    },
+    {
+      "status": "run_started",
+      "project_root": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6",
+      "timestamp": "2026-11-22T20:57:14.275551+00:00"
+    },
+    {
+      "issue_id": "3b8e8663486ae9d1",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "IR_EXPRESSIONS_OPAQUE",
+        "severity": "warning",
+        "priority": "high",
+        "subsystem": "expression_frontend",
+        "message": "180 expression/control operands are preserved as source-backed opaque expressions, not parsed AST nodes.",
+        "path": "universal_ir.json",
+        "artifact": "ir",
+        "reported_by": [
+          "ir",
+          "semantic_analysis"
+        ],
+        "downstream_resolution": {
+          "status": "addressed_and_verified",
+          "method": "semantic_normalization",
+          "artifact": "normalized_ir.json",
+          "evidence": {
+            "parse_error_count": 0,
+            "unresolved_expression_count": 0,
+            "unresolved_node_count": 0
+          }
+        }
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "819cb004f8175b41",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_OPTION_COMPARE_TEXT",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "Case-insensitive string comparison",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "0122a74b6408229e",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_OPTION_BASE_1",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "One-based default array bounds",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "5587823c9eaf352d",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_ERROR_HANDLING",
+        "severity": "blocking",
+        "priority": "blocking",
+        "subsystem": "runtime_semantics",
+        "message": "VBA On Error runtime semantics",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis",
+          "validator"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "23237f686b357dad",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_GOSUB_RETURN",
+        "severity": "blocking",
+        "priority": "blocking",
+        "subsystem": "control_flow_lowering",
+        "message": "Legacy GoSub/Return control flow",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis",
+          "validator"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "1bf0876e4f475d64",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "LATE_BOUND_OBJECT_MEMBERS",
+        "severity": "blocking",
+        "priority": "blocking",
+        "subsystem": "type_resolution",
+        "message": "Late-bound COM/Object members",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis",
+          "validator"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "e6de893d2fd87b83",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "COM_CREATEOBJECT",
+        "severity": "blocking",
+        "priority": "blocking",
+        "subsystem": "runtime_interop",
+        "message": "COM object activation",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis",
+          "validator"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "ee88c76051b51797",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_BYREF",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "ByRef parameter mutation",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "c1bc89f9cd8a864d",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_IIF_EAGER_EVALUATION",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "IIf evaluates both result expressions",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "a62749e49ad875d5",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_DOEVENTS",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "DoEvents cooperative yield",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "c843adf9733165d5",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_DYNAMIC_ARRAYS",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "Dynamic arrays, ReDim, Preserve and Erase",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "8e38f66c50e020c6",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_CURRENCY",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "VBA Currency fixed-point arithmetic",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "ca80ce08c602ddaa",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_DATE",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "VBA Date representation",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "f3111e18a06811ac",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_VARIANT",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "Variant dynamic values",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "e069497c27e85eb4",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_COLLECTION",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "VBA Collection semantics",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "09ef64a26bcf64ab",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_ARRAY_INITIALIZATION_IDIOM",
+        "severity": "blocking",
+        "priority": "blocking",
+        "subsystem": "array_semantics",
+        "message": "Double-Not dynamic-array initialization check",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis",
+          "validator"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "589f8fc907666ed0",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_OBJECT_IDENTITY",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "VBA Is object-reference comparison",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "cac9c81a1f8996b7",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_BITWISE_LOGICAL_OPERATORS",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "Bitwise logical operators on numeric values",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "08e44f2b12f78bf2",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "CROSS_NESTED_BLOCK_CLOSE",
+        "severity": "warning",
+        "priority": "high",
+        "subsystem": "frontend_control_flow",
+        "message": "End If closed a non-top IF frame; inspect nested syntax.",
+        "path": "vba_sample_6.bas",
+        "line": 223,
+        "artifact": "pseudocode_run",
+        "reported_by": [
+          "pseudocode_run"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "775d96c69b611473",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "CROSS_NESTED_BLOCK_CLOSE",
+        "severity": "warning",
+        "priority": "high",
+        "subsystem": "frontend_control_flow",
+        "message": "End If closed a non-top IF frame; inspect nested syntax.",
+        "path": "vba_sample_6.bas",
+        "line": 256,
+        "artifact": "pseudocode_run",
+        "reported_by": [
+          "pseudocode_run"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "852578f6dd5c48dc",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "CROSS_NESTED_BLOCK_CLOSE",
+        "severity": "warning",
+        "priority": "high",
+        "subsystem": "frontend_control_flow",
+        "message": "End If closed a non-top IF frame; inspect nested syntax.",
+        "path": "vba_sample_6.bas",
+        "line": 472,
+        "artifact": "pseudocode_run",
+        "reported_by": [
+          "pseudocode_run"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "ed9313967888c4a2",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "PSEUDOCODE_COVERAGE_GAP",
+        "severity": "warning",
+        "message": "Detailed pseudocode section missing: ExecuteStressPipeline",
+        "procedure": "ExecuteStressPipeline"
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "ff18da0af55874c3",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "PSEUDOCODE_COVERAGE_GAP",
+        "severity": "warning",
+        "message": "Detailed pseudocode section missing: LogAudit",
+        "procedure": "LogAudit"
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "b754410abfb99d3a",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "PSEUDOCODE_COVERAGE_GAP",
+        "severity": "warning",
+        "message": "Detailed pseudocode section missing: TryParseEntry",
+        "procedure": "TryParseEntry"
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "f3d2f7fda0291948",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "PSEUDOCODE_COVERAGE_GAP",
+        "severity": "warning",
+        "message": "Detailed pseudocode section missing: NormalizeEntryInPlace",
+        "procedure": "NormalizeEntryInPlace"
+      },
+      "timestamp": "2026-11-22T20:57:14.370486+00:00"
+    },
+    {
+      "issue_id": "d8cdc528ce2be432",
+      "status": "detected",
+      "pass": "final_validation",
+      "issue": {
+        "code": "VBA_ERROR_HANDLING",
+        "severity": "blocking",
+        "message": "VBA On Error runtime semantics"
+      },
+      "timestamp": "2026-11-22T20:57:14.455036+00:00"
+    },
+    {
+      "issue_id": "ae6b415040e7630f",
+      "status": "detected",
+      "pass": "final_validation",
+      "issue": {
+        "code": "VBA_GOSUB_RETURN",
+        "severity": "blocking",
+        "message": "Legacy GoSub/Return control flow"
+      },
+      "timestamp": "2026-11-22T20:57:14.455036+00:00"
+    },
+    {
+      "issue_id": "b6277ffa76e2ac9c",
+      "status": "detected",
+      "pass": "final_validation",
+      "issue": {
+        "code": "LATE_BOUND_OBJECT_MEMBERS",
+        "severity": "blocking",
+        "message": "Late-bound COM/Object members"
+      },
+      "timestamp": "2026-11-22T20:57:14.455036+00:00"
+    },
+    {
+      "issue_id": "8ac983f4e7056e25",
+      "status": "detected",
+      "pass": "final_validation",
+      "issue": {
+        "code": "COM_CREATEOBJECT",
+        "severity": "blocking",
+        "message": "COM object activation"
+      },
+      "timestamp": "2026-11-22T20:57:14.455036+00:00"
+    },
+    {
+      "issue_id": "ed7a0e860828d305",
+      "status": "detected",
+      "pass": "final_validation",
+      "issue": {
+        "code": "VBA_ARRAY_INITIALIZATION_IDIOM",
+        "severity": "blocking",
+        "message": "Double-Not dynamic-array initialization check"
+      },
+      "timestamp": "2026-11-22T20:57:14.455036+00:00"
+    },
+    {
+      "issue_id": "3b8e8663486ae9d1",
+      "status": "addressed_and_verified",
+      "addressed": true,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": false,
+        "absent_after_final_scan": true,
+        "downstream_resolution": {
+          "status": "addressed_and_verified",
+          "method": "semantic_normalization",
+          "artifact": "normalized_ir.json",
+          "evidence": {
+            "parse_error_count": 0,
+            "unresolved_expression_count": 0,
+            "unresolved_node_count": 0
+          }
+        }
+      },
+      "timestamp": "2026-11-22T20:57:14.456093+00:00"
+    },
+    {
+      "issue_id": "819cb004f8175b41",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.456907+00:00"
+    },
+    {
+      "issue_id": "0122a74b6408229e",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.457687+00:00"
+    },
+    {
+      "issue_id": "5587823c9eaf352d",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.458459+00:00"
+    },
+    {
+      "issue_id": "23237f686b357dad",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.459217+00:00"
+    },
+    {
+      "issue_id": "1bf0876e4f475d64",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.460059+00:00"
+    },
+    {
+      "issue_id": "e6de893d2fd87b83",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.460850+00:00"
+    },
+    {
+      "issue_id": "ee88c76051b51797",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.461624+00:00"
+    },
+    {
+      "issue_id": "c1bc89f9cd8a864d",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.462370+00:00"
+    },
+    {
+      "issue_id": "a62749e49ad875d5",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.463205+00:00"
+    },
+    {
+      "issue_id": "c843adf9733165d5",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.463963+00:00"
+    },
+    {
+      "issue_id": "8e38f66c50e020c6",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.464719+00:00"
+    },
+    {
+      "issue_id": "ca80ce08c602ddaa",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.465464+00:00"
+    },
+    {
+      "issue_id": "f3111e18a06811ac",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.466267+00:00"
+    },
+    {
+      "issue_id": "e069497c27e85eb4",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.467093+00:00"
+    },
+    {
+      "issue_id": "09ef64a26bcf64ab",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.467970+00:00"
+    },
+    {
+      "issue_id": "589f8fc907666ed0",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.469014+00:00"
+    },
+    {
+      "issue_id": "cac9c81a1f8996b7",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.469892+00:00"
+    },
+    {
+      "issue_id": "08e44f2b12f78bf2",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.470705+00:00"
+    },
+    {
+      "issue_id": "775d96c69b611473",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.471531+00:00"
+    },
+    {
+      "issue_id": "852578f6dd5c48dc",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.472335+00:00"
+    },
+    {
+      "issue_id": "ed9313967888c4a2",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.473115+00:00"
+    },
+    {
+      "issue_id": "ff18da0af55874c3",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.473884+00:00"
+    },
+    {
+      "issue_id": "b754410abfb99d3a",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.474670+00:00"
+    },
+    {
+      "issue_id": "f3d2f7fda0291948",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.475774+00:00"
+    },
+    {
+      "issue_id": "d8cdc528ce2be432",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.476566+00:00"
+    },
+    {
+      "issue_id": "ae6b415040e7630f",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.477374+00:00"
+    },
+    {
+      "issue_id": "b6277ffa76e2ac9c",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.478210+00:00"
+    },
+    {
+      "issue_id": "8ac983f4e7056e25",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.479004+00:00"
+    },
+    {
+      "issue_id": "ed7a0e860828d305",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:14.479807+00:00"
+    },
+    {
+      "status": "run_completed",
+      "issue_count": 30,
+      "addressed_issue_count": 1,
+      "unresolved_issue_count": 29,
+      "conversion_readiness": "NOT_CERTIFIED",
+      "timestamp": "2026-11-22T20:57:14.484712+00:00"
+    },
+    {
+      "status": "run_started",
+      "project_root": "/Users/harshutkarshmishra/Downloads/VS Code/Code_Convert_Graph_RAG/files/vba_graph_output/sample_6",
+      "timestamp": "2026-11-22T20:57:21.838268+00:00"
+    },
+    {
+      "issue_id": "3b8e8663486ae9d1",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "IR_EXPRESSIONS_OPAQUE",
+        "severity": "warning",
+        "priority": "high",
+        "subsystem": "expression_frontend",
+        "message": "180 expression/control operands are preserved as source-backed opaque expressions, not parsed AST nodes.",
+        "path": "universal_ir.json",
+        "artifact": "ir",
+        "reported_by": [
+          "ir",
+          "semantic_analysis"
+        ],
+        "downstream_resolution": {
+          "status": "addressed_and_verified",
+          "method": "semantic_normalization",
+          "artifact": "normalized_ir.json",
+          "evidence": {
+            "parse_error_count": 0,
+            "unresolved_expression_count": 0,
+            "unresolved_node_count": 0
+          }
+        }
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "819cb004f8175b41",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_OPTION_COMPARE_TEXT",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "Case-insensitive string comparison",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "0122a74b6408229e",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_OPTION_BASE_1",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "One-based default array bounds",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "5587823c9eaf352d",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_ERROR_HANDLING",
+        "severity": "blocking",
+        "priority": "blocking",
+        "subsystem": "runtime_semantics",
+        "message": "VBA On Error runtime semantics",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis",
+          "validator"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "23237f686b357dad",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_GOSUB_RETURN",
+        "severity": "blocking",
+        "priority": "blocking",
+        "subsystem": "control_flow_lowering",
+        "message": "Legacy GoSub/Return control flow",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis",
+          "validator"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "1bf0876e4f475d64",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "LATE_BOUND_OBJECT_MEMBERS",
+        "severity": "blocking",
+        "priority": "blocking",
+        "subsystem": "type_resolution",
+        "message": "Late-bound COM/Object members",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis",
+          "validator"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "e6de893d2fd87b83",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "COM_CREATEOBJECT",
+        "severity": "blocking",
+        "priority": "blocking",
+        "subsystem": "runtime_interop",
+        "message": "COM object activation",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis",
+          "validator"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "ee88c76051b51797",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_BYREF",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "ByRef parameter mutation",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "c1bc89f9cd8a864d",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_IIF_EAGER_EVALUATION",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "IIf evaluates both result expressions",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "a62749e49ad875d5",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_DOEVENTS",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "DoEvents cooperative yield",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "c843adf9733165d5",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_DYNAMIC_ARRAYS",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "Dynamic arrays, ReDim, Preserve and Erase",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "8e38f66c50e020c6",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_CURRENCY",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "VBA Currency fixed-point arithmetic",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "ca80ce08c602ddaa",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_DATE",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "VBA Date representation",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "f3111e18a06811ac",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_VARIANT",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "Variant dynamic values",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "e069497c27e85eb4",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_COLLECTION",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "VBA Collection semantics",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "09ef64a26bcf64ab",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_ARRAY_INITIALIZATION_IDIOM",
+        "severity": "blocking",
+        "priority": "blocking",
+        "subsystem": "array_semantics",
+        "message": "Double-Not dynamic-array initialization check",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis",
+          "validator"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "589f8fc907666ed0",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_OBJECT_IDENTITY",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "VBA Is object-reference comparison",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "cac9c81a1f8996b7",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "VBA_BITWISE_LOGICAL_OPERATORS",
+        "severity": "warning",
+        "priority": "normal",
+        "subsystem": "unknown",
+        "message": "Bitwise logical operators on numeric values",
+        "path": "semantic_analysis.json",
+        "artifact": "semantic_analysis",
+        "reported_by": [
+          "semantic_analysis"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "08e44f2b12f78bf2",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "CROSS_NESTED_BLOCK_CLOSE",
+        "severity": "warning",
+        "priority": "high",
+        "subsystem": "frontend_control_flow",
+        "message": "End If closed a non-top IF frame; inspect nested syntax.",
+        "path": "vba_sample_6.bas",
+        "line": 223,
+        "artifact": "pseudocode_run",
+        "reported_by": [
+          "pseudocode_run"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "775d96c69b611473",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "CROSS_NESTED_BLOCK_CLOSE",
+        "severity": "warning",
+        "priority": "high",
+        "subsystem": "frontend_control_flow",
+        "message": "End If closed a non-top IF frame; inspect nested syntax.",
+        "path": "vba_sample_6.bas",
+        "line": 256,
+        "artifact": "pseudocode_run",
+        "reported_by": [
+          "pseudocode_run"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "852578f6dd5c48dc",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "CROSS_NESTED_BLOCK_CLOSE",
+        "severity": "warning",
+        "priority": "high",
+        "subsystem": "frontend_control_flow",
+        "message": "End If closed a non-top IF frame; inspect nested syntax.",
+        "path": "vba_sample_6.bas",
+        "line": 472,
+        "artifact": "pseudocode_run",
+        "reported_by": [
+          "pseudocode_run"
+        ]
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "ed9313967888c4a2",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "PSEUDOCODE_COVERAGE_GAP",
+        "severity": "warning",
+        "message": "Detailed pseudocode section missing: ExecuteStressPipeline",
+        "procedure": "ExecuteStressPipeline"
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "ff18da0af55874c3",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "PSEUDOCODE_COVERAGE_GAP",
+        "severity": "warning",
+        "message": "Detailed pseudocode section missing: LogAudit",
+        "procedure": "LogAudit"
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "b754410abfb99d3a",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "PSEUDOCODE_COVERAGE_GAP",
+        "severity": "warning",
+        "message": "Detailed pseudocode section missing: TryParseEntry",
+        "procedure": "TryParseEntry"
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "f3d2f7fda0291948",
+      "status": "detected",
+      "pass": 1,
+      "issue": {
+        "code": "PSEUDOCODE_COVERAGE_GAP",
+        "severity": "warning",
+        "message": "Detailed pseudocode section missing: NormalizeEntryInPlace",
+        "procedure": "NormalizeEntryInPlace"
+      },
+      "timestamp": "2026-11-22T20:57:21.930821+00:00"
+    },
+    {
+      "issue_id": "d8cdc528ce2be432",
+      "status": "detected",
+      "pass": "final_validation",
+      "issue": {
+        "code": "VBA_ERROR_HANDLING",
+        "severity": "blocking",
+        "message": "VBA On Error runtime semantics"
+      },
+      "timestamp": "2026-11-22T20:57:22.016623+00:00"
+    },
+    {
+      "issue_id": "ae6b415040e7630f",
+      "status": "detected",
+      "pass": "final_validation",
+      "issue": {
+        "code": "VBA_GOSUB_RETURN",
+        "severity": "blocking",
+        "message": "Legacy GoSub/Return control flow"
+      },
+      "timestamp": "2026-11-22T20:57:22.016623+00:00"
+    },
+    {
+      "issue_id": "b6277ffa76e2ac9c",
+      "status": "detected",
+      "pass": "final_validation",
+      "issue": {
+        "code": "LATE_BOUND_OBJECT_MEMBERS",
+        "severity": "blocking",
+        "message": "Late-bound COM/Object members"
+      },
+      "timestamp": "2026-11-22T20:57:22.016623+00:00"
+    },
+    {
+      "issue_id": "8ac983f4e7056e25",
+      "status": "detected",
+      "pass": "final_validation",
+      "issue": {
+        "code": "COM_CREATEOBJECT",
+        "severity": "blocking",
+        "message": "COM object activation"
+      },
+      "timestamp": "2026-11-22T20:57:22.016623+00:00"
+    },
+    {
+      "issue_id": "ed7a0e860828d305",
+      "status": "detected",
+      "pass": "final_validation",
+      "issue": {
+        "code": "VBA_ARRAY_INITIALIZATION_IDIOM",
+        "severity": "blocking",
+        "message": "Double-Not dynamic-array initialization check"
+      },
+      "timestamp": "2026-11-22T20:57:22.016623+00:00"
+    },
+    {
+      "issue_id": "3b8e8663486ae9d1",
+      "status": "addressed_and_verified",
+      "addressed": true,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": false,
+        "absent_after_final_scan": true,
+        "downstream_resolution": {
+          "status": "addressed_and_verified",
+          "method": "semantic_normalization",
+          "artifact": "normalized_ir.json",
+          "evidence": {
+            "parse_error_count": 0,
+            "unresolved_expression_count": 0,
+            "unresolved_node_count": 0
+          }
+        }
+      },
+      "timestamp": "2026-11-22T20:57:22.017994+00:00"
+    },
+    {
+      "issue_id": "819cb004f8175b41",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.019146+00:00"
+    },
+    {
+      "issue_id": "0122a74b6408229e",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.020106+00:00"
+    },
+    {
+      "issue_id": "5587823c9eaf352d",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.021055+00:00"
+    },
+    {
+      "issue_id": "23237f686b357dad",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.022049+00:00"
+    },
+    {
+      "issue_id": "1bf0876e4f475d64",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.023063+00:00"
+    },
+    {
+      "issue_id": "e6de893d2fd87b83",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.024051+00:00"
+    },
+    {
+      "issue_id": "ee88c76051b51797",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.024979+00:00"
+    },
+    {
+      "issue_id": "c1bc89f9cd8a864d",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.025947+00:00"
+    },
+    {
+      "issue_id": "a62749e49ad875d5",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.026907+00:00"
+    },
+    {
+      "issue_id": "c843adf9733165d5",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.027911+00:00"
+    },
+    {
+      "issue_id": "8e38f66c50e020c6",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.028925+00:00"
+    },
+    {
+      "issue_id": "ca80ce08c602ddaa",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.029854+00:00"
+    },
+    {
+      "issue_id": "f3111e18a06811ac",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.030804+00:00"
+    },
+    {
+      "issue_id": "e069497c27e85eb4",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.031780+00:00"
+    },
+    {
+      "issue_id": "09ef64a26bcf64ab",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.032789+00:00"
+    },
+    {
+      "issue_id": "589f8fc907666ed0",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.033874+00:00"
+    },
+    {
+      "issue_id": "cac9c81a1f8996b7",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.035179+00:00"
+    },
+    {
+      "issue_id": "08e44f2b12f78bf2",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.036219+00:00"
+    },
+    {
+      "issue_id": "775d96c69b611473",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.037219+00:00"
+    },
+    {
+      "issue_id": "852578f6dd5c48dc",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.038238+00:00"
+    },
+    {
+      "issue_id": "ed9313967888c4a2",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.039291+00:00"
+    },
+    {
+      "issue_id": "ff18da0af55874c3",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.040326+00:00"
+    },
+    {
+      "issue_id": "b754410abfb99d3a",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.041323+00:00"
+    },
+    {
+      "issue_id": "f3d2f7fda0291948",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.042310+00:00"
+    },
+    {
+      "issue_id": "d8cdc528ce2be432",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.043321+00:00"
+    },
+    {
+      "issue_id": "ae6b415040e7630f",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.044328+00:00"
+    },
+    {
+      "issue_id": "b6277ffa76e2ac9c",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.045334+00:00"
+    },
+    {
+      "issue_id": "8ac983f4e7056e25",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.046764+00:00"
+    },
+    {
+      "issue_id": "ed7a0e860828d305",
+      "status": "detected_unresolved",
+      "addressed": false,
+      "changes": [],
+      "verification": {
+        "present_in_final_issue_set": true,
+        "absent_after_final_scan": false,
+        "downstream_resolution": null
+      },
+      "timestamp": "2026-11-22T20:57:22.047876+00:00"
+    },
+    {
+      "status": "run_completed",
+      "issue_count": 30,
+      "addressed_issue_count": 1,
+      "unresolved_issue_count": 29,
+      "conversion_readiness": "NOT_CERTIFIED",
+      "timestamp": "2026-11-22T20:57:22.053422+00:00"
     }
   ]
 }

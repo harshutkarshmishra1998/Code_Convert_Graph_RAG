@@ -59,7 +59,8 @@ def _add_body_nodes(items,parent,path,source,nodes,edges,segments):
     previous=None
     for index,item in enumerate(items):
         loc=item.get("location",{})
-        start=loc.get("start_line",1); end=loc.get("end_line",start)
+        start=loc.get("start_line",1)
+        end=item.get("end_location",{}).get("end_line",loc.get("end_line",start))
         typ=item.get("type","OPAQUE")
         name=item.get("name") or item.get("target") or f"{typ.lower()}_{index+1}"
         nid=stable_id("node",path,start,end,f"{parent}:{typ}:{index}:{name}")
@@ -67,7 +68,9 @@ def _add_body_nodes(items,parent,path,source,nodes,edges,segments):
         node={"id":nid,"type":typ,"name":str(name),"parent_id":parent,
               "source":{"path":path,"start_line":start,"end_line":end,
                         "text":_slice(source,start,end)},
-              "metadata":{k:v for k,v in item.items() if k not in {"source","location","body","branches","else_body","cases"}}}
+              "metadata":{k:v for k,v in item.items() if k not in {
+                  "source","location","end_location","body","branches","else_body","cases"
+              }}}
         nodes.append(node); edges.append({"source":parent,"target":nid,"relation":"CONTAINS","evidence":{}})
         if previous:
             edges.append({"source":previous,"target":nid,"relation":"NEXT","evidence":{"order":"source"}})

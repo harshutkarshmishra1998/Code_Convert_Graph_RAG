@@ -36,20 +36,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_0767c2bbbb351890",
-    "parent_id": "node_2e08b0a64cb22886",
+    "id": "segment_cf0150df29aaa425",
+    "parent_id": "node_ed38303faa058eb3",
     "kind": "IF_BLOCK",
     "name": "if_block_3",
     "path": "vba_sample_2.bas",
     "start_line": 8,
-    "end_line": 8,
-    "source": "    If IsNull(rawSku) Or IsEmpty(rawSku) Then",
+    "end_line": 10,
+    "source": "    If IsNull(rawSku) Or IsEmpty(rawSku) Then\n        Err.Raise vbObjectError + 1001, \"NormalizeSku\", \"SKU is required.\"\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_7e327c595231c577",
-    "parent_id": "node_5958bf06ecfd9545",
+    "id": "segment_def4dff0a2398f90",
+    "parent_id": "node_6a20e88f4275a1d3",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_2.bas",
@@ -60,20 +60,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_5c13f236999f5827",
-    "parent_id": "node_9033b9a9f00eb47b",
+    "id": "segment_1c4a390aac39d17b",
+    "parent_id": "node_4d354136ae1feba8",
     "kind": "IF_BLOCK",
     "name": "if_block_4",
     "path": "vba_sample_2.bas",
     "start_line": 12,
-    "end_line": 12,
-    "source": "    If VarType(rawSku) <> vbString Then",
+    "end_line": 14,
+    "source": "    If VarType(rawSku) <> vbString Then\n        Err.Raise vbObjectError + 1002, \"NormalizeSku\", \"SKU must be text.\"\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_e087d4eb5031cf2c",
-    "parent_id": "node_60bc4c74b896e9f1",
+    "id": "segment_63ec26001d3de98c",
+    "parent_id": "node_ec8c1baa67fcdffb",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_2.bas",
@@ -96,20 +96,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_5fa68cba0e49b059",
-    "parent_id": "node_f085f76e1954acc1",
+    "id": "segment_d383d7926cc1cca1",
+    "parent_id": "node_180987e84ae3cf7c",
     "kind": "IF_BLOCK",
     "name": "if_block_6",
     "path": "vba_sample_2.bas",
     "start_line": 17,
-    "end_line": 17,
-    "source": "    If Len(normalized) < 4 Or Len(normalized) > 24 Then",
+    "end_line": 19,
+    "source": "    If Len(normalized) < 4 Or Len(normalized) > 24 Then\n        Err.Raise vbObjectError + 1003, \"NormalizeSku\", \"SKU length is invalid.\"\n    End If",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_fe91e799f6feedc0",
-    "parent_id": "node_4af81e3c6f0b64b1",
+    "id": "segment_a29b3ad3d65e5eb6",
+    "parent_id": "node_3fec97c5cf83c683",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_2.bas",
@@ -120,20 +120,20 @@
     "annotations": {}
   },
   {
-    "id": "segment_4b8bab34fd67f1ff",
-    "parent_id": "node_a5cbc6b3bed0f25a",
+    "id": "segment_f5d833fa28ca3205",
+    "parent_id": "node_d3d67965ce96c547",
     "kind": "SELECT_BLOCK",
     "name": "select_block_7",
     "path": "vba_sample_2.bas",
     "start_line": 21,
-    "end_line": 21,
-    "source": "    Select Case True",
+    "end_line": 26,
+    "source": "    Select Case True\n        Case normalized Like \"*[!A-Z0-9-]*\"\n            Err.Raise vbObjectError + 1004, \"NormalizeSku\", \"SKU contains unsupported characters.\"\n        Case Else\n            NormalizeSku = normalized\n    End Select",
     "summary": null,
     "annotations": {}
   },
   {
-    "id": "segment_708321f9ce3f2e35",
-    "parent_id": "node_aa898f231fa91d16",
+    "id": "segment_0058965dd3fa0634",
+    "parent_id": "node_a95b8ef6fd12b30e",
     "kind": "CALL_OR_COMMAND",
     "name": "call_or_command_1",
     "path": "vba_sample_2.bas",
@@ -144,8 +144,8 @@
     "annotations": {}
   },
   {
-    "id": "segment_ecfddb74700c40f8",
-    "parent_id": "node_d384efc6d7a8a88d",
+    "id": "segment_6c9fb32bde52c212",
+    "parent_id": "node_514e974afc6512a3",
     "kind": "ASSIGNMENT",
     "name": "NormalizeSku",
     "path": "vba_sample_2.bas",
@@ -168,10 +168,10 @@
     "annotations": {}
   },
   {
-    "id": "segment_a4e957d9756f6ab4",
-    "parent_id": "node_9826d3c300cc1baf",
-    "kind": "CALL_OR_COMMAND",
-    "name": "call_or_command_9",
+    "id": "segment_9efc068c98015ba9",
+    "parent_id": "node_83b13c505ae7835f",
+    "kind": "LABEL",
+    "name": "InvalidSku",
     "path": "vba_sample_2.bas",
     "start_line": 30,
     "end_line": 30,

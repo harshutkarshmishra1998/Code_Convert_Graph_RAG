@@ -546,15 +546,15 @@
       }
     },
     {
-      "id": "node_2535bb6ab0c43035",
+      "id": "node_d433a42f6a84031c",
       "type": "FOR_BLOCK",
       "name": "for_block_22",
       "parent_id": "procedure_a5eeb2937970632e",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 31,
-        "end_line": 31,
-        "text": "    For rowNumber = 2 To lastInventoryRow"
+        "end_line": 43,
+        "text": "    For rowNumber = 2 To lastInventoryRow\n        itemCode = UCase$(Trim$(CStr(inventorySheet.Cells(rowNumber, \"A\").Value2)))\n        If Len(itemCode) > 0 Then\n            If IsNumeric(inventorySheet.Cells(rowNumber, \"B\").Value2) Then\n                If inventory.Exists(itemCode) Then\n                    Err.Raise vbObjectError + 4001, \"ReconcileInventory\", \"Duplicate inventory item: \" & itemCode\n                End If\n                inventory.Add itemCode, CDbl(inventorySheet.Cells(rowNumber, \"B\").Value2)\n            Else\n                inventorySheet.Cells(rowNumber, \"B\").Interior.Color = vbRed\n            End If\n        End If\n    Next rowNumber"
       },
       "metadata": {
         "type": "FOR_BLOCK",
@@ -577,14 +577,21 @@
           ],
           "parse_status": "tokenized_not_fully_parsed"
         },
-        "step": null
+        "step": null,
+        "terminator": {
+          "source": "Next rowNumber",
+          "location": {
+            "start_line": 43,
+            "end_line": 43
+          }
+        }
       }
     },
     {
-      "id": "node_c45d35af467a537a",
+      "id": "node_1b5b694971390eb6",
       "type": "ASSIGNMENT",
       "name": "itemCode",
-      "parent_id": "node_2535bb6ab0c43035",
+      "parent_id": "node_d433a42f6a84031c",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 32,
@@ -634,15 +641,15 @@
       }
     },
     {
-      "id": "node_db0516611496bbe4",
+      "id": "node_6990d3122b460549",
       "type": "IF_BLOCK",
       "name": "if_block_2",
-      "parent_id": "node_2535bb6ab0c43035",
+      "parent_id": "node_d433a42f6a84031c",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 33,
-        "end_line": 33,
-        "text": "        If Len(itemCode) > 0 Then"
+        "end_line": 42,
+        "text": "        If Len(itemCode) > 0 Then\n            If IsNumeric(inventorySheet.Cells(rowNumber, \"B\").Value2) Then\n                If inventory.Exists(itemCode) Then\n                    Err.Raise vbObjectError + 4001, \"ReconcileInventory\", \"Duplicate inventory item: \" & itemCode\n                End If\n                inventory.Add itemCode, CDbl(inventorySheet.Cells(rowNumber, \"B\").Value2)\n            Else\n                inventorySheet.Cells(rowNumber, \"B\").Interior.Color = vbRed\n            End If\n        End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -661,18 +668,25 @@
             "itemCode"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 42,
+            "end_line": 42
+          }
         }
       }
     },
     {
-      "id": "branch_f7b24a8e1372c564",
+      "id": "branch_d40f1841a728d055",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_db0516611496bbe4",
+      "parent_id": "node_6990d3122b460549",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 33,
-        "end_line": 33,
+        "end_line": 42,
         "text": ""
       },
       "metadata": {
@@ -695,18 +709,65 @@
       }
     },
     {
-      "id": "node_4e995f2977578195",
+      "id": "node_e38c15414d192a53",
       "type": "IF_BLOCK",
       "name": "if_block_1",
-      "parent_id": "branch_f7b24a8e1372c564",
+      "parent_id": "branch_d40f1841a728d055",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 34,
-        "end_line": 34,
-        "text": "            If IsNumeric(inventorySheet.Cells(rowNumber, \"B\").Value2) Then"
+        "end_line": 41,
+        "text": "            If IsNumeric(inventorySheet.Cells(rowNumber, \"B\").Value2) Then\n                If inventory.Exists(itemCode) Then\n                    Err.Raise vbObjectError + 4001, \"ReconcileInventory\", \"Duplicate inventory item: \" & itemCode\n                End If\n                inventory.Add itemCode, CDbl(inventorySheet.Cells(rowNumber, \"B\").Value2)\n            Else\n                inventorySheet.Cells(rowNumber, \"B\").Interior.Color = vbRed\n            End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
+        "condition": {
+          "source": "IsNumeric(inventorySheet.Cells(rowNumber, \"B\").Value2)",
+          "tokens": [
+            "IsNumeric",
+            "(",
+            "inventorySheet",
+            ".",
+            "Cells",
+            "(",
+            "rowNumber",
+            ",",
+            "\"B\"",
+            ")",
+            ".",
+            "Value2",
+            ")"
+          ],
+          "identifiers": [
+            "IsNumeric",
+            "inventorySheet",
+            "Cells",
+            "rowNumber",
+            "Value2"
+          ],
+          "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 41,
+            "end_line": 41
+          }
+        }
+      }
+    },
+    {
+      "id": "branch_88060e17aa7bed80",
+      "type": "IF_BRANCH",
+      "name": "IF",
+      "parent_id": "node_e38c15414d192a53",
+      "source": {
+        "path": "vba_sample_5.bas",
+        "start_line": 34,
+        "end_line": 41,
+        "text": ""
+      },
+      "metadata": {
         "condition": {
           "source": "IsNumeric(inventorySheet.Cells(rowNumber, \"B\").Value2)",
           "tokens": [
@@ -736,55 +797,15 @@
       }
     },
     {
-      "id": "branch_ec25de660f5d22ac",
-      "type": "IF_BRANCH",
-      "name": "IF",
-      "parent_id": "node_4e995f2977578195",
-      "source": {
-        "path": "vba_sample_5.bas",
-        "start_line": 34,
-        "end_line": 34,
-        "text": ""
-      },
-      "metadata": {
-        "condition": {
-          "source": "IsNumeric(inventorySheet.Cells(rowNumber, \"B\").Value2)",
-          "tokens": [
-            "IsNumeric",
-            "(",
-            "inventorySheet",
-            ".",
-            "Cells",
-            "(",
-            "rowNumber",
-            ",",
-            "\"B\"",
-            ")",
-            ".",
-            "Value2",
-            ")"
-          ],
-          "identifiers": [
-            "IsNumeric",
-            "inventorySheet",
-            "Cells",
-            "rowNumber",
-            "Value2"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
-      }
-    },
-    {
-      "id": "node_2684bf1feb053042",
+      "id": "node_6ee3e433e7e3b803",
       "type": "IF_BLOCK",
       "name": "if_block_1",
-      "parent_id": "branch_ec25de660f5d22ac",
+      "parent_id": "branch_88060e17aa7bed80",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 35,
-        "end_line": 35,
-        "text": "                If inventory.Exists(itemCode) Then"
+        "end_line": 37,
+        "text": "                If inventory.Exists(itemCode) Then\n                    Err.Raise vbObjectError + 4001, \"ReconcileInventory\", \"Duplicate inventory item: \" & itemCode\n                End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -804,18 +825,25 @@
             "itemCode"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 37,
+            "end_line": 37
+          }
         }
       }
     },
     {
-      "id": "branch_dd15a70c68579a30",
+      "id": "branch_27d81dd81c70cbb2",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_2684bf1feb053042",
+      "parent_id": "node_6ee3e433e7e3b803",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 35,
-        "end_line": 35,
+        "end_line": 37,
         "text": ""
       },
       "metadata": {
@@ -839,10 +867,10 @@
       }
     },
     {
-      "id": "node_200959c4fe82082e",
+      "id": "node_11d7f7fa4890c37a",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_1",
-      "parent_id": "branch_dd15a70c68579a30",
+      "parent_id": "branch_27d81dd81c70cbb2",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 36,
@@ -878,10 +906,10 @@
       }
     },
     {
-      "id": "node_7d45f198001217fd",
+      "id": "node_a33c630d94500120",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_2",
-      "parent_id": "branch_ec25de660f5d22ac",
+      "parent_id": "branch_88060e17aa7bed80",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 38,
@@ -927,23 +955,23 @@
       }
     },
     {
-      "id": "branch_c3df39f6d7a7c76a",
+      "id": "branch_2a1a691b6a9826ea",
       "type": "ELSE_BRANCH",
       "name": "ELSE",
-      "parent_id": "node_4e995f2977578195",
+      "parent_id": "node_e38c15414d192a53",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 34,
-        "end_line": 34,
+        "end_line": 41,
         "text": ""
       },
       "metadata": {}
     },
     {
-      "id": "node_61240f3ca582d92e",
+      "id": "node_516e93d62b335888",
       "type": "ASSIGNMENT",
       "name": "inventorySheet.Cells(rowNumber, \"B\").Interior.Color",
-      "parent_id": "branch_c3df39f6d7a7c76a",
+      "parent_id": "branch_2a1a691b6a9826ea",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 40,
@@ -967,42 +995,15 @@
       }
     },
     {
-      "id": "node_d7677756ab1b1326",
-      "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_3",
-      "parent_id": "node_2535bb6ab0c43035",
-      "source": {
-        "path": "vba_sample_5.bas",
-        "start_line": 43,
-        "end_line": 43,
-        "text": "    Next rowNumber"
-      },
-      "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "Next rowNumber",
-          "tokens": [
-            "Next",
-            "rowNumber"
-          ],
-          "identifiers": [
-            "Next",
-            "rowNumber"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
-      }
-    },
-    {
-      "id": "node_a4d9818566746884",
+      "id": "node_0d25a9bdb410c3eb",
       "type": "FOR_BLOCK",
-      "name": "for_block_4",
-      "parent_id": "node_2535bb6ab0c43035",
+      "name": "for_block_23",
+      "parent_id": "procedure_a5eeb2937970632e",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 45,
-        "end_line": 45,
-        "text": "    For rowNumber = 2 To lastMovementRow"
+        "end_line": 60,
+        "text": "    For rowNumber = 2 To lastMovementRow\n        itemCode = UCase$(Trim$(CStr(movementSheet.Cells(rowNumber, \"A\").Value2)))\n        If IsDate(movementSheet.Cells(rowNumber, \"B\").Value2) _\n            And IsNumeric(movementSheet.Cells(rowNumber, \"C\").Value2) Then\n            transactionDate = CDate(movementSheet.Cells(rowNumber, \"B\").Value2)\n            quantity = CDbl(movementSheet.Cells(rowNumber, \"C\").Value2)\n\n            If DateDiff(\"d\", transactionDate, Date) <= 30 And transactionDate <= Date Then\n                If movementTotals.Exists(itemCode) Then\n                    movementTotals(itemCode) = movementTotals(itemCode) + quantity\n                Else\n                    movementTotals.Add itemCode, quantity\n                End If\n            End If\n        End If\n    Next rowNumber"
       },
       "metadata": {
         "type": "FOR_BLOCK",
@@ -1025,14 +1026,21 @@
           ],
           "parse_status": "tokenized_not_fully_parsed"
         },
-        "step": null
+        "step": null,
+        "terminator": {
+          "source": "Next rowNumber",
+          "location": {
+            "start_line": 60,
+            "end_line": 60
+          }
+        }
       }
     },
     {
-      "id": "node_9534a12e71fe6719",
+      "id": "node_bfef43ce314d6431",
       "type": "ASSIGNMENT",
       "name": "itemCode",
-      "parent_id": "node_a4d9818566746884",
+      "parent_id": "node_0d25a9bdb410c3eb",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 46,
@@ -1082,15 +1090,15 @@
       }
     },
     {
-      "id": "node_86e990a44dc1eb60",
+      "id": "node_1f91b3440b576cdf",
       "type": "IF_BLOCK",
       "name": "if_block_2",
-      "parent_id": "node_a4d9818566746884",
+      "parent_id": "node_0d25a9bdb410c3eb",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 47,
-        "end_line": 48,
-        "text": "        If IsDate(movementSheet.Cells(rowNumber, \"B\").Value2) _\n            And IsNumeric(movementSheet.Cells(rowNumber, \"C\").Value2) Then"
+        "end_line": 59,
+        "text": "        If IsDate(movementSheet.Cells(rowNumber, \"B\").Value2) _\n            And IsNumeric(movementSheet.Cells(rowNumber, \"C\").Value2) Then\n            transactionDate = CDate(movementSheet.Cells(rowNumber, \"B\").Value2)\n            quantity = CDbl(movementSheet.Cells(rowNumber, \"C\").Value2)\n\n            If DateDiff(\"d\", transactionDate, Date) <= 30 And transactionDate <= Date Then\n                If movementTotals.Exists(itemCode) Then\n                    movementTotals(itemCode) = movementTotals(itemCode) + quantity\n                Else\n                    movementTotals.Add itemCode, quantity\n                End If\n            End If\n        End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -1138,18 +1146,25 @@
             "Value2"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 59,
+            "end_line": 59
+          }
         }
       }
     },
     {
-      "id": "branch_3650f379f0b1cb9c",
+      "id": "branch_eb77b0055c4da1ca",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_86e990a44dc1eb60",
+      "parent_id": "node_1f91b3440b576cdf",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 47,
-        "end_line": 48,
+        "end_line": 59,
         "text": ""
       },
       "metadata": {
@@ -1201,10 +1216,10 @@
       }
     },
     {
-      "id": "node_60ca173ddd949ed3",
+      "id": "node_3895250f27cc8db6",
       "type": "ASSIGNMENT",
       "name": "transactionDate",
-      "parent_id": "branch_3650f379f0b1cb9c",
+      "parent_id": "branch_eb77b0055c4da1ca",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 49,
@@ -1244,10 +1259,10 @@
       }
     },
     {
-      "id": "node_a400415771810664",
+      "id": "node_c4f2312e0c7d59ab",
       "type": "ASSIGNMENT",
       "name": "quantity",
-      "parent_id": "branch_3650f379f0b1cb9c",
+      "parent_id": "branch_eb77b0055c4da1ca",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 50,
@@ -1287,15 +1302,15 @@
       }
     },
     {
-      "id": "node_fca14ec969eaa872",
+      "id": "node_aba0f0382a432313",
       "type": "IF_BLOCK",
       "name": "if_block_3",
-      "parent_id": "branch_3650f379f0b1cb9c",
+      "parent_id": "branch_eb77b0055c4da1ca",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 52,
-        "end_line": 52,
-        "text": "            If DateDiff(\"d\", transactionDate, Date) <= 30 And transactionDate <= Date Then"
+        "end_line": 58,
+        "text": "            If DateDiff(\"d\", transactionDate, Date) <= 30 And transactionDate <= Date Then\n                If movementTotals.Exists(itemCode) Then\n                    movementTotals(itemCode) = movementTotals(itemCode) + quantity\n                Else\n                    movementTotals.Add itemCode, quantity\n                End If\n            End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -1325,18 +1340,25 @@
             "Date"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 58,
+            "end_line": 58
+          }
         }
       }
     },
     {
-      "id": "branch_97c9da7a051a40b5",
+      "id": "branch_ecc285888f6a3eac",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_fca14ec969eaa872",
+      "parent_id": "node_aba0f0382a432313",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 52,
-        "end_line": 52,
+        "end_line": 58,
         "text": ""
       },
       "metadata": {
@@ -1370,15 +1392,15 @@
       }
     },
     {
-      "id": "node_58d21da19dc87f91",
+      "id": "node_e96c4bb19b2feb21",
       "type": "IF_BLOCK",
       "name": "if_block_1",
-      "parent_id": "branch_97c9da7a051a40b5",
+      "parent_id": "branch_ecc285888f6a3eac",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 53,
-        "end_line": 53,
-        "text": "                If movementTotals.Exists(itemCode) Then"
+        "end_line": 57,
+        "text": "                If movementTotals.Exists(itemCode) Then\n                    movementTotals(itemCode) = movementTotals(itemCode) + quantity\n                Else\n                    movementTotals.Add itemCode, quantity\n                End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -1398,18 +1420,25 @@
             "itemCode"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 57,
+            "end_line": 57
+          }
         }
       }
     },
     {
-      "id": "branch_926c0d48c06b1f81",
+      "id": "branch_a516daa62491e514",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_58d21da19dc87f91",
+      "parent_id": "node_e96c4bb19b2feb21",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 53,
-        "end_line": 53,
+        "end_line": 57,
         "text": ""
       },
       "metadata": {
@@ -1433,10 +1462,10 @@
       }
     },
     {
-      "id": "node_1d5369055e3fc70b",
+      "id": "node_8b546ddb09e26e04",
       "type": "ASSIGNMENT",
       "name": "movementTotals(itemCode)",
-      "parent_id": "branch_926c0d48c06b1f81",
+      "parent_id": "branch_a516daa62491e514",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 54,
@@ -1467,23 +1496,23 @@
       }
     },
     {
-      "id": "branch_c5826e58ec899c29",
+      "id": "branch_a75204206dfed084",
       "type": "ELSE_BRANCH",
       "name": "ELSE",
-      "parent_id": "node_58d21da19dc87f91",
+      "parent_id": "node_e96c4bb19b2feb21",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 53,
-        "end_line": 53,
+        "end_line": 57,
         "text": ""
       },
       "metadata": {}
     },
     {
-      "id": "node_15a55c4756052521",
+      "id": "node_0a1a58068c0a8d36",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_1",
-      "parent_id": "branch_c5826e58ec899c29",
+      "parent_id": "branch_a75204206dfed084",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 56,
@@ -1513,42 +1542,15 @@
       }
     },
     {
-      "id": "node_c2ebfcf1a33882ac",
-      "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_3",
-      "parent_id": "node_a4d9818566746884",
-      "source": {
-        "path": "vba_sample_5.bas",
-        "start_line": 60,
-        "end_line": 60,
-        "text": "    Next rowNumber"
-      },
-      "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "Next rowNumber",
-          "tokens": [
-            "Next",
-            "rowNumber"
-          ],
-          "identifiers": [
-            "Next",
-            "rowNumber"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
-      }
-    },
-    {
-      "id": "node_e7d63ed35cf45565",
+      "id": "node_d7af7f0c393c47b9",
       "type": "FOR_BLOCK",
-      "name": "for_block_4",
-      "parent_id": "node_a4d9818566746884",
+      "name": "for_block_24",
+      "parent_id": "procedure_a5eeb2937970632e",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 62,
-        "end_line": 62,
-        "text": "    For rowNumber = 2 To lastInventoryRow"
+        "end_line": 88,
+        "text": "    For rowNumber = 2 To lastInventoryRow\n        itemCode = UCase$(Trim$(CStr(inventorySheet.Cells(rowNumber, \"A\").Value2)))\n        If inventory.Exists(itemCode) Then\n            quantity = inventory(itemCode)\n            If movementTotals.Exists(itemCode) Then\n                quantity = quantity + movementTotals(itemCode)\n            End If\n\n            Select Case True\n                Case quantity < 0\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"INVESTIGATE\"\n                Case quantity = 0\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"OUT OF STOCK\"\n                Case quantity < 5\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"REORDER\"\n                Case Else\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"OK\"\n            End Select\n            inventorySheet.Cells(rowNumber, \"D\").Value = quantity\n        End If\n\n        elapsedSeconds = Timer - startedAt\n        If elapsedSeconds < 0 Then elapsedSeconds = elapsedSeconds + 86400\n        If elapsedSeconds > LOCK_TIMEOUT_SECONDS Then\n            Err.Raise vbObjectError + 4002, \"ReconcileInventory\", \"Reconciliation exceeded its time limit.\"\n        End If\n    Next rowNumber"
       },
       "metadata": {
         "type": "FOR_BLOCK",
@@ -1571,14 +1573,21 @@
           ],
           "parse_status": "tokenized_not_fully_parsed"
         },
-        "step": null
+        "step": null,
+        "terminator": {
+          "source": "Next rowNumber",
+          "location": {
+            "start_line": 88,
+            "end_line": 88
+          }
+        }
       }
     },
     {
-      "id": "node_2eb31d5b365d7b5d",
+      "id": "node_606f9187265672cf",
       "type": "ASSIGNMENT",
       "name": "itemCode",
-      "parent_id": "node_e7d63ed35cf45565",
+      "parent_id": "node_d7af7f0c393c47b9",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 63,
@@ -1628,15 +1637,15 @@
       }
     },
     {
-      "id": "node_e467dccdbdfa7aaf",
+      "id": "node_ba836698315d50d6",
       "type": "IF_BLOCK",
       "name": "if_block_2",
-      "parent_id": "node_e7d63ed35cf45565",
+      "parent_id": "node_d7af7f0c393c47b9",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 64,
-        "end_line": 64,
-        "text": "        If inventory.Exists(itemCode) Then"
+        "end_line": 81,
+        "text": "        If inventory.Exists(itemCode) Then\n            quantity = inventory(itemCode)\n            If movementTotals.Exists(itemCode) Then\n                quantity = quantity + movementTotals(itemCode)\n            End If\n\n            Select Case True\n                Case quantity < 0\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"INVESTIGATE\"\n                Case quantity = 0\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"OUT OF STOCK\"\n                Case quantity < 5\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"REORDER\"\n                Case Else\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"OK\"\n            End Select\n            inventorySheet.Cells(rowNumber, \"D\").Value = quantity\n        End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -1656,18 +1665,25 @@
             "itemCode"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 81,
+            "end_line": 81
+          }
         }
       }
     },
     {
-      "id": "branch_b1e72ebe0f9402c8",
+      "id": "branch_7279e42c28be80cd",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_e467dccdbdfa7aaf",
+      "parent_id": "node_ba836698315d50d6",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 64,
-        "end_line": 64,
+        "end_line": 81,
         "text": ""
       },
       "metadata": {
@@ -1691,10 +1707,10 @@
       }
     },
     {
-      "id": "node_b18f0118e01177b1",
+      "id": "node_30552a8a065e4e35",
       "type": "ASSIGNMENT",
       "name": "quantity",
-      "parent_id": "branch_b1e72ebe0f9402c8",
+      "parent_id": "branch_7279e42c28be80cd",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 65,
@@ -1722,15 +1738,15 @@
       }
     },
     {
-      "id": "node_18ce6d5b37c57d6b",
+      "id": "node_a2e100dd7ba6a70b",
       "type": "IF_BLOCK",
       "name": "if_block_2",
-      "parent_id": "branch_b1e72ebe0f9402c8",
+      "parent_id": "branch_7279e42c28be80cd",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 66,
-        "end_line": 66,
-        "text": "            If movementTotals.Exists(itemCode) Then"
+        "end_line": 68,
+        "text": "            If movementTotals.Exists(itemCode) Then\n                quantity = quantity + movementTotals(itemCode)\n            End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -1750,18 +1766,25 @@
             "itemCode"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 68,
+            "end_line": 68
+          }
         }
       }
     },
     {
-      "id": "branch_1304b65feac58f1a",
+      "id": "branch_6e82a3cc421e773f",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_18ce6d5b37c57d6b",
+      "parent_id": "node_a2e100dd7ba6a70b",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 66,
-        "end_line": 66,
+        "end_line": 68,
         "text": ""
       },
       "metadata": {
@@ -1785,10 +1808,10 @@
       }
     },
     {
-      "id": "node_17c23711c892c7f8",
+      "id": "node_0a49061ea07e5f8f",
       "type": "ASSIGNMENT",
       "name": "quantity",
-      "parent_id": "branch_1304b65feac58f1a",
+      "parent_id": "branch_6e82a3cc421e773f",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 67,
@@ -1819,15 +1842,15 @@
       }
     },
     {
-      "id": "node_bbdf77ae8709e5f1",
+      "id": "node_8f801327f46c3c32",
       "type": "SELECT_BLOCK",
       "name": "select_block_3",
-      "parent_id": "branch_b1e72ebe0f9402c8",
+      "parent_id": "branch_7279e42c28be80cd",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 70,
-        "end_line": 70,
-        "text": "            Select Case True"
+        "end_line": 79,
+        "text": "            Select Case True\n                Case quantity < 0\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"INVESTIGATE\"\n                Case quantity = 0\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"OUT OF STOCK\"\n                Case quantity < 5\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"REORDER\"\n                Case Else\n                    inventorySheet.Cells(rowNumber, \"C\").Value = \"OK\"\n            End Select"
       },
       "metadata": {
         "type": "SELECT_BLOCK",
@@ -1838,18 +1861,25 @@
           ],
           "identifiers": [],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End Select",
+          "location": {
+            "start_line": 79,
+            "end_line": 79
+          }
         }
       }
     },
     {
-      "id": "case_870ebfed043abe69",
+      "id": "case_b063831839699fea",
       "type": "CASE_BRANCH",
       "name": "quantity < 0",
-      "parent_id": "node_bbdf77ae8709e5f1",
+      "parent_id": "node_8f801327f46c3c32",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 70,
-        "end_line": 70,
+        "end_line": 79,
         "text": ""
       },
       "metadata": {
@@ -1857,10 +1887,10 @@
       }
     },
     {
-      "id": "node_83480a31dff61e91",
+      "id": "node_b8e40c33e916f6ee",
       "type": "ASSIGNMENT",
       "name": "inventorySheet.Cells(rowNumber, \"C\").Value",
-      "parent_id": "case_870ebfed043abe69",
+      "parent_id": "case_b063831839699fea",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 72,
@@ -1882,14 +1912,14 @@
       }
     },
     {
-      "id": "case_b637da1411d7dfe4",
+      "id": "case_f492472e67365919",
       "type": "CASE_BRANCH",
       "name": "quantity = 0",
-      "parent_id": "node_bbdf77ae8709e5f1",
+      "parent_id": "node_8f801327f46c3c32",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 70,
-        "end_line": 70,
+        "end_line": 79,
         "text": ""
       },
       "metadata": {
@@ -1897,10 +1927,10 @@
       }
     },
     {
-      "id": "node_686447be98900ce5",
+      "id": "node_80651bd0beb42e37",
       "type": "ASSIGNMENT",
       "name": "inventorySheet.Cells(rowNumber, \"C\").Value",
-      "parent_id": "case_b637da1411d7dfe4",
+      "parent_id": "case_f492472e67365919",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 74,
@@ -1922,14 +1952,14 @@
       }
     },
     {
-      "id": "case_5f9c12ef1c894ab3",
+      "id": "case_ecc3db7224131492",
       "type": "CASE_BRANCH",
       "name": "quantity < 5",
-      "parent_id": "node_bbdf77ae8709e5f1",
+      "parent_id": "node_8f801327f46c3c32",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 70,
-        "end_line": 70,
+        "end_line": 79,
         "text": ""
       },
       "metadata": {
@@ -1937,10 +1967,10 @@
       }
     },
     {
-      "id": "node_70a942bfeab113f4",
+      "id": "node_7aa5adf724d34fc0",
       "type": "ASSIGNMENT",
       "name": "inventorySheet.Cells(rowNumber, \"C\").Value",
-      "parent_id": "case_5f9c12ef1c894ab3",
+      "parent_id": "case_ecc3db7224131492",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 76,
@@ -1962,14 +1992,14 @@
       }
     },
     {
-      "id": "case_f7e387855844887c",
+      "id": "case_5f1d86d6b88f4948",
       "type": "CASE_BRANCH",
       "name": "Else",
-      "parent_id": "node_bbdf77ae8709e5f1",
+      "parent_id": "node_8f801327f46c3c32",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 70,
-        "end_line": 70,
+        "end_line": 79,
         "text": ""
       },
       "metadata": {
@@ -1977,10 +2007,10 @@
       }
     },
     {
-      "id": "node_fbe97c6f3b033cc6",
+      "id": "node_41af8a896f36ae74",
       "type": "ASSIGNMENT",
       "name": "inventorySheet.Cells(rowNumber, \"C\").Value",
-      "parent_id": "case_f7e387855844887c",
+      "parent_id": "case_5f1d86d6b88f4948",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 78,
@@ -2002,10 +2032,10 @@
       }
     },
     {
-      "id": "node_64e506416b99ad05",
+      "id": "node_8cace9eebf603e6d",
       "type": "ASSIGNMENT",
       "name": "inventorySheet.Cells(rowNumber, \"D\").Value",
-      "parent_id": "branch_b1e72ebe0f9402c8",
+      "parent_id": "branch_7279e42c28be80cd",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 80,
@@ -2029,10 +2059,10 @@
       }
     },
     {
-      "id": "node_cf1dcc2526a29a6f",
+      "id": "node_0d7a30ac24cd6126",
       "type": "ASSIGNMENT",
       "name": "elapsedSeconds",
-      "parent_id": "node_e7d63ed35cf45565",
+      "parent_id": "node_d7af7f0c393c47b9",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 83,
@@ -2059,10 +2089,10 @@
       }
     },
     {
-      "id": "node_81e678505243a1e1",
+      "id": "node_f0145781ae6800c2",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_4",
-      "parent_id": "node_e7d63ed35cf45565",
+      "parent_id": "node_d7af7f0c393c47b9",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 84,
@@ -2097,15 +2127,15 @@
       }
     },
     {
-      "id": "node_637310e910a4077c",
+      "id": "node_682965e18204cb14",
       "type": "IF_BLOCK",
       "name": "if_block_5",
-      "parent_id": "node_e7d63ed35cf45565",
+      "parent_id": "node_d7af7f0c393c47b9",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 85,
-        "end_line": 85,
-        "text": "        If elapsedSeconds > LOCK_TIMEOUT_SECONDS Then"
+        "end_line": 87,
+        "text": "        If elapsedSeconds > LOCK_TIMEOUT_SECONDS Then\n            Err.Raise vbObjectError + 4002, \"ReconcileInventory\", \"Reconciliation exceeded its time limit.\"\n        End If"
       },
       "metadata": {
         "type": "IF_BLOCK",
@@ -2121,18 +2151,25 @@
             "LOCK_TIMEOUT_SECONDS"
           ],
           "parse_status": "tokenized_not_fully_parsed"
+        },
+        "terminator": {
+          "source": "End If",
+          "location": {
+            "start_line": 87,
+            "end_line": 87
+          }
         }
       }
     },
     {
-      "id": "branch_2d2ddd7f78da32e2",
+      "id": "branch_d2a8d0942ae579ce",
       "type": "IF_BRANCH",
       "name": "IF",
-      "parent_id": "node_637310e910a4077c",
+      "parent_id": "node_682965e18204cb14",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 85,
-        "end_line": 85,
+        "end_line": 87,
         "text": ""
       },
       "metadata": {
@@ -2152,10 +2189,10 @@
       }
     },
     {
-      "id": "node_a3c8eb0ea7a5eb4f",
+      "id": "node_b7a9abb7edb1c52b",
       "type": "CALL_OR_COMMAND",
       "name": "call_or_command_1",
-      "parent_id": "branch_2d2ddd7f78da32e2",
+      "parent_id": "branch_d2a8d0942ae579ce",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 86,
@@ -2188,37 +2225,10 @@
       }
     },
     {
-      "id": "node_8507804fc1b1984e",
+      "id": "node_b40ca6ba13b5e605",
       "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_6",
-      "parent_id": "node_e7d63ed35cf45565",
-      "source": {
-        "path": "vba_sample_5.bas",
-        "start_line": 88,
-        "end_line": 88,
-        "text": "    Next rowNumber"
-      },
-      "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "Next rowNumber",
-          "tokens": [
-            "Next",
-            "rowNumber"
-          ],
-          "identifiers": [
-            "Next",
-            "rowNumber"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
-      }
-    },
-    {
-      "id": "node_222498b47b0e5158",
-      "type": "ASSIGNMENT",
-      "name": "inventorySheet.Range(\"A1:D\" & lastInventoryRow).Sort Key1:",
-      "parent_id": "node_e7d63ed35cf45565",
+      "name": "call_or_command_25",
+      "parent_id": "procedure_a5eeb2937970632e",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 90,
@@ -2226,12 +2236,22 @@
         "text": "    inventorySheet.Range(\"A1:D\" & lastInventoryRow).Sort _\n        Key1:=inventorySheet.Range(\"A1\"), Header:=xlYes"
       },
       "metadata": {
-        "type": "ASSIGNMENT",
-        "assignment_kind": "IMPLICIT",
-        "target": "inventorySheet.Range(\"A1:D\" & lastInventoryRow).Sort Key1:",
+        "type": "CALL_OR_COMMAND",
         "expression": {
-          "source": "inventorySheet.Range(\"A1\"), Header:=xlYes",
+          "source": "inventorySheet.Range(\"A1:D\" & lastInventoryRow).Sort Key1:=inventorySheet.Range(\"A1\"), Header:=xlYes",
           "tokens": [
+            "inventorySheet",
+            ".",
+            "Range",
+            "(",
+            "\"A1:D\"",
+            "&",
+            "lastInventoryRow",
+            ")",
+            ".",
+            "Sort",
+            "Key1",
+            ":=",
             "inventorySheet",
             ".",
             "Range",
@@ -2246,6 +2266,11 @@
           "identifiers": [
             "inventorySheet",
             "Range",
+            "lastInventoryRow",
+            "Sort",
+            "Key1",
+            "inventorySheet",
+            "Range",
             "Header",
             "xlYes"
           ],
@@ -2254,10 +2279,10 @@
       }
     },
     {
-      "id": "node_f1fc71456fab8db0",
+      "id": "node_e8550434d8161da0",
       "type": "JUMP",
       "name": "CleanUp",
-      "parent_id": "node_e7d63ed35cf45565",
+      "parent_id": "procedure_a5eeb2937970632e",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 92,
@@ -2271,10 +2296,10 @@
       }
     },
     {
-      "id": "node_12144f7b4336bb6c",
-      "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_9",
-      "parent_id": "node_e7d63ed35cf45565",
+      "id": "node_0669fbe3db77baca",
+      "type": "LABEL",
+      "name": "HandleError",
+      "parent_id": "procedure_a5eeb2937970632e",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 94,
@@ -2282,24 +2307,15 @@
         "text": "HandleError:"
       },
       "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "HandleError",
-          "tokens": [
-            "HandleError"
-          ],
-          "identifiers": [
-            "HandleError"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
+        "type": "LABEL",
+        "name": "HandleError"
       }
     },
     {
-      "id": "node_44807f962e01b9b4",
+      "id": "node_950dec90e704c118",
       "type": "ASSIGNMENT",
       "name": "failureNumber",
-      "parent_id": "node_e7d63ed35cf45565",
+      "parent_id": "procedure_a5eeb2937970632e",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 95,
@@ -2326,10 +2342,10 @@
       }
     },
     {
-      "id": "node_f086a36199b178b2",
+      "id": "node_c1f3d1919a61f187",
       "type": "ASSIGNMENT",
       "name": "failureDescription",
-      "parent_id": "node_e7d63ed35cf45565",
+      "parent_id": "procedure_a5eeb2937970632e",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 96,
@@ -2356,10 +2372,10 @@
       }
     },
     {
-      "id": "node_0d58634fef3ef115",
+      "id": "node_166c37a6a1166372",
       "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_12",
-      "parent_id": "node_e7d63ed35cf45565",
+      "name": "call_or_command_30",
+      "parent_id": "procedure_a5eeb2937970632e",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 97,
@@ -2389,10 +2405,10 @@
       }
     },
     {
-      "id": "node_3ead3c3f2381326b",
+      "id": "node_19a4c426200b0aef",
       "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_13",
-      "parent_id": "node_e7d63ed35cf45565",
+      "name": "call_or_command_31",
+      "parent_id": "procedure_a5eeb2937970632e",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 98,
@@ -2421,10 +2437,10 @@
       }
     },
     {
-      "id": "node_2cdbdbf24f16ebca",
-      "type": "CALL_OR_COMMAND",
-      "name": "call_or_command_14",
-      "parent_id": "node_e7d63ed35cf45565",
+      "id": "node_1992514e813b4e66",
+      "type": "LABEL",
+      "name": "CleanUp",
+      "parent_id": "procedure_a5eeb2937970632e",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 100,
@@ -2432,24 +2448,15 @@
         "text": "CleanUp:"
       },
       "metadata": {
-        "type": "CALL_OR_COMMAND",
-        "expression": {
-          "source": "CleanUp",
-          "tokens": [
-            "CleanUp"
-          ],
-          "identifiers": [
-            "CleanUp"
-          ],
-          "parse_status": "tokenized_not_fully_parsed"
-        }
+        "type": "LABEL",
+        "name": "CleanUp"
       }
     },
     {
-      "id": "node_0ed5713abd5c2751",
+      "id": "node_400f249f5110eba8",
       "type": "ASSIGNMENT",
       "name": "Application.EnableEvents",
-      "parent_id": "node_e7d63ed35cf45565",
+      "parent_id": "procedure_a5eeb2937970632e",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 101,
@@ -2473,10 +2480,10 @@
       }
     },
     {
-      "id": "node_abfc56633217b979",
+      "id": "node_a7bc082b492e80d8",
       "type": "ASSIGNMENT",
       "name": "movementTotals",
-      "parent_id": "node_e7d63ed35cf45565",
+      "parent_id": "procedure_a5eeb2937970632e",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 102,
@@ -2498,10 +2505,10 @@
       }
     },
     {
-      "id": "node_853c28380dbd48ca",
+      "id": "node_e756a6df25c0b724",
       "type": "ASSIGNMENT",
       "name": "inventory",
-      "parent_id": "node_e7d63ed35cf45565",
+      "parent_id": "procedure_a5eeb2937970632e",
       "source": {
         "path": "vba_sample_5.bas",
         "start_line": 103,
@@ -3151,603 +3158,561 @@
     },
     {
       "source": "procedure_a5eeb2937970632e",
-      "target": "node_2535bb6ab0c43035",
+      "target": "node_d433a42f6a84031c",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
       "source": "node_e2e2044e79d0786a",
-      "target": "node_2535bb6ab0c43035",
+      "target": "node_d433a42f6a84031c",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_2535bb6ab0c43035",
-      "target": "node_c45d35af467a537a",
+      "source": "node_d433a42f6a84031c",
+      "target": "node_1b5b694971390eb6",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_2535bb6ab0c43035",
-      "target": "node_db0516611496bbe4",
+      "source": "node_d433a42f6a84031c",
+      "target": "node_6990d3122b460549",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_c45d35af467a537a",
-      "target": "node_db0516611496bbe4",
+      "source": "node_1b5b694971390eb6",
+      "target": "node_6990d3122b460549",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_db0516611496bbe4",
-      "target": "branch_f7b24a8e1372c564",
+      "source": "node_6990d3122b460549",
+      "target": "branch_d40f1841a728d055",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_f7b24a8e1372c564",
-      "target": "node_4e995f2977578195",
+      "source": "branch_d40f1841a728d055",
+      "target": "node_e38c15414d192a53",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_4e995f2977578195",
-      "target": "branch_ec25de660f5d22ac",
+      "source": "node_e38c15414d192a53",
+      "target": "branch_88060e17aa7bed80",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_ec25de660f5d22ac",
-      "target": "node_2684bf1feb053042",
+      "source": "branch_88060e17aa7bed80",
+      "target": "node_6ee3e433e7e3b803",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_2684bf1feb053042",
-      "target": "branch_dd15a70c68579a30",
+      "source": "node_6ee3e433e7e3b803",
+      "target": "branch_27d81dd81c70cbb2",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_dd15a70c68579a30",
-      "target": "node_200959c4fe82082e",
+      "source": "branch_27d81dd81c70cbb2",
+      "target": "node_11d7f7fa4890c37a",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_ec25de660f5d22ac",
-      "target": "node_7d45f198001217fd",
+      "source": "branch_88060e17aa7bed80",
+      "target": "node_a33c630d94500120",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_2684bf1feb053042",
-      "target": "node_7d45f198001217fd",
+      "source": "node_6ee3e433e7e3b803",
+      "target": "node_a33c630d94500120",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_4e995f2977578195",
-      "target": "branch_c3df39f6d7a7c76a",
+      "source": "node_e38c15414d192a53",
+      "target": "branch_2a1a691b6a9826ea",
       "relation": "FALSE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_c3df39f6d7a7c76a",
-      "target": "node_61240f3ca582d92e",
+      "source": "branch_2a1a691b6a9826ea",
+      "target": "node_516e93d62b335888",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_2535bb6ab0c43035",
-      "target": "node_d7677756ab1b1326",
+      "source": "procedure_a5eeb2937970632e",
+      "target": "node_0d25a9bdb410c3eb",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_db0516611496bbe4",
-      "target": "node_d7677756ab1b1326",
+      "source": "node_d433a42f6a84031c",
+      "target": "node_0d25a9bdb410c3eb",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_2535bb6ab0c43035",
-      "target": "node_a4d9818566746884",
+      "source": "node_0d25a9bdb410c3eb",
+      "target": "node_bfef43ce314d6431",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_d7677756ab1b1326",
-      "target": "node_a4d9818566746884",
+      "source": "node_0d25a9bdb410c3eb",
+      "target": "node_1f91b3440b576cdf",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_bfef43ce314d6431",
+      "target": "node_1f91b3440b576cdf",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_a4d9818566746884",
-      "target": "node_9534a12e71fe6719",
-      "relation": "CONTAINS",
-      "evidence": {}
-    },
-    {
-      "source": "node_a4d9818566746884",
-      "target": "node_86e990a44dc1eb60",
-      "relation": "CONTAINS",
-      "evidence": {}
-    },
-    {
-      "source": "node_9534a12e71fe6719",
-      "target": "node_86e990a44dc1eb60",
-      "relation": "NEXT",
-      "evidence": {
-        "order": "source"
-      }
-    },
-    {
-      "source": "node_86e990a44dc1eb60",
-      "target": "branch_3650f379f0b1cb9c",
+      "source": "node_1f91b3440b576cdf",
+      "target": "branch_eb77b0055c4da1ca",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_3650f379f0b1cb9c",
-      "target": "node_60ca173ddd949ed3",
+      "source": "branch_eb77b0055c4da1ca",
+      "target": "node_3895250f27cc8db6",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_3650f379f0b1cb9c",
-      "target": "node_a400415771810664",
+      "source": "branch_eb77b0055c4da1ca",
+      "target": "node_c4f2312e0c7d59ab",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_60ca173ddd949ed3",
-      "target": "node_a400415771810664",
+      "source": "node_3895250f27cc8db6",
+      "target": "node_c4f2312e0c7d59ab",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "branch_3650f379f0b1cb9c",
-      "target": "node_fca14ec969eaa872",
+      "source": "branch_eb77b0055c4da1ca",
+      "target": "node_aba0f0382a432313",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_a400415771810664",
-      "target": "node_fca14ec969eaa872",
+      "source": "node_c4f2312e0c7d59ab",
+      "target": "node_aba0f0382a432313",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_fca14ec969eaa872",
-      "target": "branch_97c9da7a051a40b5",
+      "source": "node_aba0f0382a432313",
+      "target": "branch_ecc285888f6a3eac",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_97c9da7a051a40b5",
-      "target": "node_58d21da19dc87f91",
+      "source": "branch_ecc285888f6a3eac",
+      "target": "node_e96c4bb19b2feb21",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_58d21da19dc87f91",
-      "target": "branch_926c0d48c06b1f81",
+      "source": "node_e96c4bb19b2feb21",
+      "target": "branch_a516daa62491e514",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_926c0d48c06b1f81",
-      "target": "node_1d5369055e3fc70b",
+      "source": "branch_a516daa62491e514",
+      "target": "node_8b546ddb09e26e04",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_58d21da19dc87f91",
-      "target": "branch_c5826e58ec899c29",
+      "source": "node_e96c4bb19b2feb21",
+      "target": "branch_a75204206dfed084",
       "relation": "FALSE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_c5826e58ec899c29",
-      "target": "node_15a55c4756052521",
+      "source": "branch_a75204206dfed084",
+      "target": "node_0a1a58068c0a8d36",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_a4d9818566746884",
-      "target": "node_c2ebfcf1a33882ac",
+      "source": "procedure_a5eeb2937970632e",
+      "target": "node_d7af7f0c393c47b9",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_86e990a44dc1eb60",
-      "target": "node_c2ebfcf1a33882ac",
+      "source": "node_0d25a9bdb410c3eb",
+      "target": "node_d7af7f0c393c47b9",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_a4d9818566746884",
-      "target": "node_e7d63ed35cf45565",
+      "source": "node_d7af7f0c393c47b9",
+      "target": "node_606f9187265672cf",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_c2ebfcf1a33882ac",
-      "target": "node_e7d63ed35cf45565",
+      "source": "node_d7af7f0c393c47b9",
+      "target": "node_ba836698315d50d6",
+      "relation": "CONTAINS",
+      "evidence": {}
+    },
+    {
+      "source": "node_606f9187265672cf",
+      "target": "node_ba836698315d50d6",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_e7d63ed35cf45565",
-      "target": "node_2eb31d5b365d7b5d",
-      "relation": "CONTAINS",
-      "evidence": {}
-    },
-    {
-      "source": "node_e7d63ed35cf45565",
-      "target": "node_e467dccdbdfa7aaf",
-      "relation": "CONTAINS",
-      "evidence": {}
-    },
-    {
-      "source": "node_2eb31d5b365d7b5d",
-      "target": "node_e467dccdbdfa7aaf",
-      "relation": "NEXT",
-      "evidence": {
-        "order": "source"
-      }
-    },
-    {
-      "source": "node_e467dccdbdfa7aaf",
-      "target": "branch_b1e72ebe0f9402c8",
+      "source": "node_ba836698315d50d6",
+      "target": "branch_7279e42c28be80cd",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_b1e72ebe0f9402c8",
-      "target": "node_b18f0118e01177b1",
+      "source": "branch_7279e42c28be80cd",
+      "target": "node_30552a8a065e4e35",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_b1e72ebe0f9402c8",
-      "target": "node_18ce6d5b37c57d6b",
+      "source": "branch_7279e42c28be80cd",
+      "target": "node_a2e100dd7ba6a70b",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_b18f0118e01177b1",
-      "target": "node_18ce6d5b37c57d6b",
+      "source": "node_30552a8a065e4e35",
+      "target": "node_a2e100dd7ba6a70b",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_18ce6d5b37c57d6b",
-      "target": "branch_1304b65feac58f1a",
+      "source": "node_a2e100dd7ba6a70b",
+      "target": "branch_6e82a3cc421e773f",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_1304b65feac58f1a",
-      "target": "node_17c23711c892c7f8",
+      "source": "branch_6e82a3cc421e773f",
+      "target": "node_0a49061ea07e5f8f",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_b1e72ebe0f9402c8",
-      "target": "node_bbdf77ae8709e5f1",
+      "source": "branch_7279e42c28be80cd",
+      "target": "node_8f801327f46c3c32",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_18ce6d5b37c57d6b",
-      "target": "node_bbdf77ae8709e5f1",
+      "source": "node_a2e100dd7ba6a70b",
+      "target": "node_8f801327f46c3c32",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_bbdf77ae8709e5f1",
-      "target": "case_870ebfed043abe69",
+      "source": "node_8f801327f46c3c32",
+      "target": "case_b063831839699fea",
       "relation": "CASE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "case_870ebfed043abe69",
-      "target": "node_83480a31dff61e91",
+      "source": "case_b063831839699fea",
+      "target": "node_b8e40c33e916f6ee",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_bbdf77ae8709e5f1",
-      "target": "case_b637da1411d7dfe4",
+      "source": "node_8f801327f46c3c32",
+      "target": "case_f492472e67365919",
       "relation": "CASE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "case_b637da1411d7dfe4",
-      "target": "node_686447be98900ce5",
+      "source": "case_f492472e67365919",
+      "target": "node_80651bd0beb42e37",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_bbdf77ae8709e5f1",
-      "target": "case_5f9c12ef1c894ab3",
+      "source": "node_8f801327f46c3c32",
+      "target": "case_ecc3db7224131492",
       "relation": "CASE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "case_5f9c12ef1c894ab3",
-      "target": "node_70a942bfeab113f4",
+      "source": "case_ecc3db7224131492",
+      "target": "node_7aa5adf724d34fc0",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_bbdf77ae8709e5f1",
-      "target": "case_f7e387855844887c",
+      "source": "node_8f801327f46c3c32",
+      "target": "case_5f1d86d6b88f4948",
       "relation": "CASE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "case_f7e387855844887c",
-      "target": "node_fbe97c6f3b033cc6",
+      "source": "case_5f1d86d6b88f4948",
+      "target": "node_41af8a896f36ae74",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "branch_b1e72ebe0f9402c8",
-      "target": "node_64e506416b99ad05",
+      "source": "branch_7279e42c28be80cd",
+      "target": "node_8cace9eebf603e6d",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_bbdf77ae8709e5f1",
-      "target": "node_64e506416b99ad05",
+      "source": "node_8f801327f46c3c32",
+      "target": "node_8cace9eebf603e6d",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_e7d63ed35cf45565",
-      "target": "node_cf1dcc2526a29a6f",
+      "source": "node_d7af7f0c393c47b9",
+      "target": "node_0d7a30ac24cd6126",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_e467dccdbdfa7aaf",
-      "target": "node_cf1dcc2526a29a6f",
+      "source": "node_ba836698315d50d6",
+      "target": "node_0d7a30ac24cd6126",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_e7d63ed35cf45565",
-      "target": "node_81e678505243a1e1",
+      "source": "node_d7af7f0c393c47b9",
+      "target": "node_f0145781ae6800c2",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_cf1dcc2526a29a6f",
-      "target": "node_81e678505243a1e1",
+      "source": "node_0d7a30ac24cd6126",
+      "target": "node_f0145781ae6800c2",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_e7d63ed35cf45565",
-      "target": "node_637310e910a4077c",
+      "source": "node_d7af7f0c393c47b9",
+      "target": "node_682965e18204cb14",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_81e678505243a1e1",
-      "target": "node_637310e910a4077c",
+      "source": "node_f0145781ae6800c2",
+      "target": "node_682965e18204cb14",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_637310e910a4077c",
-      "target": "branch_2d2ddd7f78da32e2",
+      "source": "node_682965e18204cb14",
+      "target": "branch_d2a8d0942ae579ce",
       "relation": "TRUE_BRANCH",
       "evidence": {}
     },
     {
-      "source": "branch_2d2ddd7f78da32e2",
-      "target": "node_a3c8eb0ea7a5eb4f",
+      "source": "branch_d2a8d0942ae579ce",
+      "target": "node_b7a9abb7edb1c52b",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_e7d63ed35cf45565",
-      "target": "node_8507804fc1b1984e",
+      "source": "procedure_a5eeb2937970632e",
+      "target": "node_b40ca6ba13b5e605",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_637310e910a4077c",
-      "target": "node_8507804fc1b1984e",
+      "source": "node_d7af7f0c393c47b9",
+      "target": "node_b40ca6ba13b5e605",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_e7d63ed35cf45565",
-      "target": "node_222498b47b0e5158",
+      "source": "procedure_a5eeb2937970632e",
+      "target": "node_e8550434d8161da0",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_8507804fc1b1984e",
-      "target": "node_222498b47b0e5158",
+      "source": "node_b40ca6ba13b5e605",
+      "target": "node_e8550434d8161da0",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_e7d63ed35cf45565",
-      "target": "node_f1fc71456fab8db0",
+      "source": "procedure_a5eeb2937970632e",
+      "target": "node_0669fbe3db77baca",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_222498b47b0e5158",
-      "target": "node_f1fc71456fab8db0",
+      "source": "node_e8550434d8161da0",
+      "target": "node_0669fbe3db77baca",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_e7d63ed35cf45565",
-      "target": "node_12144f7b4336bb6c",
+      "source": "procedure_a5eeb2937970632e",
+      "target": "node_950dec90e704c118",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_f1fc71456fab8db0",
-      "target": "node_12144f7b4336bb6c",
+      "source": "node_0669fbe3db77baca",
+      "target": "node_950dec90e704c118",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_e7d63ed35cf45565",
-      "target": "node_44807f962e01b9b4",
+      "source": "procedure_a5eeb2937970632e",
+      "target": "node_c1f3d1919a61f187",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_12144f7b4336bb6c",
-      "target": "node_44807f962e01b9b4",
+      "source": "node_950dec90e704c118",
+      "target": "node_c1f3d1919a61f187",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_e7d63ed35cf45565",
-      "target": "node_f086a36199b178b2",
+      "source": "procedure_a5eeb2937970632e",
+      "target": "node_166c37a6a1166372",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_44807f962e01b9b4",
-      "target": "node_f086a36199b178b2",
+      "source": "node_c1f3d1919a61f187",
+      "target": "node_166c37a6a1166372",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_e7d63ed35cf45565",
-      "target": "node_0d58634fef3ef115",
+      "source": "procedure_a5eeb2937970632e",
+      "target": "node_19a4c426200b0aef",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_f086a36199b178b2",
-      "target": "node_0d58634fef3ef115",
+      "source": "node_166c37a6a1166372",
+      "target": "node_19a4c426200b0aef",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_e7d63ed35cf45565",
-      "target": "node_3ead3c3f2381326b",
+      "source": "procedure_a5eeb2937970632e",
+      "target": "node_1992514e813b4e66",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_0d58634fef3ef115",
-      "target": "node_3ead3c3f2381326b",
+      "source": "node_19a4c426200b0aef",
+      "target": "node_1992514e813b4e66",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_e7d63ed35cf45565",
-      "target": "node_2cdbdbf24f16ebca",
+      "source": "procedure_a5eeb2937970632e",
+      "target": "node_400f249f5110eba8",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_3ead3c3f2381326b",
-      "target": "node_2cdbdbf24f16ebca",
+      "source": "node_1992514e813b4e66",
+      "target": "node_400f249f5110eba8",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_e7d63ed35cf45565",
-      "target": "node_0ed5713abd5c2751",
+      "source": "procedure_a5eeb2937970632e",
+      "target": "node_a7bc082b492e80d8",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_2cdbdbf24f16ebca",
-      "target": "node_0ed5713abd5c2751",
+      "source": "node_400f249f5110eba8",
+      "target": "node_a7bc082b492e80d8",
       "relation": "NEXT",
       "evidence": {
         "order": "source"
       }
     },
     {
-      "source": "node_e7d63ed35cf45565",
-      "target": "node_abfc56633217b979",
+      "source": "procedure_a5eeb2937970632e",
+      "target": "node_e756a6df25c0b724",
       "relation": "CONTAINS",
       "evidence": {}
     },
     {
-      "source": "node_0ed5713abd5c2751",
-      "target": "node_abfc56633217b979",
-      "relation": "NEXT",
-      "evidence": {
-        "order": "source"
-      }
-    },
-    {
-      "source": "node_e7d63ed35cf45565",
-      "target": "node_853c28380dbd48ca",
-      "relation": "CONTAINS",
-      "evidence": {}
-    },
-    {
-      "source": "node_abfc56633217b979",
-      "target": "node_853c28380dbd48ca",
+      "source": "node_a7bc082b492e80d8",
+      "target": "node_e756a6df25c0b724",
       "relation": "NEXT",
       "evidence": {
         "order": "source"

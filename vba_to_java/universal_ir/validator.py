@@ -148,6 +148,46 @@ def validate_program(program: dict[str, Any]) -> list[dict[str, str]]:
                 else:
                     for si, child in enumerate(branch.get("body", [])):
                         check_stmt(child, f"{path}.branches[{bi}].body[{si}]")
+        if kind in {"for", "for_each"}:
+            if not stmt.get("variable"):
+                issue(path + ".variable", f"{kind} statement requires a variable.", "IR_INCOMPLETE_CONTROL_FLOW")
+            for key in ("start", "end") if kind == "for" else ("iterable",):
+                if key not in stmt:
+                    issue(path + "." + key, f"{kind} statement requires {key}.", "IR_INCOMPLETE_CONTROL_FLOW")
+        if kind == "while" and "condition" not in stmt:
+            issue(path + ".condition", "While statement requires condition.", "IR_INCOMPLETE_CONTROL_FLOW")
+        if kind in {"do_while", "do_until"} and "condition" not in stmt and not stmt.get("semantics", {}).get("unconditional"):
+            issue(path + ".condition", "Conditional Do statement requires condition.", "IR_INCOMPLETE_CONTROL_FLOW")
+        if kind == "switch":
+            if "expression" not in stmt:
+                issue(path + ".expression", "Switch statement requires an expression.", "IR_INCOMPLETE_CONTROL_FLOW")
+            branches = stmt.get("branches", [])
+            if not isinstance(branches, list):
+                issue(path + ".branches", "Switch branches must be an array.", "IR_INVALID_BRANCHES")
+            else:
+                defaults = 0
+                for bi, branch in enumerate(branches):
+                    bpath = f"{path}.branches[{bi}]"
+                    if not isinstance(branch, dict):
+                        issue(bpath, "Switch branch must be an object.", "IR_INVALID_BRANCH")
+                        continue
+                    branch_kind = branch.get("branch_kind")
+                    if branch_kind not in {"case", "case_else"}:
+                        issue(bpath + ".branch_kind", "Switch branch must be case or case_else.", "IR_INVALID_BRANCH_KIND")
+                    if branch_kind == "case_else":
+                        defaults += 1
+                    elif not isinstance(branch.get("condition"), dict):
+                        issue(bpath + ".condition", "Case branch requires a condition.", "IR_INCOMPLETE_CONTROL_FLOW")
+                    elif branch.get("condition") is not None:
+                        check_expr(branch["condition"], bpath + ".condition")
+                    body = branch.get("body")
+                    if not isinstance(body, list):
+                        issue(bpath + ".body", "Switch branch body must be an array.", "IR_INVALID_BRANCH_BODY")
+                    else:
+                        for si, child in enumerate(body):
+                            check_stmt(child, f"{bpath}.body[{si}]")
+                if defaults > 1:
+                    issue(path + ".branches", "Switch cannot contain multiple Case Else branches.", "IR_DUPLICATE_DEFAULT_CASE")
         if kind in {"for", "for_each", "while", "do_while", "do_until", "switch", "block", "with", "error_handler"}:
             for key in ("body", "statements"):
                 if key in stmt:

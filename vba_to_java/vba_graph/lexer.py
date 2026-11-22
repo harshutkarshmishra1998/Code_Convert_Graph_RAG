@@ -1,4 +1,7 @@
 """VBA-aware physical/logical line handling; original lines remain intact."""
+import re
+
+
 def split_comment(line):
     quoted = False
     i = 0
@@ -42,6 +45,10 @@ def logical_lines(source):
 def split_colon_statements(text):
     """Split VBA statement separators outside string literals. Preserve label prefixes."""
     out, buf = [], []
+    label = re.match(r"^\s*((?:[A-Za-z_]\w*|\d+))\s*:(.*)$", text)
+    if label:
+        out.append(f"{label.group(1)}:")
+        text = label.group(2)
     quoted, i = False, 0
     while i < len(text):
         c = text[i]

@@ -104,6 +104,18 @@ class Parser:
     def prefix(self) -> dict[str, Any]:
         t = self.current
         low = t.value.lower()
+        if t.kind == 'OP' and t.value == '.':
+            self.take()
+            if self.current.kind != 'IDENT':
+                raise ParseError(f"Expected member name after With-dot at offset {self.current.pos}")
+            member = self.take().value
+            receiver = {
+                'kind': 'identifier',
+                'name': '__vba_with_receiver__',
+                'semantics': {'implicit_with_receiver': True},
+            }
+            return {'kind': 'member_access', 'object': receiver, 'member': member,
+                    'semantics': {'implicit_with_member': True}}
         if t.kind == 'OP' and t.value in {'+', '-'}:
             self.take(); return {'kind': 'unary_expression', 'operator': t.value, 'operand': self.expression(11)}
         if t.kind == 'IDENT' and low in {'not'}:
@@ -168,7 +180,13 @@ class Parser:
                 args: list[dict[str, Any]] = []
                 if not self.accept(')'):
                     while True:
-                        args.append(self.expression(0))
+                        if self.current.kind == 'IDENT' and self.i + 1 < len(self.tokens) and self.tokens[self.i + 1].value == ':=':
+                            name = self.take().value
+                            self.take()
+                            args.append({'kind': 'named_argument', 'name': name,
+                                         'value': self.expression(0)})
+                        else:
+                            args.append(self.expression(0))
                         if self.accept(')'):
                             break
                         self.expect(',')
@@ -182,7 +200,7 @@ def parse_expression(source: str) -> dict[str, Any]:
     return Parser(source).parse()
 
 
-def _split_top_level_commas(source: str) -> list[str]:
+def _split_top_level_commas(source: str, *, keep_empty: bool = False) -> list[str]:
     pieces=[]; start=0; depth=0; in_string=False; i=0
     while i < len(source):
         ch=source[i]
@@ -196,7 +214,76 @@ def _split_top_level_commas(source: str) -> list[str]:
                 pieces.append(source[start:i].strip()); start=i+1
         i += 1
     pieces.append(source[start:].strip())
-    return [p for p in pieces if p]
+    return pieces if keep_empty else [p for p in pieces if p]
+
+
+def _parse_call_argument(source: str) -> dict[str, Any]:
+    text = source.strip()
+    if not text:
+        return {'kind': 'missing', 'semantics': {'omitted_vba_argument': True}}
+    named = re.match(r'^([A-Za-z_][A-Za-z0-9_]*)\s*:=\s*(.+)$', text, re.S)
+    if named:
+        return {'kind': 'named_argument', 'name': named.group(1),
+                'value': parse_expression(named.group(2))}
+    return parse_expression(text)
+
+
+def _join_continuations(source: str) -> str:
+    out: list[str] = []
+    quoted = False
+    i = 0
+    while i < len(source):
+        char = source[i]
+        if char == '"':
+            if quoted and i + 1 < len(source) and source[i + 1] == '"':
+                out.extend(['"', '"'])
+                i += 2
+                continue
+            quoted = not quoted
+        if not quoted and char == '_' and i > 0 and source[i - 1].isspace():
+            end = i + 1
+            while end < len(source) and source[end] in ' \t':
+                end += 1
+            if source.startswith('\r\n', end):
+                end += 2
+            elif end < len(source) and source[end] in '\r\n':
+                end += 1
+            else:
+                out.append(char)
+                i += 1
+                continue
+            while end < len(source) and source[end] in ' \t':
+                end += 1
+            out.append(' ')
+            i = end
+            continue
+        out.append(char)
+        i += 1
+    return ''.join(out)
+
+
+def _named_argument_start(source: str) -> int | None:
+    quoted = False
+    depth = 0
+    i = 0
+    while i < len(source):
+        char = source[i]
+        if char == '"':
+            if quoted and i + 1 < len(source) and source[i + 1] == '"':
+                i += 2
+                continue
+            quoted = not quoted
+        elif not quoted:
+            if char == '(':
+                depth += 1
+            elif char == ')':
+                depth = max(0, depth - 1)
+            elif depth == 0 and (i == 0 or source[i - 1].isspace()):
+                match = re.match(r'[A-Za-z_][A-Za-z0-9_]*\s*:=', source[i:])
+                if match:
+                    return i
+        i += 1
+    return None
 
 
 def parse_vba_call_statement(source: str) -> dict[str, Any]:
@@ -205,22 +292,37 @@ def parse_vba_call_statement(source: str) -> dict[str, Any]:
     This is deliberately separate from expression calls because VBA permits
     omitted parentheses and whitespace-separated arguments in statements.
     """
-    text = source.strip()
+    text = _join_continuations(source).strip()
     if text.lower().startswith('call '):
         text = text[5:].strip()
+    named_start = _named_argument_start(text)
+    if named_start is not None:
+        callee_text = text[:named_start].strip()
+        if callee_text:
+            arguments = [
+                _parse_call_argument(piece)
+                for piece in _split_top_level_commas(text[named_start:], keep_empty=True)
+            ]
+            return {
+                'kind': 'invocation_expression',
+                'callee': parse_expression(callee_text),
+                'arguments': arguments,
+                'syntax': 'vba_statement',
+                'source': text,
+            }
     # Find the callee prefix, allowing a dotted method name.
-    m = re.match(r'([A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*)\b(.*)$', text, re.S)
+    m = re.match(r'((?:[A-Za-z_][A-Za-z0-9_]*|\.[A-Za-z_][A-Za-z0-9_]*)(?:\.[A-Za-z_][A-Za-z0-9_]*)*)(.*)$', text, re.S)
     if not m:
         raise ParseError('Could not identify VBA statement-call target')
     callee_text, rest = m.group(1), m.group(2).strip()
     callee = parse_expression(callee_text)
-    if rest.startswith('(') and rest.endswith(')'):
-        # Parenthesized argument list after a statement-style Call.
+    if rest.startswith('('):
+        # Parse the full postfix chain, including members after a call.
         expr = parse_expression(callee_text + rest)
         return expr
     args: list[dict[str, Any]] = []
     if rest:
-        for piece in _split_top_level_commas(rest):
-            args.append(parse_expression(piece))
+        for piece in _split_top_level_commas(rest, keep_empty=True):
+            args.append(_parse_call_argument(piece))
     return {'kind': 'invocation_expression', 'callee': callee, 'arguments': args,
             'syntax': 'vba_statement', 'source': source.strip()}

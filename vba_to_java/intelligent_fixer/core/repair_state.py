@@ -18,7 +18,7 @@ class RepairState:
 
     def read(self,path,default):
         try: return json.loads(path.read_text(encoding="utf-8"))
-        except (FileNotFoundError,json.JSONDecodeError): return default
+        except FileNotFoundError: return default
 
     def append(self, record):
         self.append_many([record])

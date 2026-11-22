@@ -11,12 +11,12 @@
     "unresolved_expression_count": 0,
     "parse_error_count": 0,
     "issue_count": 0,
-    "upstream_diagnostic_count": 5,
-    "blocking_upstream_diagnostic_count": 4,
+    "upstream_diagnostic_count": 1,
+    "blocking_upstream_diagnostic_count": 0,
     "blocking_compatibility_requirement_count": 5,
-    "frontend_hierarchy_repair_count": 24,
+    "frontend_hierarchy_repair_count": 0,
     "pseudocode_procedure_sections_missing": 4,
-    "granular_segment_count": 237,
+    "granular_segment_count": 228,
     "segment_kinds": {
       "PROCEDURE": 15,
       "ERROR_CONTROL": 6,
@@ -24,18 +24,19 @@
       "IF_BLOCK": 32,
       "ASSIGNMENT": 99,
       "EXIT": 7,
-      "CALL_OR_COMMAND": 33,
+      "CALL_OR_COMMAND": 21,
       "FOR_BLOCK": 8,
+      "LABEL": 3,
       "JUMP": 1,
       "RETURN_CONTROL": 1
     },
     "referenced_segment_count": 228
   },
   "graph_evidence": {
-    "node_count": 331,
-    "edge_count": 520,
-    "ir_graph_node_references": 330,
-    "matched_graph_node_references": 330,
+    "node_count": 323,
+    "edge_count": 502,
+    "ir_graph_node_references": 322,
+    "matched_graph_node_references": 322,
     "unreferenced_graph_node_count": 1,
     "missing_graph_node_references": [],
     "full_module_snapshots_excluded": true,
@@ -412,46 +413,10 @@
   ],
   "upstream_diagnostics": [
     {
-      "code": "CROSS_NESTED_BLOCK_CLOSE",
-      "severity": "warning",
-      "message": "End If closed a non-top IF frame; inspect nested syntax.",
-      "location": {
-        "file": "vba_sample_6.bas",
-        "line": 223
-      },
-      "suggestion": "Resolve or explicitly disposition this diagnostic before claiming behavioural equivalence."
-    },
-    {
-      "code": "CROSS_NESTED_BLOCK_CLOSE",
-      "severity": "warning",
-      "message": "End If closed a non-top IF frame; inspect nested syntax.",
-      "location": {
-        "file": "vba_sample_6.bas",
-        "line": 256
-      },
-      "suggestion": "Resolve or explicitly disposition this diagnostic before claiming behavioural equivalence."
-    },
-    {
-      "code": "CROSS_NESTED_BLOCK_CLOSE",
-      "severity": "warning",
-      "message": "End If closed a non-top IF frame; inspect nested syntax.",
-      "location": {
-        "file": "vba_sample_6.bas",
-        "line": 472
-      },
-      "suggestion": "Resolve or explicitly disposition this diagnostic before claiming behavioural equivalence."
-    },
-    {
       "code": "IR_EXPRESSIONS_OPAQUE",
       "severity": "warning",
       "message": "180 expression/control operands are preserved as source-backed opaque expressions, not parsed AST nodes.",
       "suggestion": "Add a real expression parser or validated LLM-assisted expression normalization before code generation."
-    },
-    {
-      "code": "IR_FRONTEND_HIERARCHY_REPAIRED",
-      "severity": "warning",
-      "message": "Applied 24 deterministic hierarchy repairs using explicit FOR/Next boundaries.",
-      "suggestion": "Review every entry in metadata.frontend_repairs against the source/pseudocode before code generation."
     }
   ],
   "superseded_diagnostics": [
@@ -473,7 +438,7 @@
           "parsed_expression_count": 176,
           "invocation_count": 65,
           "pseudocode_coverage": "missing_detailed_section",
-          "control_flow_integrity": "repaired_needs_review"
+          "control_flow_integrity": "no_frontend_block_diagnostic_reported"
         },
         {
           "procedure": "InitInfrastructure",
@@ -513,7 +478,7 @@
           "parsed_expression_count": 70,
           "invocation_count": 84,
           "pseudocode_coverage": "missing_detailed_section",
-          "control_flow_integrity": "uncertain_due_to_frontend_diagnostic"
+          "control_flow_integrity": "no_frontend_block_diagnostic_reported"
         },
         {
           "procedure": "NormalizeEntryInPlace",
@@ -521,7 +486,7 @@
           "parsed_expression_count": 83,
           "invocation_count": 15,
           "pseudocode_coverage": "missing_detailed_section",
-          "control_flow_integrity": "uncertain_due_to_frontend_diagnostic"
+          "control_flow_integrity": "no_frontend_block_diagnostic_reported"
         },
         {
           "procedure": "DeduplicateBatchEntries",
@@ -529,7 +494,7 @@
           "parsed_expression_count": 78,
           "invocation_count": 15,
           "pseudocode_coverage": "detailed_section_present",
-          "control_flow_integrity": "repaired_needs_review"
+          "control_flow_integrity": "no_frontend_block_diagnostic_reported"
         },
         {
           "procedure": "RunLegacyGoSubAudit",
@@ -537,7 +502,7 @@
           "parsed_expression_count": 44,
           "invocation_count": 12,
           "pseudocode_coverage": "detailed_section_present",
-          "control_flow_integrity": "repaired_needs_review"
+          "control_flow_integrity": "no_frontend_block_diagnostic_reported"
         },
         {
           "procedure": "EvaluateDependencyDepth",
@@ -545,7 +510,7 @@
           "parsed_expression_count": 81,
           "invocation_count": 72,
           "pseudocode_coverage": "detailed_section_present",
-          "control_flow_integrity": "repaired_needs_review"
+          "control_flow_integrity": "no_frontend_block_diagnostic_reported"
         },
         {
           "procedure": "BuildUpsertSql",
@@ -561,7 +526,7 @@
           "parsed_expression_count": 25,
           "invocation_count": 5,
           "pseudocode_coverage": "detailed_section_present",
-          "control_flow_integrity": "repaired_needs_review"
+          "control_flow_integrity": "no_frontend_block_diagnostic_reported"
         },
         {
           "procedure": "BuildSummaryReport",
@@ -569,7 +534,7 @@
           "parsed_expression_count": 45,
           "invocation_count": 7,
           "pseudocode_coverage": "detailed_section_present",
-          "control_flow_integrity": "uncertain_due_to_frontend_diagnostic"
+          "control_flow_integrity": "no_frontend_block_diagnostic_reported"
         },
         {
           "procedure": "GetAuditEntryCount",

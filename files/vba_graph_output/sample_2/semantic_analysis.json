@@ -1,0 +1,216 @@
+{
+  "analyzer_version": "0.1.0",
+  "input_ir_version": "1.0.0",
+  "project": "vba_sample_2",
+  "status": "blocked",
+  "migration_readiness": "blocked",
+  "summary": {
+    "module_count": 1,
+    "procedure_count": 1,
+    "parsed_expression_count": 72,
+    "unresolved_expression_count": 0,
+    "parse_error_count": 0,
+    "issue_count": 11,
+    "upstream_diagnostic_count": 1,
+    "blocking_upstream_diagnostic_count": 0,
+    "blocking_compatibility_requirement_count": 2,
+    "frontend_hierarchy_repair_count": 0,
+    "pseudocode_procedure_sections_missing": 1,
+    "granular_segment_count": 15,
+    "segment_kinds": {
+      "PROCEDURE": 1,
+      "DECLARATION": 1,
+      "ERROR_CONTROL": 1,
+      "IF_BLOCK": 3,
+      "CALL_OR_COMMAND": 5,
+      "ASSIGNMENT": 2,
+      "SELECT_BLOCK": 1,
+      "EXIT": 1,
+      "LABEL": 1
+    },
+    "referenced_segment_count": 15
+  },
+  "graph_evidence": {
+    "node_count": 23,
+    "edge_count": 32,
+    "ir_graph_node_references": 22,
+    "matched_graph_node_references": 22,
+    "unreferenced_graph_node_count": 1,
+    "missing_graph_node_references": [],
+    "full_module_snapshots_excluded": true,
+    "full_procedure_snapshots_excluded": true
+  },
+  "manifest_evidence": {
+    "project": null,
+    "sample": null,
+    "source_files": [
+      {
+        "path": "vba_sample_2.bas",
+        "kind": "source",
+        "encoding": "utf-8",
+        "sha256": "10095d58ec66f1d8ba5f5fc42d7e175af3aff2c198044ee8d93956e86badb753",
+        "size_bytes": 934
+      }
+    ]
+  },
+  "compatibility_requirements": [
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "title": "VBA On Error runtime semantics",
+      "severity": "blocking",
+      "target_guidance": "Implement a compatibility runtime for Resume Next, GoTo handler, GoTo 0, Err state and handler activation; this pass preserves directives but does not emulate execution.",
+      "evidence": [
+        {
+          "procedure": "NormalizeSku",
+          "mode": "goto_handler",
+          "handler": "InvalidSku"
+        }
+      ]
+    },
+    {
+      "code": "LATE_BOUND_OBJECT_MEMBERS",
+      "title": "Late-bound COM/Object members",
+      "severity": "blocking",
+      "target_guidance": "Define explicit Java interfaces/adapters for the actual COM object behavior. Object-typed references alone do not identify the target API.",
+      "evidence": [
+        {
+          "procedure": "NormalizeSku",
+          "member": "Raise",
+          "owner_type": null
+        }
+      ]
+    }
+  ],
+  "pseudocode_coverage_gaps": [
+    "NormalizeSku"
+  ],
+  "upstream_diagnostics": [
+    {
+      "code": "IR_EXPRESSIONS_OPAQUE",
+      "severity": "warning",
+      "message": "11 expression/control operands are preserved as source-backed opaque expressions, not parsed AST nodes.",
+      "suggestion": "Add a real expression parser or validated LLM-assisted expression normalization before code generation."
+    }
+  ],
+  "superseded_diagnostics": [
+    {
+      "code": "IR_EXPRESSIONS_OPAQUE",
+      "severity": "warning",
+      "message": "11 expression/control operands are preserved as source-backed opaque expressions, not parsed AST nodes.",
+      "suggestion": "Add a real expression parser or validated LLM-assisted expression normalization before code generation."
+    }
+  ],
+  "issues": [
+    {
+      "severity": "warning",
+      "code": "UNRESOLVED_MEMBER",
+      "procedure": "NormalizeSku",
+      "path": "modules[0].procedures[0].body[2].branches[0].body[0].expression.callee",
+      "member": "Raise",
+      "message": "Member owner type could not be resolved; retain as late-bound member access."
+    },
+    {
+      "severity": "warning",
+      "code": "UNRESOLVED_IDENTIFIER",
+      "procedure": "NormalizeSku",
+      "path": "modules[0].procedures[0].body[3].condition.left.callee",
+      "symbol": "VarType",
+      "message": "Identifier was not found in local, parameter, module, procedure, or known intrinsic symbols."
+    },
+    {
+      "severity": "warning",
+      "code": "UNRESOLVED_INVOCATION",
+      "procedure": "NormalizeSku",
+      "path": "modules[0].procedures[0].body[3].condition.left",
+      "callee": "VarType",
+      "message": "Invocation could be a user function, external function, or array; no declaration resolved it."
+    },
+    {
+      "severity": "warning",
+      "code": "UNRESOLVED_IDENTIFIER",
+      "procedure": "NormalizeSku",
+      "path": "modules[0].procedures[0].body[3].condition.right",
+      "symbol": "vbString",
+      "message": "Identifier was not found in local, parameter, module, procedure, or known intrinsic symbols."
+    },
+    {
+      "severity": "warning",
+      "code": "UNRESOLVED_IDENTIFIER",
+      "procedure": "NormalizeSku",
+      "path": "modules[0].procedures[0].body[3].branches[0].condition.left.callee",
+      "symbol": "VarType",
+      "message": "Identifier was not found in local, parameter, module, procedure, or known intrinsic symbols."
+    },
+    {
+      "severity": "warning",
+      "code": "UNRESOLVED_INVOCATION",
+      "procedure": "NormalizeSku",
+      "path": "modules[0].procedures[0].body[3].branches[0].condition.left",
+      "callee": "VarType",
+      "message": "Invocation could be a user function, external function, or array; no declaration resolved it."
+    },
+    {
+      "severity": "warning",
+      "code": "UNRESOLVED_IDENTIFIER",
+      "procedure": "NormalizeSku",
+      "path": "modules[0].procedures[0].body[3].branches[0].condition.right",
+      "symbol": "vbString",
+      "message": "Identifier was not found in local, parameter, module, procedure, or known intrinsic symbols."
+    },
+    {
+      "severity": "warning",
+      "code": "UNRESOLVED_MEMBER",
+      "procedure": "NormalizeSku",
+      "path": "modules[0].procedures[0].body[3].branches[0].body[0].expression.callee",
+      "member": "Raise",
+      "message": "Member owner type could not be resolved; retain as late-bound member access."
+    },
+    {
+      "severity": "warning",
+      "code": "UNRESOLVED_MEMBER",
+      "procedure": "NormalizeSku",
+      "path": "modules[0].procedures[0].body[5].branches[0].body[0].expression.callee",
+      "member": "Raise",
+      "message": "Member owner type could not be resolved; retain as late-bound member access."
+    },
+    {
+      "severity": "warning",
+      "code": "UNRESOLVED_MEMBER",
+      "procedure": "NormalizeSku",
+      "path": "modules[0].procedures[0].body[6].branches[1].body[0].expression.callee",
+      "member": "Raise",
+      "message": "Member owner type could not be resolved; retain as late-bound member access."
+    },
+    {
+      "severity": "warning",
+      "code": "UNRESOLVED_MEMBER",
+      "procedure": "NormalizeSku",
+      "path": "modules[0].procedures[0].body[9].expression.callee",
+      "member": "Raise",
+      "message": "Member owner type could not be resolved; retain as late-bound member access."
+    }
+  ],
+  "modules": [
+    {
+      "module": "vba_sample_2",
+      "procedures": [
+        {
+          "procedure": "NormalizeSku",
+          "unresolved_expression_count": 0,
+          "parsed_expression_count": 57,
+          "invocation_count": 22,
+          "pseudocode_coverage": "missing_detailed_section",
+          "control_flow_integrity": "no_frontend_block_diagnostic_reported"
+        }
+      ]
+    }
+  ],
+  "policy": {
+    "full_module_and_procedure_snapshots_used": false,
+    "llm_used": false,
+    "opaque_expressions_guessed": false,
+    "parse_failures_preserved_as_unresolved": true,
+    "frontend_control_flow_repairs_auto_approved": false,
+    "pseudocode_is_supporting_evidence_not_ground_truth": true
+  }
+}

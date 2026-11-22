@@ -1,0 +1,665 @@
+{
+  "schema_version": "1.0.0",
+  "project": "vba_sample_1",
+  "source": {
+    "path": "vba_sample_1.bas",
+    "encoding": "utf-8",
+    "sha256": "364729d63817d3d67f1e5b799ab41a6e6fbbf32fee80266dc613f744b88feaff",
+    "text": "Option Explicit\n\nPublic Sub RefreshMonthlySummary()\n    Dim sourceSheet As Worksheet\n    Dim reportSheet As Worksheet\n    Dim lastRow As Long\n    Dim rowNumber As Long\n    Dim reportRow As Long\n\n    On Error GoTo HandleError\n\n    Set sourceSheet = ThisWorkbook.Worksheets(\"Transactions\")\n    Set reportSheet = ThisWorkbook.Worksheets(\"Monthly Summary\")\n    lastRow = sourceSheet.Cells(sourceSheet.Rows.Count, \"A\").End(xlUp).Row\n    reportRow = 2\n\n    For rowNumber = 2 To lastRow\n        If Len(Trim$(CStr(sourceSheet.Cells(rowNumber, \"A\").Value))) > 0 Then\n            If IsDate(sourceSheet.Cells(rowNumber, \"B\").Value) Then\n                reportSheet.Cells(reportRow, \"A\").Value = sourceSheet.Cells(rowNumber, \"A\").Value\n                reportSheet.Cells(reportRow, \"B\").Value = CDate(sourceSheet.Cells(rowNumber, \"B\").Value)\n                reportSheet.Cells(reportRow, \"C\").Value = sourceSheet.Cells(rowNumber, \"C\").Value\n                reportRow = reportRow + 1\n            Else\n                sourceSheet.Cells(rowNumber, \"B\").Interior.Color = vbYellow\n            End If\n        End If\n    Next rowNumber\n\n    reportSheet.Columns(\"A:C\").AutoFit\n    MsgBox \"Summary refreshed with \" & (reportRow - 2) & \" records.\", vbInformation\n    Exit Sub\n\nHandleError:\n    MsgBox \"Unable to refresh the monthly summary: \" & Err.Description, vbExclamation\nEnd Sub\n"
+  },
+  "context_quality": {
+    "source_provenance_verified": true,
+    "all_required_artifacts_present": true,
+    "llm_generation_performed": false,
+    "semantic_status": "blocked",
+    "migration_readiness": "blocked",
+    "blocking_compatibility_requirement_count": 2,
+    "semantic_error_count": 36,
+    "unresolved_expression_count": 0,
+    "opaque_statement_count": 0,
+    "pseudocode_available": false,
+    "missing_pseudocode_procedure_sections": 1,
+    "pseudocode_coverage_gaps": [
+      "RefreshMonthlySummary"
+    ],
+    "fixer_run_available": true,
+    "fixer_llm_enabled": false,
+    "fixer_addressed_issue_count": 1,
+    "fixer_unresolved_issue_count": 6
+  },
+  "shared_context": {
+    "source": {
+      "path": "vba_sample_1.bas",
+      "encoding": "utf-8",
+      "sha256": "364729d63817d3d67f1e5b799ab41a6e6fbbf32fee80266dc613f744b88feaff",
+      "manifest_entry": {
+        "path": "vba_sample_1.bas",
+        "kind": "source",
+        "encoding": "utf-8",
+        "sha256": "364729d63817d3d67f1e5b799ab41a6e6fbbf32fee80266dc613f744b88feaff",
+        "size_bytes": 1360
+      }
+    },
+    "generation_instructions": [
+      "Generate code only after the target language and runtime are specified.",
+      "Treat the original VBA source as the behavior authority; use graph, segments, IR, and semantic analysis as supporting evidence.",
+      "Preserve control flow, errors, data conversions, evaluation order, side effects, and VBA-specific behavior.",
+      "Do not silently omit unsupported or opaque statements, unresolved symbols, compatibility requirements, or missing pseudocode sections.",
+      "Treat intelligent-fixer issues as resolved only when its final status is addressed_and_verified; preserve unresolved findings.",
+      "Do not invent external APIs, workbook schemas, file formats, or runtime behavior; list assumptions and ask for missing requirements.",
+      "Keep source-location and graph/segment provenance with each translated procedure where practical.",
+      "Return a procedure-by-procedure implementation, a behavior/compatibility note, and a list of unresolved questions."
+    ],
+    "signatures": [
+      {
+        "module": "vba_sample_1",
+        "name": "RefreshMonthlySummary",
+        "kind": "procedure",
+        "visibility": "public",
+        "parameters": [],
+        "return_type": {
+          "kind": "void",
+          "name": "void"
+        }
+      }
+    ],
+    "module_declarations": {
+      "vba_sample_1": []
+    },
+    "semantic_status": "blocked",
+    "migration_readiness": "blocked",
+    "semantic_summary": {
+      "module_count": 1,
+      "procedure_count": 1,
+      "parsed_expression_count": 76,
+      "unresolved_expression_count": 0,
+      "parse_error_count": 0,
+      "issue_count": 64,
+      "upstream_diagnostic_count": 1,
+      "blocking_upstream_diagnostic_count": 0,
+      "blocking_compatibility_requirement_count": 2,
+      "frontend_hierarchy_repair_count": 0,
+      "pseudocode_procedure_sections_missing": 1,
+      "granular_segment_count": 23,
+      "segment_kinds": {
+        "PROCEDURE": 1,
+        "DECLARATION": 5,
+        "ERROR_CONTROL": 1,
+        "ASSIGNMENT": 9,
+        "FOR_BLOCK": 1,
+        "IF_BLOCK": 2,
+        "CALL_OR_COMMAND": 3,
+        "EXIT": 1,
+        "LABEL": 1
+      },
+      "referenced_segment_count": 23
+    },
+    "blocking_requirements": [
+      {
+        "code": "VBA_ERROR_HANDLING",
+        "title": "VBA On Error runtime semantics",
+        "severity": "blocking",
+        "target_guidance": "Implement a compatibility runtime for Resume Next, GoTo handler, GoTo 0, Err state and handler activation; this pass preserves directives but does not emulate execution.",
+        "evidence": [
+          {
+            "procedure": "RefreshMonthlySummary",
+            "mode": "goto_handler",
+            "handler": "HandleError"
+          }
+        ]
+      },
+      {
+        "code": "LATE_BOUND_OBJECT_MEMBERS",
+        "title": "Late-bound COM/Object members",
+        "severity": "blocking",
+        "target_guidance": "Define explicit Java interfaces/adapters for the actual COM object behavior. Object-typed references alone do not identify the target API.",
+        "evidence": [
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "Worksheets",
+            "owner_type": null
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "Row",
+            "owner_type": null
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "End",
+            "owner_type": null
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "Cells",
+            "owner_type": "Worksheet"
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "Count",
+            "owner_type": null
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "Rows",
+            "owner_type": "Worksheet"
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "Value",
+            "owner_type": null
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "Color",
+            "owner_type": null
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "Interior",
+            "owner_type": null
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "AutoFit",
+            "owner_type": null
+          },
+          {
+            "procedure": "RefreshMonthlySummary",
+            "member": "Columns",
+            "owner_type": "Worksheet"
+          }
+        ]
+      }
+    ],
+    "semantic_errors": [
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].local_variables[0].type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].local_variables[1].type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[0].declarations[0].type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[1].declarations[0].type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[6].target.expression.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[7].target.expression.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[8].value.object.callee.object.callee.object.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[8].value.object.callee.object.arguments[0].object.object.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[8].value.object.callee.object.owner_expression.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[8].value.object.owner_expression.callee.object.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[8].value.object.owner_expression.arguments[0].object.object.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[8].value.object.owner_expression.owner_expression.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].body[0].branches[0].body[0].target.expression.object.callee.object.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].body[0].branches[0].body[0].target.expression.object.owner_expression.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].body[0].branches[0].body[0].value.object.callee.object.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].body[0].branches[0].body[0].value.object.owner_expression.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].body[0].branches[0].body[1].target.expression.object.callee.object.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].body[0].branches[0].body[1].target.expression.object.owner_expression.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].body[0].branches[0].body[1].value.arguments[0].object.callee.object.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].body[0].branches[0].body[1].value.arguments[0].object.owner_expression.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].body[0].branches[0].body[2].target.expression.object.callee.object.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].body[0].branches[0].body[2].target.expression.object.owner_expression.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].body[0].branches[0].body[2].value.object.callee.object.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].body[0].branches[0].body[2].value.object.owner_expression.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].body[0].branches[0].condition.arguments[0].object.callee.object.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].body[0].branches[0].condition.arguments[0].object.owner_expression.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].body[0].branches[1].body[0].target.expression.object.object.callee.object.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].body[0].branches[1].body[0].target.expression.object.object.owner_expression.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].body[0].condition.arguments[0].object.callee.object.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].body[0].condition.arguments[0].object.owner_expression.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].condition.left.arguments[0].arguments[0].arguments[0].object.callee.object.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].branches[0].condition.left.arguments[0].arguments[0].arguments[0].object.owner_expression.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].condition.left.arguments[0].arguments[0].arguments[0].object.callee.object.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[10].body[0].condition.left.arguments[0].arguments[0].arguments[0].object.owner_expression.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[11].expression.object.callee.object.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      },
+      {
+        "severity": "error",
+        "code": "UNRESOLVED_NAMED_TYPE",
+        "path": "$.modules[0].procedures[0].body[11].expression.object.owner_expression.inferred_type",
+        "message": "Named type 'Worksheet' was not resolved."
+      }
+    ],
+    "pseudocode_coverage_gaps": [
+      "RefreshMonthlySummary"
+    ],
+    "intelligent_fixer": {
+      "run_available": true,
+      "llm_enabled": false,
+      "conversion_readiness": "NOT_CERTIFIED",
+      "issue_count": 7,
+      "addressed_issue_count": 1,
+      "unresolved_issue_count": 6
+    },
+    "artifact_files": {
+      "graph": {
+        "file": "graph.json",
+        "sha256": "175477cd878a8576c0594d559be300e59cc0f2d9d2bde6af65febb6c596ab84e",
+        "size_bytes": 34950
+      },
+      "segments": {
+        "file": "segments.json",
+        "sha256": "64e2299404e25d8d61347bda8808eb653946cf51c8149f92222bc49a68ad2624",
+        "size_bytes": 11151
+      },
+      "graph_report": {
+        "file": "report.json",
+        "sha256": "3610b95c09f4e02e6db9082e2e4cf3a98562186a1097868cd3df0ae5a630886a",
+        "size_bytes": 185
+      },
+      "manifest": {
+        "file": "manifest.json",
+        "sha256": "e3aae377531237410aee067f4b807474edd2a2e4e45942fb5604efca363de65c",
+        "size_bytes": 195
+      },
+      "universal_ir": {
+        "file": "universal_ir.json",
+        "sha256": "76acf4f755d1abaf6c16b05a33a963d0e2ccd9fc630b1724b2a06757a8b43e4c",
+        "size_bytes": 74022
+      },
+      "normalized_ir": {
+        "file": "normalized_ir.json",
+        "sha256": "4333358ef6326820789f34b5e7ff6e384cc5cb0f374dd6523b5a0436ed1a0f45",
+        "size_bytes": 188142
+      },
+      "semantic_analysis": {
+        "file": "semantic_analysis.json",
+        "sha256": "3d146a4dea38c4e6f2627f893945e62928e720e03beb8b8c8c5468f5c4f8c594",
+        "size_bytes": 24507
+      },
+      "intelligent_fixer_log": {
+        "file": "intelligent_fixer_log.json",
+        "sha256": "175d0c99e7a9fec9d587d9fd38c1be95d6dabb75d04def9031121743ff84fcbe",
+        "size_bytes": 16789
+      },
+      "final_quality_report": {
+        "file": "final_quality_report.json",
+        "sha256": "1d2fe915d2008296d2f17e3675678b585723ba9e25613f4e6d581904f0f8edcd",
+        "size_bytes": 18211
+      },
+      "unresolved_issues": {
+        "file": "unresolved_issues.json",
+        "sha256": "a120853799d06405185113475af7c24e33365cdd7a94cff6152580cfb7bd9f6e",
+        "size_bytes": 19001
+      }
+    }
+  },
+  "procedure_files": [
+    {
+      "module": "vba_sample_1",
+      "name": "RefreshMonthlySummary",
+      "file": "llm_handoff_RefreshMonthlySummary.json",
+      "kind": "procedure",
+      "source_location": {
+        "line": 3,
+        "end_line": 36,
+        "file": "vba_sample_1.bas"
+      },
+      "graph_node_ids": [
+        "procedure_717ab93df6b2eebd"
+      ],
+      "segment_ids": [],
+      "direct_callees": []
+    }
+  ],
+  "pseudocode_run": null,
+  "intelligent_fixer": {
+    "run_available": true,
+    "llm_enabled": false,
+    "conversion_readiness": "NOT_CERTIFIED",
+    "issue_count": 7,
+    "addressed_issue_count": 1,
+    "unresolved_issue_count": 6,
+    "issues": [
+      {
+        "issue_id": "cdbb35c9869444f5",
+        "issue": {
+          "code": "IR_EXPRESSIONS_OPAQUE",
+          "severity": "warning",
+          "priority": "high",
+          "subsystem": "expression_frontend",
+          "message": "17 expression/control operands are preserved as source-backed opaque expressions, not parsed AST nodes.",
+          "path": "universal_ir.json",
+          "artifact": "ir",
+          "reported_by": [
+            "ir",
+            "semantic_analysis"
+          ],
+          "downstream_resolution": {
+            "status": "addressed_and_verified",
+            "method": "semantic_normalization",
+            "artifact": "normalized_ir.json",
+            "evidence": {
+              "parse_error_count": 0,
+              "unresolved_expression_count": 0,
+              "unresolved_node_count": 0
+            }
+          }
+        },
+        "detected": true,
+        "addressed": true,
+        "status": "addressed_and_verified",
+        "changes": [],
+        "resolution_evidence": {
+          "status": "addressed_and_verified",
+          "method": "semantic_normalization",
+          "artifact": "normalized_ir.json",
+          "evidence": {
+            "parse_error_count": 0,
+            "unresolved_expression_count": 0,
+            "unresolved_node_count": 0
+          }
+        },
+        "verification": {
+          "present_in_final_issue_set": false,
+          "absent_after_final_scan": true,
+          "downstream_resolution": {
+            "status": "addressed_and_verified",
+            "method": "semantic_normalization",
+            "artifact": "normalized_ir.json",
+            "evidence": {
+              "parse_error_count": 0,
+              "unresolved_expression_count": 0,
+              "unresolved_node_count": 0
+            }
+          }
+        }
+      },
+      {
+        "issue_id": "5587823c9eaf352d",
+        "issue": {
+          "code": "VBA_ERROR_HANDLING",
+          "severity": "blocking",
+          "priority": "blocking",
+          "subsystem": "runtime_semantics",
+          "message": "VBA On Error runtime semantics",
+          "path": "semantic_analysis.json",
+          "artifact": "semantic_analysis",
+          "reported_by": [
+            "semantic_analysis",
+            "validator"
+          ]
+        },
+        "detected": true,
+        "addressed": false,
+        "status": "detected_unresolved",
+        "changes": [],
+        "resolution_evidence": null,
+        "verification": {
+          "present_in_final_issue_set": true,
+          "absent_after_final_scan": false,
+          "downstream_resolution": null
+        }
+      },
+      {
+        "issue_id": "1bf0876e4f475d64",
+        "issue": {
+          "code": "LATE_BOUND_OBJECT_MEMBERS",
+          "severity": "blocking",
+          "priority": "blocking",
+          "subsystem": "type_resolution",
+          "message": "Late-bound COM/Object members",
+          "path": "semantic_analysis.json",
+          "artifact": "semantic_analysis",
+          "reported_by": [
+            "semantic_analysis",
+            "validator"
+          ]
+        },
+        "detected": true,
+        "addressed": false,
+        "status": "detected_unresolved",
+        "changes": [],
+        "resolution_evidence": null,
+        "verification": {
+          "present_in_final_issue_set": true,
+          "absent_after_final_scan": false,
+          "downstream_resolution": null
+        }
+      },
+      {
+        "issue_id": "be179dca75047441",
+        "issue": {
+          "code": "SEMANTIC_ISSUE_COUNT",
+          "severity": "blocking",
+          "message": "issue_count=64"
+        },
+        "detected": true,
+        "addressed": false,
+        "status": "detected_unresolved",
+        "changes": [],
+        "resolution_evidence": null,
+        "verification": {
+          "present_in_final_issue_set": true,
+          "absent_after_final_scan": false,
+          "downstream_resolution": null
+        }
+      },
+      {
+        "issue_id": "bac85a17c0fcb2ac",
+        "issue": {
+          "code": "PSEUDOCODE_COVERAGE_GAP",
+          "severity": "warning",
+          "message": "Detailed pseudocode section missing: RefreshMonthlySummary",
+          "procedure": "RefreshMonthlySummary"
+        },
+        "detected": true,
+        "addressed": false,
+        "status": "detected_unresolved",
+        "changes": [],
+        "resolution_evidence": null,
+        "verification": {
+          "present_in_final_issue_set": true,
+          "absent_after_final_scan": false,
+          "downstream_resolution": null
+        }
+      },
+      {
+        "issue_id": "d8cdc528ce2be432",
+        "issue": {
+          "code": "VBA_ERROR_HANDLING",
+          "severity": "blocking",
+          "message": "VBA On Error runtime semantics"
+        },
+        "detected": true,
+        "addressed": false,
+        "status": "detected_unresolved",
+        "changes": [],
+        "resolution_evidence": null,
+        "verification": {
+          "present_in_final_issue_set": true,
+          "absent_after_final_scan": false,
+          "downstream_resolution": null
+        }
+      },
+      {
+        "issue_id": "b6277ffa76e2ac9c",
+        "issue": {
+          "code": "LATE_BOUND_OBJECT_MEMBERS",
+          "severity": "blocking",
+          "message": "Late-bound COM/Object members"
+        },
+        "detected": true,
+        "addressed": false,
+        "status": "detected_unresolved",
+        "changes": [],
+        "resolution_evidence": null,
+        "verification": {
+          "present_in_final_issue_set": true,
+          "absent_after_final_scan": false,
+          "downstream_resolution": null
+        }
+      }
+    ]
+  }
+}

@@ -1,6 +1,7 @@
-# VBA graph JSON outputs
+# VBA analysis and LLM handoff outputs
 
-This folder contains one output directory per input module:
+Each sample directory contains flat, same-folder outputs for the matching
+`.bas` module:
 
 | Input | Output directory |
 |---|---|
@@ -11,117 +12,147 @@ This folder contains one output directory per input module:
 | [vba_sample_5.bas](../vba_sample_5.bas) | `sample_5/` |
 | [vba_sample_6.bas](../vba_sample_6.bas) | `sample_6/` |
 
-Each output directory contains `graph.json`, `segments.json`, `report.json`, and
-`manifest.json`. These are analysis artifacts; the converter does not generate
-pseudocode or Java code.
+These are analysis and handoff artifacts, not translated application code.
+The handoff generator does not make an external LLM request.
 
-## What each JSON file is for
+## Files and their purpose
 
-### `graph.json` - structure and relationships
+### Frontend evidence
 
-This is the main structured representation of a VBA project. It includes:
+- **`graph.json`** — procedure and statement nodes, parent/child structure,
+  source locations, symbols, control-flow relationships, and conservative
+  call/reference links. Use it to inspect structure and ordering.
+- **`segments.json`** — source-preserving procedure, block, and statement
+  chunks. Match `id` and `parent_id` values to graph nodes; use the chunks as
+  grounded input for pseudocode or code generation.
+- **`report.json`** — graph counts and parser diagnostic/opaque-statement
+  counts. It is a quick quality check, not a behavior specification.
+- **`manifest.json`** — input path, encoding, byte size, and SHA-256. It
+  verifies which exact source version produced the artifacts.
 
-- Project and module nodes, procedure nodes, and statement/control-flow nodes.
-- Node IDs, parent IDs, source paths, line numbers, source text, and metadata.
-- Edges such as `CONTAINS`, `NEXT`, branch relationships, and conservative
-  `CALLS`/`REFERENCES` links.
-- `symbols` for parameters and locally identified variables.
-- `diagnostics` for parser warnings, plus the manifest in the graph.
+### Language-neutral conversion evidence
 
-Use it to understand procedure boundaries, nesting, ordering, branches, loops,
-and possible procedure calls. Semantic links are best-effort hints, not a
-complete VBA type or call analysis.
+- **`universal_ir.json`** — structured procedures, declarations, expressions,
+  statements, and control flow, with source provenance. It is the primary
+  target-independent starting point for code generation.
+- **`normalized_ir.json`** — Universal IR after deterministic expression,
+  symbol, type, and control-flow normalization. Unsupported or unresolved
+  constructs remain explicit; they are not guessed.
+- **`semantic_analysis.json`** — readiness status, unresolved-expression and
+  pseudocode-coverage summaries, compatibility requirements, provenance
+  checks, and semantic issues. A `blocked` status means the target needs
+  compatibility work or missing evidence; it does not mean the files failed
+  to generate.
 
-### `segments.json` - source chunks for downstream processing
+### Optional LLM-generated pseudocode
 
-This is a flat list of source-preserving chunks. Each segment has an ID, parent
-ID, kind, name, source path, line range, and source text. Procedure segments
-contain whole procedures; other segments represent statements and blocks.
-`summary` and `annotations` are available for enrichment, but are empty by
-default.
+- **`pseudocode.md`** — generated module/procedure explanations, if available.
+- **`pseudocode_run.json`** — generation attempt and coverage status, if
+  available.
 
-Use this file to feed procedures or smaller source units into a pseudocode
-generator while retaining their graph IDs and line locations.
+Pseudocode is optional and is never the sole source of truth. Check the
+semantic report's missing-procedure list before relying on it.
 
-### `report.json` - conversion counts and quick quality check
+### Intelligent-fixer audit
 
-This contains counts for modules, procedures, nodes, edges, segments,
-diagnostics, and opaque statements. Use it to compare runs and decide whether
-parser warnings need review. It is not needed to construct pseudocode.
+- **`intelligent_fixer_log.json`** — per-run issue detection and resolution
+  status, including whether the LLM adapter was enabled and whether each issue
+  was `addressed_and_verified` or remains unresolved.
+- **`final_quality_report.json`** — the final structural, semantic, regression,
+  compile, and behavioral validation summary.
+- **`unresolved_issues.json`** and **`repair_history.json`** — current unresolved
+  findings and append-only run history.
 
-### `manifest.json` - input provenance
+The checked-in reports were refreshed in offline, no-auto-apply mode. The
+opaque-IR finding is marked `addressed_and_verified` only where normalized IR
+and semantic validation prove zero unresolved nodes and parse errors. No
+generated-file patches were applied; other findings remain explicitly
+unresolved.
 
-This records each input file's path, detected encoding, byte size, and SHA-256
-hash. Use it to trace generated graph data back to the exact input version. It
-does not describe VBA behavior and is not needed to construct pseudocode.
+### Recommended LLM input
 
-## Which files to use for pseudocode
+- **`llm_handoff.json`** — a compact project index with exact source, module
+  declarations and procedure signatures, artifact hashes, semantic readiness,
+  compatibility blockers, intelligent-fixer resolution statuses, and links to
+  procedure context files.
+- **`llm_handoff_<Procedure>.json`** — a per-procedure package with the exact
+  procedure source, normalized IR, provenance, callee references, relevant
+  semantic report, and pseudocode section when available. Keeping procedures
+  separate avoids forcing a model to ingest the entire project at once.
+- **`llm_handoff.md`** — a concise readiness summary and instructions for using
+  the index and procedure files.
 
-Use **both `graph.json` and `segments.json`** as the intermediate input:
+Give an LLM `llm_handoff.json`, the relevant procedure file(s), and the target
+language/runtime. Include a callee's procedure file when translating a caller.
+The original VBA source remains authoritative; the graph, segments, IR, and
+semantic analysis provide structure and expose uncertainty. Ask the LLM to
+preserve behavior, list assumptions, and call out unresolved requirements
+rather than inventing APIs or silently dropping unsupported behavior.
 
-1. Use `graph.json` for procedure structure, parent/child relationships,
-   control-flow branches, statement ordering, symbols, and possible calls.
-2. Use `segments.json` for the source text and line spans of each procedure and
-   statement. Match segments to graph nodes using their IDs and parent IDs.
-3. Use the original `.bas` file to verify any source represented as opaque or
-   flagged by diagnostics.
+## Which files are needed?
 
-`report.json` and `manifest.json` are useful for validation and provenance, but
-are optional for pseudocode generation. Do not rely on summaries: they are
-`null` unless added by a separate annotation step. Preserve unknown statements
-instead of silently dropping them; this parser is conservative and does not
-implement the full VBA language.
+- **To write pseudocode:** use `graph.json`, `segments.json`, and the original
+  `.bas` source. The graph provides control-flow structure; segments provide
+  exact source text and line spans.
+- **To generate code in another language:** use `llm_handoff.json` plus the
+  relevant `llm_handoff_<Procedure>.json` file(s). They include the source,
+  normalized IR, module declarations, procedure signatures, semantic
+  constraints, provenance, and optional pseudocode. The original graph,
+  segments, Universal IR, and normalized IR files remain available beside the
+  handoff files for deeper inspection.
+- **To validate freshness:** compare the source hash in `manifest.json` with
+  the source. The handoff generator performs this check and refuses stale
+  inputs.
 
-## Samples included
+## Current graph results
 
-The figures below come from converting all six supplied samples. Node, edge,
-and segment counts describe the generated graph; diagnostic counts indicate
-warnings, not necessarily conversion failure.
+Counts are from the six checked-in samples after the parser fixes. The
+diagnostic count is zero for each sample; opaque statements are also zero.
 
 | Sample | Procedures | Nodes | Edges | Segments | Diagnostics |
 |---|---:|---:|---:|---:|---:|
-| `sample_1` | 1 | 30 | 48 | 25 | 1 |
+| `sample_1` | 1 | 29 | 46 | 24 | 0 |
 | `sample_2` | 1 | 23 | 32 | 16 | 0 |
-| `sample_3` | 1 | 61 | 92 | 48 | 0 |
-| `sample_4` | 1 | 83 | 140 | 71 | 1 |
-| `sample_5` | 2 | 98 | 156 | 80 | 0 |
-| `sample_6` | 15 | 331 | 520 | 252 | 3 |
+| `sample_3` | 1 | 59 | 88 | 46 | 0 |
+| `sample_4` | 1 | 83 | 140 | 71 | 0 |
+| `sample_5` | 2 | 95 | 150 | 77 | 0 |
+| `sample_6` | 15 | 323 | 502 | 243 | 0 |
 
-Procedure names represented in the samples:
+The semantic analyzer reports zero unresolved expressions for every sample
+after normalization. Migration readiness is still `blocked` because some
+samples use VBA-specific error handling, COM/late-bound objects, `GoSub`,
+arrays, or other compatibility behaviors that must be deliberately implemented
+in the target runtime. Sample 6 also has four procedures without detailed
+pseudocode sections; the precise names are recorded in its semantic report and
+handoff bundle.
 
-- `sample_1`: `RefreshMonthlySummary`
-- `sample_2`: `NormalizeSku`
-- `sample_3`: `ImportDailySales`
-- `sample_4`: `ConsolidateDepartmentFiles`
-- `sample_5`: `ReconcileInventory`, `LogInventoryError`
-- `sample_6`: `ExecuteStressPipeline`, `InitInfrastructure`, `NextSequence`,
-  `LogAudit`, `NormalizeLineEndings`, `TryParseEntry`,
-  `NormalizeEntryInPlace`, `DeduplicateBatchEntries`, `RunLegacyGoSubAudit`,
-  `EvaluateDependencyDepth`, `BuildUpsertSql`, `SanitizeSqlIdentifier`,
-  `BuildSummaryReport`, `GetAuditEntryCount`, `ResetModuleState`
+## Regenerating outputs
 
-Samples 1 and 4 each have one `OPAQUE_STATEMENT` warning for an `.AutoFit`
-statement. Sample 6 has three `CROSS_NESTED_BLOCK_CLOSE` warnings; review those
-locations against the original source before treating its control-flow graph as
-authoritative.
-
-## Regenerating all six output directories
-
-From the repository root, call the converter's per-input `main(input, output)`
-function for each sample:
+The per-input `main(input_path, output)` functions are used internally, so no
+terminal arguments are needed. Rebuild graph, Universal IR, and semantic
+artifacts for samples 1–6 from the repository root:
 
 ```python
 from pathlib import Path
 
-from vba_to_java.vba_graph.cli import main
+from vba_to_java.vba_graph.cli import main as build_graph
+from vba_to_java.universal_ir.cli import main as build_ir
+from vba_to_java.semantic_analyzer.cli import main as analyze
 
-inputs = Path("files")
-outputs = inputs / "vba_graph_output"
+root = Path.cwd()
 n = [1, 2, 3, 4, 5, 6]
 
 for i in n:
-    main(
-        inputs / f"vba_sample_{i}.bas",
-        outputs / f"sample_{i}",
-    )
+    source = root / "files" / f"vba_sample_{i}.bas"
+    output = root / "files" / "vba_graph_output" / f"sample_{i}"
+    build_graph(source, output)
+    build_ir(source, output)
+    analyze(source, output)
+```
+
+Generate or refresh the project index, procedure bundles, and Markdown summary
+for every sample with:
+
+```sh
+python -m vba_to_java.llm_handoff
 ```

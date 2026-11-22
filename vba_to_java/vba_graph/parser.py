@@ -49,6 +49,32 @@ def split_args(src):
             result.append({"name":arg,"type":"Unknown","source":arg,"parse_status":"raw"})
     return result
 
+
+def _assignment_parts(source):
+    quoted = False
+    depth = 0
+    i = 0
+    while i < len(source):
+        char = source[i]
+        if char == '"':
+            if quoted and i + 1 < len(source) and source[i + 1] == '"':
+                i += 2
+                continue
+            quoted = not quoted
+        elif not quoted:
+            if char == "(":
+                depth += 1
+            elif char == ")":
+                depth = max(0, depth - 1)
+            elif char == "=" and depth == 0:
+                previous = source[i - 1] if i else ""
+                following = source[i + 1] if i + 1 < len(source) else ""
+                if previous not in "<>:" and following != "=":
+                    return source[:i].strip(), source[i + 1:].strip()
+        i += 1
+    return None
+
+
 def classify_statement(text):
     s = text.strip()
     low = s.lower()
@@ -57,8 +83,9 @@ def classify_statement(text):
         return None
     if re.match(r"^(rem\b|')", s, re.I):
         return dict(base, type="COMMENT")
-    if re.match(r"^[A-Za-z_]\w*:$", s):
-        return dict(base, type="LABEL", name=s[:-1])
+    label = re.match(r"^([A-Za-z_]\w*|\d+):$", s)
+    if label:
+        return dict(base, type="LABEL", name=label.group(1))
     if re.match(r"^(on\s+error|resume\b)", s, re.I):
         return dict(base, type="ERROR_CONTROL")
     if re.match(r"^(goto|gosub)\b", s, re.I):
@@ -73,15 +100,16 @@ def classify_statement(text):
     if re.match(r"^debug\.print\b", s, re.I):
         return dict(base, type="HOST_CALL", host="Debug.Print")
     if re.match(r"^(set|let)\s+", s, re.I):
-        m = re.match(r"^(Set|Let)\s+(.+?)\s*=\s*(.*)$", s, re.I)
-        if m:
+        m = re.match(r"^(Set|Let)\s+(.+)$", s, re.I)
+        parts = _assignment_parts(m.group(2)) if m else None
+        if m and parts:
             return dict(base, type="ASSIGNMENT", assignment_kind=m.group(1).upper(),
-                        target=m.group(2), expression=expression_info(m.group(3)))
-    m = re.match(r"^(.+?)\s*=\s*(.+)$", s)
-    if m and not re.match(r"^(if|elseif)\b", s, re.I):
+                        target=parts[0], expression=expression_info(parts[1]))
+    parts = _assignment_parts(s)
+    if parts and not re.match(r"^(if|elseif)\b", s, re.I):
         return dict(base, type="ASSIGNMENT", assignment_kind="IMPLICIT",
-                    target=m.group(1).strip(), expression=expression_info(m.group(2)))
-    if re.match(r"^(call\s+)?[A-Za-z_]\w*(?:[.!][A-Za-z_]\w*)*(?:\s+.+|\(.*\))?$", s, re.I):
+                    target=parts[0], expression=expression_info(parts[1]))
+    if re.match(r"^(?:call\s+)?(?:[A-Za-z_]\w*(?:[.!][A-Za-z_]\w*)*|\.[A-Za-z_]\w*)\s*(?:\(|\s+|$)", s, re.I):
         return dict(base, type="CALL_OR_COMMAND",
                     expression=expression_info(re.sub(r"^call\s+","",s,flags=re.I)))
     return dict(base, type="OPAQUE_STATEMENT", parse_status="unparsed")
@@ -137,6 +165,16 @@ def parse_module(source, path, module_name, module_kind):
             continue
 
         if re.match(r"^End\s+(Sub|Function|Property)\s*$", text, re.I):
+            if stack:
+                diagnostics.append({
+                    "severity": "warning",
+                    "code": "UNCLOSED_BLOCK_AT_PROCEDURE_END",
+                    "message": f"{len(stack)} block frame(s) remained open at procedure end.",
+                    "path": path,
+                    "line": loc["start_line"],
+                })
+                for frame in stack:
+                    frame["node"].setdefault("end_location", loc)
             current["end_location"] = loc
             current = None
             stack = []
@@ -175,6 +213,34 @@ def parse_module(source, path, module_name, module_kind):
                         "body":[],"source":statement,"location":loc}
                 add(node); stack.append({"type":"LOOP","node":node,"body":node["body"]}); continue
 
+            m = re.match(r"^Next(?:\s+(.+))?$", statement, re.I)
+            if m:
+                variables = [item.strip() for item in (m.group(1) or "").split(",") if item.strip()]
+                for variable in variables or [None]:
+                    if (not stack or stack[-1]["type"] != "LOOP"
+                            or stack[-1]["node"].get("type") not in {"FOR_BLOCK", "FOR_EACH_BLOCK"}):
+                        add({"type":"UNMATCHED_BLOCK_TERMINATOR","source":statement,"location":loc})
+                        diagnostics.append({"severity":"warning","code":"UNMATCHED_FOR_NEXT",
+                            "message":"Next has no matching open For block.","path":path,
+                            "line":loc["start_line"],"source":statement})
+                        break
+                    frame = stack[-1]
+                    expected = re.sub(r"\s+As\s+.+$", "", str(frame["node"].get("variable", "")),
+                                      flags=re.I).strip()
+                    if variable and expected.casefold() != variable.casefold():
+                        add({"type":"UNMATCHED_BLOCK_TERMINATOR","source":statement,"location":loc})
+                        diagnostics.append({"severity":"warning","code":"FOR_NEXT_VARIABLE_MISMATCH",
+                            "message":f"Next variable {variable!r} does not match open For variable {expected!r}.",
+                            "path":path,"line":loc["start_line"],"source":statement})
+                        break
+                    stack.pop()
+                    frame["node"]["end_location"] = loc
+                    frame["node"]["terminator"] = {
+                        "source": statement,
+                        "location": loc,
+                    }
+                continue
+
             m = re.match(r"^Do(?:\s+(While|Until)\s+(.+))?$", statement, re.I)
             if m:
                 node = {"type":"DO_LOOP_BLOCK","test_position":"PRE" if m.group(1) else "POST",
@@ -183,12 +249,21 @@ def parse_module(source, path, module_name, module_kind):
                         "body":[],"source":statement,"location":loc}
                 add(node); stack.append({"type":"LOOP","node":node,"body":node["body"]}); continue
 
-            if re.match(r"^Loop(?:\s+(While|Until)\s+.+)?$", statement, re.I):
-                if stack and stack[-1]["type"] == "LOOP":
-                    stack.pop()
+            m = re.match(r"^Loop(?:\s+(While|Until)\s+(.+))?$", statement, re.I)
+            if m:
+                if (stack and stack[-1]["type"] == "LOOP"
+                        and stack[-1]["node"].get("type") == "DO_LOOP_BLOCK"):
+                    frame = stack.pop()
+                    frame["node"]["end_location"] = loc
+                    frame["node"]["terminator"] = {"source": statement, "location": loc}
+                    if frame["node"].get("test_position") == "POST":
+                        frame["node"]["test"] = m.group(1).upper() if m.group(1) else None
+                        frame["node"]["condition"] = expression_info(m.group(2)) if m.group(2) else None
                 else:
                     add({"type":"UNMATCHED_BLOCK_TERMINATOR","source":statement,"location":loc})
-                    diagnostics.append({"severity":"warning","code":"UNMATCHED_LOOP_END","path":path,"line":loc["start_line"]})
+                    diagnostics.append({"severity":"warning","code":"UNMATCHED_LOOP_END",
+                        "message":"Loop has no matching open Do block.","path":path,
+                        "line":loc["start_line"],"source":statement})
                 continue
 
             m = re.match(r"^While\s+(.+)$", statement, re.I)
@@ -198,8 +273,16 @@ def parse_module(source, path, module_name, module_kind):
                 add(node); stack.append({"type":"LOOP","node":node,"body":node["body"]}); continue
 
             if re.match(r"^Wend$", statement, re.I):
-                if stack and stack[-1]["type"] == "LOOP": stack.pop()
-                else: add({"type":"UNMATCHED_BLOCK_TERMINATOR","source":statement,"location":loc})
+                if (stack and stack[-1]["type"] == "LOOP"
+                        and stack[-1]["node"].get("type") == "WHILE_BLOCK"):
+                    frame = stack.pop()
+                    frame["node"]["end_location"] = loc
+                    frame["node"]["terminator"] = {"source": statement, "location": loc}
+                else:
+                    add({"type":"UNMATCHED_BLOCK_TERMINATOR","source":statement,"location":loc})
+                    diagnostics.append({"severity":"warning","code":"UNMATCHED_WEND",
+                        "message":"Wend has no matching open While block.","path":path,
+                        "line":loc["start_line"]})
                 continue
 
             m = re.match(r"^Select\s+Case\s+(.+)$", statement, re.I)
@@ -220,18 +303,34 @@ def parse_module(source, path, module_name, module_kind):
                 add(node); stack.append({"type":"WITH","node":node,"body":node["body"]}); continue
 
             if re.match(r"^End\s+With$", statement, re.I):
-                if stack and stack[-1]["type"] == "WITH": stack.pop()
-                else: add({"type":"UNMATCHED_BLOCK_TERMINATOR","source":statement,"location":loc})
+                if stack and stack[-1]["type"] == "WITH":
+                    frame = stack.pop()
+                    frame["node"]["end_location"] = loc
+                    frame["node"]["terminator"] = {"source": statement, "location": loc}
+                else:
+                    add({"type":"UNMATCHED_BLOCK_TERMINATOR","source":statement,"location":loc})
+                    diagnostics.append({"severity":"warning","code":"UNMATCHED_END_WITH",
+                        "message":"End With has no matching open With block.","path":path,
+                        "line":loc["start_line"]})
                 continue
 
             if re.match(r"^End\s+Select$", statement, re.I):
-                if stack and stack[-1]["type"] == "SELECT": stack.pop()
-                else: add({"type":"UNMATCHED_BLOCK_TERMINATOR","source":statement,"location":loc})
+                if stack and stack[-1]["type"] == "SELECT":
+                    frame = stack.pop()
+                    frame["node"]["end_location"] = loc
+                    frame["node"]["terminator"] = {"source": statement, "location": loc}
+                else:
+                    add({"type":"UNMATCHED_BLOCK_TERMINATOR","source":statement,"location":loc})
+                    diagnostics.append({"severity":"warning","code":"UNMATCHED_END_SELECT",
+                        "message":"End Select has no matching open Select Case block.",
+                        "path":path,"line":loc["start_line"]})
                 continue
 
             if re.match(r"^End\s+If$", statement, re.I):
                 idx = next((i for i in range(len(stack)-1,-1,-1) if stack[i]["type"]=="IF"), None)
                 if idx is not None:
+                    stack[idx]["node"]["end_location"] = loc
+                    stack[idx]["node"]["terminator"] = {"source": statement, "location": loc}
                     if idx != len(stack)-1:
                         diagnostics.append({"severity":"warning","code":"CROSS_NESTED_BLOCK_CLOSE",
                             "message":"End If closed a non-top IF frame; inspect nested syntax.",
@@ -239,6 +338,9 @@ def parse_module(source, path, module_name, module_kind):
                     stack = stack[:idx]
                 else:
                     add({"type":"UNMATCHED_BLOCK_TERMINATOR","source":statement,"location":loc})
+                    diagnostics.append({"severity":"warning","code":"UNMATCHED_END_IF",
+                        "message":"End If has no matching open block If.","path":path,
+                        "line":loc["start_line"]})
                 continue
 
             node = classify_statement(statement)
