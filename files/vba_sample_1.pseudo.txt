@@ -1,0 +1,29 @@
+PROCEDURE RefreshMonthlySummary()
+    DECLARE sourceSheet: Worksheet
+    DECLARE reportSheet: Worksheet
+    DECLARE lastRow: Long
+    DECLARE rowNumber: Long
+    DECLARE reportRow: Long
+    ON ERROR, GO TO HandleError
+    SET sourceSheet TO ThisWorkbook.Worksheets("Transactions")
+    SET reportSheet TO ThisWorkbook.Worksheets("Monthly Summary")
+    SET lastRow TO sourceSheet.Cells(sourceSheet.Rows.Count, "A").End(xlUp).Row
+    SET reportRow TO 2
+    FOR rowNumber FROM 2 TO lastRow
+        IF Len(Trim$(CStr(sourceSheet.Cells(rowNumber, "A").Value))) > 0 THEN
+            IF IsDate(sourceSheet.Cells(rowNumber, "B").Value) THEN
+                SET reportSheet.Cells(reportRow, "A").Value TO sourceSheet.Cells(rowNumber, "A").Value
+                SET reportSheet.Cells(reportRow, "B").Value TO CDate(sourceSheet.Cells(rowNumber, "B").Value)
+                SET reportSheet.Cells(reportRow, "C").Value TO sourceSheet.Cells(rowNumber, "C").Value
+                SET reportRow TO reportRow + 1
+            ELSE
+                SET sourceSheet.Cells(rowNumber, "B").Interior.Color TO vbYellow
+            END IF
+        END IF
+    END FOR
+    EXECUTE reportSheet.Columns("A:C").AutoFit
+    DISPLAY "Summary refreshed with " & (reportRow - 2) & " records.", vbInformation
+    RETURN
+    LABEL HandleError
+    DISPLAY "Unable to refresh the monthly summary: " & Err.Description, vbExclamation
+END PROCEDURE

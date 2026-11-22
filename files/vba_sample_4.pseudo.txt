@@ -1,0 +1,87 @@
+PROCEDURE ConsolidateDepartmentFiles(inputFolder: String, outputPath: String)
+    DECLARE fileName: String
+    DECLARE sourceBook: Workbook
+    DECLARE sourceSheet: Worksheet
+    DECLARE targetSheet: Worksheet
+    DECLARE outputBook: Workbook
+    DECLARE fileSystem: Object
+    DECLARE sourceRange: Range
+    DECLARE nextRow: Long
+    DECLARE lastRow: Long
+    DECLARE processedFiles: Long
+    DECLARE savedCalculation: XlCalculation
+    DECLARE savedEvents: Boolean
+    DECLARE savedScreenUpdating: Boolean
+    ON ERROR, GO TO HandleError
+    EXECUTE Err.Clear
+    SET savedCalculation TO Application.Calculation
+    SET savedEvents TO Application.EnableEvents
+    SET savedScreenUpdating TO Application.ScreenUpdating
+    IF LCase$(Right$(outputPath, 5)) <> ".xlsx" THEN
+        EXECUTE Err.Raise vbObjectError + 3002, "ConsolidateDepartmentFiles", "Output path must use the .xlsx extension."
+    END IF
+    IF StrComp(outputPath, ThisWorkbook.FullName, vbTextCompare) = 0 THEN
+        EXECUTE Err.Raise vbObjectError + 3003, "ConsolidateDepartmentFiles", "Output cannot replace the macro workbook."
+    END IF
+    IF Right$(inputFolder, 1) <> Application.PathSeparator THEN
+        SET inputFolder TO inputFolder & Application.PathSeparator
+    END IF
+    SET fileSystem TO CreateObject("Scripting.FileSystemObject")
+    IF Not fileSystem.FolderExists(inputFolder) THEN
+        EXECUTE Err.Raise vbObjectError + 3001, "ConsolidateDepartmentFiles", "Input folder is unavailable."
+    END IF
+    SET fileSystem TO NULL
+    SET targetSheet TO ThisWorkbook.Worksheets("Consolidated")
+    SET Application.ScreenUpdating TO FALSE
+    SET Application.EnableEvents TO FALSE
+    SET Application.Calculation TO xlCalculationManual
+    EXECUTE targetSheet.Cells.ClearContents
+    SET nextRow TO 1
+    SET fileName TO Dir$(inputFolder & "*.xlsx")
+    WHILE Len(fileName) > 0
+        IF StrComp(inputFolder & fileName, ThisWorkbook.FullName, vbTextCompare) <> 0 THEN
+            SET sourceBook TO Workbooks.Open(Filename:=inputFolder & fileName, ReadOnly:=TRUE)
+            SET sourceSheet TO sourceBook.Worksheets(1)
+            SET lastRow TO sourceSheet.Cells(sourceSheet.Rows.Count, "A").End(xlUp).Row
+            IF lastRow >= 1 THEN
+                SET sourceRange TO sourceSheet.Range("A1:F" & lastRow)
+                IF nextRow = 1 THEN
+                    SET targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count, sourceRange.Columns.Count).Value TO sourceRange.Value
+                    SET nextRow TO nextRow + sourceRange.Rows.Count
+                ELSE IF sourceRange.Rows.Count > 1 THEN
+                    SET targetSheet.Cells(nextRow, 1).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value TO sourceRange.Offset(1, 0).Resize(sourceRange.Rows.Count - 1, sourceRange.Columns.Count).Value
+                    SET nextRow TO nextRow + sourceRange.Rows.Count - 1
+                END IF
+            END IF
+            EXECUTE sourceBook.Close SaveChanges:=False
+            SET sourceBook TO NULL
+            SET processedFiles TO processedFiles + 1
+        END IF
+        SET fileName TO Dir$()
+    END WHILE
+    EXECUTE targetSheet.Columns("A:F").AutoFit
+    SET outputBook TO Workbooks.Add(xlWBATWorksheet)
+    SET outputBook.Worksheets(1).Name TO "Consolidated"
+    IF nextRow > 1 THEN
+        SET outputBook.Worksheets(1).Range("A1:F" & nextRow - 1).Value TO targetSheet.Range("A1:F" & nextRow - 1).Value
+    END IF
+    EXECUTE outputBook.SaveAs Filename:=outputPath, FileFormat:=xlOpenXMLWorkbook
+    EXECUTE outputBook.Close SaveChanges:=False
+    SET outputBook TO NULL
+    GO TO CleanUp
+    LABEL HandleError
+    IF Not sourceBook Is Nothing THEN
+        EXECUTE sourceBook.Close SaveChanges:=False
+    END IF
+    IF Not outputBook Is Nothing THEN
+        EXECUTE outputBook.Close SaveChanges:=False
+    END IF
+    DISPLAY "Consolidation failed for '" & fileName & "': " & Err.Description, vbCritical
+    LABEL CleanUp
+    SET Application.Calculation TO savedCalculation
+    SET Application.EnableEvents TO savedEvents
+    SET Application.ScreenUpdating TO savedScreenUpdating
+    IF Err.Number = 0 THEN
+        DISPLAY "Consolidated " & processedFiles & " department files.", vbInformation
+    END IF
+END PROCEDURE

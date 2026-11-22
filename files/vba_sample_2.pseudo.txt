@@ -1,0 +1,23 @@
+FUNCTION NormalizeSku(rawSku: Variant) RETURNS String
+    DECLARE normalized: String
+    ON ERROR, GO TO InvalidSku
+    IF IsNull(rawSku) Or IsEmpty(rawSku) THEN
+        EXECUTE Err.Raise vbObjectError + 1001, "NormalizeSku", "SKU is required."
+    END IF
+    IF VarType(rawSku) <> vbString THEN
+        EXECUTE Err.Raise vbObjectError + 1002, "NormalizeSku", "SKU must be text."
+    END IF
+    SET normalized TO UCase$(Trim$(CStr(rawSku)))
+    IF Len(normalized) < 4 Or Len(normalized) > 24 THEN
+        EXECUTE Err.Raise vbObjectError + 1003, "NormalizeSku", "SKU length is invalid."
+    END IF
+    SELECT True
+        CASE normalized Like "*[!A-Z0-9-]*"
+            EXECUTE Err.Raise vbObjectError + 1004, "NormalizeSku", "SKU contains unsupported characters."
+        CASE OTHERWISE
+            SET NormalizeSku TO normalized
+    END SELECT
+    RETURN
+    LABEL InvalidSku
+    EXECUTE Err.Raise Err.Number, "NormalizeSku", Err.Description
+END PROCEDURE

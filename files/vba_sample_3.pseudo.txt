@@ -1,0 +1,63 @@
+PROCEDURE ImportDailySales(tsvPath: String, reportDate: Date)
+    DECLARE stream: Object
+    DECLARE salesByRegion: Object
+    DECLARE fields: Variant
+    DECLARE lineText: String
+    DECLARE regionCode: String
+    DECLARE saleAmount: Currency
+    DECLARE lastRow: Long
+    DECLARE rowNumber: Long
+    ON ERROR, GO TO HandleError
+    IF Len(Dir$(tsvPath)) = 0 THEN
+        EXECUTE Err.Raise vbObjectError + 2001, "ImportDailySales", "Input file does not exist."
+    END IF
+    SET salesByRegion TO CreateObject("Scripting.Dictionary")
+    SET stream TO CreateObject("ADODB.Stream")
+    SET stream.Type TO 2
+    SET stream.Charset TO "utf-8"
+    EXECUTE stream.Open
+    EXECUTE stream.LoadFromFile tsvPath
+    IF Not stream.EOS THEN
+        SET lineText TO stream.ReadText(-2)
+    END IF
+    WHILE Not stream.EOS
+        SET lineText TO stream.ReadText(-2)
+        SET fields TO Split(lineText, vbTab)
+        IF UBound(fields) >= 2 THEN
+            SET regionCode TO UCase$(Trim$(CStr(fields(1))))
+            IF IsNumeric(fields(2)) And Len(regionCode) > 0 THEN
+                SET saleAmount TO CCur(fields(2))
+                IF salesByRegion.Exists(regionCode) THEN
+                    SET salesByRegion(regionCode) TO salesByRegion(regionCode) + saleAmount
+                ELSE
+                    EXECUTE salesByRegion.Add regionCode, saleAmount
+                END IF
+            END IF
+        END IF
+    END WHILE
+    EXECUTE stream.Close
+    SET stream TO NULL
+    WITH ThisWorkbook.Worksheets("Daily Sales")
+        SET lastRow TO .Cells(.Rows.Count, "A").End(xlUp).Row
+        FOR rowNumber FROM 2 TO lastRow
+            IF IsDate(.Cells(rowNumber, "A").Value) THEN
+                IF DateValue(.Cells(rowNumber, "A").Value) = DateValue(reportDate) THEN
+                    SET regionCode TO UCase$(Trim$(CStr(.Cells(rowNumber, "B").Value)))
+                    IF salesByRegion.Exists(regionCode) THEN
+                        SET CURRENT WITH-OBJECT.Cells(rowNumber, "C").Value TO salesByRegion(regionCode)
+                    ELSE
+                        SET CURRENT WITH-OBJECT.Cells(rowNumber, "C").Value TO 0
+                    END IF
+                END IF
+            END IF
+        END FOR
+    END WITH
+    RETURN
+    LABEL HandleError
+    IF Not stream Is Nothing THEN
+        IF stream.State = 1 THEN
+            EXECUTE stream.Close
+        END IF
+    END IF
+    EXECUTE Err.Raise Err.Number, "ImportDailySales", Err.Description
+END PROCEDURE
