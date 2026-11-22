@@ -1,0 +1,998 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/universal-ir/1.0.0/schema.json",
+  "title": "Universal IR",
+  "description": "Language-neutral intermediate representation for program translation.",
+  "type": "object",
+  "required": [
+    "ir_version",
+    "source_language",
+    "name",
+    "modules"
+  ],
+  "properties": {
+    "ir_version": {
+      "const": "1.0.0"
+    },
+    "source_language": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_language_version": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/module"
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/diagnostic"
+      }
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "semantics": {
+      "type": "object"
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "target_id"
+        ],
+        "properties": {
+          "target_id": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "source_language": {
+          "type": "string"
+        },
+        "source_text": {
+          "type": "string"
+        },
+        "source_location": {
+          "$ref": "#/$defs/sourceLocation"
+        },
+        "graph_node_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "segment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "inferred": {
+          "type": "boolean"
+        },
+        "inference_reason": {
+          "type": "string"
+        },
+        "segment_sources": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "sourceLocation": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string"
+        },
+        "module": {
+          "type": "string"
+        },
+        "procedure": {
+          "type": "string"
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "column": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end_line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end_column": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": true
+    },
+    "typeSpec": {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "primitive",
+            "named",
+            "array",
+            "collection",
+            "map",
+            "nullable",
+            "variant",
+            "object",
+            "pointer",
+            "unknown",
+            "void"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "element_type": {
+          "$ref": "#/$defs/typeSpec"
+        },
+        "key_type": {
+          "$ref": "#/$defs/typeSpec"
+        },
+        "value_type": {
+          "$ref": "#/$defs/typeSpec"
+        },
+        "dimensions": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "bounds": {
+          "type": "object"
+        },
+        "source_type": {
+          "type": "string"
+        },
+        "semantics": {
+          "type": "object"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "primitive",
+                  "named",
+                  "object"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "name"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "array",
+                  "collection",
+                  "nullable",
+                  "pointer"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "element_type"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "map"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "key_type",
+              "value_type"
+            ]
+          }
+        }
+      ],
+      "additionalProperties": true
+    },
+    "expression": {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "literal",
+            "identifier",
+            "member_access",
+            "index",
+            "call",
+            "unary",
+            "binary",
+            "conditional",
+            "new",
+            "nothing",
+            "missing",
+            "array_literal",
+            "type_cast",
+            "lambda",
+            "unsupported"
+          ]
+        },
+        "value": {},
+        "name": {
+          "type": "string"
+        },
+        "operator": {
+          "type": "string"
+        },
+        "operand": {
+          "$ref": "#/$defs/expression"
+        },
+        "left": {
+          "$ref": "#/$defs/expression"
+        },
+        "right": {
+          "$ref": "#/$defs/expression"
+        },
+        "target": {
+          "$ref": "#/$defs/expression"
+        },
+        "object": {
+          "$ref": "#/$defs/expression"
+        },
+        "member": {
+          "type": "string"
+        },
+        "arguments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/argument"
+          }
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/expression"
+          }
+        },
+        "indices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/expression"
+          }
+        },
+        "condition": {
+          "$ref": "#/$defs/expression"
+        },
+        "when_true": {
+          "$ref": "#/$defs/expression"
+        },
+        "when_false": {
+          "$ref": "#/$defs/expression"
+        },
+        "type": {
+          "$ref": "#/$defs/typeSpec"
+        },
+        "semantics": {
+          "type": "object"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "literal"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "value"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "identifier"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "name"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "binary"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "operator",
+              "left",
+              "right"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "unary"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "operator",
+              "operand"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "member_access"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "object",
+              "member"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "index"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "target",
+              "indices"
+            ]
+          }
+        }
+      ],
+      "additionalProperties": true
+    },
+    "argument": {
+      "type": "object",
+      "required": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "$ref": "#/$defs/expression"
+        },
+        "passing": {
+          "enum": [
+            "value",
+            "reference",
+            "omitted",
+            "unspecified"
+          ]
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "statement": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "block",
+            "variable_declaration",
+            "assignment",
+            "expression",
+            "if",
+            "switch",
+            "for",
+            "for_each",
+            "while",
+            "do_while",
+            "do_until",
+            "call",
+            "return",
+            "break",
+            "continue",
+            "exit",
+            "label",
+            "goto",
+            "gosub",
+            "on_error",
+            "error_handler",
+            "raise_error",
+            "with",
+            "redim",
+            "erase",
+            "file_io",
+            "unsupported",
+            "comment",
+            "gosub_return"
+          ]
+        },
+        "expression": {
+          "$ref": "#/$defs/expression"
+        },
+        "target": {
+          "$ref": "#/$defs/expression"
+        },
+        "value": {
+          "$ref": "#/$defs/expression"
+        },
+        "condition": {
+          "$ref": "#/$defs/expression"
+        },
+        "iterable": {
+          "$ref": "#/$defs/expression"
+        },
+        "start": {
+          "$ref": "#/$defs/expression"
+        },
+        "end": {
+          "$ref": "#/$defs/expression"
+        },
+        "step": {
+          "$ref": "#/$defs/expression"
+        },
+        "body": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/statement"
+          }
+        },
+        "statements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/statement"
+          }
+        },
+        "else_body": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/statement"
+          }
+        },
+        "initializer": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/statement"
+          }
+        },
+        "update": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/statement"
+          }
+        },
+        "branches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "branch_kind",
+              "body"
+            ],
+            "properties": {
+              "branch_kind": {
+                "type": "string"
+              },
+              "condition": {
+                "$ref": "#/$defs/expression"
+              },
+              "body": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/statement"
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "variable": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "handler": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string"
+        },
+        "error_code": {
+          "$ref": "#/$defs/expression"
+        },
+        "message": {
+          "$ref": "#/$defs/expression"
+        },
+        "dimensions": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "declarations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/variable"
+          }
+        },
+        "arguments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/argument"
+          }
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "semantics": {
+          "type": "object"
+        },
+        "exit_target": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "if"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "condition"
+            ],
+            "anyOf": [
+              {
+                "required": [
+                  "body"
+                ]
+              },
+              {
+                "required": [
+                  "branches"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "goto",
+                  "gosub",
+                  "label"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "label"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "unsupported"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "semantics"
+            ]
+          }
+        }
+      ],
+      "additionalProperties": true
+    },
+    "variable": {
+      "type": "object",
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/$defs/typeSpec"
+        },
+        "scope": {
+          "enum": [
+            "local",
+            "module",
+            "global",
+            "parameter",
+            "field"
+          ]
+        },
+        "storage": {
+          "enum": [
+            "constant",
+            "mutable",
+            "static"
+          ]
+        },
+        "initial_value": {
+          "$ref": "#/$defs/expression"
+        },
+        "visibility": {
+          "type": "string"
+        },
+        "modifiers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        }
+      },
+      "additionalProperties": true
+    },
+    "parameter": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/$defs/typeSpec"
+        },
+        "passing": {
+          "enum": [
+            "value",
+            "reference",
+            "unspecified"
+          ]
+        },
+        "optional": {
+          "type": "boolean"
+        },
+        "default": {
+          "$ref": "#/$defs/expression"
+        },
+        "param_array": {
+          "type": "boolean"
+        },
+        "modifiers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        }
+      },
+      "additionalProperties": true
+    },
+    "procedure": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "kind"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "function",
+            "procedure",
+            "constructor",
+            "destructor",
+            "property_get",
+            "property_let",
+            "property_set",
+            "operator"
+          ]
+        },
+        "visibility": {
+          "type": "string"
+        },
+        "modifiers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "parameters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/parameter"
+          }
+        },
+        "return_type": {
+          "$ref": "#/$defs/typeSpec"
+        },
+        "local_variables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/variable"
+          }
+        },
+        "body": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/statement"
+          }
+        },
+        "annotations": {
+          "type": "object"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "semantics": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": true
+    },
+    "declaration": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "variable",
+            "constant",
+            "enum",
+            "record",
+            "type_alias",
+            "external",
+            "class",
+            "interface",
+            "property",
+            "unsupported"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "visibility": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/$defs/typeSpec"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "value": {
+          "$ref": "#/$defs/expression"
+        },
+        "modifiers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "semantics": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": true
+    },
+    "module": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "kind"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "module",
+            "class",
+            "interface",
+            "record",
+            "package"
+          ]
+        },
+        "declarations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/declaration"
+          }
+        },
+        "procedures": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/procedure"
+          }
+        },
+        "imports": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "annotations": {
+          "type": "object"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "semantics": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": true
+    },
+    "diagnostic": {
+      "type": "object",
+      "required": [
+        "code",
+        "severity",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "error",
+            "warning",
+            "info"
+          ]
+        },
+        "message": {
+          "type": "string"
+        },
+        "location": {
+          "$ref": "#/$defs/sourceLocation"
+        },
+        "node_id": {
+          "type": "string"
+        },
+        "suggestion": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

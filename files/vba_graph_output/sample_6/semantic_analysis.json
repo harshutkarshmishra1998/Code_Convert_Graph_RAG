@@ -1,0 +1,601 @@
+{
+  "analyzer_version": "0.1.0",
+  "input_ir_version": "1.0.0",
+  "project": "vba_sample_6",
+  "status": "blocked",
+  "migration_readiness": "blocked",
+  "summary": {
+    "module_count": 1,
+    "procedure_count": 15,
+    "parsed_expression_count": 926,
+    "unresolved_expression_count": 0,
+    "parse_error_count": 0,
+    "issue_count": 0,
+    "upstream_diagnostic_count": 5,
+    "blocking_upstream_diagnostic_count": 4,
+    "blocking_compatibility_requirement_count": 5,
+    "frontend_hierarchy_repair_count": 24,
+    "pseudocode_procedure_sections_missing": 4,
+    "granular_segment_count": 237,
+    "segment_kinds": {
+      "PROCEDURE": 15,
+      "ERROR_CONTROL": 6,
+      "DECLARATION": 50,
+      "IF_BLOCK": 32,
+      "ASSIGNMENT": 99,
+      "EXIT": 7,
+      "CALL_OR_COMMAND": 33,
+      "FOR_BLOCK": 8,
+      "JUMP": 1,
+      "RETURN_CONTROL": 1
+    },
+    "referenced_segment_count": 228
+  },
+  "graph_evidence": {
+    "node_count": 331,
+    "edge_count": 520,
+    "ir_graph_node_references": 330,
+    "matched_graph_node_references": 330,
+    "unreferenced_graph_node_count": 1,
+    "missing_graph_node_references": [],
+    "full_module_snapshots_excluded": true,
+    "full_procedure_snapshots_excluded": true
+  },
+  "manifest_evidence": {
+    "project": null,
+    "sample": null,
+    "source_files": [
+      {
+        "path": "vba_sample_6.bas",
+        "kind": "source",
+        "encoding": "utf-8",
+        "sha256": "7289ca3eb6d951118004db2ff7c58f5f44b6b8ee6a818a3efa5490dea9542736",
+        "size_bytes": 16480
+      }
+    ]
+  },
+  "compatibility_requirements": [
+    {
+      "code": "VBA_OPTION_COMPARE_TEXT",
+      "title": "Case-insensitive string comparison",
+      "severity": "review",
+      "target_guidance": "Preserve locale-aware VBA text-comparison semantics for affected string comparisons; do not assume Java String.equalsIgnoreCase is fully equivalent.",
+      "evidence": [
+        "Option Compare Text"
+      ]
+    },
+    {
+      "code": "VBA_OPTION_BASE_1",
+      "title": "One-based default array bounds",
+      "severity": "review",
+      "target_guidance": "Use an array abstraction that preserves explicit lower bounds and VBA default lower-bound rules.",
+      "evidence": [
+        "Option Base 1"
+      ]
+    },
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "title": "VBA On Error runtime semantics",
+      "severity": "blocking",
+      "target_guidance": "Implement a compatibility runtime for Resume Next, GoTo handler, GoTo 0, Err state and handler activation; this pass preserves directives but does not emulate execution.",
+      "evidence": [
+        {
+          "procedure": "ExecuteStressPipeline",
+          "mode": "goto_handler",
+          "handler": "ErrHandler"
+        },
+        {
+          "procedure": "InitInfrastructure",
+          "mode": "resume_next",
+          "handler": null
+        },
+        {
+          "procedure": "InitInfrastructure",
+          "mode": "disable_handler",
+          "handler": null
+        },
+        {
+          "procedure": "TryParseEntry",
+          "mode": "goto_handler",
+          "handler": "ParseFail"
+        },
+        {
+          "procedure": "DeduplicateBatchEntries",
+          "mode": "resume_next",
+          "handler": null
+        },
+        {
+          "procedure": "DeduplicateBatchEntries",
+          "mode": "disable_handler",
+          "handler": null
+        }
+      ]
+    },
+    {
+      "code": "VBA_GOSUB_RETURN",
+      "title": "Legacy GoSub/Return control flow",
+      "severity": "blocking",
+      "target_guidance": "Lower GoSub to an explicit continuation/return stack or a proven equivalent; never map Return to Java method return.",
+      "evidence": [
+        {
+          "procedure": "RunLegacyGoSubAudit",
+          "label": "ValidateSingleEntry"
+        }
+      ]
+    },
+    {
+      "code": "LATE_BOUND_OBJECT_MEMBERS",
+      "title": "Late-bound COM/Object members",
+      "severity": "blocking",
+      "target_guidance": "Define explicit Java interfaces/adapters for the actual COM object behavior. Object-typed references alone do not identify the target API.",
+      "evidence": [
+        {
+          "procedure": "DeduplicateBatchEntries",
+          "member": "Add",
+          "owner_type": "Object"
+        },
+        {
+          "procedure": "DeduplicateBatchEntries",
+          "member": "Exists",
+          "owner_type": "Object"
+        }
+      ]
+    },
+    {
+      "code": "COM_CREATEOBJECT",
+      "title": "COM object activation",
+      "severity": "blocking",
+      "target_guidance": "Replace ProgID-based activation with an explicit Java implementation or integration adapter; preserve fallback behavior.",
+      "evidence": [
+        {
+          "procedure": "InitInfrastructure",
+          "expression": "CreateObject(\"Scripting.Dictionary\")"
+        },
+        {
+          "procedure": "DeduplicateBatchEntries",
+          "expression": "CreateObject(\"Scripting.Dictionary\")"
+        }
+      ]
+    },
+    {
+      "code": "VBA_BYREF",
+      "title": "ByRef parameter mutation",
+      "severity": "review",
+      "target_guidance": "Generate mutable holders or pass mutable record/array references so writes in the callee are visible to the caller.",
+      "evidence": [
+        {
+          "caller": "ExecuteStressPipeline",
+          "target": "NormalizeEntryInPlace",
+          "parameter": "entry",
+          "argument_is_lvalue": true
+        },
+        {
+          "caller": "ExecuteStressPipeline",
+          "target": "TryParseEntry",
+          "parameter": "target",
+          "argument_is_lvalue": true
+        },
+        {
+          "caller": "ExecuteStressPipeline",
+          "target": "DeduplicateBatchEntries",
+          "parameter": "batch",
+          "argument_is_lvalue": true
+        },
+        {
+          "caller": "ExecuteStressPipeline",
+          "target": "RunLegacyGoSubAudit",
+          "parameter": "batch",
+          "argument_is_lvalue": true
+        },
+        {
+          "caller": "ExecuteStressPipeline",
+          "target": "RunLegacyGoSubAudit",
+          "parameter": "summaryStatus",
+          "argument_is_lvalue": true
+        },
+        {
+          "caller": "ExecuteStressPipeline",
+          "target": "BuildSummaryReport",
+          "parameter": "batch",
+          "argument_is_lvalue": true
+        }
+      ]
+    },
+    {
+      "code": "VBA_IIF_EAGER_EVALUATION",
+      "title": "IIf evaluates both result expressions",
+      "severity": "review",
+      "target_guidance": "Do not translate IIf to Java’s lazy conditional operator without checking side effects and exceptions; VBA IIf evaluates both branches.",
+      "evidence": [
+        {
+          "procedure": "BuildUpsertSql",
+          "source": "IIf(entry.IsReconciled, 1, 0)"
+        }
+      ]
+    },
+    {
+      "code": "VBA_DOEVENTS",
+      "title": "DoEvents cooperative yield",
+      "severity": "review",
+      "target_guidance": "Decide whether a Java event-loop/thread-yield equivalent is required; a no-op changes responsiveness semantics.",
+      "evidence": [
+        {
+          "procedure": "ExecuteStressPipeline",
+          "source": "DoEvents"
+        }
+      ]
+    },
+    {
+      "code": "VBA_DYNAMIC_ARRAYS",
+      "title": "Dynamic arrays, ReDim, Preserve and Erase",
+      "severity": "review",
+      "target_guidance": "Implement resizable arrays with preserved lower/upper bounds, element copying, and Erase semantics.",
+      "evidence": [
+        {
+          "procedure": "ExecuteStressPipeline",
+          "preserve": false
+        },
+        {
+          "procedure": "ExecuteStressPipeline",
+          "preserve": true
+        },
+        {
+          "procedure": "TryParseEntry",
+          "preserve": false
+        },
+        {
+          "procedure": "TryParseEntry",
+          "preserve": false
+        },
+        {
+          "procedure": "NormalizeEntryInPlace",
+          "preserve": false
+        },
+        {
+          "procedure": "NormalizeEntryInPlace",
+          "preserve": true
+        },
+        {
+          "procedure": "DeduplicateBatchEntries",
+          "preserve": false
+        },
+        {
+          "procedure": "DeduplicateBatchEntries",
+          "preserve": true
+        }
+      ]
+    },
+    {
+      "code": "VBA_CURRENCY",
+      "title": "VBA Currency fixed-point arithmetic",
+      "severity": "review",
+      "target_guidance": "Use fixed-point decimal arithmetic with four decimal places and verify rounding/overflow rules.",
+      "evidence": {
+        "type_occurrences": 4
+      }
+    },
+    {
+      "code": "VBA_DATE",
+      "title": "VBA Date representation",
+      "severity": "review",
+      "target_guidance": "Map VBA/OLE Automation dates carefully; verify serial-date conversions, timezone assumptions and date parsing/formatting.",
+      "evidence": {
+        "type_occurrences": 1
+      }
+    },
+    {
+      "code": "VBA_VARIANT",
+      "title": "Variant dynamic values",
+      "severity": "review",
+      "target_guidance": "Preserve runtime type changes, Empty/Null distinctions, arrays stored in Variant, and VBA conversion rules.",
+      "evidence": [
+        {
+          "procedure": "TryParseEntry",
+          "variable": "parts"
+        },
+        {
+          "procedure": "TryParseEntry",
+          "variable": "tagTokens"
+        },
+        {
+          "procedure": "EvaluateDependencyDepth",
+          "variable": "pairs"
+        },
+        {
+          "procedure": "EvaluateDependencyDepth",
+          "variable": "edgeParts"
+        }
+      ]
+    },
+    {
+      "code": "VBA_COLLECTION",
+      "title": "VBA Collection semantics",
+      "severity": "review",
+      "target_guidance": "Preserve insertion order, one-based Item indexing, Count, Add and Remove behavior.",
+      "evidence": [
+        {
+          "module": "ComplexConversionStressTest",
+          "variable": "m_AuditLog"
+        }
+      ]
+    },
+    {
+      "code": "VBA_ARRAY_INITIALIZATION_IDIOM",
+      "title": "Double-Not dynamic-array initialization check",
+      "severity": "blocking",
+      "target_guidance": "Confirm the source runtime meaning and replace with an explicit initialized/uninitialized array state in Java. Do not translate Not Not as ordinary boolean negation.",
+      "evidence": [
+        {
+          "procedure": "NormalizeEntryInPlace",
+          "source": "(Not Not entry.Tags) <> 0",
+          "operand_type": "array"
+        },
+        {
+          "procedure": "NormalizeEntryInPlace",
+          "source": "(Not Not entry.Tags) = 0",
+          "operand_type": "array"
+        }
+      ]
+    },
+    {
+      "code": "VBA_OBJECT_IDENTITY",
+      "title": "VBA Is object-reference comparison",
+      "severity": "review",
+      "target_guidance": "Preserve object identity/null comparison semantics; distinguish Is from value equality.",
+      "evidence": [
+        {
+          "procedure": "InitInfrastructure",
+          "operator": "is",
+          "source": "Err.Number <> 0 Or m_NodeRegistry Is Nothing"
+        },
+        {
+          "procedure": "InitInfrastructure",
+          "operator": "is",
+          "source": "m_AuditLog Is Nothing"
+        },
+        {
+          "procedure": "LogAudit",
+          "operator": "is",
+          "source": "m_AuditLog Is Nothing"
+        },
+        {
+          "procedure": "DeduplicateBatchEntries",
+          "operator": "is",
+          "source": "seenKeys Is Nothing"
+        },
+        {
+          "procedure": "BuildSummaryReport",
+          "operator": "is",
+          "source": "Not m_AuditLog Is Nothing And m_AuditLog.Count > 0"
+        },
+        {
+          "procedure": "GetAuditEntryCount",
+          "operator": "is",
+          "source": "m_AuditLog Is Nothing"
+        }
+      ]
+    },
+    {
+      "code": "VBA_BITWISE_LOGICAL_OPERATORS",
+      "title": "Bitwise logical operators on numeric values",
+      "severity": "review",
+      "target_guidance": "Preserve VBA bitwise behavior for numeric operands; do not map every And/Or expression to Java boolean operators.",
+      "evidence": [
+        {
+          "procedure": "ExecuteStressPipeline",
+          "operator": "and",
+          "source": "(modeMask And ModeNormalize) = ModeNormalize"
+        },
+        {
+          "procedure": "ExecuteStressPipeline",
+          "operator": "and",
+          "source": "(modeMask And ModeAggregate) = ModeAggregate"
+        },
+        {
+          "procedure": "ExecuteStressPipeline",
+          "operator": "and",
+          "source": "(modeMask And ModeDeduplicate) = ModeDeduplicate And batch.RecordCount > 1"
+        },
+        {
+          "procedure": "ExecuteStressPipeline",
+          "operator": "and",
+          "source": "(modeMask And ModeAudit) = ModeAudit"
+        }
+      ]
+    }
+  ],
+  "pseudocode_coverage_gaps": [
+    "ExecuteStressPipeline",
+    "LogAudit",
+    "TryParseEntry",
+    "NormalizeEntryInPlace"
+  ],
+  "upstream_diagnostics": [
+    {
+      "code": "CROSS_NESTED_BLOCK_CLOSE",
+      "severity": "warning",
+      "message": "End If closed a non-top IF frame; inspect nested syntax.",
+      "location": {
+        "file": "vba_sample_6.bas",
+        "line": 223
+      },
+      "suggestion": "Resolve or explicitly disposition this diagnostic before claiming behavioural equivalence."
+    },
+    {
+      "code": "CROSS_NESTED_BLOCK_CLOSE",
+      "severity": "warning",
+      "message": "End If closed a non-top IF frame; inspect nested syntax.",
+      "location": {
+        "file": "vba_sample_6.bas",
+        "line": 256
+      },
+      "suggestion": "Resolve or explicitly disposition this diagnostic before claiming behavioural equivalence."
+    },
+    {
+      "code": "CROSS_NESTED_BLOCK_CLOSE",
+      "severity": "warning",
+      "message": "End If closed a non-top IF frame; inspect nested syntax.",
+      "location": {
+        "file": "vba_sample_6.bas",
+        "line": 472
+      },
+      "suggestion": "Resolve or explicitly disposition this diagnostic before claiming behavioural equivalence."
+    },
+    {
+      "code": "IR_EXPRESSIONS_OPAQUE",
+      "severity": "warning",
+      "message": "180 expression/control operands are preserved as source-backed opaque expressions, not parsed AST nodes.",
+      "suggestion": "Add a real expression parser or validated LLM-assisted expression normalization before code generation."
+    },
+    {
+      "code": "IR_FRONTEND_HIERARCHY_REPAIRED",
+      "severity": "warning",
+      "message": "Applied 24 deterministic hierarchy repairs using explicit FOR/Next boundaries.",
+      "suggestion": "Review every entry in metadata.frontend_repairs against the source/pseudocode before code generation."
+    }
+  ],
+  "superseded_diagnostics": [
+    {
+      "code": "IR_EXPRESSIONS_OPAQUE",
+      "severity": "warning",
+      "message": "180 expression/control operands are preserved as source-backed opaque expressions, not parsed AST nodes.",
+      "suggestion": "Add a real expression parser or validated LLM-assisted expression normalization before code generation."
+    }
+  ],
+  "issues": [],
+  "modules": [
+    {
+      "module": "ComplexConversionStressTest",
+      "procedures": [
+        {
+          "procedure": "ExecuteStressPipeline",
+          "unresolved_expression_count": 0,
+          "parsed_expression_count": 176,
+          "invocation_count": 65,
+          "pseudocode_coverage": "missing_detailed_section",
+          "control_flow_integrity": "repaired_needs_review"
+        },
+        {
+          "procedure": "InitInfrastructure",
+          "unresolved_expression_count": 0,
+          "parsed_expression_count": 18,
+          "invocation_count": 3,
+          "pseudocode_coverage": "detailed_section_present",
+          "control_flow_integrity": "no_frontend_block_diagnostic_reported"
+        },
+        {
+          "procedure": "NextSequence",
+          "unresolved_expression_count": 0,
+          "parsed_expression_count": 3,
+          "invocation_count": 0,
+          "pseudocode_coverage": "detailed_section_present",
+          "control_flow_integrity": "no_frontend_block_diagnostic_reported"
+        },
+        {
+          "procedure": "LogAudit",
+          "unresolved_expression_count": 0,
+          "parsed_expression_count": 9,
+          "invocation_count": 2,
+          "pseudocode_coverage": "missing_detailed_section",
+          "control_flow_integrity": "no_frontend_block_diagnostic_reported"
+        },
+        {
+          "procedure": "NormalizeLineEndings",
+          "unresolved_expression_count": 0,
+          "parsed_expression_count": 5,
+          "invocation_count": 2,
+          "pseudocode_coverage": "detailed_section_present",
+          "control_flow_integrity": "no_frontend_block_diagnostic_reported"
+        },
+        {
+          "procedure": "TryParseEntry",
+          "unresolved_expression_count": 0,
+          "parsed_expression_count": 70,
+          "invocation_count": 84,
+          "pseudocode_coverage": "missing_detailed_section",
+          "control_flow_integrity": "uncertain_due_to_frontend_diagnostic"
+        },
+        {
+          "procedure": "NormalizeEntryInPlace",
+          "unresolved_expression_count": 0,
+          "parsed_expression_count": 83,
+          "invocation_count": 15,
+          "pseudocode_coverage": "missing_detailed_section",
+          "control_flow_integrity": "uncertain_due_to_frontend_diagnostic"
+        },
+        {
+          "procedure": "DeduplicateBatchEntries",
+          "unresolved_expression_count": 0,
+          "parsed_expression_count": 78,
+          "invocation_count": 15,
+          "pseudocode_coverage": "detailed_section_present",
+          "control_flow_integrity": "repaired_needs_review"
+        },
+        {
+          "procedure": "RunLegacyGoSubAudit",
+          "unresolved_expression_count": 0,
+          "parsed_expression_count": 44,
+          "invocation_count": 12,
+          "pseudocode_coverage": "detailed_section_present",
+          "control_flow_integrity": "repaired_needs_review"
+        },
+        {
+          "procedure": "EvaluateDependencyDepth",
+          "unresolved_expression_count": 0,
+          "parsed_expression_count": 81,
+          "invocation_count": 72,
+          "pseudocode_coverage": "detailed_section_present",
+          "control_flow_integrity": "repaired_needs_review"
+        },
+        {
+          "procedure": "BuildUpsertSql",
+          "unresolved_expression_count": 0,
+          "parsed_expression_count": 9,
+          "invocation_count": 12,
+          "pseudocode_coverage": "detailed_section_present",
+          "control_flow_integrity": "no_frontend_block_diagnostic_reported"
+        },
+        {
+          "procedure": "SanitizeSqlIdentifier",
+          "unresolved_expression_count": 0,
+          "parsed_expression_count": 25,
+          "invocation_count": 5,
+          "pseudocode_coverage": "detailed_section_present",
+          "control_flow_integrity": "repaired_needs_review"
+        },
+        {
+          "procedure": "BuildSummaryReport",
+          "unresolved_expression_count": 0,
+          "parsed_expression_count": 45,
+          "invocation_count": 7,
+          "pseudocode_coverage": "detailed_section_present",
+          "control_flow_integrity": "uncertain_due_to_frontend_diagnostic"
+        },
+        {
+          "procedure": "GetAuditEntryCount",
+          "unresolved_expression_count": 0,
+          "parsed_expression_count": 6,
+          "invocation_count": 0,
+          "pseudocode_coverage": "detailed_section_present",
+          "control_flow_integrity": "no_frontend_block_diagnostic_reported"
+        },
+        {
+          "procedure": "ResetModuleState",
+          "unresolved_expression_count": 0,
+          "parsed_expression_count": 6,
+          "invocation_count": 0,
+          "pseudocode_coverage": "detailed_section_present",
+          "control_flow_integrity": "no_frontend_block_diagnostic_reported"
+        }
+      ]
+    }
+  ],
+  "policy": {
+    "full_module_and_procedure_snapshots_used": false,
+    "llm_used": false,
+    "opaque_expressions_guessed": false,
+    "parse_failures_preserved_as_unresolved": true,
+    "frontend_control_flow_repairs_auto_approved": false,
+    "pseudocode_is_supporting_evidence_not_ground_truth": true
+  }
+}
