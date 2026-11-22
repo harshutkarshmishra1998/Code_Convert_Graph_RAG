@@ -35,20 +35,79 @@
       ]
     }
   ],
+  "accuracy_verification": {
+    "status": "NOT_VERIFIED",
+    "implementation": "source_derived_java_template",
+    "source_procedure_mapping": {
+      "source_procedure_count": 1,
+      "ir_procedure_count": 1,
+      "source_only": [],
+      "ir_only": [],
+      "status": "matched"
+    },
+    "checks_passed": [
+      "Source file SHA-256 matches manifest.json",
+      "Normalized IR project name matches the source file stem",
+      "Source and normalized IR procedure-name sets match",
+      "Generated Java compiles with javac",
+      "All generated Java sources compile with Apache POI via Maven"
+    ],
+    "checks_not_performed": [
+      "Behavioral comparison against execution in a VBA host",
+      "Differential tests using equivalent VBA and Java inputs/outputs",
+      "Testing with the user's real workbooks or TSV inputs"
+    ],
+    "blocking_finding_count": 2,
+    "high_finding_count": 0,
+    "findings": [
+      {
+        "code": "SEMANTIC_VBA_ERROR_HANDLING",
+        "title": "VBA On Error runtime semantics",
+        "severity": "blocking",
+        "count": 1,
+        "explanation": "Implement a compatibility runtime for Resume Next, GoTo handler, GoTo 0, Err state and handler activation; this pass preserves directives but does not emulate execution.",
+        "examples": [
+          {
+            "procedure": "NormalizeSku",
+            "mode": "goto_handler",
+            "handler": "InvalidSku"
+          }
+        ]
+      },
+      {
+        "code": "SEMANTIC_LATE_BOUND_OBJECT_MEMBERS",
+        "title": "Late-bound COM/Object members",
+        "severity": "blocking",
+        "count": 1,
+        "explanation": "Define explicit Java interfaces/adapters for the actual COM object behavior. Object-typed references alone do not identify the target API.",
+        "examples": [
+          {
+            "procedure": "NormalizeSku",
+            "member": "Raise",
+            "owner_type": null
+          }
+        ]
+      }
+    ],
+    "known_limitations": [
+      {
+        "code": "VBA_VARIANT_RUNTIME",
+        "severity": "low",
+        "description": "Java callers represent VBA Null/Empty with explicit Java values; Java null alone represents only Null-like input."
+      }
+    ],
+    "note": "The source-derived template is not certified as behaviorally equivalent until its input/output behavior is compared with VBA."
+  },
+  "accuracy_status": "NOT_VERIFIED",
   "generated_with_runtime_requirements": true,
   "compile_status": "passed",
-  "compiler_output": "",
-  "limitations": [
+  "compiler_output": "Maven package completed successfully.",
+  "limitations": [],
+  "implementation_limitations": [
     {
-      "code": "VBA_ERROR_HANDLING",
-      "message": "On Error runtime behavior needs a target implementation.",
-      "procedure": "NormalizeSku",
-      "source_location": {
-        "line": 6,
-        "end_line": 6,
-        "file": "vba_sample_2.bas"
-      },
-      "source_text": "On Error GoTo InvalidSku"
+      "code": "VBA_VARIANT_RUNTIME",
+      "severity": "low",
+      "description": "Java callers represent VBA Null/Empty with explicit Java values; Java null alone represents only Null-like input."
     }
   ],
   "note": "Compilation verifies Java syntax only, not behavioral equivalence or availability of VBA host adapters."

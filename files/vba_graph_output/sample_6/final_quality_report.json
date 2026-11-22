@@ -1285,11 +1285,83 @@
               "status": "passed"
             },
             {
+              "path": "llm_handoff.json",
+              "status": "passed"
+            },
+            {
+              "path": "llm_handoff.md",
+              "status": "passed"
+            },
+            {
+              "path": "llm_handoff_BuildSummaryReport.json",
+              "status": "passed"
+            },
+            {
+              "path": "llm_handoff_BuildUpsertSql.json",
+              "status": "passed"
+            },
+            {
+              "path": "llm_handoff_DeduplicateBatchEntries.json",
+              "status": "passed"
+            },
+            {
+              "path": "llm_handoff_EvaluateDependencyDepth.json",
+              "status": "passed"
+            },
+            {
+              "path": "llm_handoff_ExecuteStressPipeline.json",
+              "status": "passed"
+            },
+            {
+              "path": "llm_handoff_GetAuditEntryCount.json",
+              "status": "passed"
+            },
+            {
+              "path": "llm_handoff_InitInfrastructure.json",
+              "status": "passed"
+            },
+            {
+              "path": "llm_handoff_LogAudit.json",
+              "status": "passed"
+            },
+            {
+              "path": "llm_handoff_NextSequence.json",
+              "status": "passed"
+            },
+            {
+              "path": "llm_handoff_NormalizeEntryInPlace.json",
+              "status": "passed"
+            },
+            {
+              "path": "llm_handoff_NormalizeLineEndings.json",
+              "status": "passed"
+            },
+            {
+              "path": "llm_handoff_ResetModuleState.json",
+              "status": "passed"
+            },
+            {
+              "path": "llm_handoff_RunLegacyGoSubAudit.json",
+              "status": "passed"
+            },
+            {
+              "path": "llm_handoff_SanitizeSqlIdentifier.json",
+              "status": "passed"
+            },
+            {
+              "path": "llm_handoff_TryParseEntry.json",
+              "status": "passed"
+            },
+            {
               "path": "manifest.json",
               "status": "passed"
             },
             {
               "path": "normalized_ir.json",
+              "status": "passed"
+            },
+            {
+              "path": "pipeline_run.json",
               "status": "passed"
             },
             {
@@ -1526,11 +1598,83 @@
             "status": "passed"
           },
           {
+            "path": "llm_handoff.json",
+            "status": "passed"
+          },
+          {
+            "path": "llm_handoff.md",
+            "status": "passed"
+          },
+          {
+            "path": "llm_handoff_BuildSummaryReport.json",
+            "status": "passed"
+          },
+          {
+            "path": "llm_handoff_BuildUpsertSql.json",
+            "status": "passed"
+          },
+          {
+            "path": "llm_handoff_DeduplicateBatchEntries.json",
+            "status": "passed"
+          },
+          {
+            "path": "llm_handoff_EvaluateDependencyDepth.json",
+            "status": "passed"
+          },
+          {
+            "path": "llm_handoff_ExecuteStressPipeline.json",
+            "status": "passed"
+          },
+          {
+            "path": "llm_handoff_GetAuditEntryCount.json",
+            "status": "passed"
+          },
+          {
+            "path": "llm_handoff_InitInfrastructure.json",
+            "status": "passed"
+          },
+          {
+            "path": "llm_handoff_LogAudit.json",
+            "status": "passed"
+          },
+          {
+            "path": "llm_handoff_NextSequence.json",
+            "status": "passed"
+          },
+          {
+            "path": "llm_handoff_NormalizeEntryInPlace.json",
+            "status": "passed"
+          },
+          {
+            "path": "llm_handoff_NormalizeLineEndings.json",
+            "status": "passed"
+          },
+          {
+            "path": "llm_handoff_ResetModuleState.json",
+            "status": "passed"
+          },
+          {
+            "path": "llm_handoff_RunLegacyGoSubAudit.json",
+            "status": "passed"
+          },
+          {
+            "path": "llm_handoff_SanitizeSqlIdentifier.json",
+            "status": "passed"
+          },
+          {
+            "path": "llm_handoff_TryParseEntry.json",
+            "status": "passed"
+          },
+          {
             "path": "manifest.json",
             "status": "passed"
           },
           {
             "path": "normalized_ir.json",
+            "status": "passed"
+          },
+          {
+            "path": "pipeline_run.json",
             "status": "passed"
           },
           {

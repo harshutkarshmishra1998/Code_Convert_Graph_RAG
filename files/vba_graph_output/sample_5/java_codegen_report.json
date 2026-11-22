@@ -183,74 +183,145 @@
       ]
     }
   ],
+  "accuracy_verification": {
+    "status": "NOT_VERIFIED",
+    "implementation": "source_derived_java_template",
+    "source_procedure_mapping": {
+      "source_procedure_count": 2,
+      "ir_procedure_count": 2,
+      "source_only": [],
+      "ir_only": [],
+      "status": "matched"
+    },
+    "checks_passed": [
+      "Source file SHA-256 matches manifest.json",
+      "Normalized IR project name matches the source file stem",
+      "Source and normalized IR procedure-name sets match",
+      "All generated Java sources compile with Apache POI via Maven"
+    ],
+    "checks_not_performed": [
+      "Behavioral comparison against execution in a VBA host",
+      "Differential tests using equivalent VBA and Java inputs/outputs",
+      "Testing with the user's real workbooks or TSV inputs"
+    ],
+    "blocking_finding_count": 3,
+    "high_finding_count": 0,
+    "findings": [
+      {
+        "code": "SEMANTIC_VBA_ERROR_HANDLING",
+        "title": "VBA On Error runtime semantics",
+        "severity": "blocking",
+        "count": 2,
+        "explanation": "Implement a compatibility runtime for Resume Next, GoTo handler, GoTo 0, Err state and handler activation; this pass preserves directives but does not emulate execution.",
+        "examples": [
+          {
+            "procedure": "ReconcileInventory",
+            "mode": "goto_handler",
+            "handler": "HandleError"
+          },
+          {
+            "procedure": "LogInventoryError",
+            "mode": "resume_next",
+            "handler": null
+          }
+        ]
+      },
+      {
+        "code": "SEMANTIC_LATE_BOUND_OBJECT_MEMBERS",
+        "title": "Late-bound COM/Object members",
+        "severity": "blocking",
+        "count": 22,
+        "explanation": "Define explicit Java interfaces/adapters for the actual COM object behavior. Object-typed references alone do not identify the target API.",
+        "examples": [
+          {
+            "procedure": "ReconcileInventory",
+            "member": "EnableEvents",
+            "owner_type": null
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "member": "Row",
+            "owner_type": null
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "member": "End",
+            "owner_type": null
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "member": "Cells",
+            "owner_type": "Worksheet"
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "member": "Count",
+            "owner_type": null
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "member": "Rows",
+            "owner_type": "Worksheet"
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "member": "Value2",
+            "owner_type": null
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "member": "Raise",
+            "owner_type": null
+          }
+        ]
+      },
+      {
+        "code": "SEMANTIC_COM_CREATEOBJECT",
+        "title": "COM object activation",
+        "severity": "blocking",
+        "count": 2,
+        "explanation": "Replace ProgID-based activation with an explicit Java implementation or integration adapter; preserve fallback behavior.",
+        "examples": [
+          {
+            "procedure": "ReconcileInventory",
+            "expression": "CreateObject(\"Scripting.Dictionary\")"
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "expression": "CreateObject(\"Scripting.Dictionary\")"
+          }
+        ]
+      }
+    ],
+    "known_limitations": [
+      {
+        "code": "EXCEL_APPLICATION_STATE",
+        "severity": "medium",
+        "description": "EnableEvents state and Excel's native sort semantics are not reproduced exactly."
+      },
+      {
+        "code": "VBA_LOCALE_CONVERSION",
+        "severity": "medium",
+        "description": "Java date and numeric parsing may differ from the host locale used by VBA IsDate, IsNumeric, and CDbl."
+      }
+    ],
+    "note": "The source-derived template is not certified as behaviorally equivalent until its input/output behavior is compared with VBA."
+  },
+  "accuracy_status": "NOT_VERIFIED",
   "generated_with_runtime_requirements": true,
   "compile_status": "passed",
-  "compiler_output": "",
-  "limitations": [
+  "compiler_output": "Maven package completed successfully.",
+  "limitations": [],
+  "implementation_limitations": [
     {
-      "code": "VBA_ERROR_HANDLING",
-      "message": "On Error runtime behavior needs a target implementation.",
-      "procedure": "ReconcileInventory",
-      "source_location": {
-        "line": 20,
-        "end_line": 20,
-        "file": "vba_sample_5.bas"
-      },
-      "source_text": "On Error GoTo HandleError"
+      "code": "EXCEL_APPLICATION_STATE",
+      "severity": "medium",
+      "description": "EnableEvents state and Excel's native sort semantics are not reproduced exactly."
     },
     {
-      "code": "VBA_HOST_ADAPTER_REQUIRED",
-      "message": "VBA host object 'Application' requires an application-specific Java adapter.",
-      "procedure": "ReconcileInventory",
-      "source_location": null,
-      "source_text": null
-    },
-    {
-      "code": "VBA_COM_ADAPTER_REQUIRED",
-      "message": "CreateObject requires a Java adapter for the requested COM server.",
-      "procedure": "ReconcileInventory",
-      "source_location": null,
-      "source_text": null
-    },
-    {
-      "code": "UNSUPPORTED_ASSIGNMENT_TARGET",
-      "message": "Assignment target cannot be lowered safely.",
-      "procedure": "ReconcileInventory",
-      "source_location": {
-        "line": 54,
-        "end_line": 54,
-        "file": "vba_sample_5.bas"
-      },
-      "source_text": "movementTotals(itemCode) = movementTotals(itemCode) + quantity"
-    },
-    {
-      "code": "VBA_LEGACY_JUMP",
-      "message": "goto control flow is explicitly marked for implementation.",
-      "procedure": "ReconcileInventory",
-      "source_location": {
-        "line": 92,
-        "end_line": 92,
-        "file": "vba_sample_5.bas"
-      },
-      "source_text": "GoTo CleanUp"
-    },
-    {
-      "code": "VBA_ERROR_HANDLING",
-      "message": "On Error runtime behavior needs a target implementation.",
-      "procedure": "LogInventoryError",
-      "source_location": {
-        "line": 110,
-        "end_line": 110,
-        "file": "vba_sample_5.bas"
-      },
-      "source_text": "On Error Resume Next"
-    },
-    {
-      "code": "VBA_HOST_ADAPTER_REQUIRED",
-      "message": "VBA host object 'ThisWorkbook' requires an application-specific Java adapter.",
-      "procedure": "LogInventoryError",
-      "source_location": null,
-      "source_text": null
+      "code": "VBA_LOCALE_CONVERSION",
+      "severity": "medium",
+      "description": "Java date and numeric parsing may differ from the host locale used by VBA IsDate, IsNumeric, and CDbl."
     }
   ],
   "note": "Compilation verifies Java syntax only, not behavioral equivalence or availability of VBA host adapters."

@@ -357,248 +357,178 @@
       ]
     }
   ],
+  "accuracy_verification": {
+    "status": "NOT_VERIFIED",
+    "implementation": "source_derived_java_template",
+    "source_procedure_mapping": {
+      "source_procedure_count": 15,
+      "ir_procedure_count": 15,
+      "source_only": [],
+      "ir_only": [],
+      "status": "matched"
+    },
+    "checks_passed": [
+      "Source file SHA-256 matches manifest.json",
+      "Normalized IR project name matches the source file stem",
+      "Source and normalized IR procedure-name sets match",
+      "Generated Java compiles with javac",
+      "All generated Java sources compile with Apache POI via Maven"
+    ],
+    "checks_not_performed": [
+      "Behavioral comparison against execution in a VBA host",
+      "Differential tests using equivalent VBA and Java inputs/outputs",
+      "Testing with the user's real workbooks or TSV inputs"
+    ],
+    "blocking_finding_count": 5,
+    "high_finding_count": 0,
+    "findings": [
+      {
+        "code": "SEMANTIC_VBA_ERROR_HANDLING",
+        "title": "VBA On Error runtime semantics",
+        "severity": "blocking",
+        "count": 6,
+        "explanation": "Implement a compatibility runtime for Resume Next, GoTo handler, GoTo 0, Err state and handler activation; this pass preserves directives but does not emulate execution.",
+        "examples": [
+          {
+            "procedure": "ExecuteStressPipeline",
+            "mode": "goto_handler",
+            "handler": "ErrHandler"
+          },
+          {
+            "procedure": "InitInfrastructure",
+            "mode": "resume_next",
+            "handler": null
+          },
+          {
+            "procedure": "InitInfrastructure",
+            "mode": "disable_handler",
+            "handler": null
+          },
+          {
+            "procedure": "TryParseEntry",
+            "mode": "goto_handler",
+            "handler": "ParseFail"
+          },
+          {
+            "procedure": "DeduplicateBatchEntries",
+            "mode": "resume_next",
+            "handler": null
+          },
+          {
+            "procedure": "DeduplicateBatchEntries",
+            "mode": "disable_handler",
+            "handler": null
+          }
+        ]
+      },
+      {
+        "code": "SEMANTIC_VBA_GOSUB_RETURN",
+        "title": "Legacy GoSub/Return control flow",
+        "severity": "blocking",
+        "count": 1,
+        "explanation": "Lower GoSub to an explicit continuation/return stack or a proven equivalent; never map Return to Java method return.",
+        "examples": [
+          {
+            "procedure": "RunLegacyGoSubAudit",
+            "label": "ValidateSingleEntry"
+          }
+        ]
+      },
+      {
+        "code": "SEMANTIC_LATE_BOUND_OBJECT_MEMBERS",
+        "title": "Late-bound COM/Object members",
+        "severity": "blocking",
+        "count": 2,
+        "explanation": "Define explicit Java interfaces/adapters for the actual COM object behavior. Object-typed references alone do not identify the target API.",
+        "examples": [
+          {
+            "procedure": "DeduplicateBatchEntries",
+            "member": "Add",
+            "owner_type": "Object"
+          },
+          {
+            "procedure": "DeduplicateBatchEntries",
+            "member": "Exists",
+            "owner_type": "Object"
+          }
+        ]
+      },
+      {
+        "code": "SEMANTIC_COM_CREATEOBJECT",
+        "title": "COM object activation",
+        "severity": "blocking",
+        "count": 2,
+        "explanation": "Replace ProgID-based activation with an explicit Java implementation or integration adapter; preserve fallback behavior.",
+        "examples": [
+          {
+            "procedure": "InitInfrastructure",
+            "expression": "CreateObject(\"Scripting.Dictionary\")"
+          },
+          {
+            "procedure": "DeduplicateBatchEntries",
+            "expression": "CreateObject(\"Scripting.Dictionary\")"
+          }
+        ]
+      },
+      {
+        "code": "SEMANTIC_VBA_ARRAY_INITIALIZATION_IDIOM",
+        "title": "Double-Not dynamic-array initialization check",
+        "severity": "blocking",
+        "count": 2,
+        "explanation": "Confirm the source runtime meaning and replace with an explicit initialized/uninitialized array state in Java. Do not translate Not Not as ordinary boolean negation.",
+        "examples": [
+          {
+            "procedure": "NormalizeEntryInPlace",
+            "source": "(Not Not entry.Tags) <> 0",
+            "operand_type": "array"
+          },
+          {
+            "procedure": "NormalizeEntryInPlace",
+            "source": "(Not Not entry.Tags) = 0",
+            "operand_type": "array"
+          }
+        ]
+      }
+    ],
+    "known_limitations": [
+      {
+        "code": "VBA_HOST_SCHEDULING",
+        "severity": "low",
+        "description": "DoEvents is represented by Thread.yield and does not provide Excel/VBA event-loop behavior."
+      },
+      {
+        "code": "VBA_LOCALE_CONVERSION",
+        "severity": "medium",
+        "description": "Date, Currency, and number formatting follow Java locale/runtime rules, which may differ from the VBA host."
+      },
+      {
+        "code": "VBA_ERROR_CONTEXT",
+        "severity": "medium",
+        "description": "The pipeline converts Java exceptions to a failure report but cannot reproduce every VBA Err.Number, source, and handler transition."
+      }
+    ],
+    "note": "The source-derived template is not certified as behaviorally equivalent until its input/output behavior is compared with VBA."
+  },
+  "accuracy_status": "NOT_VERIFIED",
   "generated_with_runtime_requirements": true,
   "compile_status": "passed",
-  "compiler_output": "",
-  "limitations": [
+  "compiler_output": "Maven package completed successfully.",
+  "limitations": [],
+  "implementation_limitations": [
     {
-      "code": "MODULE_TYPE_NOT_LOWERED",
-      "message": "Module declaration 'LedgerEntry' needs a target-language type mapping.",
-      "procedure": null,
-      "source_location": null,
-      "source_text": null
+      "code": "VBA_HOST_SCHEDULING",
+      "severity": "low",
+      "description": "DoEvents is represented by Thread.yield and does not provide Excel/VBA event-loop behavior."
     },
     {
-      "code": "MODULE_TYPE_NOT_LOWERED",
-      "message": "Module declaration 'BatchSummary' needs a target-language type mapping.",
-      "procedure": null,
-      "source_location": null,
-      "source_text": null
+      "code": "VBA_LOCALE_CONVERSION",
+      "severity": "medium",
+      "description": "Date, Currency, and number formatting follow Java locale/runtime rules, which may differ from the VBA host."
     },
     {
-      "code": "MODULE_TYPE_NOT_LOWERED",
-      "message": "Module declaration 'InternalGraphNode' needs a target-language type mapping.",
-      "procedure": null,
-      "source_location": null,
-      "source_text": null
-    },
-    {
-      "code": "VBA_ERROR_HANDLING",
-      "message": "On Error runtime behavior needs a target implementation.",
-      "procedure": "ExecuteStressPipeline",
-      "source_location": {
-        "line": 60,
-        "end_line": 60,
-        "file": "vba_sample_6.bas"
-      },
-      "source_text": "On Error GoTo ErrHandler"
-    },
-    {
-      "code": "UNSUPPORTED_REDIM_TARGET",
-      "message": "ReDim target is not a local array variable.",
-      "procedure": "ExecuteStressPipeline",
-      "source_location": {
-        "line": 82,
-        "end_line": 82,
-        "file": "vba_sample_6.bas"
-      },
-      "source_text": "ReDim batch.Entries(1 To UBound(lines) - LBound(lines) + 1)"
-    },
-    {
-      "code": "UNSUPPORTED_REDIM_TARGET",
-      "message": "ReDim target is not a local array variable.",
-      "procedure": "ExecuteStressPipeline",
-      "source_location": {
-        "line": 115,
-        "end_line": 115,
-        "file": "vba_sample_6.bas"
-      },
-      "source_text": "ReDim Preserve batch.Entries(1 To batch.RecordCount)"
-    },
-    {
-      "code": "UNSUPPORTED_ERASE_TARGET",
-      "message": "Erase target is not a local array variable.",
-      "procedure": "ExecuteStressPipeline",
-      "source_location": {
-        "line": 117,
-        "end_line": 117,
-        "file": "vba_sample_6.bas"
-      },
-      "source_text": "Erase batch.Entries"
-    },
-    {
-      "code": "VBA_ERROR_HANDLING",
-      "message": "On Error runtime behavior needs a target implementation.",
-      "procedure": "InitInfrastructure",
-      "source_location": {
-        "line": 145,
-        "end_line": 145,
-        "file": "vba_sample_6.bas"
-      },
-      "source_text": "On Error Resume Next"
-    },
-    {
-      "code": "VBA_COM_ADAPTER_REQUIRED",
-      "message": "CreateObject requires a Java adapter for the requested COM server.",
-      "procedure": "InitInfrastructure",
-      "source_location": null,
-      "source_text": null
-    },
-    {
-      "code": "LATE_BOUND_OBJECT_CREATION",
-      "message": "VBA object construction requires a target-specific adapter.",
-      "procedure": "InitInfrastructure",
-      "source_location": null,
-      "source_text": null
-    },
-    {
-      "code": "VBA_ERROR_HANDLING",
-      "message": "On Error runtime behavior needs a target implementation.",
-      "procedure": "InitInfrastructure",
-      "source_location": {
-        "line": 151,
-        "end_line": 151,
-        "file": "vba_sample_6.bas"
-      },
-      "source_text": "On Error GoTo 0"
-    },
-    {
-      "code": "LATE_BOUND_OBJECT_CREATION",
-      "message": "VBA object construction requires a target-specific adapter.",
-      "procedure": "LogAudit",
-      "source_location": null,
-      "source_text": null
-    },
-    {
-      "code": "VBA_ERROR_HANDLING",
-      "message": "On Error runtime behavior needs a target implementation.",
-      "procedure": "TryParseEntry",
-      "source_location": {
-        "line": 183,
-        "end_line": 183,
-        "file": "vba_sample_6.bas"
-      },
-      "source_text": "On Error GoTo ParseFail"
-    },
-    {
-      "code": "VBA_LEGACY_JUMP",
-      "message": "goto control flow is explicitly marked for implementation.",
-      "procedure": "TryParseEntry",
-      "source_location": null,
-      "source_text": "GoTo ParseFail"
-    },
-    {
-      "code": "UNSUPPORTED_REDIM_TARGET",
-      "message": "ReDim target is not a local array variable.",
-      "procedure": "TryParseEntry",
-      "source_location": {
-        "line": 216,
-        "end_line": 216,
-        "file": "vba_sample_6.bas"
-      },
-      "source_text": "ReDim target.Tags(1 To UBound(tagTokens) - LBound(tagTokens) + 1)"
-    },
-    {
-      "code": "UNSUPPORTED_REDIM_TARGET",
-      "message": "ReDim target is not a local array variable.",
-      "procedure": "TryParseEntry",
-      "source_location": {
-        "line": 221,
-        "end_line": 221,
-        "file": "vba_sample_6.bas"
-      },
-      "source_text": "ReDim target.Tags(1 To 1)"
-    },
-    {
-      "code": "UNSUPPORTED_REDIM_TARGET",
-      "message": "ReDim target is not a local array variable.",
-      "procedure": "NormalizeEntryInPlace",
-      "source_location": {
-        "line": 260,
-        "end_line": 260,
-        "file": "vba_sample_6.bas"
-      },
-      "source_text": "ReDim entry.Tags(1 To 1)"
-    },
-    {
-      "code": "UNSUPPORTED_REDIM_TARGET",
-      "message": "ReDim target is not a local array variable.",
-      "procedure": "NormalizeEntryInPlace",
-      "source_location": {
-        "line": 263,
-        "end_line": 263,
-        "file": "vba_sample_6.bas"
-      },
-      "source_text": "ReDim Preserve entry.Tags(1 To UBound(entry.Tags) + 1)"
-    },
-    {
-      "code": "VBA_ERROR_HANDLING",
-      "message": "On Error runtime behavior needs a target implementation.",
-      "procedure": "DeduplicateBatchEntries",
-      "source_location": {
-        "line": 280,
-        "end_line": 280,
-        "file": "vba_sample_6.bas"
-      },
-      "source_text": "On Error Resume Next"
-    },
-    {
-      "code": "VBA_COM_ADAPTER_REQUIRED",
-      "message": "CreateObject requires a Java adapter for the requested COM server.",
-      "procedure": "DeduplicateBatchEntries",
-      "source_location": null,
-      "source_text": null
-    },
-    {
-      "code": "VBA_ERROR_HANDLING",
-      "message": "On Error runtime behavior needs a target implementation.",
-      "procedure": "DeduplicateBatchEntries",
-      "source_location": {
-        "line": 282,
-        "end_line": 282,
-        "file": "vba_sample_6.bas"
-      },
-      "source_text": "On Error GoTo 0"
-    },
-    {
-      "code": "UNSUPPORTED_ERASE_TARGET",
-      "message": "Erase target is not a local array variable.",
-      "procedure": "DeduplicateBatchEntries",
-      "source_location": {
-        "line": 306,
-        "end_line": 306,
-        "file": "vba_sample_6.bas"
-      },
-      "source_text": "Erase batch.Entries"
-    },
-    {
-      "code": "VBA_LEGACY_JUMP",
-      "message": "gosub control flow is explicitly marked for implementation.",
-      "procedure": "RunLegacyGoSubAudit",
-      "source_location": {
-        "line": 327,
-        "end_line": 327,
-        "file": "vba_sample_6.bas"
-      },
-      "source_text": "GoSub ValidateSingleEntry"
-    },
-    {
-      "code": "VBA_LEGACY_JUMP",
-      "message": "gosub_return control flow is explicitly marked for implementation.",
-      "procedure": "RunLegacyGoSubAudit",
-      "source_location": {
-        "line": 345,
-        "end_line": 345,
-        "file": "vba_sample_6.bas"
-      },
-      "source_text": "Return"
-    },
-    {
-      "code": "LATE_BOUND_OBJECT_CREATION",
-      "message": "VBA object construction requires a target-specific adapter.",
-      "procedure": "ResetModuleState",
-      "source_location": null,
-      "source_text": null
+      "code": "VBA_ERROR_CONTEXT",
+      "severity": "medium",
+      "description": "The pipeline converts Java exceptions to a failure report but cannot reproduce every VBA Err.Number, source, and handler transition."
     }
   ],
   "note": "Compilation verifies Java syntax only, not behavioral equivalence or availability of VBA host adapters."

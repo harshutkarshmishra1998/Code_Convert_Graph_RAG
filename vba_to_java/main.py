@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import json
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 from typing import Callable
@@ -77,7 +79,7 @@ def main(input_path: str | Path, output: str | Path) -> int:
             "reason": "The pseudocode module sends source to an external LLM; this local pipeline does not make external requests.",
         })
 
-        code = stage("Java generation and javac check", lambda: generate_java(source_path, sample_dir))
+        code = stage("Java generation", lambda: generate_java(source_path, sample_dir))
         if code != 0:
             raise RuntimeError(f"Java generation or compilation failed with return code {code}")
 
@@ -103,9 +105,20 @@ def main(input_path: str | Path, output: str | Path) -> int:
 
         run_report["status"] = "completed"
         run_report["java_file"] = f"{source_path.stem}.java"
-        run_report["java_compile_status"] = json.loads(
+        java_report = json.loads(
             (sample_dir / "java_codegen_report.json").read_text(encoding="utf-8")
-        ).get("compile_status")
+        )
+        run_report["java_compile_status"] = java_report.get("compile_status")
+        run_report["accuracy_status"] = java_report.get("accuracy_status", "NOT_VERIFIED")
+        run_report["blocking_accuracy_findings"] = java_report.get(
+            "accuracy_verification", {}
+        ).get("blocking_finding_count", 0)
+        if run_report["blocking_accuracy_findings"]:
+            print(
+                f"[{sample_dir.name}] WARNING: Java behavior remains unverified, with "
+                f"{run_report['blocking_accuracy_findings']} blocking compatibility findings; "
+                "see java_codegen_report.json."
+            )
         return_code = 0
     except Exception as exc:
         run_report["status"] = "failed"
@@ -130,5 +143,68 @@ if __name__ == "__main__":
         input_path = project_root / "files" / f"vba_sample_{i}.bas"
         output = output_root / f"sample_{i}"
         status = max(status, main(input_path, output))
+
+    if status == 0:
+        mvn = shutil.which("mvn")
+        if mvn is None:
+            build_status = 1
+            build_output = "Maven is required to resolve Apache POI and compile all generated Java files."
+        else:
+            build = subprocess.run(
+                [mvn, "-q", "-DskipTests", "package"],
+                cwd=project_root,
+                capture_output=True,
+                text=True,
+                check=False,
+                timeout=300,
+            )
+            build_status = build.returncode
+            build_output = "\n".join(
+                part.strip() for part in (build.stdout, build.stderr) if part.strip()
+            )
+            if not build_output:
+                build_output = "Maven package completed successfully."
+
+        for i in n:
+            sample_dir = output_root / f"sample_{i}"
+            report_path = sample_dir / "java_codegen_report.json"
+            pipeline_path = sample_dir / "pipeline_run.json"
+            if not report_path.is_file() or not pipeline_path.is_file():
+                continue
+            java_report = json.loads(report_path.read_text(encoding="utf-8"))
+            pipeline_report = json.loads(pipeline_path.read_text(encoding="utf-8"))
+            stage_result = {
+                "name": "Maven Java project compilation",
+                "status": "completed" if build_status == 0 else "failed",
+                "return_code": build_status,
+            }
+            pipeline_report.setdefault("stages", []).append(stage_result)
+            if build_status == 0:
+                java_report["compile_status"] = "passed"
+                java_report["compiler_output"] = build_output
+                checks = java_report["accuracy_verification"].setdefault("checks_passed", [])
+                if "All generated Java sources compile with Apache POI via Maven" not in checks:
+                    checks.append("All generated Java sources compile with Apache POI via Maven")
+                pipeline_report["java_compile_status"] = "passed"
+            else:
+                java_report["compile_status"] = "failed"
+                java_report["compiler_output"] = build_output
+                java_report["accuracy_verification"]["checks_failed"] = [
+                    "All generated Java sources compile with Apache POI via Maven"
+                ]
+                pipeline_report["java_compile_status"] = "failed"
+                pipeline_report["status"] = "failed"
+                pipeline_report["error"] = "Maven Java project compilation failed."
+            report_path.write_text(
+                json.dumps(java_report, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            pipeline_path.write_text(
+                json.dumps(pipeline_report, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+        if build_status != 0:
+            print(f"ERROR: Java project compilation failed:\n{build_output}", file=sys.stderr)
+            status = 1
 
     raise SystemExit(status)

@@ -525,11 +525,27 @@
               "status": "passed"
             },
             {
+              "path": "llm_handoff.json",
+              "status": "passed"
+            },
+            {
+              "path": "llm_handoff.md",
+              "status": "passed"
+            },
+            {
+              "path": "llm_handoff_ImportDailySales.json",
+              "status": "passed"
+            },
+            {
               "path": "manifest.json",
               "status": "passed"
             },
             {
               "path": "normalized_ir.json",
+              "status": "passed"
+            },
+            {
+              "path": "pipeline_run.json",
               "status": "passed"
             },
             {
@@ -660,11 +676,27 @@
             "status": "passed"
           },
           {
+            "path": "llm_handoff.json",
+            "status": "passed"
+          },
+          {
+            "path": "llm_handoff.md",
+            "status": "passed"
+          },
+          {
+            "path": "llm_handoff_ImportDailySales.json",
+            "status": "passed"
+          },
+          {
             "path": "manifest.json",
             "status": "passed"
           },
           {
             "path": "normalized_ir.json",
+            "status": "passed"
+          },
+          {
+            "path": "pipeline_run.json",
             "status": "passed"
           },
           {

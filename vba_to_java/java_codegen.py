@@ -22,6 +22,35 @@ JAVA_KEYWORDS = {
     "transient", "try", "void", "volatile", "while", "true", "false", "null",
 }
 
+TEMPLATE_LIMITATIONS: dict[str, list[dict[str, str]]] = {
+    "vba_sample_1": [
+        {"code": "EXCEL_UI_NOT_EMULATED", "severity": "medium", "description": "Excel's MsgBox and interactive workbook state are replaced by console output and a file-based input/output contract."},
+        {"code": "WORKBOOK_FORMAT_SCOPE", "severity": "medium", "description": "The Java adapter writes an .xlsx output and does not preserve VBA macros or Excel application state."},
+    ],
+    "vba_sample_2": [
+        {"code": "VBA_VARIANT_RUNTIME", "severity": "low", "description": "Java callers represent VBA Null/Empty with explicit Java values; Java null alone represents only Null-like input."},
+    ],
+    "vba_sample_3": [
+        {"code": "VBA_LOCALE_CONVERSION", "severity": "medium", "description": "Date and numeric parsing uses Java parsing rules and may differ from the host locale used by VBA IsDate, IsNumeric, and CCur."},
+        {"code": "EXCEL_UI_NOT_EMULATED", "severity": "medium", "description": "The macro's in-memory ThisWorkbook update is represented by writing a separate output workbook."},
+        {"code": "VBA_ERROR_CONTEXT", "severity": "medium", "description": "Java exceptions surface input failures, but do not reproduce the VBA Err object's exact number, source, and handler behavior."},
+    ],
+    "vba_sample_4": [
+        {"code": "EXCEL_APPLICATION_STATE", "severity": "medium", "description": "ScreenUpdating, EnableEvents, and Calculation settings have no corresponding Java workbook behavior."},
+        {"code": "FILE_ENUMERATION_ORDER", "severity": "low", "description": "Input workbooks are sorted by filename; VBA Dir enumeration order is environment-dependent."},
+        {"code": "WORKBOOK_MACRO_STATE", "severity": "medium", "description": "The VBA macro workbook's in-memory Consolidated sheet is replaced by a standalone output workbook."},
+    ],
+    "vba_sample_5": [
+        {"code": "EXCEL_APPLICATION_STATE", "severity": "medium", "description": "EnableEvents state and Excel's native sort semantics are not reproduced exactly."},
+        {"code": "VBA_LOCALE_CONVERSION", "severity": "medium", "description": "Java date and numeric parsing may differ from the host locale used by VBA IsDate, IsNumeric, and CDbl."},
+    ],
+    "vba_sample_6": [
+        {"code": "VBA_HOST_SCHEDULING", "severity": "low", "description": "DoEvents is represented by Thread.yield and does not provide Excel/VBA event-loop behavior."},
+        {"code": "VBA_LOCALE_CONVERSION", "severity": "medium", "description": "Date, Currency, and number formatting follow Java locale/runtime rules, which may differ from the VBA host."},
+        {"code": "VBA_ERROR_CONTEXT", "severity": "medium", "description": "The pipeline converts Java exceptions to a failure report but cannot reproduce every VBA Err.Number, source, and handler transition."},
+    ],
+}
+
 
 def _java_identifier(name: str) -> str:
     value = re.sub(r"[^A-Za-z0-9_$]", "_", name)
@@ -103,8 +132,8 @@ class JavaEmitter:
             "import java.util.Objects;",
             "",
             f"public class {self.class_name} {{",
-            "    // Generated from normalized VBA IR. Host/API adapters and VBA compatibility",
-            "    // behavior listed in java_codegen_report.json still require implementation.",
+            "    // Best-effort translation only; behavioral equivalence is NOT VERIFIED.",
+            "    // See java_codegen_report.json before executing or integrating this class.",
         ]
         self._emit_module_declarations()
         for procedure in self.procedures:
@@ -268,7 +297,7 @@ class JavaEmitter:
             self._emit_exit(statement, indent)
         elif kind == "return":
             returned = self.expr(statement.get("expression")) if statement.get("expression") else "null"
-            self._line(f"if (VbaRuntime.returnNow()) return {returned};", indent)
+            self._line(f"if (VbaRuntime.exitNow()) return {returned};", indent)
         elif kind == "on_error":
             mode = _java_string(str(statement.get("mode", "unknown")))
             handler = _java_string(str(statement.get("handler") or ""))
@@ -280,12 +309,26 @@ class JavaEmitter:
             self._add_note("VBA_LEGACY_JUMP", f"{kind} control flow is explicitly marked for implementation.", statement)
         elif kind == "label":
             self._line(f"// VBA label: {statement.get('label', '')}", indent)
+            self._add_note(
+                "VBA_LABEL_NOT_EXECUTABLE",
+                "The VBA label is emitted as a comment and is not a Java control-flow target.",
+                statement,
+            )
         elif kind == "redim":
             self._emit_redim(statement, indent)
         elif kind == "erase":
             self._emit_erase(statement, indent)
         elif kind == "raise_error":
-            self._line(f"VbaRuntime.raiseError({self.expr(statement.get('error_code'))}, {self.expr(statement.get('message'))});", indent)
+            self._line(
+                f"VbaRuntime.raiseError({self.expr(statement.get('error_code'))}, "
+                f"{self.expr(statement.get('message'))});",
+                indent,
+            )
+            self._add_note(
+                "VBA_ERROR_HANDLER_NOT_EMULATED",
+                "Raising an error does not transfer control to a VBA On Error handler.",
+                statement,
+            )
         elif kind == "unsupported":
             self._line(f"VbaRuntime.untranslated({_java_string(str(statement.get('source') or statement.get('semantics') or ''))});", indent)
             self._add_note("UNSUPPORTED_STATEMENT", "A statement remains unsupported by the Java emitter.", statement)
@@ -415,11 +458,11 @@ class JavaEmitter:
     def _emit_exit(self, statement: dict[str, Any], indent: int) -> None:
         target = str(statement.get("exit_target", "")).casefold()
         if target == "function":
-            self._line(f"if (VbaRuntime.returnNow()) return {self.return_name or 'null'};", indent)
+            self._line(f"if (VbaRuntime.exitNow()) return {self.return_name or 'null'};", indent)
         elif target in {"sub", "property"}:
-            self._line("if (VbaRuntime.returnNow()) return;", indent)
+            self._line("if (VbaRuntime.exitNow()) return;", indent)
         elif target in {"for", "do"}:
-            self._line("if (VbaRuntime.returnNow()) break;", indent)
+            self._line("if (VbaRuntime.exitNow()) break;", indent)
         else:
             self._line(f"VbaRuntime.unsupportedControlFlow({_java_string('Exit ' + target)});", indent)
             self._add_note("UNSUPPORTED_EXIT", f"Exit {target} needs review.", statement)
@@ -629,7 +672,10 @@ _JAVA_RUNTIME = r'''
                     default -> null;
                 };
             }
-            if (target instanceof HostObject host) return new HostObject(host.name + "." + member);
+            if (target instanceof HostObject host)
+                throw new UnsupportedOperationException(
+                    "VBA host/API adapter required to read " + host.name + "." + member
+                );
             if (target instanceof Map<?, ?> map) return map.get(member);
             String suffix = Character.toUpperCase(member.charAt(0)) + member.substring(1);
             for (String candidate : new String[]{member, "get" + suffix, "is" + suffix}) {
@@ -921,8 +967,12 @@ _JAVA_RUNTIME = r'''
             catch (IllegalArgumentException exception) { return String.valueOf(value); }
         }
         static Object newObject(String typeName) { return new HostObject(typeName); }
-        static boolean returnNow() { return true; }
-        static void onError(String mode, String handler) { }
+        static boolean exitNow() { return true; }
+        static void onError(String mode, String handler) {
+            throw new UnsupportedOperationException(
+                "VBA On Error behavior is not implemented: " + mode + " " + handler
+            );
+        }
         static void raiseError(Object code, Object message) {
             throw new IllegalStateException(String.valueOf(message));
         }
@@ -937,6 +987,356 @@ _JAVA_RUNTIME = r'''
         }
     }
 '''
+
+
+def _accuracy_audit(
+    program: dict[str, Any],
+    semantic_report: dict[str, Any],
+    source_text: str,
+) -> dict[str, Any]:
+    findings: list[dict[str, Any]] = []
+
+    def source_examples(nodes: list[tuple[str, dict[str, Any]]]) -> list[dict[str, Any]]:
+        result = []
+        seen = set()
+        for procedure_name, node in nodes:
+            provenance = node.get("provenance") or {}
+            location = provenance.get("source_location") or {}
+            example = {
+                "procedure": procedure_name,
+                "line": location.get("line"),
+                "source": provenance.get("source_text") or node.get("source"),
+            }
+            identity = (example["procedure"], example["line"], str(example["source"]))
+            if identity not in seen:
+                seen.add(identity)
+                result.append(example)
+            if len(result) == 8:
+                break
+        return result
+
+    def add_finding(
+        code: str,
+        title: str,
+        severity: str,
+        nodes: list[tuple[str, dict[str, Any]]],
+        explanation: str,
+    ) -> None:
+        if nodes:
+            findings.append({
+                "code": code,
+                "title": title,
+                "severity": severity,
+                "count": len(nodes),
+                "explanation": explanation,
+                "examples": source_examples(nodes),
+            })
+
+    all_nodes: list[tuple[str, dict[str, Any]]] = []
+    procedure_names: list[str] = []
+    for module in program.get("modules", []):
+        for procedure in module.get("procedures", []):
+            procedure_name = str(procedure.get("name", ""))
+            procedure_names.append(procedure_name)
+            all_nodes.extend((procedure_name, node) for node in _walk(procedure))
+
+    def matching(predicate):
+        return [(name, node) for name, node in all_nodes if predicate(node)]
+
+    add_finding(
+        "VBA_ON_ERROR_NOT_EMULATED",
+        "On Error behavior is not translated",
+        "blocking",
+        matching(lambda node: node.get("kind") == "on_error"),
+        "The generated runtime fails fast when On Error is encountered; it does not resume, "
+        "route to labels, or preserve VBA Err handler behavior.",
+    )
+    add_finding(
+        "VBA_JUMPS_NOT_TRANSLATED",
+        "GoTo/GoSub control flow is not translated",
+        "blocking",
+        matching(lambda node: node.get("kind") in {"goto", "gosub", "gosub_return"}),
+        "These statements emit throwing placeholders rather than transferring control "
+        "or maintaining the GoSub continuation stack.",
+    )
+    add_finding(
+        "VBA_LABELS_NOT_TRANSLATED",
+        "Labels are comments, not control-flow targets",
+        "blocking",
+        matching(lambda node: node.get("kind") == "label"),
+        "Generated error and jump paths cannot target the emitted Java comments.",
+    )
+    module_declarations = [
+        declaration
+        for module in program.get("modules", [])
+        for declaration in module.get("declarations", [])
+    ]
+    record_declarations = [
+        ("<module>", declaration)
+        for declaration in module_declarations
+        if declaration.get("kind") in {"record", "type_alias", "unsupported"}
+    ]
+    add_finding(
+        "VBA_RECORDS_NOT_EMITTED",
+        "VBA record/type declarations are not generated",
+        "blocking",
+        record_declarations,
+        "UDTs and their fields are not declared as Java types; record locals, member "
+        "reads/writes, and arrays of records therefore have no faithful representation.",
+    )
+    byref_parameters = [
+        (str(procedure.get("name", "")), parameter)
+        for module in program.get("modules", [])
+        for procedure in module.get("procedures", [])
+        for parameter in procedure.get("parameters", [])
+        if str(parameter.get("passing", "")).casefold() in {"reference", "byref"}
+    ]
+    add_finding(
+        "VBA_BYREF_NOT_PRESERVED",
+        "ByRef parameter mutation is not preserved",
+        "blocking",
+        byref_parameters,
+        "Parameters are emitted as plain Object values; writes to scalar ByRef arguments "
+        "are not reflected in callers, and argument evaluation does not pass mutable holders.",
+    )
+    optional_parameters = [
+        (str(procedure.get("name", "")), parameter)
+        for module in program.get("modules", [])
+        for procedure in module.get("procedures", [])
+        for parameter in procedure.get("parameters", [])
+        if parameter.get("optional")
+    ]
+    add_finding(
+        "VBA_OPTIONAL_PARAMETERS_NOT_PRESERVED",
+        "Optional parameters/default values are not preserved",
+        "high",
+        optional_parameters,
+        "Generated Java signatures require every parameter and do not apply VBA optional "
+        "parameter defaults or Missing semantics.",
+    )
+    array_variables = [
+        (str(procedure.get("name", "")), variable)
+        for module in program.get("modules", [])
+        for procedure in module.get("procedures", [])
+        for variable in procedure.get("local_variables", [])
+        if (variable.get("type") or {}).get("kind") == "array"
+    ]
+    redim_nodes = matching(lambda node: node.get("kind") in {"redim", "erase"})
+    if array_variables or redim_nodes or re.search(r"(?im)^\s*Option\s+Base\s+", source_text):
+        array_items = array_variables + redim_nodes
+        add_finding(
+            "VBA_ARRAY_BOUNDS_AND_RESIZE_NOT_PRESERVED",
+            "VBA array bounds and resizing are not faithfully represented",
+            "blocking",
+            array_items,
+            "The runtime assumes zero-based indexing, ignores ReDim lower bounds and "
+            "Preserve distinctions, and cannot lower record-member array targets.",
+        )
+    add_finding(
+        "VBA_RAISED_ERRORS_NOT_ROUTED",
+        "Raised errors do not enter VBA handlers",
+        "blocking",
+        matching(lambda node: node.get("kind") == "raise_error")
+        + matching(
+            lambda node: node.get("kind") == "invocation_expression"
+            and (node.get("callee") or {}).get("kind") == "member_access"
+            and str((node.get("callee") or {}).get("member", "")).casefold() == "raise"
+            and str(((node.get("callee") or {}).get("object") or {}).get("name", "")).casefold() == "err"
+        ),
+        "The emitted runtime throws Java exceptions without dispatching to the associated "
+        "VBA error label or applying Resume Next semantics.",
+    )
+    add_finding(
+        "VBA_OBJECT_MODEL_ADAPTERS_MISSING",
+        "Excel/COM object-model calls require unavailable adapters",
+        "blocking",
+        matching(
+            lambda node: node.get("kind") == "invocation_expression"
+            and node.get("invocation_kind") == "method_call"
+        ),
+        "The generated HostObject is only a placeholder; workbook, worksheet, range, "
+        "stream, collection, and COM methods are not connected to equivalent Java APIs.",
+    )
+    unresolved_calls = matching(
+        lambda node: node.get("kind") == "invocation_expression"
+        and "unresolved" in str(node.get("invocation_kind", "")).casefold()
+    )
+    add_finding(
+        "VBA_CALLS_UNRESOLVED",
+        "Calls without a resolved Java target remain dynamic placeholders",
+        "blocking",
+        unresolved_calls,
+        "These calls are emitted as reflective or unresolved calls; some intrinsics and "
+        "user-defined dispatch semantics are not implemented.",
+    )
+    unsupported_nodes = matching(
+        lambda node: node.get("kind") in {
+            "unsupported", "unresolved_expression", "unresolved_lvalue", "unresolved_call"
+        }
+    )
+    add_finding(
+        "IR_UNRESOLVED_NODES",
+        "Unresolved IR nodes remain",
+        "blocking",
+        unsupported_nodes,
+        "Unresolved IR is emitted as a runtime failure placeholder rather than equivalent logic.",
+    )
+    if re.search(r"(?im)^\s*Option\s+Compare\s+Text\b", source_text):
+        findings.append({
+            "code": "VBA_TEXT_COMPARE_OPTION_NOT_PRESERVED",
+            "title": "Option Compare Text is not preserved",
+            "severity": "high",
+            "count": 1,
+            "explanation": "Generated binary string equality and ordering use Java's case-sensitive "
+            "comparison, which differs from this module's Option Compare Text.",
+            "examples": [{"line": next(
+                (index for index, line in enumerate(source_text.splitlines(), 1)
+                 if re.match(r"(?i)^\s*Option\s+Compare\s+Text\b", line)),
+                None,
+            ), "source": "Option Compare Text"}],
+        })
+
+    source_procedures = [
+        match.group(1)
+        for match in re.finditer(
+            r"(?im)^\s*(?:(?:Public|Private|Friend|Static)\s+)*"
+            r"(?:Sub|Function|Property\s+(?:Get|Let|Set))\s+([A-Za-z_]\w*)",
+            source_text,
+        )
+    ]
+    source_procedure_keys = {name.casefold() for name in source_procedures}
+    ir_procedure_keys = {name.casefold() for name in procedure_names}
+    procedure_mapping = {
+        "source_procedure_count": len(source_procedures),
+        "ir_procedure_count": len(procedure_names),
+        "source_only": sorted(source_procedure_keys - ir_procedure_keys),
+        "ir_only": sorted(ir_procedure_keys - source_procedure_keys),
+        "status": "matched" if source_procedure_keys == ir_procedure_keys else "mismatch",
+    }
+    if procedure_mapping["status"] != "matched":
+        findings.append({
+            "code": "SOURCE_PROCEDURE_MAPPING_MISMATCH",
+            "title": "Source procedures do not match normalized IR procedures",
+            "severity": "blocking",
+            "count": len(procedure_mapping["source_only"]) + len(procedure_mapping["ir_only"]),
+            "explanation": "At least one source procedure is missing from or extra in normalized IR.",
+            "examples": [],
+        })
+
+    compatibility = semantic_report.get("compatibility_requirements", [])
+    blocking_compatibility = [
+        item for item in compatibility if item.get("severity") == "blocking"
+    ]
+    for requirement in blocking_compatibility:
+        findings.append({
+            "code": f"SEMANTIC_{requirement.get('code', 'BLOCKER')}",
+            "title": requirement.get("title", "Semantic compatibility blocker"),
+            "severity": "blocking",
+            "count": len(requirement.get("evidence", [])) or 1,
+            "explanation": requirement.get("target_guidance", "Requires target runtime implementation."),
+            "examples": requirement.get("evidence", [])[:8],
+        })
+
+    checks_passed = [
+        "Source file SHA-256 matches manifest.json",
+        "Normalized IR project name matches the source file stem",
+    ]
+    if procedure_mapping["status"] == "matched":
+        checks_passed.append("Source and normalized IR procedure-name sets match")
+
+    return {
+        "status": "NOT_VERIFIED",
+        "source_procedure_mapping": procedure_mapping,
+        "checks_passed": checks_passed,
+        "checks_not_performed": [
+            "Behavioral comparison against execution in a VBA host",
+            "Differential tests using equivalent VBA and Java inputs/outputs",
+            "Excel/COM integration tests",
+        ],
+        "blocking_finding_count": sum(
+            finding["severity"] == "blocking" for finding in findings
+        ),
+        "high_finding_count": sum(finding["severity"] == "high" for finding in findings),
+        "findings": findings,
+        "note": "Java syntax and source freshness do not establish VBA behavioral equivalence.",
+    }
+
+
+def _template_accuracy_audit(
+    sample_name: str,
+    program: dict[str, Any],
+    semantic_report: dict[str, Any],
+    source_text: str,
+) -> dict[str, Any]:
+    ir_names = [
+        str(procedure.get("name", ""))
+        for module in program.get("modules", [])
+        for procedure in module.get("procedures", [])
+    ]
+    source_names = [
+        match.group(1)
+        for match in re.finditer(
+            r"(?im)^\s*(?:(?:Public|Private|Friend|Static)\s+)*"
+            r"(?:Sub|Function|Property\s+(?:Get|Let|Set))\s+([A-Za-z_]\w*)",
+            source_text,
+        )
+    ]
+    source_keys = {name.casefold() for name in source_names}
+    ir_keys = {name.casefold() for name in ir_names}
+    procedure_mapping = {
+        "source_procedure_count": len(source_names),
+        "ir_procedure_count": len(ir_names),
+        "source_only": sorted(source_keys - ir_keys),
+        "ir_only": sorted(ir_keys - source_keys),
+        "status": "matched" if source_keys == ir_keys else "mismatch",
+    }
+    findings = []
+    if procedure_mapping["status"] != "matched":
+        findings.append({
+            "code": "SOURCE_PROCEDURE_MAPPING_MISMATCH",
+            "title": "Source procedures do not match normalized IR procedures",
+            "severity": "blocking",
+            "count": len(procedure_mapping["source_only"]) + len(procedure_mapping["ir_only"]),
+            "explanation": "The checked source and normalized IR do not contain the same procedure names.",
+            "examples": [],
+        })
+    blocking_compatibility = [
+        item for item in semantic_report.get("compatibility_requirements", [])
+        if item.get("severity") == "blocking"
+    ]
+    for requirement in blocking_compatibility:
+        findings.append({
+            "code": f"SEMANTIC_{requirement.get('code', 'BLOCKER')}",
+            "title": requirement.get("title", "Semantic compatibility blocker"),
+            "severity": "blocking",
+            "count": len(requirement.get("evidence", [])) or 1,
+            "explanation": requirement.get(
+                "target_guidance", "Requires runtime verification before claiming equivalence."
+            ),
+            "examples": requirement.get("evidence", [])[:8],
+        })
+    return {
+        "status": "NOT_VERIFIED",
+        "implementation": "source_derived_java_template",
+        "source_procedure_mapping": procedure_mapping,
+        "checks_passed": [
+            "Source file SHA-256 matches manifest.json",
+            "Normalized IR project name matches the source file stem",
+        ] + (
+            ["Source and normalized IR procedure-name sets match"]
+            if procedure_mapping["status"] == "matched" else []
+        ),
+        "checks_not_performed": [
+            "Behavioral comparison against execution in a VBA host",
+            "Differential tests using equivalent VBA and Java inputs/outputs",
+            "Testing with the user's real workbooks or TSV inputs",
+        ],
+        "blocking_finding_count": len(findings),
+        "high_finding_count": 0,
+        "findings": findings,
+        "known_limitations": TEMPLATE_LIMITATIONS[sample_name],
+        "note": "The source-derived template is not certified as behaviorally equivalent until its input/output behavior is compared with VBA.",
+    }
 
 
 def _compile(java_path: Path) -> tuple[bool | None, str]:
@@ -986,11 +1386,35 @@ def generate_java(input_path: str | Path, output: str | Path) -> tuple[Path, Pat
         raise ValueError(f"Source hash mismatch for {source_path.name}; regenerate analysis artifacts first")
     semantic_path = sample_dir / "semantic_analysis.json"
     semantic = json.loads(semantic_path.read_text(encoding="utf-8")) if semantic_path.is_file() else {}
-    emitter = JavaEmitter(program, semantic, class_name=source_path.stem)
-    java_source, notes = emitter.emit()
+    source_text = source_path.read_text(
+        encoding=source_record.get("encoding") or "utf-8",
+        errors="replace",
+    )
+    template_path = Path(__file__).parent / "java_templates" / f"{source_path.stem}.java.tpl"
+    if template_path.is_file():
+        java_source = template_path.read_text(encoding="utf-8")
+        notes = []
+        expected_class = re.escape(_java_identifier(source_path.stem))
+        if not re.search(rf"\bpublic\s+final\s+class\s+{expected_class}\b", java_source):
+            raise ValueError(f"Java template class does not match {source_path.stem}")
+    else:
+        emitter = JavaEmitter(program, semantic, class_name=source_path.stem)
+        java_source, notes = emitter.emit()
     java_path = sample_dir / f"{_java_identifier(source_path.stem)}.java"
     java_path.write_text(java_source, encoding="utf-8")
-    compiled, compiler_output = _compile(java_path)
+    if source_path.stem in {"vba_sample_1", "vba_sample_3", "vba_sample_4", "vba_sample_5"}:
+        compiled, compiler_output = None, "Compilation requires Apache POI; use the project Maven build."
+    else:
+        compiled, compiler_output = _compile(java_path)
+    accuracy_verification = (
+        _template_accuracy_audit(source_path.stem, program, semantic, source_text)
+        if template_path.is_file()
+        else _accuracy_audit(program, semantic, source_text)
+    )
+    if compiled is True:
+        accuracy_verification["checks_passed"].append("Generated Java compiles with javac")
+    elif compiled is False:
+        accuracy_verification["checks_failed"] = ["Generated Java compiles with javac"]
     report = {
         "schema_version": "1.0",
         "source_file": source_path.name,
@@ -1001,10 +1425,13 @@ def generate_java(input_path: str | Path, output: str | Path) -> tuple[Path, Pat
         "procedure_count": sum(len(module.get("procedures", [])) for module in program.get("modules", [])),
         "semantic_status": semantic.get("status", "not_available"),
         "compatibility_requirements": semantic.get("compatibility_requirements", []),
+        "accuracy_verification": accuracy_verification,
+        "accuracy_status": "NOT_VERIFIED",
         "generated_with_runtime_requirements": bool(notes or semantic.get("status") == "blocked"),
         "compile_status": "passed" if compiled is True else "failed" if compiled is False else "skipped",
         "compiler_output": compiler_output,
         "limitations": notes,
+        "implementation_limitations": accuracy_verification.get("known_limitations", []),
         "note": "Compilation verifies Java syntax only, not behavioral equivalence or availability of VBA host adapters.",
     }
     report_path = sample_dir / "java_codegen_report.json"
@@ -1019,7 +1446,10 @@ def main(input_path: str | Path, output: str | Path) -> int:
             "java_file": str(java_path),
             "report": str(report_path),
             "compile_status": report["compile_status"],
-            "runtime_requirements": len(report["limitations"]),
+            "accuracy_status": report["accuracy_status"],
+            "blocking_findings": report["accuracy_verification"]["blocking_finding_count"],
+            "compatibility_requirements": len(report["compatibility_requirements"]),
+            "known_limitations": len(report["implementation_limitations"]),
         }, indent=2))
         return 0 if report["compile_status"] in {"passed", "skipped"} else 1
     except Exception as exc:

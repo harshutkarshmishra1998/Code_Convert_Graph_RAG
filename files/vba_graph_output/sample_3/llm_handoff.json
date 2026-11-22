@@ -325,13 +325,13 @@
       },
       "intelligent_fixer_log": {
         "file": "intelligent_fixer_log.json",
-        "sha256": "a9463017509774a38036e14dfde6c868e7835cf215fae16c7ac7a978a4a1d5e6",
-        "size_bytes": 13863
+        "sha256": "0756fe4cd6b92698c0bfe1cd5a875ce937b1242c484f9ef153328bbe383e2013",
+        "size_bytes": 69131
       },
       "final_quality_report": {
         "file": "final_quality_report.json",
-        "sha256": "b5e7edd1e3e80bf3367260f0c98bf5e05812365e11b3ef809d2cbde3185cd7ed",
-        "size_bytes": 24818
+        "sha256": "cfc36644549c41c1ebf9913bb6fd538d9f022c5406e7089ba9c112900328dae7",
+        "size_bytes": 25650
       },
       "unresolved_issues": {
         "file": "unresolved_issues.json",
