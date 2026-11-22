@@ -212,7 +212,6 @@
   ],
   "accuracy_verification": {
     "status": "NOT_VERIFIED",
-    "implementation": "source_derived_java_template",
     "source_procedure_mapping": {
       "source_procedure_count": 1,
       "ir_procedure_count": 1,
@@ -224,16 +223,165 @@
       "Source file SHA-256 matches manifest.json",
       "Normalized IR project name matches the source file stem",
       "Source and normalized IR procedure-name sets match",
-      "All generated Java sources compile with Apache POI via Maven"
+      "Generated Java passes javac syntax/type checking"
     ],
     "checks_not_performed": [
       "Behavioral comparison against execution in a VBA host",
       "Differential tests using equivalent VBA and Java inputs/outputs",
-      "Testing with the user's real workbooks or TSV inputs"
+      "Excel/COM integration tests"
     ],
-    "blocking_finding_count": 3,
+    "blocking_finding_count": 9,
     "high_finding_count": 0,
     "findings": [
+      {
+        "code": "VBA_ON_ERROR_NOT_EMULATED",
+        "title": "On Error behavior is not translated",
+        "severity": "blocking",
+        "count": 1,
+        "explanation": "The generated runtime fails fast when On Error is encountered; it does not resume, route to labels, or preserve VBA Err handler behavior.",
+        "examples": [
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": 18,
+            "source": "On Error GoTo HandleError"
+          }
+        ]
+      },
+      {
+        "code": "VBA_JUMPS_NOT_TRANSLATED",
+        "title": "GoTo/GoSub control flow is not translated",
+        "severity": "blocking",
+        "count": 1,
+        "explanation": "These statements emit throwing placeholders rather than transferring control or maintaining the GoSub continuation stack.",
+        "examples": [
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": 83,
+            "source": "GoTo CleanUp"
+          }
+        ]
+      },
+      {
+        "code": "VBA_LABELS_NOT_TRANSLATED",
+        "title": "Labels are comments, not control-flow targets",
+        "severity": "blocking",
+        "count": 2,
+        "explanation": "Generated error and jump paths cannot target the emitted Java comments.",
+        "examples": [
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": 85,
+            "source": "HandleError:"
+          },
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": 90,
+            "source": "CleanUp:"
+          }
+        ]
+      },
+      {
+        "code": "VBA_RAISED_ERRORS_NOT_ROUTED",
+        "title": "Raised errors do not enter VBA handlers",
+        "severity": "blocking",
+        "count": 3,
+        "explanation": "The emitted runtime throws Java exceptions without dispatching to the associated VBA error label or applying Resume Next semantics.",
+        "examples": [
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": null,
+            "source": "Err.Raise vbObjectError + 3002, \"ConsolidateDepartmentFiles\", \"Output path must use the .xlsx extension.\""
+          },
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": null,
+            "source": "Err.Raise vbObjectError + 3003, \"ConsolidateDepartmentFiles\", \"Output cannot replace the macro workbook.\""
+          },
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": null,
+            "source": "Err.Raise vbObjectError + 3001, \"ConsolidateDepartmentFiles\", \"Input folder is unavailable.\""
+          }
+        ]
+      },
+      {
+        "code": "VBA_OBJECT_MODEL_ADAPTERS_MISSING",
+        "title": "Excel/COM object-model calls require unavailable adapters",
+        "severity": "blocking",
+        "count": 35,
+        "explanation": "The generated HostObject is only a placeholder; workbook, worksheet, range, stream, collection, and COM methods are not connected to equivalent Java APIs.",
+        "examples": [
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": null,
+            "source": "Err.Clear"
+          },
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": null,
+            "source": "Err.Raise vbObjectError + 3002, \"ConsolidateDepartmentFiles\", \"Output path must use the .xlsx extension.\""
+          },
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": null,
+            "source": "Err.Raise vbObjectError + 3003, \"ConsolidateDepartmentFiles\", \"Output cannot replace the macro workbook.\""
+          },
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": null,
+            "source": "Err.Raise vbObjectError + 3001, \"ConsolidateDepartmentFiles\", \"Input folder is unavailable.\""
+          },
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": null,
+            "source": null
+          },
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": null,
+            "source": "ThisWorkbook.Worksheets(\"Consolidated\")"
+          },
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": null,
+            "source": "targetSheet.Cells.ClearContents"
+          },
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": null,
+            "source": "Workbooks.Open(Filename:=inputFolder & fileName, ReadOnly:=True)"
+          }
+        ]
+      },
+      {
+        "code": "VBA_CALLS_UNRESOLVED",
+        "title": "Calls without a resolved Java target remain dynamic placeholders",
+        "severity": "blocking",
+        "count": 4,
+        "explanation": "These calls are emitted as reflective or unresolved calls; some intrinsics and user-defined dispatch semantics are not implemented.",
+        "examples": [
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": null,
+            "source": "Dir$(inputFolder & \"*.xlsx\")"
+          },
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": null,
+            "source": "Dir$()"
+          },
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": null,
+            "source": "MsgBox \"Consolidation failed for '\" & fileName & \"': \" & Err.Description, vbCritical"
+          },
+          {
+            "procedure": "ConsolidateDepartmentFiles",
+            "line": null,
+            "source": "MsgBox \"Consolidated \" & processedFiles & \" department files.\", vbInformation"
+          }
+        ]
+      },
       {
         "code": "SEMANTIC_VBA_ERROR_HANDLING",
         "title": "VBA On Error runtime semantics",
@@ -311,45 +459,84 @@
         ]
       }
     ],
-    "known_limitations": [
-      {
-        "code": "EXCEL_APPLICATION_STATE",
-        "severity": "medium",
-        "description": "ScreenUpdating, EnableEvents, and Calculation settings have no corresponding Java workbook behavior."
-      },
-      {
-        "code": "FILE_ENUMERATION_ORDER",
-        "severity": "low",
-        "description": "Input workbooks are sorted by filename; VBA Dir enumeration order is environment-dependent."
-      },
-      {
-        "code": "WORKBOOK_MACRO_STATE",
-        "severity": "medium",
-        "description": "The VBA macro workbook's in-memory Consolidated sheet is replaced by a standalone output workbook."
-      }
-    ],
-    "note": "The source-derived template is not certified as behaviorally equivalent until its input/output behavior is compared with VBA."
+    "note": "Java syntax and source freshness do not establish VBA behavioral equivalence."
   },
   "accuracy_status": "NOT_VERIFIED",
   "generated_with_runtime_requirements": true,
-  "compile_status": "passed",
-  "compiler_output": "Maven package completed successfully.",
-  "limitations": [],
-  "implementation_limitations": [
+  "syntax_check_status": "passed",
+  "syntax_check_output": "",
+  "limitations": [
     {
-      "code": "EXCEL_APPLICATION_STATE",
-      "severity": "medium",
-      "description": "ScreenUpdating, EnableEvents, and Calculation settings have no corresponding Java workbook behavior."
+      "code": "VBA_ERROR_HANDLING",
+      "message": "On Error runtime behavior needs a target implementation.",
+      "procedure": "ConsolidateDepartmentFiles",
+      "source_location": {
+        "line": 18,
+        "end_line": 18,
+        "file": "vba_sample_4.bas"
+      },
+      "source_text": "On Error GoTo HandleError"
     },
     {
-      "code": "FILE_ENUMERATION_ORDER",
-      "severity": "low",
-      "description": "Input workbooks are sorted by filename; VBA Dir enumeration order is environment-dependent."
+      "code": "VBA_HOST_ADAPTER_REQUIRED",
+      "message": "VBA host object 'Application' requires an application-specific Java adapter.",
+      "procedure": "ConsolidateDepartmentFiles",
+      "source_location": null,
+      "source_text": null
     },
     {
-      "code": "WORKBOOK_MACRO_STATE",
-      "severity": "medium",
-      "description": "The VBA macro workbook's in-memory Consolidated sheet is replaced by a standalone output workbook."
+      "code": "VBA_HOST_ADAPTER_REQUIRED",
+      "message": "VBA host object 'ThisWorkbook' requires an application-specific Java adapter.",
+      "procedure": "ConsolidateDepartmentFiles",
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "VBA_COM_ADAPTER_REQUIRED",
+      "message": "CreateObject requires a Java adapter for the requested COM server.",
+      "procedure": "ConsolidateDepartmentFiles",
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "VBA_HOST_ADAPTER_REQUIRED",
+      "message": "VBA host object 'Workbooks' requires an application-specific Java adapter.",
+      "procedure": "ConsolidateDepartmentFiles",
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "VBA_LEGACY_JUMP",
+      "message": "goto control flow is explicitly marked for implementation.",
+      "procedure": "ConsolidateDepartmentFiles",
+      "source_location": {
+        "line": 83,
+        "end_line": 83,
+        "file": "vba_sample_4.bas"
+      },
+      "source_text": "GoTo CleanUp"
+    },
+    {
+      "code": "VBA_LABEL_NOT_EXECUTABLE",
+      "message": "The VBA label is emitted as a comment and is not a Java control-flow target.",
+      "procedure": "ConsolidateDepartmentFiles",
+      "source_location": {
+        "line": 85,
+        "end_line": 85,
+        "file": "vba_sample_4.bas"
+      },
+      "source_text": "HandleError:"
+    },
+    {
+      "code": "VBA_LABEL_NOT_EXECUTABLE",
+      "message": "The VBA label is emitted as a comment and is not a Java control-flow target.",
+      "procedure": "ConsolidateDepartmentFiles",
+      "source_location": {
+        "line": 90,
+        "end_line": 90,
+        "file": "vba_sample_4.bas"
+      },
+      "source_text": "CleanUp:"
     }
   ],
   "note": "Compilation verifies Java syntax only, not behavioral equivalence or availability of VBA host adapters."

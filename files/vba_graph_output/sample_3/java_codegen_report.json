@@ -171,7 +171,6 @@
   ],
   "accuracy_verification": {
     "status": "NOT_VERIFIED",
-    "implementation": "source_derived_java_template",
     "source_procedure_mapping": {
       "source_procedure_count": 1,
       "ir_procedure_count": 1,
@@ -183,16 +182,131 @@
       "Source file SHA-256 matches manifest.json",
       "Normalized IR project name matches the source file stem",
       "Source and normalized IR procedure-name sets match",
-      "All generated Java sources compile with Apache POI via Maven"
+      "Generated Java passes javac syntax/type checking"
     ],
     "checks_not_performed": [
       "Behavioral comparison against execution in a VBA host",
       "Differential tests using equivalent VBA and Java inputs/outputs",
-      "Testing with the user's real workbooks or TSV inputs"
+      "Excel/COM integration tests"
     ],
-    "blocking_finding_count": 3,
+    "blocking_finding_count": 8,
     "high_finding_count": 0,
     "findings": [
+      {
+        "code": "VBA_ON_ERROR_NOT_EMULATED",
+        "title": "On Error behavior is not translated",
+        "severity": "blocking",
+        "count": 1,
+        "explanation": "The generated runtime fails fast when On Error is encountered; it does not resume, route to labels, or preserve VBA Err handler behavior.",
+        "examples": [
+          {
+            "procedure": "ImportDailySales",
+            "line": 13,
+            "source": "On Error GoTo HandleError"
+          }
+        ]
+      },
+      {
+        "code": "VBA_LABELS_NOT_TRANSLATED",
+        "title": "Labels are comments, not control-flow targets",
+        "severity": "blocking",
+        "count": 1,
+        "explanation": "Generated error and jump paths cannot target the emitted Java comments.",
+        "examples": [
+          {
+            "procedure": "ImportDailySales",
+            "line": 68,
+            "source": "HandleError:"
+          }
+        ]
+      },
+      {
+        "code": "VBA_RAISED_ERRORS_NOT_ROUTED",
+        "title": "Raised errors do not enter VBA handlers",
+        "severity": "blocking",
+        "count": 2,
+        "explanation": "The emitted runtime throws Java exceptions without dispatching to the associated VBA error label or applying Resume Next semantics.",
+        "examples": [
+          {
+            "procedure": "ImportDailySales",
+            "line": null,
+            "source": "Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\""
+          },
+          {
+            "procedure": "ImportDailySales",
+            "line": null,
+            "source": "Err.Raise Err.Number, \"ImportDailySales\", Err.Description"
+          }
+        ]
+      },
+      {
+        "code": "VBA_OBJECT_MODEL_ADAPTERS_MISSING",
+        "title": "Excel/COM object-model calls require unavailable adapters",
+        "severity": "blocking",
+        "count": 24,
+        "explanation": "The generated HostObject is only a placeholder; workbook, worksheet, range, stream, collection, and COM methods are not connected to equivalent Java APIs.",
+        "examples": [
+          {
+            "procedure": "ImportDailySales",
+            "line": null,
+            "source": "Err.Raise vbObjectError + 2001, \"ImportDailySales\", \"Input file does not exist.\""
+          },
+          {
+            "procedure": "ImportDailySales",
+            "line": null,
+            "source": "stream.Open"
+          },
+          {
+            "procedure": "ImportDailySales",
+            "line": null,
+            "source": "stream.LoadFromFile tsvPath"
+          },
+          {
+            "procedure": "ImportDailySales",
+            "line": null,
+            "source": "stream.ReadText(-2)"
+          },
+          {
+            "procedure": "ImportDailySales",
+            "line": null,
+            "source": "salesByRegion.Exists(regionCode)"
+          },
+          {
+            "procedure": "ImportDailySales",
+            "line": null,
+            "source": "salesByRegion.Add regionCode, saleAmount"
+          },
+          {
+            "procedure": "ImportDailySales",
+            "line": null,
+            "source": "stream.Close"
+          },
+          {
+            "procedure": "ImportDailySales",
+            "line": null,
+            "source": "ThisWorkbook.Worksheets(\"Daily Sales\")"
+          }
+        ]
+      },
+      {
+        "code": "VBA_CALLS_UNRESOLVED",
+        "title": "Calls without a resolved Java target remain dynamic placeholders",
+        "severity": "blocking",
+        "count": 9,
+        "explanation": "These calls are emitted as reflective or unresolved calls; some intrinsics and user-defined dispatch semantics are not implemented.",
+        "examples": [
+          {
+            "procedure": "ImportDailySales",
+            "line": null,
+            "source": null
+          },
+          {
+            "procedure": "ImportDailySales",
+            "line": null,
+            "source": "salesByRegion(regionCode)"
+          }
+        ]
+      },
       {
         "code": "SEMANTIC_VBA_ERROR_HANDLING",
         "title": "VBA On Error runtime semantics",
@@ -274,45 +388,59 @@
         ]
       }
     ],
-    "known_limitations": [
-      {
-        "code": "VBA_LOCALE_CONVERSION",
-        "severity": "medium",
-        "description": "Date and numeric parsing uses Java parsing rules and may differ from the host locale used by VBA IsDate, IsNumeric, and CCur."
-      },
-      {
-        "code": "EXCEL_UI_NOT_EMULATED",
-        "severity": "medium",
-        "description": "The macro's in-memory ThisWorkbook update is represented by writing a separate output workbook."
-      },
-      {
-        "code": "VBA_ERROR_CONTEXT",
-        "severity": "medium",
-        "description": "Java exceptions surface input failures, but do not reproduce the VBA Err object's exact number, source, and handler behavior."
-      }
-    ],
-    "note": "The source-derived template is not certified as behaviorally equivalent until its input/output behavior is compared with VBA."
+    "note": "Java syntax and source freshness do not establish VBA behavioral equivalence."
   },
   "accuracy_status": "NOT_VERIFIED",
   "generated_with_runtime_requirements": true,
-  "compile_status": "passed",
-  "compiler_output": "Maven package completed successfully.",
-  "limitations": [],
-  "implementation_limitations": [
+  "syntax_check_status": "passed",
+  "syntax_check_output": "",
+  "limitations": [
     {
-      "code": "VBA_LOCALE_CONVERSION",
-      "severity": "medium",
-      "description": "Date and numeric parsing uses Java parsing rules and may differ from the host locale used by VBA IsDate, IsNumeric, and CCur."
+      "code": "VBA_ERROR_HANDLING",
+      "message": "On Error runtime behavior needs a target implementation.",
+      "procedure": "ImportDailySales",
+      "source_location": {
+        "line": 13,
+        "end_line": 13,
+        "file": "vba_sample_3.bas"
+      },
+      "source_text": "On Error GoTo HandleError"
     },
     {
-      "code": "EXCEL_UI_NOT_EMULATED",
-      "severity": "medium",
-      "description": "The macro's in-memory ThisWorkbook update is represented by writing a separate output workbook."
+      "code": "VBA_COM_ADAPTER_REQUIRED",
+      "message": "CreateObject requires a Java adapter for the requested COM server.",
+      "procedure": "ImportDailySales",
+      "source_location": null,
+      "source_text": null
     },
     {
-      "code": "VBA_ERROR_CONTEXT",
-      "severity": "medium",
-      "description": "Java exceptions surface input failures, but do not reproduce the VBA Err object's exact number, source, and handler behavior."
+      "code": "UNSUPPORTED_ASSIGNMENT_TARGET",
+      "message": "Assignment target cannot be lowered safely.",
+      "procedure": "ImportDailySales",
+      "source_location": {
+        "line": 39,
+        "end_line": 39,
+        "file": "vba_sample_3.bas"
+      },
+      "source_text": "salesByRegion(regionCode) = salesByRegion(regionCode) + saleAmount"
+    },
+    {
+      "code": "VBA_HOST_ADAPTER_REQUIRED",
+      "message": "VBA host object 'ThisWorkbook' requires an application-specific Java adapter.",
+      "procedure": "ImportDailySales",
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "VBA_LABEL_NOT_EXECUTABLE",
+      "message": "The VBA label is emitted as a comment and is not a Java control-flow target.",
+      "procedure": "ImportDailySales",
+      "source_location": {
+        "line": 68,
+        "end_line": 68,
+        "file": "vba_sample_3.bas"
+      },
+      "source_text": "HandleError:"
     }
   ],
   "note": "Compilation verifies Java syntax only, not behavioral equivalence or availability of VBA host adapters."

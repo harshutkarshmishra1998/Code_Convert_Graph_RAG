@@ -185,7 +185,6 @@
   ],
   "accuracy_verification": {
     "status": "NOT_VERIFIED",
-    "implementation": "source_derived_java_template",
     "source_procedure_mapping": {
       "source_procedure_count": 2,
       "ir_procedure_count": 2,
@@ -197,16 +196,165 @@
       "Source file SHA-256 matches manifest.json",
       "Normalized IR project name matches the source file stem",
       "Source and normalized IR procedure-name sets match",
-      "All generated Java sources compile with Apache POI via Maven"
+      "Generated Java passes javac syntax/type checking"
     ],
     "checks_not_performed": [
       "Behavioral comparison against execution in a VBA host",
       "Differential tests using equivalent VBA and Java inputs/outputs",
-      "Testing with the user's real workbooks or TSV inputs"
+      "Excel/COM integration tests"
     ],
-    "blocking_finding_count": 3,
+    "blocking_finding_count": 9,
     "high_finding_count": 0,
     "findings": [
+      {
+        "code": "VBA_ON_ERROR_NOT_EMULATED",
+        "title": "On Error behavior is not translated",
+        "severity": "blocking",
+        "count": 2,
+        "explanation": "The generated runtime fails fast when On Error is encountered; it does not resume, route to labels, or preserve VBA Err handler behavior.",
+        "examples": [
+          {
+            "procedure": "ReconcileInventory",
+            "line": 20,
+            "source": "On Error GoTo HandleError"
+          },
+          {
+            "procedure": "LogInventoryError",
+            "line": 110,
+            "source": "On Error Resume Next"
+          }
+        ]
+      },
+      {
+        "code": "VBA_JUMPS_NOT_TRANSLATED",
+        "title": "GoTo/GoSub control flow is not translated",
+        "severity": "blocking",
+        "count": 1,
+        "explanation": "These statements emit throwing placeholders rather than transferring control or maintaining the GoSub continuation stack.",
+        "examples": [
+          {
+            "procedure": "ReconcileInventory",
+            "line": 92,
+            "source": "GoTo CleanUp"
+          }
+        ]
+      },
+      {
+        "code": "VBA_LABELS_NOT_TRANSLATED",
+        "title": "Labels are comments, not control-flow targets",
+        "severity": "blocking",
+        "count": 2,
+        "explanation": "Generated error and jump paths cannot target the emitted Java comments.",
+        "examples": [
+          {
+            "procedure": "ReconcileInventory",
+            "line": 94,
+            "source": "HandleError:"
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "line": 100,
+            "source": "CleanUp:"
+          }
+        ]
+      },
+      {
+        "code": "VBA_RAISED_ERRORS_NOT_ROUTED",
+        "title": "Raised errors do not enter VBA handlers",
+        "severity": "blocking",
+        "count": 2,
+        "explanation": "The emitted runtime throws Java exceptions without dispatching to the associated VBA error label or applying Resume Next semantics.",
+        "examples": [
+          {
+            "procedure": "ReconcileInventory",
+            "line": null,
+            "source": "Err.Raise vbObjectError + 4001, \"ReconcileInventory\", \"Duplicate inventory item: \" & itemCode"
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "line": null,
+            "source": "Err.Raise vbObjectError + 4002, \"ReconcileInventory\", \"Reconciliation exceeded its time limit.\""
+          }
+        ]
+      },
+      {
+        "code": "VBA_OBJECT_MODEL_ADAPTERS_MISSING",
+        "title": "Excel/COM object-model calls require unavailable adapters",
+        "severity": "blocking",
+        "count": 48,
+        "explanation": "The generated HostObject is only a placeholder; workbook, worksheet, range, stream, collection, and COM methods are not connected to equivalent Java APIs.",
+        "examples": [
+          {
+            "procedure": "ReconcileInventory",
+            "line": null,
+            "source": null
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "line": null,
+            "source": "Err.Raise vbObjectError + 4001, \"ReconcileInventory\", \"Duplicate inventory item: \" & itemCode"
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "line": null,
+            "source": "inventory.Exists(itemCode)"
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "line": null,
+            "source": "inventory.Add itemCode, CDbl(inventorySheet.Cells(rowNumber, \"B\").Value2)"
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "line": null,
+            "source": "movementTotals.Exists(itemCode)"
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "line": null,
+            "source": "movementTotals.Add itemCode, quantity"
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "line": null,
+            "source": "Err.Raise vbObjectError + 4002, \"ReconcileInventory\", \"Reconciliation exceeded its time limit.\""
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "line": null,
+            "source": "inventorySheet.Range(\"A1:D\" & lastInventoryRow).Sort  Key1:=inventorySheet.Range(\"A1\"), Header:=xlYes"
+          }
+        ]
+      },
+      {
+        "code": "VBA_CALLS_UNRESOLVED",
+        "title": "Calls without a resolved Java target remain dynamic placeholders",
+        "severity": "blocking",
+        "count": 7,
+        "explanation": "These calls are emitted as reflective or unresolved calls; some intrinsics and user-defined dispatch semantics are not implemented.",
+        "examples": [
+          {
+            "procedure": "ReconcileInventory",
+            "line": null,
+            "source": "movementTotals(itemCode)"
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "line": null,
+            "source": null
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "line": null,
+            "source": "inventory(itemCode)"
+          },
+          {
+            "procedure": "ReconcileInventory",
+            "line": null,
+            "source": "MsgBox \"Inventory reconciliation failed: \" & failureDescription, vbExclamation"
+          }
+        ]
+      },
       {
         "code": "SEMANTIC_VBA_ERROR_HANDLING",
         "title": "VBA On Error runtime semantics",
@@ -293,35 +441,99 @@
         ]
       }
     ],
-    "known_limitations": [
-      {
-        "code": "EXCEL_APPLICATION_STATE",
-        "severity": "medium",
-        "description": "EnableEvents state and Excel's native sort semantics are not reproduced exactly."
-      },
-      {
-        "code": "VBA_LOCALE_CONVERSION",
-        "severity": "medium",
-        "description": "Java date and numeric parsing may differ from the host locale used by VBA IsDate, IsNumeric, and CDbl."
-      }
-    ],
-    "note": "The source-derived template is not certified as behaviorally equivalent until its input/output behavior is compared with VBA."
+    "note": "Java syntax and source freshness do not establish VBA behavioral equivalence."
   },
   "accuracy_status": "NOT_VERIFIED",
   "generated_with_runtime_requirements": true,
-  "compile_status": "passed",
-  "compiler_output": "Maven package completed successfully.",
-  "limitations": [],
-  "implementation_limitations": [
+  "syntax_check_status": "passed",
+  "syntax_check_output": "",
+  "limitations": [
     {
-      "code": "EXCEL_APPLICATION_STATE",
-      "severity": "medium",
-      "description": "EnableEvents state and Excel's native sort semantics are not reproduced exactly."
+      "code": "VBA_ERROR_HANDLING",
+      "message": "On Error runtime behavior needs a target implementation.",
+      "procedure": "ReconcileInventory",
+      "source_location": {
+        "line": 20,
+        "end_line": 20,
+        "file": "vba_sample_5.bas"
+      },
+      "source_text": "On Error GoTo HandleError"
     },
     {
-      "code": "VBA_LOCALE_CONVERSION",
-      "severity": "medium",
-      "description": "Java date and numeric parsing may differ from the host locale used by VBA IsDate, IsNumeric, and CDbl."
+      "code": "VBA_HOST_ADAPTER_REQUIRED",
+      "message": "VBA host object 'Application' requires an application-specific Java adapter.",
+      "procedure": "ReconcileInventory",
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "VBA_COM_ADAPTER_REQUIRED",
+      "message": "CreateObject requires a Java adapter for the requested COM server.",
+      "procedure": "ReconcileInventory",
+      "source_location": null,
+      "source_text": null
+    },
+    {
+      "code": "UNSUPPORTED_ASSIGNMENT_TARGET",
+      "message": "Assignment target cannot be lowered safely.",
+      "procedure": "ReconcileInventory",
+      "source_location": {
+        "line": 54,
+        "end_line": 54,
+        "file": "vba_sample_5.bas"
+      },
+      "source_text": "movementTotals(itemCode) = movementTotals(itemCode) + quantity"
+    },
+    {
+      "code": "VBA_LEGACY_JUMP",
+      "message": "goto control flow is explicitly marked for implementation.",
+      "procedure": "ReconcileInventory",
+      "source_location": {
+        "line": 92,
+        "end_line": 92,
+        "file": "vba_sample_5.bas"
+      },
+      "source_text": "GoTo CleanUp"
+    },
+    {
+      "code": "VBA_LABEL_NOT_EXECUTABLE",
+      "message": "The VBA label is emitted as a comment and is not a Java control-flow target.",
+      "procedure": "ReconcileInventory",
+      "source_location": {
+        "line": 94,
+        "end_line": 94,
+        "file": "vba_sample_5.bas"
+      },
+      "source_text": "HandleError:"
+    },
+    {
+      "code": "VBA_LABEL_NOT_EXECUTABLE",
+      "message": "The VBA label is emitted as a comment and is not a Java control-flow target.",
+      "procedure": "ReconcileInventory",
+      "source_location": {
+        "line": 100,
+        "end_line": 100,
+        "file": "vba_sample_5.bas"
+      },
+      "source_text": "CleanUp:"
+    },
+    {
+      "code": "VBA_ERROR_HANDLING",
+      "message": "On Error runtime behavior needs a target implementation.",
+      "procedure": "LogInventoryError",
+      "source_location": {
+        "line": 110,
+        "end_line": 110,
+        "file": "vba_sample_5.bas"
+      },
+      "source_text": "On Error Resume Next"
+    },
+    {
+      "code": "VBA_HOST_ADAPTER_REQUIRED",
+      "message": "VBA host object 'ThisWorkbook' requires an application-specific Java adapter.",
+      "procedure": "LogInventoryError",
+      "source_location": null,
+      "source_text": null
     }
   ],
   "note": "Compilation verifies Java syntax only, not behavioral equivalence or availability of VBA host adapters."

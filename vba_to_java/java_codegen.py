@@ -22,36 +22,6 @@ JAVA_KEYWORDS = {
     "transient", "try", "void", "volatile", "while", "true", "false", "null",
 }
 
-TEMPLATE_LIMITATIONS: dict[str, list[dict[str, str]]] = {
-    "vba_sample_1": [
-        {"code": "EXCEL_UI_NOT_EMULATED", "severity": "medium", "description": "Excel's MsgBox and interactive workbook state are replaced by console output and a file-based input/output contract."},
-        {"code": "WORKBOOK_FORMAT_SCOPE", "severity": "medium", "description": "The Java adapter writes an .xlsx output and does not preserve VBA macros or Excel application state."},
-    ],
-    "vba_sample_2": [
-        {"code": "VBA_VARIANT_RUNTIME", "severity": "low", "description": "Java callers represent VBA Null/Empty with explicit Java values; Java null alone represents only Null-like input."},
-    ],
-    "vba_sample_3": [
-        {"code": "VBA_LOCALE_CONVERSION", "severity": "medium", "description": "Date and numeric parsing uses Java parsing rules and may differ from the host locale used by VBA IsDate, IsNumeric, and CCur."},
-        {"code": "EXCEL_UI_NOT_EMULATED", "severity": "medium", "description": "The macro's in-memory ThisWorkbook update is represented by writing a separate output workbook."},
-        {"code": "VBA_ERROR_CONTEXT", "severity": "medium", "description": "Java exceptions surface input failures, but do not reproduce the VBA Err object's exact number, source, and handler behavior."},
-    ],
-    "vba_sample_4": [
-        {"code": "EXCEL_APPLICATION_STATE", "severity": "medium", "description": "ScreenUpdating, EnableEvents, and Calculation settings have no corresponding Java workbook behavior."},
-        {"code": "FILE_ENUMERATION_ORDER", "severity": "low", "description": "Input workbooks are sorted by filename; VBA Dir enumeration order is environment-dependent."},
-        {"code": "WORKBOOK_MACRO_STATE", "severity": "medium", "description": "The VBA macro workbook's in-memory Consolidated sheet is replaced by a standalone output workbook."},
-    ],
-    "vba_sample_5": [
-        {"code": "EXCEL_APPLICATION_STATE", "severity": "medium", "description": "EnableEvents state and Excel's native sort semantics are not reproduced exactly."},
-        {"code": "VBA_LOCALE_CONVERSION", "severity": "medium", "description": "Java date and numeric parsing may differ from the host locale used by VBA IsDate, IsNumeric, and CDbl."},
-    ],
-    "vba_sample_6": [
-        {"code": "VBA_HOST_SCHEDULING", "severity": "low", "description": "DoEvents is represented by Thread.yield and does not provide Excel/VBA event-loop behavior."},
-        {"code": "VBA_LOCALE_CONVERSION", "severity": "medium", "description": "Date, Currency, and number formatting follow Java locale/runtime rules, which may differ from the VBA host."},
-        {"code": "VBA_ERROR_CONTEXT", "severity": "medium", "description": "The pipeline converts Java exceptions to a failure report but cannot reproduce every VBA Err.Number, source, and handler transition."},
-    ],
-}
-
-
 def _java_identifier(name: str) -> str:
     value = re.sub(r"[^A-Za-z0-9_$]", "_", name)
     if not value or not re.match(r"[A-Za-z_$]", value):
@@ -1262,84 +1232,7 @@ def _accuracy_audit(
     }
 
 
-def _template_accuracy_audit(
-    sample_name: str,
-    program: dict[str, Any],
-    semantic_report: dict[str, Any],
-    source_text: str,
-) -> dict[str, Any]:
-    ir_names = [
-        str(procedure.get("name", ""))
-        for module in program.get("modules", [])
-        for procedure in module.get("procedures", [])
-    ]
-    source_names = [
-        match.group(1)
-        for match in re.finditer(
-            r"(?im)^\s*(?:(?:Public|Private|Friend|Static)\s+)*"
-            r"(?:Sub|Function|Property\s+(?:Get|Let|Set))\s+([A-Za-z_]\w*)",
-            source_text,
-        )
-    ]
-    source_keys = {name.casefold() for name in source_names}
-    ir_keys = {name.casefold() for name in ir_names}
-    procedure_mapping = {
-        "source_procedure_count": len(source_names),
-        "ir_procedure_count": len(ir_names),
-        "source_only": sorted(source_keys - ir_keys),
-        "ir_only": sorted(ir_keys - source_keys),
-        "status": "matched" if source_keys == ir_keys else "mismatch",
-    }
-    findings = []
-    if procedure_mapping["status"] != "matched":
-        findings.append({
-            "code": "SOURCE_PROCEDURE_MAPPING_MISMATCH",
-            "title": "Source procedures do not match normalized IR procedures",
-            "severity": "blocking",
-            "count": len(procedure_mapping["source_only"]) + len(procedure_mapping["ir_only"]),
-            "explanation": "The checked source and normalized IR do not contain the same procedure names.",
-            "examples": [],
-        })
-    blocking_compatibility = [
-        item for item in semantic_report.get("compatibility_requirements", [])
-        if item.get("severity") == "blocking"
-    ]
-    for requirement in blocking_compatibility:
-        findings.append({
-            "code": f"SEMANTIC_{requirement.get('code', 'BLOCKER')}",
-            "title": requirement.get("title", "Semantic compatibility blocker"),
-            "severity": "blocking",
-            "count": len(requirement.get("evidence", [])) or 1,
-            "explanation": requirement.get(
-                "target_guidance", "Requires runtime verification before claiming equivalence."
-            ),
-            "examples": requirement.get("evidence", [])[:8],
-        })
-    return {
-        "status": "NOT_VERIFIED",
-        "implementation": "source_derived_java_template",
-        "source_procedure_mapping": procedure_mapping,
-        "checks_passed": [
-            "Source file SHA-256 matches manifest.json",
-            "Normalized IR project name matches the source file stem",
-        ] + (
-            ["Source and normalized IR procedure-name sets match"]
-            if procedure_mapping["status"] == "matched" else []
-        ),
-        "checks_not_performed": [
-            "Behavioral comparison against execution in a VBA host",
-            "Differential tests using equivalent VBA and Java inputs/outputs",
-            "Testing with the user's real workbooks or TSV inputs",
-        ],
-        "blocking_finding_count": len(findings),
-        "high_finding_count": 0,
-        "findings": findings,
-        "known_limitations": TEMPLATE_LIMITATIONS[sample_name],
-        "note": "The source-derived template is not certified as behaviorally equivalent until its input/output behavior is compared with VBA.",
-    }
-
-
-def _compile(java_path: Path) -> tuple[bool | None, str]:
+def _syntax_check(java_path: Path) -> tuple[bool | None, str]:
     javac = shutil.which("javac")
     if not javac:
         return None, "javac is not installed; source compilation was skipped."
@@ -1390,31 +1283,16 @@ def generate_java(input_path: str | Path, output: str | Path) -> tuple[Path, Pat
         encoding=source_record.get("encoding") or "utf-8",
         errors="replace",
     )
-    template_path = Path(__file__).parent / "java_templates" / f"{source_path.stem}.java.tpl"
-    if template_path.is_file():
-        java_source = template_path.read_text(encoding="utf-8")
-        notes = []
-        expected_class = re.escape(_java_identifier(source_path.stem))
-        if not re.search(rf"\bpublic\s+final\s+class\s+{expected_class}\b", java_source):
-            raise ValueError(f"Java template class does not match {source_path.stem}")
-    else:
-        emitter = JavaEmitter(program, semantic, class_name=source_path.stem)
-        java_source, notes = emitter.emit()
+    emitter = JavaEmitter(program, semantic, class_name=source_path.stem)
+    java_source, notes = emitter.emit()
     java_path = sample_dir / f"{_java_identifier(source_path.stem)}.java"
     java_path.write_text(java_source, encoding="utf-8")
-    if source_path.stem in {"vba_sample_1", "vba_sample_3", "vba_sample_4", "vba_sample_5"}:
-        compiled, compiler_output = None, "Compilation requires Apache POI; use the project Maven build."
-    else:
-        compiled, compiler_output = _compile(java_path)
-    accuracy_verification = (
-        _template_accuracy_audit(source_path.stem, program, semantic, source_text)
-        if template_path.is_file()
-        else _accuracy_audit(program, semantic, source_text)
-    )
-    if compiled is True:
-        accuracy_verification["checks_passed"].append("Generated Java compiles with javac")
-    elif compiled is False:
-        accuracy_verification["checks_failed"] = ["Generated Java compiles with javac"]
+    syntax_valid, syntax_output = _syntax_check(java_path)
+    accuracy_verification = _accuracy_audit(program, semantic, source_text)
+    if syntax_valid is True:
+        accuracy_verification["checks_passed"].append("Generated Java passes javac syntax/type checking")
+    elif syntax_valid is False:
+        accuracy_verification["checks_failed"] = ["Generated Java passes javac syntax/type checking"]
     report = {
         "schema_version": "1.0",
         "source_file": source_path.name,
@@ -1428,10 +1306,9 @@ def generate_java(input_path: str | Path, output: str | Path) -> tuple[Path, Pat
         "accuracy_verification": accuracy_verification,
         "accuracy_status": "NOT_VERIFIED",
         "generated_with_runtime_requirements": bool(notes or semantic.get("status") == "blocked"),
-        "compile_status": "passed" if compiled is True else "failed" if compiled is False else "skipped",
-        "compiler_output": compiler_output,
+        "syntax_check_status": "passed" if syntax_valid is True else "failed" if syntax_valid is False else "skipped",
+        "syntax_check_output": syntax_output,
         "limitations": notes,
-        "implementation_limitations": accuracy_verification.get("known_limitations", []),
         "note": "Compilation verifies Java syntax only, not behavioral equivalence or availability of VBA host adapters.",
     }
     report_path = sample_dir / "java_codegen_report.json"
@@ -1445,13 +1322,12 @@ def main(input_path: str | Path, output: str | Path) -> int:
         print(json.dumps({
             "java_file": str(java_path),
             "report": str(report_path),
-            "compile_status": report["compile_status"],
+            "syntax_check_status": report["syntax_check_status"],
             "accuracy_status": report["accuracy_status"],
             "blocking_findings": report["accuracy_verification"]["blocking_finding_count"],
-            "compatibility_requirements": len(report["compatibility_requirements"]),
-            "known_limitations": len(report["implementation_limitations"]),
+            "runtime_requirements": len(report["limitations"]),
         }, indent=2))
-        return 0 if report["compile_status"] in {"passed", "skipped"} else 1
+        return 0 if report["syntax_check_status"] in {"passed", "skipped"} else 1
     except Exception as exc:
         print(f"ERROR: {type(exc).__name__}: {exc}", file=sys.stderr)
         return 1

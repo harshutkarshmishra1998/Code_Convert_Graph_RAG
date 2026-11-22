@@ -1,79 +1,487 @@
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Comparator;
+import java.lang.reflect.Array;
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.stream.Stream;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.util.Map;
+import java.util.Objects;
 
-public final class vba_sample_4 {
-    private vba_sample_4() { }
-
-    public static int ConsolidateDepartmentFiles(Path inputFolder, Path outputPath) throws IOException {
-        if (!outputPath.getFileName().toString().toLowerCase(Locale.ROOT).endsWith(".xlsx")) {
-            throw new IllegalArgumentException("Output path must use the .xlsx extension.");
+public class vba_sample_4 {
+    // Best-effort translation only; behavioral equivalence is NOT VERIFIED.
+    // See java_codegen_report.json before executing or integrating this class.
+    public void ConsolidateDepartmentFiles(Object inputFolder, Object outputPath) {
+        // ByRef/COM/runtime semantics are documented in the semantic report.
+        Object fileName = null;
+        Object sourceBook = null;
+        Object sourceSheet = null;
+        Object targetSheet = null;
+        Object outputBook = null;
+        Object fileSystem = null;
+        Object sourceRange = null;
+        Object nextRow = null;
+        Object lastRow = null;
+        Object processedFiles = null;
+        Object savedCalculation = null;
+        Object savedEvents = null;
+        Object savedScreenUpdating = null;
+        VbaRuntime.onError("goto_handler", "HandleError");
+        VbaRuntime.call(VbaRuntime.errorState(), "Clear", new Object[]{});
+        savedCalculation = VbaRuntime.get(VbaRuntime.host("Application"), "Calculation" );
+        savedEvents = VbaRuntime.get(VbaRuntime.host("Application"), "EnableEvents" );
+        savedScreenUpdating = VbaRuntime.get(VbaRuntime.host("Application"), "ScreenUpdating" );
+        if (VbaRuntime.truthy(VbaRuntime.binary("<>", VbaRuntime.builtin("LCase$", new Object[]{VbaRuntime.builtin("Right$", new Object[]{outputPath, 5})}), ".xlsx"))) {
+            VbaRuntime.call(VbaRuntime.errorState(), "Raise", new Object[]{VbaRuntime.binary("+", VbaRuntime.name("vbObjectError"), 3002), "ConsolidateDepartmentFiles", "Output path must use the .xlsx extension."});
         }
-        Path folder = inputFolder.toAbsolutePath().normalize();
-        if (!Files.isDirectory(folder)) {
-            throw new IllegalArgumentException("Input folder is unavailable: " + folder);
+        if (VbaRuntime.truthy(VbaRuntime.binary("=", VbaRuntime.builtin("StrComp", new Object[]{outputPath, VbaRuntime.get(VbaRuntime.host("ThisWorkbook"), "FullName" ), VbaRuntime.name("vbTextCompare")}), 0))) {
+            VbaRuntime.call(VbaRuntime.errorState(), "Raise", new Object[]{VbaRuntime.binary("+", VbaRuntime.name("vbObjectError"), 3003), "ConsolidateDepartmentFiles", "Output cannot replace the macro workbook."});
         }
-        Path output = outputPath.toAbsolutePath().normalize();
-        List<Path> inputFiles;
-        try (Stream<Path> listed = Files.list(folder)) {
-            inputFiles = listed.filter(Files::isRegularFile)
-                .filter(path -> path.getFileName().toString().toLowerCase(Locale.ROOT).endsWith(".xlsx"))
-                .map(path -> path.toAbsolutePath().normalize())
-                .filter(path -> !path.equals(output))
-                .sorted(Comparator.comparing(path -> path.getFileName().toString(),
-                    String.CASE_INSENSITIVE_ORDER))
-                .toList();
+        if (VbaRuntime.truthy(VbaRuntime.binary("<>", VbaRuntime.builtin("Right$", new Object[]{inputFolder, 1}), VbaRuntime.get(VbaRuntime.host("Application"), "PathSeparator" )))) {
+            inputFolder = VbaRuntime.binary("&", inputFolder, VbaRuntime.get(VbaRuntime.host("Application"), "PathSeparator" ));
         }
-
-        try (Workbook outputBook = new XSSFWorkbook()) {
-            Sheet target = outputBook.createSheet("Consolidated");
-            int nextRow = 0;
-            int processedFiles = 0;
-
-            for (Path inputFile : inputFiles) {
-                try (Workbook sourceBook = VbaExcelSupport.open(inputFile)) {
-                    if (sourceBook.getNumberOfSheets() == 0) {
-                        throw new IllegalArgumentException("Workbook has no worksheets: " + inputFile);
+        fileSystem = VbaRuntime.builtin("CreateObject", new Object[]{"Scripting.FileSystemObject"});
+        if (VbaRuntime.truthy(VbaRuntime.unary("not", VbaRuntime.call(fileSystem, "FolderExists", new Object[]{inputFolder})))) {
+            VbaRuntime.call(VbaRuntime.errorState(), "Raise", new Object[]{VbaRuntime.binary("+", VbaRuntime.name("vbObjectError"), 3001), "ConsolidateDepartmentFiles", "Input folder is unavailable."});
+        }
+        fileSystem = null;
+        targetSheet = VbaRuntime.call(VbaRuntime.host("ThisWorkbook"), "Worksheets", new Object[]{"Consolidated"});
+        VbaRuntime.set(VbaRuntime.host("Application"), "ScreenUpdating", Boolean.FALSE);
+        VbaRuntime.set(VbaRuntime.host("Application"), "EnableEvents", Boolean.FALSE);
+        VbaRuntime.set(VbaRuntime.host("Application"), "Calculation", VbaRuntime.name("xlCalculationManual"));
+        VbaRuntime.call(VbaRuntime.get(targetSheet, "Cells" ), "ClearContents", new Object[]{});
+        nextRow = 1;
+        fileName = VbaRuntime.call(null, "Dir$", new Object[]{VbaRuntime.binary("&", inputFolder, "*.xlsx")});
+        while (VbaRuntime.truthy(VbaRuntime.binary(">", VbaRuntime.builtin("Len", new Object[]{fileName}), 0))) {
+            if (VbaRuntime.truthy(VbaRuntime.binary("<>", VbaRuntime.builtin("StrComp", new Object[]{VbaRuntime.binary("&", inputFolder, fileName), VbaRuntime.get(VbaRuntime.host("ThisWorkbook"), "FullName" ), VbaRuntime.name("vbTextCompare")}), 0))) {
+                sourceBook = VbaRuntime.call(VbaRuntime.host("Workbooks"), "Open", new Object[]{new VbaRuntime.NamedArg("Filename", VbaRuntime.binary("&", inputFolder, fileName)), new VbaRuntime.NamedArg("ReadOnly", Boolean.TRUE)});
+                sourceSheet = VbaRuntime.call(sourceBook, "Worksheets", new Object[]{1});
+                lastRow = VbaRuntime.get(VbaRuntime.call(VbaRuntime.call(sourceSheet, "Cells", new Object[]{VbaRuntime.get(VbaRuntime.get(sourceSheet, "Rows" ), "Count" ), "A"}), "End", new Object[]{VbaRuntime.name("xlUp")}), "Row" );
+                if (VbaRuntime.truthy(VbaRuntime.binary(">=", lastRow, 1))) {
+                    sourceRange = VbaRuntime.call(sourceSheet, "Range", new Object[]{VbaRuntime.binary("&", "A1:F", lastRow)});
+                    if (VbaRuntime.truthy(VbaRuntime.binary("=", nextRow, 1))) {
+                        VbaRuntime.set(VbaRuntime.call(VbaRuntime.call(targetSheet, "Cells", new Object[]{nextRow, 1}), "Resize", new Object[]{VbaRuntime.get(VbaRuntime.get(sourceRange, "Rows" ), "Count" ), VbaRuntime.get(VbaRuntime.get(sourceRange, "Columns" ), "Count" )}), "Value", VbaRuntime.get(sourceRange, "Value" ));
+                        nextRow = VbaRuntime.binary("+", nextRow, VbaRuntime.get(VbaRuntime.get(sourceRange, "Rows" ), "Count" ));
+                    } else if (VbaRuntime.truthy(VbaRuntime.binary(">", VbaRuntime.get(VbaRuntime.get(sourceRange, "Rows" ), "Count" ), 1))) {
+                        VbaRuntime.set(VbaRuntime.call(VbaRuntime.call(targetSheet, "Cells", new Object[]{nextRow, 1}), "Resize", new Object[]{VbaRuntime.binary("-", VbaRuntime.get(VbaRuntime.get(sourceRange, "Rows" ), "Count" ), 1), VbaRuntime.get(VbaRuntime.get(sourceRange, "Columns" ), "Count" )}), "Value", VbaRuntime.get(VbaRuntime.call(VbaRuntime.call(sourceRange, "Offset", new Object[]{1, 0}), "Resize", new Object[]{VbaRuntime.binary("-", VbaRuntime.get(VbaRuntime.get(sourceRange, "Rows" ), "Count" ), 1), VbaRuntime.get(VbaRuntime.get(sourceRange, "Columns" ), "Count" )}), "Value" ));
+                        nextRow = VbaRuntime.binary("-", VbaRuntime.binary("+", nextRow, VbaRuntime.get(VbaRuntime.get(sourceRange, "Rows" ), "Count" )), 1);
                     }
-                    Sheet source = sourceBook.getSheetAt(0);
-                    int lastSourceRow = VbaExcelSupport.lastRowInColumn(source, 0);
-                    int firstSourceRow = processedFiles == 0 ? 0 : 1;
-                    if (lastSourceRow >= firstSourceRow) {
-                        for (int sourceRow = firstSourceRow; sourceRow <= lastSourceRow; sourceRow++) {
-                            for (int column = 0; column < 6; column++) {
-                                Cell from = VbaExcelSupport.cell(source, sourceRow, column);
-                                Cell to = VbaExcelSupport.writableCell(target, nextRow, column);
-                                VbaExcelSupport.copyValue(from, to);
-                            }
-                            nextRow++;
-                        }
-                    }
-                    processedFiles++;
                 }
+                VbaRuntime.call(sourceBook, "Close", new Object[]{new VbaRuntime.NamedArg("SaveChanges", Boolean.FALSE)});
+                sourceBook = null;
+                processedFiles = VbaRuntime.binary("+", processedFiles, 1);
             }
-
-            VbaExcelSupport.autoSize(target, 6);
-            VbaExcelSupport.writeAtomically(outputBook, output);
-            System.out.printf("Consolidated %d department files.%n", processedFiles);
-            return processedFiles;
+            fileName = VbaRuntime.call(null, "Dir$", new Object[]{});
+        }
+        VbaRuntime.get(VbaRuntime.call(targetSheet, "Columns", new Object[]{"A:F"}), "AutoFit" );
+        outputBook = VbaRuntime.call(VbaRuntime.host("Workbooks"), "Add", new Object[]{VbaRuntime.name("xlWBATWorksheet")});
+        VbaRuntime.set(VbaRuntime.call(outputBook, "Worksheets", new Object[]{1}), "Name", "Consolidated");
+        if (VbaRuntime.truthy(VbaRuntime.binary(">", nextRow, 1))) {
+            VbaRuntime.set(VbaRuntime.call(VbaRuntime.call(outputBook, "Worksheets", new Object[]{1}), "Range", new Object[]{VbaRuntime.binary("&", "A1:F", VbaRuntime.binary("-", nextRow, 1))}), "Value", VbaRuntime.get(VbaRuntime.call(targetSheet, "Range", new Object[]{VbaRuntime.binary("&", "A1:F", VbaRuntime.binary("-", nextRow, 1))}), "Value" ));
+        }
+        VbaRuntime.call(outputBook, "SaveAs", new Object[]{new VbaRuntime.NamedArg("Filename", outputPath), new VbaRuntime.NamedArg("FileFormat", VbaRuntime.name("xlOpenXMLWorkbook"))});
+        VbaRuntime.call(outputBook, "Close", new Object[]{new VbaRuntime.NamedArg("SaveChanges", Boolean.FALSE)});
+        outputBook = null;
+        VbaRuntime.unsupportedControlFlow("goto CleanUp");
+        // VBA label: HandleError
+        if (VbaRuntime.truthy(VbaRuntime.unary("not", VbaRuntime.binary("is", sourceBook, null)))) {
+            VbaRuntime.call(sourceBook, "Close", new Object[]{new VbaRuntime.NamedArg("SaveChanges", Boolean.FALSE)});
+        }
+        if (VbaRuntime.truthy(VbaRuntime.unary("not", VbaRuntime.binary("is", outputBook, null)))) {
+            VbaRuntime.call(outputBook, "Close", new Object[]{new VbaRuntime.NamedArg("SaveChanges", Boolean.FALSE)});
+        }
+        VbaRuntime.call(null, "MsgBox", new Object[]{VbaRuntime.binary("&", VbaRuntime.binary("&", VbaRuntime.binary("&", "Consolidation failed for '", fileName), "': "), VbaRuntime.get(VbaRuntime.errorState(), "Description" )), VbaRuntime.name("vbCritical")});
+        // VBA label: CleanUp
+        VbaRuntime.set(VbaRuntime.host("Application"), "Calculation", savedCalculation);
+        VbaRuntime.set(VbaRuntime.host("Application"), "EnableEvents", savedEvents);
+        VbaRuntime.set(VbaRuntime.host("Application"), "ScreenUpdating", savedScreenUpdating);
+        if (VbaRuntime.truthy(VbaRuntime.binary("=", VbaRuntime.get(VbaRuntime.errorState(), "Number" ), 0))) {
+            VbaRuntime.call(null, "MsgBox", new Object[]{VbaRuntime.binary("&", VbaRuntime.binary("&", "Consolidated ", processedFiles), " department files."), VbaRuntime.name("vbInformation")});
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        if (args.length < 1 || args.length > 2) {
-            System.err.println("Usage: java vba_sample_4 <input-folder> [output.xlsx]");
-            System.exit(2);
+
+    private static final class VbaRuntime {
+        static final Object MISSING = new Object();
+        private static final ErrorState ERR = new ErrorState();
+
+        static final class NamedArg {
+            final String name;
+            final Object value;
+            NamedArg(String name, Object value) { this.name = name; this.value = value; }
         }
-        Path folder = Path.of(args[0]);
-        Path output = args.length == 2 ? Path.of(args[1]) : folder.resolve("consolidated.xlsx");
-        ConsolidateDepartmentFiles(folder, output);
+
+        static final class HostObject {
+            final String name;
+            HostObject(String name) { this.name = name; }
+            @Override public String toString() { return name; }
+        }
+
+        static final class ErrorState {
+            int number;
+            String description = "";
+            void clear() { number = 0; description = ""; }
+            void raise(Object number, Object source, Object description) {
+                this.number = (int) VbaRuntime.number(number);
+                this.description = String.valueOf(description);
+                throw new IllegalStateException(this.description);
+            }
+        }
+
+        static Object errorState() { return ERR; }
+        static Object host(String name) { return new HostObject(name); }
+        static Object name(String name) {
+            return switch (name.toLowerCase()) {
+                case "true" -> Boolean.TRUE;
+                case "false" -> Boolean.FALSE;
+                case "nothing", "null", "empty" -> null;
+                case "vbcrlf", "vbnewline" -> "\r\n";
+                case "vbcr" -> "\r";
+                case "vblf" -> "\n";
+                case "vbtab" -> "\t";
+                case "vbnullstring" -> "";
+                case "vbtextcompare" -> 1;
+                case "vbbinarycompare" -> 0;
+                case "vbobjecterror" -> -2147221504;
+                case "xlup" -> -4162;
+                case "xlyes" -> 1;
+                case "xlnone" -> -4142;
+                case "xlopenxmlworkbook" -> 51;
+                case "vbyellow" -> 6;
+                case "vbinformation" -> 64;
+                case "vbexclamation" -> 48;
+                case "vbcritical" -> 16;
+                case "now" -> LocalDateTime.now();
+                case "timer" -> LocalDateTime.now().toLocalTime().toSecondOfDay();
+                default -> new HostObject(name);
+            };
+        }
+
+        static Object get(Object target, String member) {
+            if (target == null) return null;
+            if (target == ERR) {
+                return switch (member.toLowerCase()) {
+                    case "number" -> ERR.number;
+                    case "description" -> ERR.description;
+                    default -> null;
+                };
+            }
+            if (target instanceof HostObject host)
+                throw new UnsupportedOperationException(
+                    "VBA host/API adapter required to read " + host.name + "." + member
+                );
+            if (target instanceof Map<?, ?> map) return map.get(member);
+            String suffix = Character.toUpperCase(member.charAt(0)) + member.substring(1);
+            for (String candidate : new String[]{member, "get" + suffix, "is" + suffix}) {
+                try {
+                    Method method = target.getClass().getMethod(candidate);
+                    return method.invoke(target);
+                } catch (ReflectiveOperationException ignored) { }
+            }
+            try { return target.getClass().getField(member).get(target); }
+            catch (ReflectiveOperationException ignored) {
+                throw new IllegalStateException("Cannot read VBA member " + member + " from " + target.getClass().getName());
+            }
+        }
+
+        static Object set(Object target, String member, Object value) {
+            if (target == null || target instanceof HostObject)
+                throw new UnsupportedOperationException("VBA host adapter required for member " + member);
+            if (target instanceof Map<?, ?> raw) {
+                @SuppressWarnings("unchecked") Map<Object, Object> map = (Map<Object, Object>) raw;
+                map.put(member, value);
+                return value;
+            }
+            String setter = "set" + Character.toUpperCase(member.charAt(0)) + member.substring(1);
+            for (Method method : target.getClass().getMethods()) {
+                if (method.getName().equalsIgnoreCase(setter) && method.getParameterCount() == 1) {
+                    try { method.invoke(target, value); return value; }
+                    catch (ReflectiveOperationException exception) { throw new IllegalStateException(exception); }
+                }
+            }
+            throw new IllegalStateException("Cannot write VBA member " + member + " on " + target.getClass().getName());
+        }
+
+        static Object call(Object target, String member, Object[] arguments) {
+            if (target == ERR && member.equalsIgnoreCase("raise")) {
+                Object[] values = unwrap(arguments);
+                ERR.raise(
+                    values.length > 0 ? values[0] : 0,
+                    values.length > 1 ? values[1] : "",
+                    values.length > 2 ? values[2] : ""
+                );
+                return null;
+            }
+            if (target == ERR && member.equalsIgnoreCase("clear")) {
+                ERR.clear();
+                return null;
+            }
+            if (target == null || target instanceof HostObject)
+                throw new UnsupportedOperationException("VBA host/API adapter required for " + member);
+            Object[] values = unwrap(arguments);
+            for (Method method : target.getClass().getMethods()) {
+                if (!method.getName().equalsIgnoreCase(member) || method.getParameterCount() != values.length) continue;
+                try { return method.invoke(target, values); }
+                catch (ReflectiveOperationException exception) { throw new IllegalStateException(exception); }
+            }
+            throw new IllegalStateException("Cannot invoke VBA member " + member + " on " + target.getClass().getName());
+        }
+
+        static Object[] unwrap(Object[] arguments) {
+            Object[] values = new Object[arguments.length];
+            for (int i = 0; i < arguments.length; i++)
+                values[i] = arguments[i] instanceof NamedArg named ? named.value : arguments[i];
+            return values;
+        }
+
+        static Object builtin(String rawName, Object[] arguments) {
+            Object[] args = unwrap(arguments);
+            Object first = args.length == 0 ? null : args[0];
+            String name = rawName.toLowerCase().replace("$", "");
+            return switch (name) {
+                case "cstr", "str" -> String.valueOf(first);
+                case "len" -> String.valueOf(first == null ? "" : first).length();
+                case "trim" -> String.valueOf(first == null ? "" : first).trim();
+                case "ltrim" -> String.valueOf(first == null ? "" : first).replaceFirst("^\\s+", "");
+                case "rtrim" -> String.valueOf(first == null ? "" : first).replaceFirst("\\s+$", "");
+                case "ucase" -> String.valueOf(first == null ? "" : first).toUpperCase();
+                case "lcase" -> String.valueOf(first == null ? "" : first).toLowerCase();
+                case "isnumeric" -> isNumeric(first);
+                case "isdate" -> canParseDate(first);
+                case "isarray" -> first != null && (first.getClass().isArray() || first instanceof List<?>);
+                case "isnull", "isempty" -> first == null;
+                case "cbool" -> truthy(first);
+                case "clng", "cint", "cbyte" -> (long) number(first);
+                case "cdbl", "csng", "val", "abs" -> name.equals("abs") ? Math.abs(number(first)) : number(first);
+                case "ccur", "cdec" -> new BigDecimal(String.valueOf(first));
+                case "cdate", "datevalue" -> parseDate(first);
+                case "split" -> Arrays.asList(String.valueOf(first).split(
+                    args.length > 1 ? java.util.regex.Pattern.quote(String.valueOf(args[1])) : "\\s+", -1));
+                case "join" -> String.join(args.length > 1 ? String.valueOf(args[1]) : " ",
+                    iterable(args.length == 0 ? null : args[0]).stream().map(String::valueOf).toList());
+                case "array" -> args;
+                case "ubound" -> upperBound(first);
+                case "lbound" -> 0;
+                case "replace" -> String.valueOf(first).replace(
+                    args.length > 1 ? String.valueOf(args[1]) : "",
+                    args.length > 2 ? String.valueOf(args[2]) : "");
+                case "left" -> String.valueOf(first).substring(0,
+                    Math.min(String.valueOf(first).length(), (int) number(args.length > 1 ? args[1] : 0)));
+                case "right" -> {
+                    String text = String.valueOf(first);
+                    int count = Math.min(text.length(), (int) number(args.length > 1 ? args[1] : 0));
+                    yield text.substring(text.length() - count);
+                }
+                case "mid" -> {
+                    String text = String.valueOf(first);
+                    int start = Math.max(0, (int) number(args.length > 1 ? args[1] : 1) - 1);
+                    int end = args.length > 2 ? Math.min(text.length(), start + (int) number(args[2])) : text.length();
+                    yield start >= text.length() ? "" : text.substring(start, end);
+                }
+                case "iif" -> args.length > 1 && truthy(args[0]) ? args[1] : args.length > 2 ? args[2] : null;
+                case "now" -> LocalDateTime.now();
+                case "date" -> java.time.LocalDate.now().toString();
+                case "year" -> parseDate(first).getYear();
+                case "strcomp" -> {
+                    String left = String.valueOf(first);
+                    String right = args.length > 1 ? String.valueOf(args[1]) : "";
+                    boolean textCompare = args.length > 2 && number(args[2]) == 1;
+                    yield Integer.signum(textCompare
+                        ? left.compareToIgnoreCase(right)
+                        : left.compareTo(right));
+                }
+                case "format" -> format(first, args.length > 1 ? String.valueOf(args[1]) : "");
+                case "doevents" -> null;
+                case "msgbox" -> { System.out.println(first); yield 0; }
+                case "createobject" -> new HostObject("COM:" + String.valueOf(first));
+                default -> throw new UnsupportedOperationException("VBA builtin requires implementation: " + rawName);
+            };
+        }
+
+        static Object binary(String operator, Object left, Object right) {
+            return switch (operator.toLowerCase()) {
+                case "&" -> String.valueOf(left == null ? "" : left) + String.valueOf(right == null ? "" : right);
+                case "+" -> left instanceof String || right instanceof String
+                    ? String.valueOf(left) + String.valueOf(right) : number(left) + number(right);
+                case "-" -> number(left) - number(right);
+                case "*" -> number(left) * number(right);
+                case "/" -> number(left) / number(right);
+                case "\\" -> (long) (number(left) / number(right));
+                case "mod" -> number(left) % number(right);
+                case "^" -> Math.pow(number(left), number(right));
+                case "=" -> equal(left, right);
+                case "<>" -> !equal(left, right);
+                case "is" -> left == right;
+                case "is_not" -> left != right;
+                case "<" -> compare(left, right) < 0;
+                case ">" -> compare(left, right) > 0;
+                case "<=" -> compare(left, right) <= 0;
+                case ">=" -> compare(left, right) >= 0;
+                case "and" -> left instanceof Number && right instanceof Number
+                    ? ((long) number(left) & (long) number(right)) : truthy(left) && truthy(right);
+                case "or" -> left instanceof Number && right instanceof Number
+                    ? ((long) number(left) | (long) number(right)) : truthy(left) || truthy(right);
+                case "xor" -> left instanceof Number && right instanceof Number
+                    ? ((long) number(left) ^ (long) number(right)) : truthy(left) ^ truthy(right);
+                case "like" -> String.valueOf(left).matches(
+                    java.util.regex.Pattern.quote(String.valueOf(right)).replace("*", "\\E.*\\Q").replace("?", "\\E.\\Q"));
+                default -> throw new UnsupportedOperationException("VBA operator requires implementation: " + operator);
+            };
+        }
+
+        static Object unary(String operator, Object value) {
+            return switch (operator.toLowerCase()) {
+                case "+" -> number(value);
+                case "-" -> -number(value);
+                case "not" -> value instanceof Number ? ~((long) number(value)) : !truthy(value);
+                default -> throw new UnsupportedOperationException("VBA unary operator requires implementation: " + operator);
+            };
+        }
+
+        static boolean truthy(Object value) {
+            if (value == null || value == MISSING) return false;
+            if (value instanceof Boolean bool) return bool;
+            if (value instanceof Number number) return number.doubleValue() != 0;
+            if (value instanceof String text) return !text.isEmpty();
+            return true;
+        }
+
+        static boolean equal(Object left, Object right) {
+            if (left instanceof Number && right instanceof Number)
+                return Double.compare(number(left), number(right)) == 0;
+            return Objects.equals(left, right);
+        }
+
+        static int compare(Object left, Object right) {
+            if (left instanceof Number && right instanceof Number)
+                return Double.compare(number(left), number(right));
+            return String.valueOf(left).compareTo(String.valueOf(right));
+        }
+
+        static double number(Object value) {
+            if (value instanceof Number number) return number.doubleValue();
+            if (value instanceof Boolean bool) return bool ? -1 : 0;
+            if (value == null || String.valueOf(value).isBlank()) return 0;
+            try { return Double.parseDouble(String.valueOf(value)); }
+            catch (NumberFormatException exception) { throw new IllegalArgumentException("Not numeric: " + value, exception); }
+        }
+
+        static boolean isNumeric(Object value) {
+            try { number(value); return value != null; }
+            catch (RuntimeException exception) { return false; }
+        }
+
+        static boolean forCondition(Object current, Object end, Object step) {
+            return number(step) >= 0 ? number(current) <= number(end) : number(current) >= number(end);
+        }
+
+        static List<Object> iterable(Object value) {
+            if (value instanceof List<?> list) return new ArrayList<>(list);
+            if (value instanceof Iterable<?> iterable) {
+                List<Object> result = new ArrayList<>();
+                iterable.forEach(result::add);
+                return result;
+            }
+            if (value != null && value.getClass().isArray()) {
+                List<Object> result = new ArrayList<>();
+                for (int i = 0; i < Array.getLength(value); i++) result.add(Array.get(value, i));
+                return result;
+            }
+            return Collections.emptyList();
+        }
+
+        static Object index(Object value, Object[] indices) {
+            int index = indices.length == 0 ? 0 : (int) number(indices[0]);
+            if (value instanceof List<?> list) return list.get(index);
+            if (value != null && value.getClass().isArray()) return Array.get(value, index);
+            if (value instanceof Map<?, ?> map) return map.get(indices.length == 0 ? null : indices[0]);
+            throw new IllegalStateException("Cannot index " + value);
+        }
+
+        static Object setIndex(Object value, Object[] indices, Object item) {
+            int index = indices.length == 0 ? 0 : (int) number(indices[0]);
+            if (value instanceof List<?> raw) {
+                @SuppressWarnings("unchecked") List<Object> list = (List<Object>) raw;
+                while (list.size() <= index) list.add(null);
+                list.set(index, item);
+                return item;
+            }
+            if (value != null && value.getClass().isArray()) { Array.set(value, index, item); return item; }
+            if (value instanceof Map<?, ?> raw && indices.length > 0) {
+                @SuppressWarnings("unchecked") Map<Object, Object> map = (Map<Object, Object>) raw;
+                map.put(indices[0], item);
+                return item;
+            }
+            throw new IllegalStateException("Cannot assign indexed value " + value);
+        }
+
+        static int upperBound(Object value) {
+            if (value instanceof List<?> list) return list.size() - 1;
+            if (value != null && value.getClass().isArray()) return Array.getLength(value) - 1;
+            return -1;
+        }
+
+        static Object redim(Object value, Object[] bounds) {
+            int length = bounds.length == 0 ? 0 : Math.max(0, (int) number(bounds[bounds.length - 1]) + 1);
+            Object[] result = new Object[length];
+            if (value != null && value.getClass().isArray())
+                System.arraycopy(value, 0, result, 0, Math.min(Array.getLength(value), result.length));
+            return result;
+        }
+
+        static Object date(String value) { return value; }
+        static LocalDateTime parseDate(Object value) {
+            if (value instanceof LocalDateTime dateTime) return dateTime;
+            if (value instanceof LocalDate date) return date.atStartOfDay();
+            String text = String.valueOf(value);
+            for (DateTimeFormatter formatter : new DateTimeFormatter[]{
+                    DateTimeFormatter.ISO_LOCAL_DATE_TIME,
+                    DateTimeFormatter.ISO_LOCAL_DATE,
+                    DateTimeFormatter.ofPattern("M/d/uuuu"),
+                    DateTimeFormatter.ofPattern("M/d/uuuu H:mm:ss")}) {
+                try {
+                    try { return LocalDateTime.parse(text, formatter); }
+                    catch (java.time.format.DateTimeParseException ignored) {
+                        return LocalDate.parse(text, formatter).atStartOfDay();
+                    }
+                } catch (java.time.format.DateTimeParseException ignored) { }
+            }
+            throw new IllegalArgumentException("Unsupported VBA date value: " + value);
+        }
+        static boolean canParseDate(Object value) {
+            if (value == null) return false;
+            try { parseDate(value); return true; }
+            catch (RuntimeException exception) { return false; }
+        }
+        static String format(Object value, String vbaPattern) {
+            if (!(value instanceof LocalDateTime)) return String.valueOf(value);
+            String pattern = vbaPattern.replace("nn", "__MINUTE__")
+                .replace("mm", "MM").replace("__MINUTE__", "mm").replace("hh", "HH");
+            try { return ((LocalDateTime) value).format(DateTimeFormatter.ofPattern(pattern)); }
+            catch (IllegalArgumentException exception) { return String.valueOf(value); }
+        }
+        static Object newObject(String typeName) { return new HostObject(typeName); }
+        static boolean exitNow() { return true; }
+        static void onError(String mode, String handler) {
+            throw new UnsupportedOperationException(
+                "VBA On Error behavior is not implemented: " + mode + " " + handler
+            );
+        }
+        static void raiseError(Object code, Object message) {
+            throw new IllegalStateException(String.valueOf(message));
+        }
+        static void unsupportedControlFlow(String description) {
+            throw new UnsupportedOperationException("Translate VBA control flow: " + description);
+        }
+        static Object untranslatedExpression(String source) {
+            throw new UnsupportedOperationException("Translate VBA expression: " + source);
+        }
+        static void untranslated(String source) {
+            throw new UnsupportedOperationException("Translate VBA statement: " + source);
+        }
     }
 }

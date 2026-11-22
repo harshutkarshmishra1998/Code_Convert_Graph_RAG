@@ -24,7 +24,7 @@
       "reason": "The pseudocode module sends source to an external LLM; this local pipeline does not make external requests."
     },
     {
-      "name": "Java generation",
+      "name": "Java generation and syntax check",
       "return_code": 0,
       "status": "completed"
     },
@@ -40,16 +40,11 @@
       "name": "LLM handoff artifacts",
       "return_code": 0,
       "status": "completed"
-    },
-    {
-      "name": "Maven Java project compilation",
-      "status": "completed",
-      "return_code": 0
     }
   ],
   "status": "completed",
   "java_file": "vba_sample_3.java",
-  "java_compile_status": "passed",
+  "java_syntax_check_status": "passed",
   "accuracy_status": "NOT_VERIFIED",
-  "blocking_accuracy_findings": 3
+  "blocking_accuracy_findings": 8
 }
