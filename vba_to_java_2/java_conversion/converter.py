@@ -10,38 +10,8 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
-from typing import Literal
-
-from pydantic import BaseModel
-
-from ..process_notes import llm_analysis
 from ..process_notes import notes_generator
 
-
-class ConversionResult(BaseModel):
-    class_name: str
-    java_source: str
-    unresolved: list[str]
-    assumptions: list[str]
-
-
-_SCHEMA = {
-    "type": "json_schema",
-    "json_schema": {
-        "name": "vba_java_conversion",
-        "strict": True,
-        "schema": {
-            "type": "object", "additionalProperties": False,
-            "required": ["class_name", "java_source", "unresolved", "assumptions"],
-            "properties": {
-                "class_name": {"type": "string"},
-                "java_source": {"type": "string"},
-                "unresolved": {"type": "array", "items": {"type": "string"}},
-                "assumptions": {"type": "array", "items": {"type": "string"}},
-            },
-        },
-    },
-}
 
 _CLIENT = None
 _MODEL = None
@@ -59,34 +29,35 @@ def _get_client():
         from langchain_groq import ChatGroq
 
         _MODEL = os.getenv("LLM_MODEL") or api_keys._loaded["LLM"]
-        client = ChatGroq(model=_MODEL, temperature=0, max_tokens=24000,
+        # GPT-OSS 20B permits up to 65,536 completion tokens; leave headroom below that cap.
+        client = ChatGroq(model=_MODEL, temperature=0, max_tokens=60000,
                           reasoning_format="hidden", reasoning_effort="low")
-        _CLIENT = client.bind(response_format=_SCHEMA)
+        _CLIENT = client
         return _CLIENT, str(_MODEL)
     except Exception as exc:
         raise RuntimeError("Java LLM unavailable; check GROQ_API, LLM, and model configuration") from exc
 
 
-def _response_dict(response):
-    if isinstance(response, BaseModel):
-        response = response.model_dump()
-    elif hasattr(response, "content"):
+def _response_source(response):
+    if hasattr(response, "content"):
         response = response.content
-    for _ in range(3):
-        if isinstance(response, dict):
-            if "java_source" in response:
-                return response
-            response = response.get("content", response.get("text", response))
-            continue
-        if isinstance(response, list):
-            response = "\n".join(item.get("text", "") if isinstance(item, dict) else str(item) for item in response)
-            continue
-        break
-    if isinstance(response, str):
-        result = json.loads(response.strip())
-        if isinstance(result, dict):
-            return result
-    raise ValueError("LLM response did not contain a Java conversion object")
+    if isinstance(response, list):
+        response = "\n".join(
+            item.get("text", "") if isinstance(item, dict) else str(item)
+            for item in response
+        )
+    if not isinstance(response, str) or not response.strip():
+        raise ValueError("LLM response did not contain Java source text")
+
+    source = response.strip()
+    fenced = re.search(r"```(?:java)?\s*([\s\S]*?)```", source, flags=re.IGNORECASE)
+    if fenced:
+        source = fenced.group(1).strip()
+    else:
+        start = re.search(r"(?m)^\s*(?:package\s+|import\s+|public\s+class\s+)", source)
+        if start:
+            source = source[start.start():].strip()
+    return source
 
 
 def _source_calculations(source):
@@ -135,10 +106,19 @@ def _java_client_prompt(source, process_note, class_name, procedures, calculatio
             "Use both the original .bas and its process_notes.md. The .bas is the source of truth; notes are an aid.",
             "Do not omit procedures, branches, loops, labels, error paths, declarations, or side effects. Do not invent behavior.",
             "Preserve every listed VBA calculation exactly in meaning and operand order. The calculation ledger is reference material; do not return a repeated mapping table.",
-            "If exact behavior cannot be represented safely, list it in unresolved; never hide it as an assumption.",
-            "Return a single compilable Java class named exactly class_name. Use Java standard library only unless the source clearly requires a dependency.",
+            "If exact behavior cannot be represented safely, mark it with a // UNRESOLVED: comment; never hide it as an assumption.",
+            "Represent Excel/VBA host objects through explicit Java adapter interfaces passed into the translated procedure. Do not fabricate workbook data or no-op required Excel operations. A host adapter that must be supplied at integration time is a documented dependency, not an unresolved translation, when the Java interface preserves every operation and its arguments/results.",
+            "Keep each translated Java method name exactly equal to its VBA procedure name, including capitalization.",
+            "Return one compilable .java file with exactly one public top-level type: the class named class_name. Put every adapter interface, helper class, and enum inside that class as a nested type; do not declare any other public top-level type.",
+            "Keep Java concise: include only code needed to preserve the VBA operations, without long explanatory comments or duplicated documentation.",
+            "Use Java standard library only unless the source clearly requires a dependency.",
+            "Java's ! operator can negate only a boolean. For StrComp(left, right, vbTextCompare) <> 0, use !(left).equalsIgnoreCase(right); parenthesize concatenated string operands, such as !(left + next).equalsIgnoreCase(right).",
+            "Keep calls consistent with the adapter methods actually declared in the Java source; add or correct adapter declarations rather than calling nonexistent methods.",
+            "Initialize Java local variables to VBA's declared-type defaults when needed, including on error-handler paths: String to empty string, numbers to zero, Boolean to false, and object references to null.",
+            "Preserve ByRef mutations with a compatible mutable representation at the parameter, every call site, and later consumers. Do not pass String where StringBuilder is expected; keep all declarations and uses type-consistent.",
             "The Java class must compile with the system javac. Do not claim runtime equivalence; report unresolved semantic differences.",
-            "Return the required structured fields only.",
+            "Return only the complete Java source text. Do not return JSON, markdown fences, or an explanation.",
+            "If behavior truly cannot be represented, include a source comment beginning // UNRESOLVED: . If you must make an assumption, include // ASSUMPTION: . Do not silently omit uncertain behavior.",
         ],
         "class_name": class_name,
         "required_procedure_names": [procedure["name"] for procedure in procedures],
@@ -149,30 +129,44 @@ def _java_client_prompt(source, process_note, class_name, procedures, calculatio
     if prior_source:
         request["previous_java_source_to_repair"] = prior_source
         request["repair_findings"] = repair_errors or []
-        request["repair_instruction"] = (
+        repair_instruction = (
             "Repair every listed issue. Keep all previously correct behavior and formulas, and "
-            "return the complete corrected Java file."
+            "return the complete corrected Java file. If the only unresolved item is an Excel/VBA "
+            "host dependency, preserve its operations behind explicit Java adapter interfaces and "
+            "document that integration requirement in the source; do not call it unresolved just "
+            "because a host implementation must be provided. Do not use fake data or no-op methods. "
+            "Keep translated procedure names exactly as spelled in VBA. Return only complete Java source text with no JSON or markdown fences."
         )
+        repair_error_text = "\n".join(repair_errors or []).casefold()
+        if "might not have been initialized" in repair_error_text:
+            repair_instruction += (
+                " Initialize the local reported by javac using the default value for its VBA type, "
+                "so error-handler paths preserve VBA behavior."
+            )
+        if "cannot be converted to" in repair_error_text:
+            repair_instruction += (
+                " Resolve the reported type mismatch consistently across the caller, callee, and "
+                "all uses. For ByRef strings, use one mutable representation and convert only where "
+                "a String value is required."
+            )
+        request["repair_instruction"] = repair_instruction
     return json.dumps(request, ensure_ascii=False)
 
 
 def _audit(result, class_name, procedures, calculations):
-    result = ConversionResult.model_validate(_response_dict(result))
+    java_source = _response_source(result)
     errors = []
-    if result.class_name != class_name:
-        errors.append(f"reported class name must be {class_name}")
-    if not re.search(rf"\bclass\s+{re.escape(class_name)}\b", result.java_source):
+    if not re.search(rf"\bclass\s+{re.escape(class_name)}\b", java_source):
         errors.append("Java source does not declare the required class")
     for procedure in procedures:
         # Match Java method declarations by name. Calls alone do not satisfy this check.
         declaration = rf"\b{re.escape(procedure['name'])}\s*\([^;{{}}]*\)\s*(?:throws\s+[\w.,\s]+)?\{{"
-        if not re.search(declaration, result.java_source):
+        if not re.search(declaration, java_source, flags=re.IGNORECASE):
             errors.append(f"Java procedure declaration is missing: {procedure['name']}")
-    if result.unresolved:
-        errors.extend(f"unresolved semantics: {item}" for item in result.unresolved)
-    if result.assumptions:
-        errors.extend(f"unverified assumption: {item}" for item in result.assumptions)
-    return result, errors
+    for marker in ("UNRESOLVED", "ASSUMPTION"):
+        details = re.findall(rf"(?im)^\s*//\s*{marker}\s*:\s*(.+)$", java_source)
+        errors.extend(f"{marker.lower()} semantics: {detail.strip()}" for detail in details)
+    return java_source, errors
 
 
 def _compile(java_source, class_name):
@@ -187,6 +181,40 @@ def _compile(java_source, class_name):
         if run.returncode:
             return (run.stderr or run.stdout).strip()[-12000:]
     return None
+
+
+def _normalize_repair_error(error):
+    error = re.sub(r"(?m)^.*?([^/\\]+\.java):\d+:", r"\1:<line>:", error)
+    return error
+
+
+def _repair_negated_string_concatenation(java_source, compile_error):
+    diagnostic = re.search(
+        r"\.java:(\d+): error: bad operand type String for unary operator '!'",
+        compile_error,
+    )
+    if not diagnostic:
+        return java_source
+    lines = java_source.splitlines()
+    line_index = int(diagnostic.group(1)) - 1
+    if not 0 <= line_index < len(lines):
+        return java_source
+    pattern = re.compile(
+        r"!\s*(?P<value>[A-Za-z_$][\w$]*(?:\s*\+\s*[A-Za-z_$][\w$]*)+)"
+        r"\s*\.\s*equalsIgnoreCase\s*\(",
+        re.DOTALL,
+    )
+    chunk_end = min(line_index + 4, len(lines))
+    chunk = "\n".join(lines[line_index:chunk_end])
+    repaired_line, count = pattern.subn(
+        lambda match: f"!({match.group('value')}).equalsIgnoreCase(",
+        chunk,
+        count=1,
+    )
+    if not count:
+        return java_source
+    lines[line_index:chunk_end] = repaired_line.splitlines()
+    return "\n".join(lines) + ("\n" if java_source.endswith("\n") else "")
 
 
 def _write_report(path, heading, bullets):
@@ -238,24 +266,32 @@ def main(input_location, process_note_location, output_location):
                                      previous_source, repair_errors)
         try:
             response = client.invoke(prompt)
-            result, errors = _audit(response, class_name, procedures, calculations)
+            java_source, errors = _audit(response, class_name, procedures, calculations)
         except Exception as exc:
-            _write_report(report_path, source_path.name, [f"LLM generation or structured-output validation failed: {type(exc).__name__}: {exc}"])
+            _write_report(report_path, source_path.name, [f"LLM Java generation failed: {type(exc).__name__}: {exc}"])
             print(f"[JAVA] FAILED — {type(exc).__name__}: {exc}", flush=True)
             print("[STOP] Java conversion stopped; no later file will be processed.", flush=True)
             return False
         if not errors:
             try:
-                compile_error = _compile(result.java_source, class_name)
+                compile_error = _compile(java_source, class_name)
             except Exception as exc:
                 compile_error = f"javac validation failed: {type(exc).__name__}: {exc}"
             if compile_error:
-                errors.append("javac compilation failed: " + compile_error)
+                repaired_source = _repair_negated_string_concatenation(java_source, compile_error)
+                if repaired_source != java_source:
+                    java_source = repaired_source
+                    try:
+                        compile_error = _compile(java_source, class_name)
+                    except Exception as exc:
+                        compile_error = f"javac validation failed: {type(exc).__name__}: {exc}"
+                if compile_error:
+                    errors.append("javac compilation failed: " + compile_error)
         if not errors:
             try:
                 output.mkdir(parents=True, exist_ok=True)
                 java_path = output / f"{class_name}.java"
-                java_path.write_text(result.java_source, encoding="utf-8")
+                java_path.write_text(java_source, encoding="utf-8")
                 _write_report(report_path, source_path.name, [
                     f"Java file: {java_path.name}", "Java compilation: PASS",
                     f"Source calculation ledger entries supplied to the LLM: {len(calculations)}",
@@ -271,7 +307,13 @@ def main(input_location, process_note_location, output_location):
             print(f"[AUDIT] Source calculation ledger supplied — {len(calculations)} entries", flush=True)
             print("[AUDIT] Behavioral equivalence — NOT VERIFIED", flush=True)
             return True
-        previous_source = result.java_source
+        if repair_errors and sorted(map(_normalize_repair_error, errors)) == sorted(
+            map(_normalize_repair_error, repair_errors)
+        ):
+            repair_errors = errors
+            print("[STOP] Repair made no progress; no Java file was emitted.", flush=True)
+            break
+        previous_source = java_source
         repair_errors = errors
         preview = "; ".join(errors[:3])
         if len(errors) > 3:
@@ -279,5 +321,7 @@ def main(input_location, process_note_location, output_location):
         print(f"[JAVA] REPAIR REQUIRED — {len(errors)} issue(s): {preview}", flush=True)
 
     _write_report(report_path, source_path.name, [*repair_errors, "No Java file was emitted because the checks did not pass."])
+    if len(repair_errors) and attempt < max_attempts:
+        return False
     print(f"[STOP] Repair limit ({max_attempts}) reached; no Java file was emitted.", flush=True)
     return False
